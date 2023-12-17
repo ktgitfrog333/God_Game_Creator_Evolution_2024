@@ -36,7 +36,7 @@ namespace Main.View
             }
         }
 
-        [SerializeField, Range(.5f, 10f)] private float angleCorrectionValue = 4f;
+        [SerializeField, Range(.5f, 10f)] private float angleCorrectionValue = 5f;
         [SerializeField] private float[] durations = { .01f };
         public float[] Durations
         {
