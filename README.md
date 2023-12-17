@@ -1,13 +1,9 @@
-# FutureContents2D
+# God_Game_Creator_Evolution_2024
 ## リリースノート
-#### v2.0.0
-##### FutureContets2Dのアップデート
-#### v1.0.1
-コード最適化
-#### v1.0.0
-Fix版第1段（オプション設定、ステージクリア済みデータ適用）
+#### v0.1.0
+##### Unityプロジェクトのアップロードとモック版作成
 ## プロジェクトバージョン
-### v2.0.0
+### v0.1.0
 ## UnityEditorバージョン
 ### [2022.3.14f](https://unity.com/ja/releases/editor/whats-new/2021.3.14)
 ## 使用アセット
