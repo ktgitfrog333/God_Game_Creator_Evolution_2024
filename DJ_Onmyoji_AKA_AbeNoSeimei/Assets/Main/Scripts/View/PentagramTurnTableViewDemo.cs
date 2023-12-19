@@ -57,9 +57,9 @@ namespace Main.View
                     if (value != 0f)
                     {
                         float[] durations = {value};
-                        pentagramTurnTableView.Durations = durations;
+                        // pentagramTurnTableView.Durations = durations;
                     }
-                    text.text = $"durations:\r\n[{string.Join(", ", pentagramTurnTableView.Durations)}]";
+                    // text.text = $"durations:\r\n[{string.Join(", ", pentagramTurnTableView.Durations)}]";
                     break;
                 default:
                     break;

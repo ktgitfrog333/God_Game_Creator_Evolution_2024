@@ -36,33 +36,21 @@ namespace Main.View
             }
         }
 
+        /// <summary>回転制御においてスティック入力感度の補正値小さいほど鈍く回転して、大きいほど素早く回転する。</summary>
         [SerializeField, Range(.5f, 10f)] private float angleCorrectionValue = 5f;
-        [SerializeField] private float[] durations = { .01f };
-        public float[] Durations
-        {
-            get { return durations; }
-            set { durations = value; }
-        }
+        /// <summary>回転制御においてスティック入力感度の補正値小さいほど鈍く回転して、大きいほど素早く回転する。</summary>
         public float AngleCorrectionValue
         {
             get { return angleCorrectionValue; }
             set { angleCorrectionValue = value; }
         }
-        private bool _isPlaying;
+
         public bool MoveSpin(BgmConfDetails bgmConfDetails)
         {
             try
             {
                 if (!ControllAudio(bgmConfDetails))
                     throw new System.Exception("ControllAudio");
-                // if (!_isPlaying)
-                // {
-                //     _isPlaying = true;
-                //     // imageを回転させる
-                //     float angle = bgmConfDetails.InputValue * -1f * angleCorrectionValue;
-                //     image.transform.DOBlendableRotateBy(new Vector3(0f, 0f, angle), durations[0])
-                //         .OnComplete(() => _isPlaying = false);
-                // }
                 float angle = bgmConfDetails.InputValue * -1f * angleCorrectionValue;
                 image.transform.Rotate(new Vector3(0f, 0f, angle));
                 return true;

@@ -19,40 +19,62 @@ namespace Main.Presenter
         [SerializeField] private PentagramTurnTableView pentagramTurnTableView;
         public Demo _demo = new Demo();
         public int ObserveEveryValueChangedCnt {get; private set;}
+        [SerializeField] private ClearCountdownTimerSystemModel clearCountdownTimerSystemModel;
+        [SerializeField] private ClearCountdownTimerCircleView clearCountdownTimerCircleView;
+        [SerializeField] private ClearCountdownTimerGaugeView clearCountdownTimerGaugeView;
+        [SerializeField] private ClearCountdownTimerTextView clearCountdownTimerTextView;
         public void OnStart()
         {
-            var inputValues = new List<float>();
-            BgmConfDetails bgmConfDetails = new BgmConfDetails();
-            pentagramSystemModel.InputValue.ObserveEveryValueChanged(x => x.Value)
+            IClearCountdownTimerViewAdapter circleView = new ClearCountdownTimerCircleViewAdapter(clearCountdownTimerCircleView);
+            IClearCountdownTimerViewAdapter gaugeView = new ClearCountdownTimerGaugeViewAdapter(clearCountdownTimerGaugeView);
+            IClearCountdownTimerViewAdapter textView = new ClearCountdownTimerTextViewAdapter(clearCountdownTimerTextView);
+
+            clearCountdownTimerSystemModel.TimeSec.ObserveEveryValueChanged(x => x.Value)
                 .Subscribe(x =>
                 {
-                    // _demo.inputValue = Mathf.Abs(x);
-                    // _demo.isOver = 1f <= _demo.inputValue;
-                    // inputValues.Add(_demo.inputValue);
-                    // _demo.inputValuesAverage = inputValues.TakeLast(10).Average();
-                    // if (_demo.isOver)
-                    //     _demo.overCnt++;
-                    
-                    // Debug.Log($"ObserveEveryValueChanged");
-                    ObserveEveryValueChangedCnt++;
-                    bgmConfDetails.InputValue = x;
-                    if (!pentagramTurnTableView.MoveSpin(bgmConfDetails))
-                        Debug.LogError("MoveSpin");
+                    if (!circleView.Set(x, clearCountdownTimerSystemModel.LimitTimeSecMax))
+                        Debug.LogError("SetAngle");
+                    if (!gaugeView.Set(x, clearCountdownTimerSystemModel.LimitTimeSecMax))
+                        Debug.LogError("SetHorizontal");
+                    if (!textView.Set(x, clearCountdownTimerSystemModel.LimitTimeSecMax))
+                        Debug.LogError("SetTextImport");
                 });
-            this.UpdateAsObservable()
-                .Subscribe(_ =>
+            clearCountdownTimerSystemModel.IsTimeOut.ObserveEveryValueChanged(x => x.Value)
+                .Subscribe(x =>
                 {
-                    // Debug.Log($"ObserveEveryValueChanged");
-                    // bgmConfDetails.InputValue = pentagramSystemModel.InputValue.Value;
-                    // if (!pentagramTurnTableView.MoveSpin(bgmConfDetails))
-                    //     Debug.LogError("MoveSpin");
+                    if (x)
+                    {
+                        if (!clearCountdownTimerSystemModel.isActiveAndEnabled)
+                            clearCountdownTimerSystemModel.enabled = false;
+                        if (!circleView.Set(0f, clearCountdownTimerSystemModel.LimitTimeSecMax))
+                            Debug.LogError("SetAngle");
+                        if (!gaugeView.Set(0f, clearCountdownTimerSystemModel.LimitTimeSecMax))
+                            Debug.LogError("SetHorizontal");
+                        if (!textView.Set(0f, clearCountdownTimerSystemModel.LimitTimeSecMax))
+                            Debug.LogError("SetTextImport");
+                    }
                 });
+
+            // var inputValues = new List<float>();
+            // BgmConfDetails bgmConfDetails = new BgmConfDetails();
+            // pentagramSystemModel.InputValue.ObserveEveryValueChanged(x => x.Value)
+            //     .Subscribe(x =>
+            //     {
+            //         ObserveEveryValueChangedCnt++;
+            //         bgmConfDetails.InputValue = x;
+            //         if (!pentagramTurnTableView.MoveSpin(bgmConfDetails))
+            //             Debug.LogError("MoveSpin");
+            //     });
         }
 
         private void Reset()
         {
-            pentagramSystemModel = GameObject.Find("PentagramSystem").GetComponent<PentagramSystemModel>();
-            pentagramTurnTableView = GameObject.Find("PentagramTurnTable").GetComponent<PentagramTurnTableView>();
+            // pentagramSystemModel = GameObject.Find("PentagramSystem").GetComponent<PentagramSystemModel>();
+            // pentagramTurnTableView = GameObject.Find("PentagramTurnTable").GetComponent<PentagramTurnTableView>();
+            clearCountdownTimerSystemModel = GameObject.Find("ClearCountdownTimerSystem").GetComponent<ClearCountdownTimerSystemModel>();
+            clearCountdownTimerCircleView = GameObject.Find("ClearCountdownTimerCircle").GetComponent<ClearCountdownTimerCircleView>();
+            clearCountdownTimerGaugeView = GameObject.Find("ClearCountdownTimerGauge").GetComponent<ClearCountdownTimerGaugeView>();
+            clearCountdownTimerTextView = GameObject.Find("ClearCountdownTimerText").GetComponent<ClearCountdownTimerTextView>();
         }
     }
 
@@ -66,3 +88,4 @@ namespace Main.Presenter
         // [Range(-360f, 360f)] public float angle;
     }
 }
+

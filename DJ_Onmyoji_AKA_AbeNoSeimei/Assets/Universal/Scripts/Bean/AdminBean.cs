@@ -22,6 +22,10 @@ namespace Universal.Bean
         /// デフォルトのスカイボックス
         /// </summary>
         private static readonly int[] SKYBOXS_DEFAULT = {1,2,0,0,0,0,0,0,0,0,0,0,0,0,0};
+        /// <summary>
+        /// デフォルトのカウントダウンタイマー
+        /// </summary>
+        private static readonly float[] CLEAR_COUNTDOWN_TIMER_DEFAULT = {5f,5f,5f,5f,5f,5f,5f,5f,5f,5f,5f,5f,5f,5f,5f};
 
         /// <summary>
         /// BGM名
@@ -35,6 +39,10 @@ namespace Universal.Bean
         /// スカイボックス
         /// </summary>
         public int[] skyBoxs = SKYBOXS_DEFAULT;
+        /// <summary>
+        /// カウントダウンタイマー
+        /// </summary>
+        public float[] clearCountdownTimer = CLEAR_COUNTDOWN_TIMER_DEFAULT;
         public AdminBean()
         {
 
@@ -48,6 +56,7 @@ namespace Universal.Bean
             playBgmNames = adminBean.playBgmNames;
             finalStages = adminBean.finalStages;
             skyBoxs = adminBean.skyBoxs;
+            clearCountdownTimer = adminBean.clearCountdownTimer;
         }
     }
 }

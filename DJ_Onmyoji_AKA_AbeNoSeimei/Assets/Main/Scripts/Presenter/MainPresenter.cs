@@ -75,6 +75,10 @@ namespace Main.Presenter
         [SerializeField] private PlayerView playerView;
         /// <summary>プレイヤーのモデル</summary>
         [SerializeField] private PlayerModel playerModel;
+        /// <summary>クリア条件を満たす要素を管理するシステム</summary>
+        [SerializeField] private ClearCountdownTimerSystemModel clearCountdownTimerSystemModel;
+        /// <summary>カウントダウンタイマーの情報に合わせてUIを変化させる</summary>
+        [SerializeField] private ClearCountdownTimerCircleView clearCountdownTimerCircleView;
 
         private void Reset()
         {
@@ -113,6 +117,8 @@ namespace Main.Presenter
             jumpGuideView = GameObject.Find("JumpGuide").GetComponent<JumpGuideView>();
             fadeImageView = GameObject.Find("FadeImage").GetComponent<FadeImageView>();
             fadeImageModel = GameObject.Find("FadeImage").GetComponent<FadeImageModel>();
+            clearCountdownTimerSystemModel = GameObject.Find("ClearCountdownTimerSystem").GetComponent<ClearCountdownTimerSystemModel>();
+            clearCountdownTimerCircleView = GameObject.Find("ClearCountdownTimerCircle").GetComponent<ClearCountdownTimerCircleView>();
         }
 
         public void OnStart()
@@ -665,6 +671,26 @@ namespace Main.Presenter
                             {
                                 if (x)
                                     isGoalReached.Value = true;
+                            });
+                        clearCountdownTimerSystemModel.enabled = true;
+                        IClearCountdownTimerViewAdapter circleView = new ClearCountdownTimerCircleViewAdapter(clearCountdownTimerCircleView);
+                        clearCountdownTimerSystemModel.TimeSec.ObserveEveryValueChanged(x => x.Value)
+                            .Subscribe(x =>
+                            {
+                                if (!circleView.Set(x, clearCountdownTimerSystemModel.LimitTimeSecMax))
+                                    Debug.LogError("SetAngle");
+                            });
+                        clearCountdownTimerSystemModel.IsTimeOut.ObserveEveryValueChanged(x => x.Value)
+                            .Subscribe(x =>
+                            {
+                                if (x)
+                                {
+                                    if (!clearCountdownTimerSystemModel.isActiveAndEnabled)
+                                        clearCountdownTimerSystemModel.enabled = false;
+                                    if (!circleView.Set(0f, clearCountdownTimerSystemModel.LimitTimeSecMax))
+                                        Debug.LogError("SetAngle");
+                                    isGoalReached.Value = true;
+                                }
                             });
                     }
                 });
