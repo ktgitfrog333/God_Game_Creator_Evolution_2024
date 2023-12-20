@@ -14,7 +14,7 @@ namespace Main.Model
     /// プレイヤー
     /// </summary>
     [RequireComponent(typeof(Rigidbody2D))]
-    public class PlayerModel : LevelPhysicsSerializerCapsule
+    public class PlayerModel : LevelPhysicsSerializerCapsule, IPlayerModel
     {
         /// <summary>移動速度</summary>
         [SerializeField] private float moveSpeed = 4f;
@@ -24,17 +24,28 @@ namespace Main.Model
         private bool _inputBan;
         /// <summary>操作禁止フラグ</summary>
         public bool InputBan => _inputBan;
+        /// <summary>死亡フラグ</summary>
+        public IReactiveProperty<bool> IsDead { get; private set; } = new BoolReactiveProperty();
 
-        /// <summary>
-        /// 操作禁止フラグをセット
-        /// </summary>
-        /// <param name="unactive">許可／禁止</param>
-        /// <returns>成功／失敗</returns>
         public bool SetInputBan(bool unactive)
         {
             try
             {
                 _inputBan = unactive;
+                return true;
+            }
+            catch (System.Exception e)
+            {
+                Debug.LogError(e);
+                return false;
+            }
+        }
+
+        public bool SetIsDead(bool enabled)
+        {
+            try
+            {
+                IsDead.Value = enabled;
                 return true;
             }
             catch (System.Exception e)
@@ -99,6 +110,34 @@ namespace Main.Model
                     // 歩く走る挙動
                     rigidbody.AddForce(moveVelocity);
                 });
+            // 死亡判定
+            IsDead.ObserveEveryValueChanged(x => x.Value)
+                .Subscribe(x =>
+                {
+                    _inputBan = true;
+                    moveVelocity = Vector3.zero;
+                });
         }
+    }
+
+    /// <summary>
+    /// モデル
+    /// プレイヤー
+    /// インターフェース
+    /// </summary>
+    public interface IPlayerModel
+    {
+        /// <summary>
+        /// 操作禁止フラグをセット
+        /// </summary>
+        /// <param name="unactive">許可／禁止</param>
+        /// <returns>成功／失敗</returns>
+        public bool SetInputBan(bool unactive);
+        /// <summary>
+        /// 死亡フラグをセット
+        /// </summary>
+        /// <param name="enabled">有効／無効</param>
+        /// <returns>成功／失敗</returns>
+        public bool SetIsDead(bool enabled);
     }
 }

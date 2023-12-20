@@ -23,37 +23,47 @@ namespace Main.Presenter
         [SerializeField] private ClearCountdownTimerCircleView clearCountdownTimerCircleView;
         [SerializeField] private ClearCountdownTimerGaugeView clearCountdownTimerGaugeView;
         [SerializeField] private ClearCountdownTimerTextView clearCountdownTimerTextView;
+        [SerializeField] private PlayerModel playerModel;
         public void OnStart()
         {
-            IClearCountdownTimerViewAdapter circleView = new ClearCountdownTimerCircleViewAdapter(clearCountdownTimerCircleView);
-            IClearCountdownTimerViewAdapter gaugeView = new ClearCountdownTimerGaugeViewAdapter(clearCountdownTimerGaugeView);
-            IClearCountdownTimerViewAdapter textView = new ClearCountdownTimerTextViewAdapter(clearCountdownTimerTextView);
-
-            clearCountdownTimerSystemModel.TimeSec.ObserveEveryValueChanged(x => x.Value)
-                .Subscribe(x =>
-                {
-                    if (!circleView.Set(x, clearCountdownTimerSystemModel.LimitTimeSecMax))
-                        Debug.LogError("SetAngle");
-                    if (!gaugeView.Set(x, clearCountdownTimerSystemModel.LimitTimeSecMax))
-                        Debug.LogError("SetHorizontal");
-                    if (!textView.Set(x, clearCountdownTimerSystemModel.LimitTimeSecMax))
-                        Debug.LogError("SetTextImport");
-                });
-            clearCountdownTimerSystemModel.IsTimeOut.ObserveEveryValueChanged(x => x.Value)
+            playerModel.IsDead.ObserveEveryValueChanged(x => x.Value)
                 .Subscribe(x =>
                 {
                     if (x)
                     {
-                        if (!clearCountdownTimerSystemModel.isActiveAndEnabled)
-                            clearCountdownTimerSystemModel.enabled = false;
-                        if (!circleView.Set(0f, clearCountdownTimerSystemModel.LimitTimeSecMax))
-                            Debug.LogError("SetAngle");
-                        if (!gaugeView.Set(0f, clearCountdownTimerSystemModel.LimitTimeSecMax))
-                            Debug.LogError("SetHorizontal");
-                        if (!textView.Set(0f, clearCountdownTimerSystemModel.LimitTimeSecMax))
-                            Debug.LogError("SetTextImport");
+                        Debug.Log("プレイヤーの死亡");
                     }
                 });
+
+            // IClearCountdownTimerViewAdapter circleView = new ClearCountdownTimerCircleViewAdapter(clearCountdownTimerCircleView);
+            // IClearCountdownTimerViewAdapter gaugeView = new ClearCountdownTimerGaugeViewAdapter(clearCountdownTimerGaugeView);
+            // IClearCountdownTimerViewAdapter textView = new ClearCountdownTimerTextViewAdapter(clearCountdownTimerTextView);
+
+            // clearCountdownTimerSystemModel.TimeSec.ObserveEveryValueChanged(x => x.Value)
+            //     .Subscribe(x =>
+            //     {
+            //         if (!circleView.Set(x, clearCountdownTimerSystemModel.LimitTimeSecMax))
+            //             Debug.LogError("SetAngle");
+            //         if (!gaugeView.Set(x, clearCountdownTimerSystemModel.LimitTimeSecMax))
+            //             Debug.LogError("SetHorizontal");
+            //         if (!textView.Set(x, clearCountdownTimerSystemModel.LimitTimeSecMax))
+            //             Debug.LogError("SetTextImport");
+            //     });
+            // clearCountdownTimerSystemModel.IsTimeOut.ObserveEveryValueChanged(x => x.Value)
+            //     .Subscribe(x =>
+            //     {
+            //         if (x)
+            //         {
+            //             if (!clearCountdownTimerSystemModel.isActiveAndEnabled)
+            //                 clearCountdownTimerSystemModel.enabled = false;
+            //             if (!circleView.Set(0f, clearCountdownTimerSystemModel.LimitTimeSecMax))
+            //                 Debug.LogError("SetAngle");
+            //             if (!gaugeView.Set(0f, clearCountdownTimerSystemModel.LimitTimeSecMax))
+            //                 Debug.LogError("SetHorizontal");
+            //             if (!textView.Set(0f, clearCountdownTimerSystemModel.LimitTimeSecMax))
+            //                 Debug.LogError("SetTextImport");
+            //         }
+            //     });
 
             // var inputValues = new List<float>();
             // BgmConfDetails bgmConfDetails = new BgmConfDetails();
@@ -71,10 +81,11 @@ namespace Main.Presenter
         {
             // pentagramSystemModel = GameObject.Find("PentagramSystem").GetComponent<PentagramSystemModel>();
             // pentagramTurnTableView = GameObject.Find("PentagramTurnTable").GetComponent<PentagramTurnTableView>();
-            clearCountdownTimerSystemModel = GameObject.Find("ClearCountdownTimerSystem").GetComponent<ClearCountdownTimerSystemModel>();
-            clearCountdownTimerCircleView = GameObject.Find("ClearCountdownTimerCircle").GetComponent<ClearCountdownTimerCircleView>();
-            clearCountdownTimerGaugeView = GameObject.Find("ClearCountdownTimerGauge").GetComponent<ClearCountdownTimerGaugeView>();
-            clearCountdownTimerTextView = GameObject.Find("ClearCountdownTimerText").GetComponent<ClearCountdownTimerTextView>();
+            // clearCountdownTimerSystemModel = GameObject.Find("ClearCountdownTimerSystem").GetComponent<ClearCountdownTimerSystemModel>();
+            // clearCountdownTimerCircleView = GameObject.Find("ClearCountdownTimerCircle").GetComponent<ClearCountdownTimerCircleView>();
+            // clearCountdownTimerGaugeView = GameObject.Find("ClearCountdownTimerGauge").GetComponent<ClearCountdownTimerGaugeView>();
+            // clearCountdownTimerTextView = GameObject.Find("ClearCountdownTimerText").GetComponent<ClearCountdownTimerTextView>();
+            playerModel = GameObject.Find("Player").GetComponent<PlayerModel>();
         }
     }
 
