@@ -34,6 +34,14 @@ namespace Main.Presenter
                         Debug.Log("プレイヤーの死亡");
                     }
                 });
+            playerModel.IsHit.ObserveEveryValueChanged(x => x.Value)
+                .Subscribe(x =>
+                {
+                    if (x)
+                        Debug.Log("ヒット_無敵中");
+                    else
+                        Debug.Log("無敵リセット");
+                });
 
             // IClearCountdownTimerViewAdapter circleView = new ClearCountdownTimerCircleViewAdapter(clearCountdownTimerCircleView);
             // IClearCountdownTimerViewAdapter gaugeView = new ClearCountdownTimerGaugeViewAdapter(clearCountdownTimerGaugeView);

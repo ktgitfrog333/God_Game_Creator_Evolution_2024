@@ -26,6 +26,10 @@ namespace Main.Model
         public bool InputBan => _inputBan;
         /// <summary>死亡フラグ</summary>
         public IReactiveProperty<bool> IsDead { get; private set; } = new BoolReactiveProperty();
+        /// <summary>ダメージ判定</summary>
+        [SerializeField] private DamageSufferedZoneModel damageSufferedZoneModel;
+        /// <summary>当たったか</summary>
+        public IReactiveProperty<bool> IsHit => damageSufferedZoneModel.IsHit;
 
         public bool SetInputBan(bool unactive)
         {
@@ -59,6 +63,7 @@ namespace Main.Model
         {
             base.Reset();
             distance = 0f;
+            damageSufferedZoneModel = GetComponentInChildren<DamageSufferedZoneModel>();
         }
 
         private void Start()
@@ -110,6 +115,9 @@ namespace Main.Model
                     // 歩く走る挙動
                     rigidbody.AddForce(moveVelocity);
                 });
+            // 敵から攻撃を受ける
+            damageSufferedZoneModel.IsHit.ObserveEveryValueChanged(x => x.Value)
+                .Subscribe(x => IsDead.Value = x);
             // 死亡判定
             IsDead.ObserveEveryValueChanged(x => x.Value)
                 .Subscribe(x =>

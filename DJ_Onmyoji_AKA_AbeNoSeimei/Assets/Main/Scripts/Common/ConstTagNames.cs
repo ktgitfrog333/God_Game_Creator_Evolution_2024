@@ -13,5 +13,7 @@ namespace Main.Common
         public static readonly string TAG_NAME_LEVEL = "Level";
         /// <summary>プレイヤー</summary>
         public static readonly string TAG_NAME_PLAYER = "Player";
+        /// <summary>敵</summary>
+        public static readonly string TAG_NAME_ENEMY = "Enemy";
     }
 }
