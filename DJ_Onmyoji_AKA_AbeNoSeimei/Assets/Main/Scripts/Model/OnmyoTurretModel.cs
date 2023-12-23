@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using Fungus;
 using UnityEngine;
 using UniRx;
+using UniRx.Triggers;
+using Unity.Collections.LowLevel.Unsafe;
 
 namespace Main.Model
 {
@@ -21,6 +23,7 @@ namespace Main.Model
         private Transform _transform;
         /// <summary>トランスフォーム</summary>
         private Transform Transform => _transform != null ? _transform : _transform = transform;
+        private RectTransform RectTransform => Transform as RectTransform;
 
         private void Start()
         {
@@ -51,12 +54,27 @@ namespace Main.Model
             while (true)
             {
                 var bullet = objectsPoolModel.GetOnmyoBulletModel();
-                if (!bullet.Initialize(Transform.position))
+                if (!bullet.Initialize(CalibrationFromTarget(RectTransform), RectTransform.parent.eulerAngles))
                     Debug.LogError("Initialize");
                 if (!bullet.isActiveAndEnabled)
                     bullet.gameObject.SetActive(true);
                 yield return new WaitForSeconds(instanceRateTimeSec);
             }
         }
+
+        /// <summary>
+        /// ターゲット位置を元に調整（From）
+        /// </summary>
+        /// <param name="rectTransform">UIターゲット情報</param>
+        /// <returns>成功／失敗</returns>
+        private Vector3 CalibrationFromTarget(RectTransform rectTransform)
+        {
+            // UI要素のローカル座標を取得
+            Vector3 localPosition = rectTransform.localPosition;
+            // ローカル座標をワールド座標に変換
+            Vector3 worldPosition = rectTransform.parent.TransformPoint(localPosition);
+            return worldPosition;
+        }
+
     }
 }

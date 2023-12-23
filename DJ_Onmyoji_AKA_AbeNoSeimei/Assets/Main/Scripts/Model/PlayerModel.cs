@@ -30,6 +30,8 @@ namespace Main.Model
         [SerializeField] private DamageSufferedZoneOfPlayerModel damageSufferedZoneModel;
         /// <summary>当たったか</summary>
         public IReactiveProperty<bool> IsHit => damageSufferedZoneModel.IsHit;
+        /// <summary>生成されたか</summary>
+        public IReactiveProperty<bool> IsInstanced { get; private set; } = new BoolReactiveProperty();
 
         public bool SetInputBan(bool unactive)
         {
@@ -125,6 +127,8 @@ namespace Main.Model
                     _inputBan = true;
                     moveVelocity = Vector3.zero;
                 });
+            if (!IsInstanced.Value)
+                IsInstanced.Value = true;
         }
     }
 

@@ -24,12 +24,18 @@ namespace Main.Model
         private float _disableTimeSec;
         /// <summary>設定</summary>
         [SerializeField] private OnmyoBulletConfig onmyoBulletConfig;
+        /// <summary>敵が攻撃範囲へ侵入した判定のトリガー</summary>
+        [Tooltip("敵が攻撃範囲へ侵入した判定のトリガー")]
+        [SerializeField] private SearchRangeOfEnemyCollider searchRangeOfEnemyCollider;
+        /// <summary>敵への攻撃ヒット判定のトリガー</summary>
+        [Tooltip("敵への攻撃ヒット判定のトリガー")]
+        [SerializeField] private AttackCollider attackCollider;
 
-        public bool Initialize(Vector2 position)
+        public bool Initialize(Vector2 position, Vector3 eulerAngles)
         {
             try
             {
-                _moveDirection = onmyoBulletConfig.moveDirection;
+                _moveDirection = Quaternion.Euler(eulerAngles) * onmyoBulletConfig.moveDirection;
                 _moveSpeed = onmyoBulletConfig.moveSpeed;
                 _disableTimeSec = onmyoBulletConfig.disableTimeSec;
                 Transform.position = position;
@@ -48,6 +54,8 @@ namespace Main.Model
             onmyoBulletConfig.moveDirection = Vector2.down;
             onmyoBulletConfig.moveSpeed = 8f;
             onmyoBulletConfig.disableTimeSec = 10f;
+            searchRangeOfEnemyCollider = GetComponentInChildren<SearchRangeOfEnemyCollider>();
+            attackCollider = GetComponentInChildren<AttackCollider>();
         }
 
         private void Awake()
@@ -55,13 +63,39 @@ namespace Main.Model
             gameObject.SetActive(false);
         }
 
+        private void Start()
+        {
+            attackCollider.IsHit.ObserveEveryValueChanged(x => x.Value)
+                .Subscribe(x =>
+                {
+                    if (x)
+                        gameObject.SetActive(false);
+                });
+        }
+
         private void OnEnable()
         {
-            DOVirtual.DelayedCall(_disableTimeSec, () => gameObject.SetActive(false));
+            StartCoroutine(DisableAfterDelay(_disableTimeSec));
+        }
+
+        /// <summary>
+        /// 遅延時間後に無効化
+        /// </summary>
+        /// <param name="delay">遅延時間</param>
+        /// <returns>コルーチン</returns>
+        private IEnumerator DisableAfterDelay(float delay)
+        {
+            yield return new WaitForSeconds(delay);
+            gameObject.SetActive(false);
         }
 
         private void FixedUpdate()
         {
+            if (searchRangeOfEnemyCollider.Target != null)
+            {
+                var targetDirection = searchRangeOfEnemyCollider.Target.position - transform.position;
+                _moveDirection = targetDirection.normalized;
+            }
             // 指定された方向と速度に弾を移動させる
             Transform.position += (Vector3)_moveDirection * _moveSpeed * Time.fixedDeltaTime;
         }
@@ -90,7 +124,8 @@ namespace Main.Model
         /// 初期設定
         /// </summary>
         /// <param name="position">生成位置</param>
+        /// <param name="eulerAngles">初期角度</param>
         /// <returns>成功／失敗</returns>
-        public bool Initialize(Vector2 position);
+        public bool Initialize(Vector2 position, Vector3 eulerAngles);
     }
 }

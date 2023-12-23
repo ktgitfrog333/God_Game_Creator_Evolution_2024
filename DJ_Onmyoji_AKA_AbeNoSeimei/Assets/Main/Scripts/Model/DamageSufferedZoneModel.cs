@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using DG.Tweening;
 using Main.Common;
+using Main.Utility;
 using UniRx;
 using UnityEngine;
 
@@ -20,6 +21,8 @@ namespace Main.Model
         [SerializeField] protected string[] tags = { ConstTagNames.TAG_NAME_ENEMY };
         /// <summary>無敵時間（秒）</summary>
         [SerializeField] protected float invincibleTimeSec = 1f;
+        /// <summary>ユーティリティ</summary>
+        private EnemyPlayerModelUtility _utility = new EnemyPlayerModelUtility();
 
         protected virtual void Start()
         {
@@ -41,11 +44,7 @@ namespace Main.Model
 
         protected virtual void OnTriggerEnter2D(Collider2D other)
         {
-            if (0 < tags.Where(q => other.CompareTag(q))
-            .Select(q => q)
-            .ToArray()
-            .Length &&
-            !IsHit.Value)
+            if (_utility.IsCompareTagAndUpdateReactiveFlag(other, tags, IsHit))
             {
                 IsHit.Value = true;
             }

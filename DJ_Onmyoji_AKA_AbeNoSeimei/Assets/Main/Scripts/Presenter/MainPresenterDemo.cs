@@ -10,6 +10,7 @@ using UniRx.Triggers;
 using Unity.Mathematics;
 using System.Linq;
 using Fungus;
+using Unity.Collections;
 
 namespace Main.Presenter
 {
@@ -26,22 +27,29 @@ namespace Main.Presenter
         [SerializeField] private PlayerModel playerModel;
         public void OnStart()
         {
-            playerModel.IsDead.ObserveEveryValueChanged(x => x.Value)
+            playerModel.IsInstanced.ObserveEveryValueChanged(x => x.Value)
                 .Subscribe(x =>
                 {
                     if (x)
-                    {
-                        Debug.Log("プレイヤーの死亡");
-                    }
+                        if (!pentagramTurnTableView.CalibrationToTarget(playerModel.transform))
+                            Debug.LogError("CalibrationToTarget");
                 });
-            playerModel.IsHit.ObserveEveryValueChanged(x => x.Value)
-                .Subscribe(x =>
-                {
-                    if (x)
-                        Debug.Log("ヒット_無敵中");
-                    else
-                        Debug.Log("無敵リセット");
-                });
+            // playerModel.IsDead.ObserveEveryValueChanged(x => x.Value)
+            //     .Subscribe(x =>
+            //     {
+            //         if (x)
+            //         {
+            //             Debug.Log("プレイヤーの死亡");
+            //         }
+            //     });
+            // playerModel.IsHit.ObserveEveryValueChanged(x => x.Value)
+            //     .Subscribe(x =>
+            //     {
+            //         if (x)
+            //             Debug.Log("ヒット_無敵中");
+            //         else
+            //             Debug.Log("無敵リセット");
+            //     });
 
             // IClearCountdownTimerViewAdapter circleView = new ClearCountdownTimerCircleViewAdapter(clearCountdownTimerCircleView);
             // IClearCountdownTimerViewAdapter gaugeView = new ClearCountdownTimerGaugeViewAdapter(clearCountdownTimerGaugeView);
@@ -88,12 +96,13 @@ namespace Main.Presenter
         private void Reset()
         {
             // pentagramSystemModel = GameObject.Find("PentagramSystem").GetComponent<PentagramSystemModel>();
-            // pentagramTurnTableView = GameObject.Find("PentagramTurnTable").GetComponent<PentagramTurnTableView>();
+            pentagramTurnTableView = GameObject.Find("PentagramTurnTable").GetComponent<PentagramTurnTableView>();
             // clearCountdownTimerSystemModel = GameObject.Find("ClearCountdownTimerSystem").GetComponent<ClearCountdownTimerSystemModel>();
             // clearCountdownTimerCircleView = GameObject.Find("ClearCountdownTimerCircle").GetComponent<ClearCountdownTimerCircleView>();
             // clearCountdownTimerGaugeView = GameObject.Find("ClearCountdownTimerGauge").GetComponent<ClearCountdownTimerGaugeView>();
             // clearCountdownTimerTextView = GameObject.Find("ClearCountdownTimerText").GetComponent<ClearCountdownTimerTextView>();
             playerModel = GameObject.Find("Player").GetComponent<PlayerModel>();
+            // onmyoTurretModel = GameObject.Find("OnmyoTurret").GetComponent<OnmyoTurretModel>();
         }
     }
 

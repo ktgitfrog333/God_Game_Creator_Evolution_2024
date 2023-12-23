@@ -5,6 +5,8 @@ using UnityEngine.UI;
 using DG.Tweening;
 using Main.Audio;
 using Main.Common;
+using UniRx;
+using UniRx.Triggers;
 
 namespace Main.View
 {
@@ -44,6 +46,10 @@ namespace Main.View
             get { return angleCorrectionValue; }
             set { angleCorrectionValue = value; }
         }
+        /// <summary>トランスフォーム</summary>
+        private Transform _transform;
+        /// <summary>トランスフォーム</summary>
+        private Transform Transform => _transform != null ? _transform : _transform = transform;
 
         public bool MoveSpin(BgmConfDetails bgmConfDetails)
         {
@@ -53,6 +59,38 @@ namespace Main.View
                     throw new System.Exception("ControllAudio");
                 float angle = bgmConfDetails.InputValue * -1f * angleCorrectionValue;
                 image.transform.Rotate(new Vector3(0f, 0f, angle));
+                return true;
+            }
+            catch (System.Exception e)
+            {
+                Debug.LogError(e);
+                return false;
+            }
+        }
+
+        public bool CalibrationToTarget(Transform transform)
+        {
+            try
+            {
+                var target = transform;
+                var mainCamera = Camera.main;
+                var parentRect = Transform.parent.GetComponent<RectTransform>();
+                this.UpdateAsObservable()
+                    .Subscribe(_ =>
+                    {
+                        // 2Dオブジェクトのワールド座標をスクリーン座標に変換
+                        Vector3 screenPosition = mainCamera.WorldToScreenPoint(target.position);
+                        // スクリーン座標→UIローカル座標変換
+                        RectTransformUtility.ScreenPointToLocalPointInRectangle(
+                            parentRect,
+                            screenPosition,
+                            mainCamera, // オーバーレイモードの場合はnull
+                            out var uiLocalPos
+                        );
+                        // UI要素の位置を更新
+                        Transform.localPosition = uiLocalPos;
+                    });
+                
                 return true;
             }
             catch (System.Exception e)
@@ -104,5 +142,11 @@ namespace Main.View
         /// <param name="bgmConfDetails">BGM設定の詳細</param>
         /// <returns>成功／失敗</returns>
         public bool MoveSpin(BgmConfDetails bgmConfDetails);
+        /// <summary>
+        /// ターゲット位置を元に調整
+        /// </summary>
+        /// <param name="transform">ターゲット情報</param>
+        /// <returns>成功／失敗</returns>
+        public bool CalibrationToTarget(Transform transform);
     }
 }

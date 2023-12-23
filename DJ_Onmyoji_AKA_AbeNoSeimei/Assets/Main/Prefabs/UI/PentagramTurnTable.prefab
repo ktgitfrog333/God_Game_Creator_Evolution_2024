@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 5232883505380997591}
   - component: {fileID: 2489806190623033527}
   - component: {fileID: 5834425334716593063}
+  - component: {fileID: 8641881819551968395}
   m_Layer: 5
   m_Name: PentagramTurnTable
   m_TagString: Untagged
@@ -26,7 +27,7 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8565043763141368986}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -59,7 +60,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 0.19607843}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -90,5 +91,16 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   image: {fileID: 2489806190623033527}
   angleCorrectionValue: 5
-  durations:
-  - 0.01
+--- !u!114 &8641881819551968395
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8565043763141368986}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ec2569d6ccce07b4291a17b3ca7488bd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  onmyoTurretPrefab: {fileID: 4570693240986880423, guid: c6551f664229eb24c9124ec16e32f843, type: 3}
