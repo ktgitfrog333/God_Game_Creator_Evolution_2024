@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7607098194154415657}
   - component: {fileID: 8259181911920433604}
-  - component: {fileID: 8976713062180533997}
+  - component: {fileID: 1227684485841128934}
   m_Layer: 0
   m_Name: DamageSufferedZone
   m_TagString: Untagged
@@ -68,7 +68,7 @@ CircleCollider2D:
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
   m_Radius: 1
---- !u!114 &8976713062180533997
+--- !u!114 &1227684485841128934
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -77,7 +77,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 6762638880256826204}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5e4dd56738023ac418afa85fc025ca4f, type: 3}
+  m_Script: {fileID: 11500000, guid: aca608b60e318e542bbff64222d3a8a6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   tags:
@@ -255,7 +255,7 @@ MonoBehaviour:
   previewColor: {r: 0, g: 1, b: 0, a: 1}
   moveSpeed: 4
   jumpSpeed: 6
-  damageSufferedZoneModel: {fileID: 8976713062180533997}
+  damageSufferedZoneModel: {fileID: 1227684485841128934}
 --- !u!114 &7897886183892488648
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Level
   - Enemy
+  - Bullet
   layers:
   - Default
   - TransparentFX
@@ -42,4 +43,7 @@ TagManager:
   m_SortingLayers:
   - name: Default
     uniqueID: 0
+    locked: 0
+  - name: uGUIOnPlayer
+    uniqueID: 3056992699
     locked: 0

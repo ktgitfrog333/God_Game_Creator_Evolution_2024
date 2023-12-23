@@ -15,5 +15,7 @@ namespace Main.Common
         public static readonly string TAG_NAME_PLAYER = "Player";
         /// <summary>敵</summary>
         public static readonly string TAG_NAME_ENEMY = "Enemy";
+        /// <summary>弾</summary>
+        public static readonly string TAG_NAME_BULLET = "Bullet";
     }
 }

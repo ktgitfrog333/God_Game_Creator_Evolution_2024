@@ -27,7 +27,7 @@ namespace Main.Model
         /// <summary>死亡フラグ</summary>
         public IReactiveProperty<bool> IsDead { get; private set; } = new BoolReactiveProperty();
         /// <summary>ダメージ判定</summary>
-        [SerializeField] private DamageSufferedZoneModel damageSufferedZoneModel;
+        [SerializeField] private DamageSufferedZoneOfPlayerModel damageSufferedZoneModel;
         /// <summary>当たったか</summary>
         public IReactiveProperty<bool> IsHit => damageSufferedZoneModel.IsHit;
 
@@ -63,7 +63,7 @@ namespace Main.Model
         {
             base.Reset();
             distance = 0f;
-            damageSufferedZoneModel = GetComponentInChildren<DamageSufferedZoneModel>();
+            damageSufferedZoneModel = GetComponentInChildren<DamageSufferedZoneOfPlayerModel>();
         }
 
         private void Start()

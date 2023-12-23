@@ -9,7 +9,7 @@ using UnityEngine;
 namespace Main.Model
 {
     /// <summary>
-    /// プレイヤーが攻撃を受ける判定のトリガー
+    /// 攻撃を受ける判定のトリガー
     /// </summary>
     [RequireComponent(typeof(CircleCollider2D))]
     public class DamageSufferedZoneModel : MonoBehaviour
@@ -17,11 +17,11 @@ namespace Main.Model
         /// <summary>当たったか</summary>
         public IReactiveProperty<bool> IsHit { get; private set; } = new BoolReactiveProperty();
         /// <summary>接触対象のオブジェクトタグ</summary>
-        [SerializeField] private string[] tags = { ConstTagNames.TAG_NAME_ENEMY };
+        [SerializeField] protected string[] tags = { ConstTagNames.TAG_NAME_ENEMY };
         /// <summary>無敵時間（秒）</summary>
-        [SerializeField] private float invincibleTimeSec = 1f;
+        [SerializeField] protected float invincibleTimeSec = 1f;
 
-        private void Start()
+        protected virtual void Start()
         {
             var collider2D = GetComponent<CircleCollider2D>();
             IsHit.ObserveEveryValueChanged(x => x.Value)
@@ -39,7 +39,7 @@ namespace Main.Model
                 });
         }
 
-        private void OnTriggerEnter2D(Collider2D other)
+        protected virtual void OnTriggerEnter2D(Collider2D other)
         {
             if (0 < tags.Where(q => other.CompareTag(q))
             .Select(q => q)
