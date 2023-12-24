@@ -8,7 +8,7 @@ namespace Main.Model
     /// <summary>
     /// 攻撃を与える判定のトリガー
     /// </summary>
-    public class AttackCollider : DamageSufferedZoneModel
+    public class AttackColliderOfOnmyoBullet : DamageSufferedZoneModel
     {
         private void Reset()
         {

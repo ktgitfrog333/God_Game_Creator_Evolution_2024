@@ -10,7 +10,7 @@ namespace Main.Model
     /// 魔力弾
     /// モデル
     /// </summary>
-    public class OnmyoBulletModel : MonoBehaviour, IOnmyoBulletModel
+    public class OnmyoBulletModel : MobCharacter, IOnmyoBulletModel
     {
         /// <summary>移動方向</summary>
         private Vector2 _moveDirection;
@@ -27,9 +27,6 @@ namespace Main.Model
         /// <summary>敵が攻撃範囲へ侵入した判定のトリガー</summary>
         [Tooltip("敵が攻撃範囲へ侵入した判定のトリガー")]
         [SerializeField] private SearchRangeOfEnemyCollider searchRangeOfEnemyCollider;
-        /// <summary>敵への攻撃ヒット判定のトリガー</summary>
-        [Tooltip("敵への攻撃ヒット判定のトリガー")]
-        [SerializeField] private AttackCollider attackCollider;
 
         public bool Initialize(Vector2 position, Vector3 eulerAngles)
         {
@@ -49,28 +46,13 @@ namespace Main.Model
             }
         }
 
-        private void Reset()
+        protected override void Reset()
         {
             onmyoBulletConfig.moveDirection = Vector2.down;
             onmyoBulletConfig.moveSpeed = 8f;
             onmyoBulletConfig.disableTimeSec = 10f;
             searchRangeOfEnemyCollider = GetComponentInChildren<SearchRangeOfEnemyCollider>();
-            attackCollider = GetComponentInChildren<AttackCollider>();
-        }
-
-        private void Awake()
-        {
-            gameObject.SetActive(false);
-        }
-
-        private void Start()
-        {
-            attackCollider.IsHit.ObserveEveryValueChanged(x => x.Value)
-                .Subscribe(x =>
-                {
-                    if (x)
-                        gameObject.SetActive(false);
-                });
+            base.Reset();
         }
 
         private void OnEnable()
@@ -93,7 +75,7 @@ namespace Main.Model
         {
             if (searchRangeOfEnemyCollider.Target != null)
             {
-                var targetDirection = searchRangeOfEnemyCollider.Target.position - transform.position;
+                var targetDirection = searchRangeOfEnemyCollider.Target.position - Transform.position;
                 _moveDirection = targetDirection.normalized;
             }
             // 指定された方向と速度に弾を移動させる
