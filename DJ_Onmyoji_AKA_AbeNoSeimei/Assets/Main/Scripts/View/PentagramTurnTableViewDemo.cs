@@ -42,7 +42,7 @@ namespace Main.View
                     break;
                 case 2:
                     // text = GetComponent<Text>();
-                    text.text = $"Update:\r\n[{pentagramSystemModel.UpdateCnt}]";
+                    // text.text = $"Update:\r\n[{pentagramSystemModel.UpdateCnt}]";
                     break;
                 case 3:
                     // text = GetComponent<Text>();

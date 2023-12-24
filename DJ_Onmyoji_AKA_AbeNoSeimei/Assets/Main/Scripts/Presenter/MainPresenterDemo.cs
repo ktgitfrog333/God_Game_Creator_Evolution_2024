@@ -27,13 +27,13 @@ namespace Main.Presenter
         [SerializeField] private PlayerModel playerModel;
         public void OnStart()
         {
-            playerModel.IsInstanced.ObserveEveryValueChanged(x => x.Value)
-                .Subscribe(x =>
-                {
-                    if (x)
-                        if (!pentagramTurnTableView.CalibrationToTarget(playerModel.transform))
-                            Debug.LogError("CalibrationToTarget");
-                });
+            // playerModel.IsInstanced.ObserveEveryValueChanged(x => x.Value)
+            //     .Subscribe(x =>
+            //     {
+            //         if (x)
+            //             if (!pentagramTurnTableView.CalibrationToTarget(playerModel.transform))
+            //                 Debug.LogError("CalibrationToTarget");
+            //     });
             // playerModel.IsDead.ObserveEveryValueChanged(x => x.Value)
             //     .Subscribe(x =>
             //     {
@@ -81,21 +81,21 @@ namespace Main.Presenter
             //         }
             //     });
 
-            // var inputValues = new List<float>();
-            // BgmConfDetails bgmConfDetails = new BgmConfDetails();
-            // pentagramSystemModel.InputValue.ObserveEveryValueChanged(x => x.Value)
-            //     .Subscribe(x =>
-            //     {
-            //         ObserveEveryValueChangedCnt++;
-            //         bgmConfDetails.InputValue = x;
-            //         if (!pentagramTurnTableView.MoveSpin(bgmConfDetails))
-            //             Debug.LogError("MoveSpin");
-            //     });
+            var inputValues = new List<float>();
+            BgmConfDetails bgmConfDetails = new BgmConfDetails();
+            pentagramSystemModel.InputValue.ObserveEveryValueChanged(x => x.Value)
+                .Subscribe(x =>
+                {
+                    ObserveEveryValueChangedCnt++;
+                    bgmConfDetails.InputValue = x;
+                    if (!pentagramTurnTableView.MoveSpin(bgmConfDetails))
+                        Debug.LogError("MoveSpin");
+                });
         }
 
         private void Reset()
         {
-            // pentagramSystemModel = GameObject.Find("PentagramSystem").GetComponent<PentagramSystemModel>();
+            pentagramSystemModel = GameObject.Find("PentagramSystem").GetComponent<PentagramSystemModel>();
             pentagramTurnTableView = GameObject.Find("PentagramTurnTable").GetComponent<PentagramTurnTableView>();
             // clearCountdownTimerSystemModel = GameObject.Find("ClearCountdownTimerSystem").GetComponent<ClearCountdownTimerSystemModel>();
             // clearCountdownTimerCircleView = GameObject.Find("ClearCountdownTimerCircle").GetComponent<ClearCountdownTimerCircleView>();

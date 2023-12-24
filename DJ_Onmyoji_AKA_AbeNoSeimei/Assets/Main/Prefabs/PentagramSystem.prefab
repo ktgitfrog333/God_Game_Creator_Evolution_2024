@@ -44,3 +44,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 07283c2439253e540a391e42ef66c8f7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  autoSpinSpeed: 0.05
