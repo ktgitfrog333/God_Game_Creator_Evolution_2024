@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UniRx;
+using Unity.Collections;
 using UnityEngine;
 
 namespace Main.Model
@@ -26,6 +27,8 @@ namespace Main.Model
         [SerializeField] private EnemyConfig enemyConfig;
         /// <summary>ターゲット</summary>
         private Transform _target;
+        /// <summary>死亡フラグ</summary>
+        public IReactiveProperty<bool> IsDead { get; private set; } = new BoolReactiveProperty();
 
         public bool Initialize(Vector2 position, Transform target)
         {
@@ -56,7 +59,19 @@ namespace Main.Model
             base.Awake();
         }
 
-        protected override void Start() { }
+        protected override void Start()
+        {
+            // プレイヤーから攻撃を受ける
+            damageSufferedZoneModel.IsHit.ObserveEveryValueChanged(x => x.Value)
+                .Subscribe(x => IsDead.Value = x);
+            // 死亡判定
+            IsDead.ObserveEveryValueChanged(x => x.Value)
+                .Subscribe(x =>
+                {
+                    if (x)
+                        gameObject.SetActive(false);
+                });
+        }
 
         private void FixedUpdate()
         {

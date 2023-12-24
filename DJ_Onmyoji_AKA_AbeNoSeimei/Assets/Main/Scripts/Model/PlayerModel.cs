@@ -124,8 +124,11 @@ namespace Main.Model
             IsDead.ObserveEveryValueChanged(x => x.Value)
                 .Subscribe(x =>
                 {
-                    _inputBan = true;
-                    moveVelocity = Vector3.zero;
+                    if (x)
+                    {
+                        _inputBan = true;
+                        moveVelocity = Vector3.zero;
+                    }
                 });
             if (!IsInstanced.Value)
                 IsInstanced.Value = true;
