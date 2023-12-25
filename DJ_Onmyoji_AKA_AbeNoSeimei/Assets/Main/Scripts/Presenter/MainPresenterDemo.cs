@@ -51,7 +51,13 @@ namespace Main.Presenter
             //             Debug.Log("無敵リセット");
             //     });
 
-            // IClearCountdownTimerViewAdapter circleView = new ClearCountdownTimerCircleViewAdapter(clearCountdownTimerCircleView);
+            IClearCountdownTimerViewAdapter circleView = new ClearCountdownTimerCircleViewAdapter(clearCountdownTimerCircleView);
+            playerModel.HP.ObserveEveryValueChanged(x => x.Value)
+                .Subscribe(x =>
+                {
+                    if (!circleView.Set(x, playerModel.HPMax))
+                        Debug.LogError("Set");
+                });
             // IClearCountdownTimerViewAdapter gaugeView = new ClearCountdownTimerGaugeViewAdapter(clearCountdownTimerGaugeView);
             // IClearCountdownTimerViewAdapter textView = new ClearCountdownTimerTextViewAdapter(clearCountdownTimerTextView);
 
@@ -83,22 +89,22 @@ namespace Main.Presenter
 
             var inputValues = new List<float>();
             BgmConfDetails bgmConfDetails = new BgmConfDetails();
-            pentagramSystemModel.InputValue.ObserveEveryValueChanged(x => x.Value)
-                .Subscribe(x =>
-                {
-                    ObserveEveryValueChangedCnt++;
-                    bgmConfDetails.InputValue = x;
-                    if (!pentagramTurnTableView.MoveSpin(bgmConfDetails))
-                        Debug.LogError("MoveSpin");
-                });
+            // pentagramSystemModel.InputValue.ObserveEveryValueChanged(x => x.Value)
+            //     .Subscribe(x =>
+            //     {
+            //         ObserveEveryValueChangedCnt++;
+            //         bgmConfDetails.InputValue = x;
+            //         if (!pentagramTurnTableView.MoveSpin(bgmConfDetails))
+            //             Debug.LogError("MoveSpin");
+            //     });
         }
 
         private void Reset()
         {
-            pentagramSystemModel = GameObject.Find("PentagramSystem").GetComponent<PentagramSystemModel>();
-            pentagramTurnTableView = GameObject.Find("PentagramTurnTable").GetComponent<PentagramTurnTableView>();
+            // pentagramSystemModel = GameObject.Find("PentagramSystem").GetComponent<PentagramSystemModel>();
+            // pentagramTurnTableView = GameObject.Find("PentagramTurnTable").GetComponent<PentagramTurnTableView>();
             // clearCountdownTimerSystemModel = GameObject.Find("ClearCountdownTimerSystem").GetComponent<ClearCountdownTimerSystemModel>();
-            // clearCountdownTimerCircleView = GameObject.Find("ClearCountdownTimerCircle").GetComponent<ClearCountdownTimerCircleView>();
+            clearCountdownTimerCircleView = GameObject.Find("ClearCountdownTimerCircle").GetComponent<ClearCountdownTimerCircleView>();
             // clearCountdownTimerGaugeView = GameObject.Find("ClearCountdownTimerGauge").GetComponent<ClearCountdownTimerGaugeView>();
             // clearCountdownTimerTextView = GameObject.Find("ClearCountdownTimerText").GetComponent<ClearCountdownTimerTextView>();
             playerModel = GameObject.Find("Player").GetComponent<PlayerModel>();

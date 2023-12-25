@@ -6,6 +6,7 @@ using UniRx.Triggers;
 using Main.Common;
 using Main.Audio;
 using DG.Tweening;
+using Main.Utility;
 
 namespace Main.Model
 {
@@ -32,6 +33,14 @@ namespace Main.Model
         public IReactiveProperty<bool> IsHit => damageSufferedZoneModel.IsHit;
         /// <summary>生成されたか</summary>
         public IReactiveProperty<bool> IsInstanced { get; private set; } = new BoolReactiveProperty();
+        /// <summary>最大HP</summary>
+        [SerializeField] private int hpMax = 10;
+        /// <summary>最大HP</summary>
+        public int HPMax => hpMax;
+        /// <summary>HP</summary>
+        public IReactiveProperty<int> HP { get; private set; } = new IntReactiveProperty();
+        /// <summary>ユーティリティ</summary>
+        private EnemyPlayerModelUtility _utility = new EnemyPlayerModelUtility();
 
         public bool SetInputBan(bool unactive)
         {
@@ -118,8 +127,9 @@ namespace Main.Model
                     rigidbody.AddForce(moveVelocity);
                 });
             // 敵から攻撃を受ける
-            damageSufferedZoneModel.IsHit.ObserveEveryValueChanged(x => x.Value)
-                .Subscribe(x => IsDead.Value = x);
+            HP.Value = hpMax;
+            if (!_utility.UpdateStateHPAndIsDead(IsHit, HP, hpMax, IsDead))
+                Debug.LogError("UpdateStateHPAndIsDead");
             // 死亡判定
             IsDead.ObserveEveryValueChanged(x => x.Value)
                 .Subscribe(x =>
