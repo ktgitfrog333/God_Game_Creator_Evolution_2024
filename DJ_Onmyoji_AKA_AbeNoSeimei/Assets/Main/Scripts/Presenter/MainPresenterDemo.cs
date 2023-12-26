@@ -22,18 +22,20 @@ namespace Main.Presenter
         public int ObserveEveryValueChangedCnt {get; private set;}
         [SerializeField] private ClearCountdownTimerSystemModel clearCountdownTimerSystemModel;
         [SerializeField] private ClearCountdownTimerCircleView clearCountdownTimerCircleView;
+        [SerializeField] private ClearCountdownTimerCircleView clearCountdownTimerCircleView_1;
         [SerializeField] private ClearCountdownTimerGaugeView clearCountdownTimerGaugeView;
         [SerializeField] private ClearCountdownTimerTextView clearCountdownTimerTextView;
         [SerializeField] private PlayerModel playerModel;
+        [SerializeField] private EnemyModel enemyModel;
         public void OnStart()
         {
-            // playerModel.IsInstanced.ObserveEveryValueChanged(x => x.Value)
-            //     .Subscribe(x =>
-            //     {
-            //         if (x)
-            //             if (!pentagramTurnTableView.CalibrationToTarget(playerModel.transform))
-            //                 Debug.LogError("CalibrationToTarget");
-            //     });
+            playerModel.IsInstanced.ObserveEveryValueChanged(x => x.Value)
+                .Subscribe(x =>
+                {
+                    if (x)
+                        if (!pentagramTurnTableView.CalibrationToTarget(playerModel.transform))
+                            Debug.LogError("CalibrationToTarget");
+                });
             // playerModel.IsDead.ObserveEveryValueChanged(x => x.Value)
             //     .Subscribe(x =>
             //     {
@@ -52,10 +54,17 @@ namespace Main.Presenter
             //     });
 
             IClearCountdownTimerViewAdapter circleView = new ClearCountdownTimerCircleViewAdapter(clearCountdownTimerCircleView);
-            playerModel.HP.ObserveEveryValueChanged(x => x.Value)
+            playerModel.State.HP.ObserveEveryValueChanged(x => x.Value)
                 .Subscribe(x =>
                 {
-                    if (!circleView.Set(x, playerModel.HPMax))
+                    if (!circleView.Set(x, playerModel.State.HPMax))
+                        Debug.LogError("Set");
+                });
+            IClearCountdownTimerViewAdapter circleView_1 = new ClearCountdownTimerCircleViewAdapter(clearCountdownTimerCircleView_1);
+            enemyModel.State.HP.ObserveEveryValueChanged(x => x.Value)
+                .Subscribe(x =>
+                {
+                    if (!circleView_1.Set(x, enemyModel.State.HPMax))
                         Debug.LogError("Set");
                 });
             // IClearCountdownTimerViewAdapter gaugeView = new ClearCountdownTimerGaugeViewAdapter(clearCountdownTimerGaugeView);
@@ -89,26 +98,28 @@ namespace Main.Presenter
 
             var inputValues = new List<float>();
             BgmConfDetails bgmConfDetails = new BgmConfDetails();
-            // pentagramSystemModel.InputValue.ObserveEveryValueChanged(x => x.Value)
-            //     .Subscribe(x =>
-            //     {
-            //         ObserveEveryValueChangedCnt++;
-            //         bgmConfDetails.InputValue = x;
-            //         if (!pentagramTurnTableView.MoveSpin(bgmConfDetails))
-            //             Debug.LogError("MoveSpin");
-            //     });
+            pentagramSystemModel.InputValue.ObserveEveryValueChanged(x => x.Value)
+                .Subscribe(x =>
+                {
+                    ObserveEveryValueChangedCnt++;
+                    bgmConfDetails.InputValue = x;
+                    if (!pentagramTurnTableView.MoveSpin(bgmConfDetails))
+                        Debug.LogError("MoveSpin");
+                });
         }
 
         private void Reset()
         {
-            // pentagramSystemModel = GameObject.Find("PentagramSystem").GetComponent<PentagramSystemModel>();
-            // pentagramTurnTableView = GameObject.Find("PentagramTurnTable").GetComponent<PentagramTurnTableView>();
+            pentagramSystemModel = GameObject.Find("PentagramSystem").GetComponent<PentagramSystemModel>();
+            pentagramTurnTableView = GameObject.Find("PentagramTurnTable").GetComponent<PentagramTurnTableView>();
             // clearCountdownTimerSystemModel = GameObject.Find("ClearCountdownTimerSystem").GetComponent<ClearCountdownTimerSystemModel>();
             clearCountdownTimerCircleView = GameObject.Find("ClearCountdownTimerCircle").GetComponent<ClearCountdownTimerCircleView>();
+            clearCountdownTimerCircleView_1 = GameObject.Find("ClearCountdownTimerCircle").GetComponent<ClearCountdownTimerCircleView>();
             // clearCountdownTimerGaugeView = GameObject.Find("ClearCountdownTimerGauge").GetComponent<ClearCountdownTimerGaugeView>();
             // clearCountdownTimerTextView = GameObject.Find("ClearCountdownTimerText").GetComponent<ClearCountdownTimerTextView>();
             playerModel = GameObject.Find("Player").GetComponent<PlayerModel>();
             // onmyoTurretModel = GameObject.Find("OnmyoTurret").GetComponent<OnmyoTurretModel>();
+            enemyModel = GameObject.Find("Enemy").GetComponent<EnemyModel>();
         }
     }
 

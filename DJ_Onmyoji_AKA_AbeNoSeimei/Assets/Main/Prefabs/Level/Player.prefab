@@ -253,9 +253,11 @@ MonoBehaviour:
   direction: {x: 0, y: 0}
   distance: 0
   previewColor: {r: 0, g: 1, b: 0, a: 1}
-  moveSpeed: 4
   jumpSpeed: 6
   damageSufferedZoneModel: {fileID: 1227684485841128934}
+  prop:
+    moveSpeed: 4
+    hpMax: 10
 --- !u!114 &7897886183892488648
 MonoBehaviour:
   m_ObjectHideFlags: 0

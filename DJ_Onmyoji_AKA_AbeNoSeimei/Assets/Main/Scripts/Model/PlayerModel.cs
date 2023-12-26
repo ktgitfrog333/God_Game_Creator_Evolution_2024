@@ -17,30 +17,22 @@ namespace Main.Model
     [RequireComponent(typeof(Rigidbody2D))]
     public class PlayerModel : LevelPhysicsSerializerCapsule, IPlayerModel
     {
-        /// <summary>移動速度</summary>
-        [SerializeField] private float moveSpeed = 4f;
         /// <summary>ジャンプ速度</summary>
         [SerializeField] private float jumpSpeed = 6f;
         /// <summary>操作禁止フラグ</summary>
         private bool _inputBan;
         /// <summary>操作禁止フラグ</summary>
         public bool InputBan => _inputBan;
-        /// <summary>死亡フラグ</summary>
-        public IReactiveProperty<bool> IsDead { get; private set; } = new BoolReactiveProperty();
         /// <summary>ダメージ判定</summary>
         [SerializeField] private DamageSufferedZoneOfPlayerModel damageSufferedZoneModel;
-        /// <summary>当たったか</summary>
-        public IReactiveProperty<bool> IsHit => damageSufferedZoneModel.IsHit;
         /// <summary>生成されたか</summary>
         public IReactiveProperty<bool> IsInstanced { get; private set; } = new BoolReactiveProperty();
-        /// <summary>最大HP</summary>
-        [SerializeField] private int hpMax = 10;
-        /// <summary>最大HP</summary>
-        public int HPMax => hpMax;
-        /// <summary>HP</summary>
-        public IReactiveProperty<int> HP { get; private set; } = new IntReactiveProperty();
         /// <summary>ユーティリティ</summary>
         private EnemyPlayerModelUtility _utility = new EnemyPlayerModelUtility();
+        /// <summary>プロパティ</summary>
+        [SerializeField] private CharacterProp prop;
+        /// <summary>ステータス</summary>
+        public CharacterState State { get; private set; }
 
         public bool SetInputBan(bool unactive)
         {
@@ -60,7 +52,7 @@ namespace Main.Model
         {
             try
             {
-                IsDead.Value = enabled;
+                State.IsDead.Value = enabled;
                 return true;
             }
             catch (System.Exception e)
@@ -75,6 +67,13 @@ namespace Main.Model
             base.Reset();
             distance = 0f;
             damageSufferedZoneModel = GetComponentInChildren<DamageSufferedZoneOfPlayerModel>();
+            prop.moveSpeed = 4f;
+            prop.hpMax = 10;
+        }
+
+        private void Awake()
+        {
+            State = new CharacterState(damageSufferedZoneModel.IsHit, prop.hpMax);
         }
 
         private void Start()
@@ -95,7 +94,7 @@ namespace Main.Model
                     origin = gameObject.transform.position;
                     if (!_inputBan)
                     {
-                        moveVelocity = new Vector3(MainGameManager.Instance.InputSystemsOwner.InputPlayer.Moved.x, moveVelocity.y, moveVelocity.z) * moveSpeed * (1f + Time.deltaTime);
+                        moveVelocity = new Vector3(MainGameManager.Instance.InputSystemsOwner.InputPlayer.Moved.x, moveVelocity.y, moveVelocity.z) * prop.moveSpeed * (1f + Time.deltaTime);
                         var rayCastHit = Physics2D.CapsuleCast(origin, size, capsuleDirection, angle, direction, distance, LayerMask.GetMask(ConstLayerNames.LAYER_NAME_FLOOR));
                         if (!isJumped &&
                             MainGameManager.Instance.InputSystemsOwner.InputPlayer.Jumped &&
@@ -127,11 +126,11 @@ namespace Main.Model
                     rigidbody.AddForce(moveVelocity);
                 });
             // 敵から攻撃を受ける
-            HP.Value = hpMax;
-            if (!_utility.UpdateStateHPAndIsDead(IsHit, HP, hpMax, IsDead))
+            State.HP.Value = prop.hpMax;
+            if (!_utility.UpdateStateHPAndIsDead(State.IsHit, State.HP, prop.hpMax, State.IsDead))
                 Debug.LogError("UpdateStateHPAndIsDead");
             // 死亡判定
-            IsDead.ObserveEveryValueChanged(x => x.Value)
+            State.IsDead.ObserveEveryValueChanged(x => x.Value)
                 .Subscribe(x =>
                 {
                     if (x)

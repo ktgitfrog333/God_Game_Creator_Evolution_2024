@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Main.Utility;
 using UniRx;
 using Unity.Collections;
 using UnityEngine;
@@ -15,26 +16,26 @@ namespace Main.Model
         /// <summary>ダメージ判定</summary>
         [Tooltip("ダメージ判定")]
         [SerializeField] private DamageSufferedZoneOfEnemyModel damageSufferedZoneModel;
-        /// <summary>当たったか</summary>
-        public IReactiveProperty<bool> IsHit => damageSufferedZoneModel.IsHit;
         /// <summary>移動速度</summary>
         private float _moveSpeed;
         /// <summary>トランスフォーム</summary>
         private Transform _transform;
         /// <summary>トランスフォーム</summary>
         private Transform Transform => _transform != null ? _transform : _transform = transform;
-        /// <summary>敵の設定</summary>
-        [SerializeField] private EnemyConfig enemyConfig;
         /// <summary>ターゲット</summary>
         private Transform _target;
-        /// <summary>死亡フラグ</summary>
-        public IReactiveProperty<bool> IsDead { get; private set; } = new BoolReactiveProperty();
+        /// <summary>ユーティリティ</summary>
+        private EnemyPlayerModelUtility _utility = new EnemyPlayerModelUtility();
+        /// <summary>プロパティ</summary>
+        [SerializeField] private CharacterProp prop;
+        /// <summary>ステータス</summary>
+        public CharacterState State { get; private set; }
 
         public bool Initialize(Vector2 position, Transform target)
         {
             try
             {
-                _moveSpeed = enemyConfig.moveSpeed;
+                _moveSpeed = prop.moveSpeed;
                 Transform.position = position;
                 if (_target == null)
                     _target = target;
@@ -51,21 +52,24 @@ namespace Main.Model
         protected override void Reset()
         {
             damageSufferedZoneModel = GetComponentInChildren<DamageSufferedZoneOfEnemyModel>();
-            enemyConfig.moveSpeed = 3f;
+            prop.moveSpeed = 3f;
+            prop.hpMax = 3;
         }
 
         protected override void Awake()
         {
+            State = new CharacterState(damageSufferedZoneModel.IsHit, prop.hpMax);
             base.Awake();
         }
 
         protected override void Start()
         {
             // プレイヤーから攻撃を受ける
-            damageSufferedZoneModel.IsHit.ObserveEveryValueChanged(x => x.Value)
-                .Subscribe(x => IsDead.Value = x);
+            State.HP.Value = prop.hpMax;
+            if (!_utility.UpdateStateHPAndIsDead(State.IsHit, State.HP, prop.hpMax, State.IsDead))
+                Debug.LogError("UpdateStateHPAndIsDead");
             // 死亡判定
-            IsDead.ObserveEveryValueChanged(x => x.Value)
+            State.IsDead.ObserveEveryValueChanged(x => x.Value)
                 .Subscribe(x =>
                 {
                     if (x)
@@ -86,15 +90,41 @@ namespace Main.Model
     }
 
     /// <summary>
-    /// 敵
-    /// 設定
+    /// キャラクターのプロパティ
     /// </summary>
     [System.Serializable]
-    public struct EnemyConfig
+    public struct CharacterProp
     {
         /// <summary>移動速度</summary>
         [Tooltip("移動速度")]
         public float moveSpeed;
+        /// <summary>最大HP</summary>
+        [Tooltip("最大HP")]
+        public int hpMax;
+    }
+
+    /// <summary>
+    /// キャラクターのステータス
+    /// </summary>
+    public class CharacterState
+    {
+        /// <summary>当たったか</summary>
+        public IReactiveProperty<bool> IsHit { get; private set; }
+        /// <summary>死亡フラグ</summary>
+        public IReactiveProperty<bool> IsDead { get; private set; } = new BoolReactiveProperty();
+        /// <summary>最大HP</summary>
+        public int HPMax { get; private set; }
+        /// <summary>HP</summary>
+        public IReactiveProperty<int> HP { get; private set; } = new IntReactiveProperty();
+        /// <summary>
+        /// キャラクターのステータス
+        /// コンストラクタ
+        /// </summary>
+        public CharacterState(IReactiveProperty<bool> isHit, int hpMax)
+        {
+            IsHit = isHit;
+            HPMax = hpMax;
+        }
     }
 
     /// <summary>

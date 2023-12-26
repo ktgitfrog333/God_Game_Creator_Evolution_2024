@@ -315,5 +315,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   attackCollider: {fileID: 0}
   damageSufferedZoneModel: {fileID: 4771599399997114491}
-  enemyConfig:
+  prop:
     moveSpeed: 3
+    hpMax: 3
