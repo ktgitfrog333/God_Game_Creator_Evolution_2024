@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using DG.Tweening;
 using UniRx;
 using UnityEngine;
+using Universal.Utility;
 
 namespace Main.Model
 {
@@ -57,18 +58,7 @@ namespace Main.Model
 
         private void OnEnable()
         {
-            StartCoroutine(DisableAfterDelay(_disableTimeSec));
-        }
-
-        /// <summary>
-        /// 遅延時間後に無効化
-        /// </summary>
-        /// <param name="delay">遅延時間</param>
-        /// <returns>コルーチン</returns>
-        private IEnumerator DisableAfterDelay(float delay)
-        {
-            yield return new WaitForSeconds(delay);
-            gameObject.SetActive(false);
+            StartCoroutine(GeneralUtility.ActionsAfterDelay(_disableTimeSec, () => gameObject.SetActive(false)));
         }
 
         private void FixedUpdate()

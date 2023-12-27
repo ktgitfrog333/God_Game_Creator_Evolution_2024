@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &296471290223033406
+--- !u!1 &69641827566713717
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -8,22 +8,22 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 7497276588651718180}
-  - component: {fileID: 2827088298547246209}
+  - component: {fileID: 4668659948551862895}
+  - component: {fileID: 7574161162513308151}
   m_Layer: 0
-  m_Name: ObjectsPool
-  m_TagString: ObjectsPool
+  m_Name: EnemiesSpawn
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &7497276588651718180
+--- !u!4 &4668659948551862895
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 296471290223033406}
+  m_GameObject: {fileID: 69641827566713717}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
@@ -32,18 +32,19 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &2827088298547246209
+--- !u!114 &7574161162513308151
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 296471290223033406}
+  m_GameObject: {fileID: 69641827566713717}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ed2ecb729ff1be4439e3ac40a83f4ec5, type: 3}
+  m_Script: {fileID: 11500000, guid: 3219d06cbde316c4faf75c15072e69a9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  countLimit: 100
-  onmyoBulletPrefab: {fileID: 4271966872695545945, guid: a369a1dd02c303e4bb37ff74a71f1f22, type: 3}
-  enemyPrefab: {fileID: 3023802622660258064, guid: 5d7044c8d42de1540a3954615dee3f19, type: 3}
+  objectsPoolPrefab: {fileID: 7497276588651718180, guid: 4434f5da33952be4c941a59c25b13d50, type: 3}
+  instanceRateTimeSec: 0.5
+  radiusMin: 10
+  radiusMax: 12

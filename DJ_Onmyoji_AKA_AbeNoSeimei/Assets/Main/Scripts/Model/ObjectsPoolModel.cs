@@ -9,30 +9,29 @@ namespace Main.Model
 {
     public class ObjectsPoolModel : MonoBehaviour, IObjectsPoolModel
     {
-        /// <summary>魔力弾</summary>
-        [SerializeField] private Transform OnmyoBulletPrefab;
         /// <summary>トランスフォーム</summary>
         private Transform _transform;
         /// <summary>プール数の上限</summary>
-        [SerializeField] private int countLimit = 1000;
+        [SerializeField] private int countLimit = 100;
         /// <summary>プール完了</summary>
         public IReactiveProperty<bool> IsCompleted { get; private set; } = new BoolReactiveProperty();
+        /// <summary>魔力弾</summary>
+        [SerializeField] private Transform onmyoBulletPrefab;
         /// <summary>魔力弾配列</summary>
         private List<OnmyoBulletModel> _onmyoBulletModels = new List<OnmyoBulletModel>();
+        /// <summary>敵</summary>
+        [SerializeField] private Transform enemyPrefab;
+        /// <summary>敵配列</summary>
+        private List<EnemyModel> _enemyModels = new List<EnemyModel>();
 
         public OnmyoBulletModel GetOnmyoBulletModel()
         {
-            var bullets = _onmyoBulletModels.Where(q => !q.isActiveAndEnabled)
-                .Select(q => q)
-                .ToArray();
-            if (bullets.Length < 1)
-            {
-                Debug.LogWarning("プレハブ新規生成");
-                var newBullet = GetBullet(OnmyoBulletPrefab, _transform).GetComponent<OnmyoBulletModel>();
-                return newBullet;
-            }
-            else
-                return bullets[0];
+            return GetInactiveComponent(_onmyoBulletModels, onmyoBulletPrefab, _transform);
+        }
+
+        public EnemyModel GetEnemyModel()
+        {
+            return GetInactiveComponent(_enemyModels, enemyPrefab, _transform);
         }
 
         private void Start()
@@ -43,21 +42,38 @@ namespace Main.Model
             for (int i = 0; i < countLimit; i++)
             {
                 // プレハブを生成してプールする
-                _onmyoBulletModels.Add(GetBullet(OnmyoBulletPrefab, _transform).GetComponent<OnmyoBulletModel>());
+                _onmyoBulletModels.Add(GetClone(onmyoBulletPrefab, _transform).GetComponent<OnmyoBulletModel>());
+                _enemyModels.Add(GetClone(enemyPrefab, _transform).GetComponent<EnemyModel>());
             }
             Debug.Log("プール完了");
             IsCompleted.Value = true;
         }
 
         /// <summary>
-        /// 魔力弾を取得
+        /// プール内のクローンオブジェクトを取得
         /// </summary>
-        /// <param name="onmyoBulletPrefab">魔力弾プレハブ</param>
+        /// <param name="cloneObject">プレハブ</param>
         /// <param name="parent">親</param>
-        /// <returns>魔力弾</returns>
-        private Transform GetBullet(Transform onmyoBulletPrefab, Transform parent)
+        /// <returns>クローンオブジェクト</returns>
+        private Transform GetClone(Transform cloneObject, Transform parent)
         {
-            return Instantiate(onmyoBulletPrefab, parent);
+            return Instantiate(cloneObject, parent);
+        }
+
+        private T GetInactiveComponent<T>(List<T> components, Transform prefab, Transform parent) where T : MonoBehaviour
+        {
+            var inactiveComponents = components.Where(q => !q.isActiveAndEnabled).ToArray();
+            if (inactiveComponents.Length < 1)
+            {
+                Debug.LogWarning("プレハブ新規生成");
+                var newComponent = GetClone(prefab, parent).GetComponent<T>();
+                components.Add(newComponent);
+                return newComponent;
+            }
+            else
+            {
+                return inactiveComponents[0];
+            }
         }
     }
 
@@ -68,5 +84,10 @@ namespace Main.Model
         /// </summary>
         /// <returns>魔力弾</returns>
         public OnmyoBulletModel GetOnmyoBulletModel();
+        /// <summary>
+        /// 敵を取り出す
+        /// </summary>
+        /// <returns>敵</returns>
+        public EnemyModel GetEnemyModel();
     }
 }

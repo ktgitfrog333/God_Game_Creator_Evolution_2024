@@ -5,50 +5,33 @@ using UnityEngine;
 using UniRx;
 using UniRx.Triggers;
 using Unity.Collections.LowLevel.Unsafe;
+using Main.Utility;
 
 namespace Main.Model
 {
     /// <summary>
     /// 陰陽玉（陰陽砲台）
     /// </summary>
-    public class OnmyoTurretModel : MonoBehaviour
+    public class OnmyoTurretModel : SpawnModel
     {
-        /// <summary>オブジェクトプール</summary>
-        [Tooltip("オブジェクトプール")]
-        [SerializeField] private Transform objectsPoolPrefab;
-        /// <summary>弾を発射する時間間隔（秒）</summary>
-        [Tooltip("弾を発射する時間間隔（秒）")]
-        [SerializeField] private float instanceRateTimeSec = .5f;
         /// <summary>トランスフォーム</summary>
         private Transform _transform;
         /// <summary>トランスフォーム</summary>
         private Transform Transform => _transform != null ? _transform : _transform = transform;
+        /// <summary>Rectトランスフォーム</summary>
         private RectTransform RectTransform => Transform as RectTransform;
 
-        private void Start()
+        private void Reset()
         {
-            var pool = GameObject.Find("ObjectsPool");
-            ObjectsPoolModel poolModel;
-            if (pool == null)
-                poolModel = Instantiate(objectsPoolPrefab).GetComponent<ObjectsPoolModel>();
-            else
-                poolModel = pool.GetComponent<ObjectsPoolModel>();
-            
-            poolModel.IsCompleted.ObserveEveryValueChanged(x => x.Value)
-                .Subscribe(x =>
-                {
-                    if (x)
-                        StartCoroutine(InstanceBullets(instanceRateTimeSec, poolModel));
-                });
+            instanceRateTimeSec = .5f;
         }
 
-        /// <summary>
-        /// 弾を生成
-        /// </summary>
-        /// <param name="instanceRateTimeSec">弾を発射する時間間隔（秒）</param>
-        /// <param name="objectsPoolModel">オブジェクトプール</param>
-        /// <returns>コルーチン</returns>
-        private IEnumerator InstanceBullets(float instanceRateTimeSec, ObjectsPoolModel objectsPoolModel)
+        protected override void Start()
+        {
+            base.Start();
+        }
+
+        protected override IEnumerator InstanceCloneObjects(float instanceRateTimeSec, ObjectsPoolModel objectsPoolModel)
         {
             // 一定間隔で弾を生成するための実装
             while (true)

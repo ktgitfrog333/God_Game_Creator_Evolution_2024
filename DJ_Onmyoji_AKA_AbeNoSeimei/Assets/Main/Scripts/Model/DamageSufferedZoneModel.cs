@@ -6,6 +6,7 @@ using Main.Common;
 using Main.Utility;
 using UniRx;
 using UnityEngine;
+using Universal.Utility;
 
 namespace Main.Model
 {
@@ -33,11 +34,11 @@ namespace Main.Model
                     if (x)
                     {
                         collider2D.enabled = false;
-                        DOVirtual.DelayedCall(invincibleTimeSec, () =>
+                        StartCoroutine(GeneralUtility.ActionsAfterDelay(invincibleTimeSec, () =>
                         {
                             IsHit.Value = false;
                             collider2D.enabled = true;
-                        });
+                        }));
                     }
                 });
         }
