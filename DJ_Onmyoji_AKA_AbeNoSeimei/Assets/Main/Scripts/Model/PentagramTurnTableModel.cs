@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Universal.Common;
 
 namespace Main.Model
 {
@@ -17,10 +18,15 @@ namespace Main.Model
         [SerializeField] private Transform onmyoTurretPrefab;
         /// <summary>円の中心から外周への距離</summary>
         [Tooltip("円の中心から外周への距離")]
-        [SerializeField] private float distance = 2f;
+        [SerializeField] private float distance;
 
         private void Start()
         {
+            var adminDataSingleton = AdminDataSingleton.Instance != null ?
+                AdminDataSingleton.Instance :
+                new GameObject(ConstGameObjectNames.GAMEOBJECT_NAME_ADMINDATA_SINGLETON).AddComponent<AdminDataSingleton>()
+                    .GetComponent<AdminDataSingleton>();
+            distance = adminDataSingleton.AdminBean.PentagramTurnTableModel.distance;
             // オブジェクトを中心に5つの位置へプレハブを生成
             // 対象位置は下記の条件に従う
             // ・中心から五角形とした場合に各頂点を座標とする

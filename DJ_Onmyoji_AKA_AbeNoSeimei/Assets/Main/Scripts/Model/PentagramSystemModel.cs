@@ -6,6 +6,7 @@ using UniRx;
 using UniRx.Triggers;
 using Main.Common;
 using UnityEngine.InputSystem;
+using Universal.Common;
 
 namespace Main.Model
 {
@@ -22,10 +23,15 @@ namespace Main.Model
         private float _multiDistanceCorrected = 7.5f;
         /// <summary>自動回転の速度</summary>
         [Tooltip("自動回転の速度")]
-        [SerializeField] private float autoSpinSpeed = .05f;
+        [SerializeField] private float autoSpinSpeed = .01f;
 
         private void Start()
         {
+            var adminDataSingleton = AdminDataSingleton.Instance != null ?
+                AdminDataSingleton.Instance :
+                new GameObject(Universal.Common.ConstGameObjectNames.GAMEOBJECT_NAME_ADMINDATA_SINGLETON).AddComponent<AdminDataSingleton>()
+                    .GetComponent<AdminDataSingleton>();
+            autoSpinSpeed = adminDataSingleton.AdminBean.PentagramSystemModel.autoSpinSpeed;
             InputSystemsOwner inputSystemsOwner = null;
             Vector2ReactiveProperty previousInput = new Vector2ReactiveProperty(Vector2.zero); // 前回の入力を保存する変数
             this.UpdateAsObservable()

@@ -4,6 +4,7 @@ using System.Linq;
 using UniRx;
 using Unity.VisualScripting;
 using UnityEngine;
+using Universal.Common;
 
 namespace Main.Model
 {
@@ -12,14 +13,17 @@ namespace Main.Model
         /// <summary>トランスフォーム</summary>
         private Transform _transform;
         /// <summary>プール数の上限</summary>
-        [SerializeField] private int countLimit = 100;
+        [Tooltip("プール数の上限")]
+        [SerializeField] private int countLimit;
         /// <summary>プール完了</summary>
         public IReactiveProperty<bool> IsCompleted { get; private set; } = new BoolReactiveProperty();
-        /// <summary>魔力弾</summary>
+        /// <summary>魔力弾のプレハブ</summary>
+        [Tooltip("魔力弾のプレハブ")]
         [SerializeField] private Transform onmyoBulletPrefab;
         /// <summary>魔力弾配列</summary>
         private List<OnmyoBulletModel> _onmyoBulletModels = new List<OnmyoBulletModel>();
-        /// <summary>敵</summary>
+        /// <summary>敵のプレハブ</summary>
+        [Tooltip("敵のプレハブ")]
         [SerializeField] private Transform enemyPrefab;
         /// <summary>敵配列</summary>
         private List<EnemyModel> _enemyModels = new List<EnemyModel>();
@@ -36,6 +40,11 @@ namespace Main.Model
 
         private void Start()
         {
+            var adminDataSingleton = AdminDataSingleton.Instance != null ?
+                AdminDataSingleton.Instance :
+                new GameObject(ConstGameObjectNames.GAMEOBJECT_NAME_ADMINDATA_SINGLETON).AddComponent<AdminDataSingleton>()
+                    .GetComponent<AdminDataSingleton>();
+            countLimit = adminDataSingleton.AdminBean.ObjectsPoolModel.countLimit;
             if (_transform == null)
                 _transform = transform;
             Debug.Log("プール開始");

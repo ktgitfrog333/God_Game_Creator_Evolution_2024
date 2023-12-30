@@ -31,7 +31,7 @@ namespace Main.Model
             }
         }
 
-        private void OnDisable()
+        protected override void OnDisable()
         {
             Target = null;
         }

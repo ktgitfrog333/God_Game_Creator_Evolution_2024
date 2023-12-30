@@ -3,7 +3,9 @@ using System.Collections.Generic;
 using Main.Utility;
 using UniRx;
 using Unity.Collections;
+using UnityEditor;
 using UnityEngine;
+using Universal.Common;
 
 namespace Main.Model
 {
@@ -52,12 +54,18 @@ namespace Main.Model
         protected override void Reset()
         {
             damageSufferedZoneModel = GetComponentInChildren<DamageSufferedZoneOfEnemyModel>();
-            prop.moveSpeed = 3f;
+            prop.moveSpeed = 1f;
             prop.hpMax = 3;
         }
 
         protected override void Awake()
         {
+            var adminDataSingleton = AdminDataSingleton.Instance != null ?
+                AdminDataSingleton.Instance :
+                new GameObject(ConstGameObjectNames.GAMEOBJECT_NAME_ADMINDATA_SINGLETON).AddComponent<AdminDataSingleton>()
+                    .GetComponent<AdminDataSingleton>();
+            prop.moveSpeed = adminDataSingleton.AdminBean.EnemyModel.prop.moveSpeed;
+            prop.hpMax = adminDataSingleton.AdminBean.EnemyModel.prop.hpMax;
             State = new CharacterState(damageSufferedZoneModel.IsHit, prop.hpMax);
             base.Awake();
         }

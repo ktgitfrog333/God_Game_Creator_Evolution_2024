@@ -104,3 +104,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   onmyoTurretPrefab: {fileID: 4570693240986880423, guid: c6551f664229eb24c9124ec16e32f843, type: 3}
+  distance: 4.5

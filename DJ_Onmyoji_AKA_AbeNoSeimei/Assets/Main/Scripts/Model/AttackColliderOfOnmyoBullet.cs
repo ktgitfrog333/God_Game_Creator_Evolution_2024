@@ -23,7 +23,7 @@ namespace Main.Model
             base.OnTriggerEnter2D(other);
         }
 
-        private void OnDisable()
+        protected override void OnDisable()
         {
             IsHit.Value = false;
         }

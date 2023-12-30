@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Main.Common;
 using UniRx;
 using UnityEngine;
+using Universal.Common;
 
 namespace Main.Model
 {
@@ -18,13 +19,14 @@ namespace Main.Model
         /// <summary>トランスフォーム</summary>
         private Transform _target;
 
-        private void Reset()
-        {
-            instanceRateTimeSec = .5f;
-        }
-
         protected override void Start()
         {
+            var adminDataSingleton = AdminDataSingleton.Instance != null ?
+                AdminDataSingleton.Instance :
+                new GameObject(Universal.Common.ConstGameObjectNames.GAMEOBJECT_NAME_ADMINDATA_SINGLETON).AddComponent<AdminDataSingleton>()
+                    .GetComponent<AdminDataSingleton>();
+            instanceRateTimeSec = adminDataSingleton.AdminBean.EnemiesSpawnModel.invincibleTimeSec;
+
             base.Start();
             Observable.FromCoroutine<Transform>(observer => WaitForTarget(observer))
                 .Subscribe(x => _target = x)

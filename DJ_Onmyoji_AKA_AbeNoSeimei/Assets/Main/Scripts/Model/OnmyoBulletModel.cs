@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using DG.Tweening;
 using UniRx;
 using UnityEngine;
+using Universal.Common;
 using Universal.Utility;
 
 namespace Main.Model
@@ -49,11 +50,20 @@ namespace Main.Model
 
         protected override void Reset()
         {
-            onmyoBulletConfig.moveDirection = Vector2.down;
-            onmyoBulletConfig.moveSpeed = 8f;
             onmyoBulletConfig.disableTimeSec = 10f;
             searchRangeOfEnemyCollider = GetComponentInChildren<SearchRangeOfEnemyCollider>();
             base.Reset();
+        }
+
+        protected override void Awake()
+        {
+            var adminDataSingleton = AdminDataSingleton.Instance != null ?
+                AdminDataSingleton.Instance :
+                new GameObject(ConstGameObjectNames.GAMEOBJECT_NAME_ADMINDATA_SINGLETON).AddComponent<AdminDataSingleton>()
+                    .GetComponent<AdminDataSingleton>();
+            onmyoBulletConfig.moveDirection = adminDataSingleton.AdminBean.OnmyoBulletModel.moveDirection;
+            onmyoBulletConfig.moveSpeed = adminDataSingleton.AdminBean.OnmyoBulletModel.moveSpeed;
+            base.Awake();
         }
 
         private void OnEnable()

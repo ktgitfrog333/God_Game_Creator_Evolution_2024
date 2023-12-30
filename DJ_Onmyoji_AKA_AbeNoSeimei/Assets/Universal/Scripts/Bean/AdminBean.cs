@@ -25,7 +25,7 @@ namespace Universal.Bean
         /// <summary>
         /// デフォルトのカウントダウンタイマー
         /// </summary>
-        private static readonly float[] CLEAR_COUNTDOWN_TIMER_DEFAULT = {5f,5f,5f,5f,5f,5f,5f,5f,5f,5f,5f,5f,5f,5f,5f};
+        private static readonly float[] CLEAR_COUNTDOWN_TIMER_DEFAULT = {300f,5f,5f,5f,5f,5f,5f,5f,5f,5f,5f,5f,5f,5f,5f};
 
         /// <summary>
         /// BGM名
@@ -43,6 +43,15 @@ namespace Universal.Bean
         /// カウントダウンタイマー
         /// </summary>
         public float[] clearCountdownTimer = CLEAR_COUNTDOWN_TIMER_DEFAULT;
+        public EnemyModel EnemyModel = new EnemyModel();
+        public EnemiesSpawnModel EnemiesSpawnModel = new EnemiesSpawnModel();
+        public ObjectsPoolModel ObjectsPoolModel = new ObjectsPoolModel();
+        public OnmyoBulletModel OnmyoBulletModel = new OnmyoBulletModel();
+        public OnmyoTurretModel OnmyoTurretModel = new OnmyoTurretModel();
+        public PentagramSystemModel PentagramSystemModel = new PentagramSystemModel();
+        public PentagramTurnTableView PentagramTurnTableView = new PentagramTurnTableView();
+        public PentagramTurnTableModel PentagramTurnTableModel = new PentagramTurnTableModel();
+        public PlayerModel PlayerModel = new PlayerModel();
         public AdminBean()
         {
 
@@ -57,6 +66,112 @@ namespace Universal.Bean
             finalStages = adminBean.finalStages;
             skyBoxs = adminBean.skyBoxs;
             clearCountdownTimer = adminBean.clearCountdownTimer;
+            EnemyModel = adminBean.EnemyModel;
+            EnemiesSpawnModel = adminBean.EnemiesSpawnModel;
+            ObjectsPoolModel = adminBean.ObjectsPoolModel;
+            OnmyoBulletModel = adminBean.OnmyoBulletModel;
+            OnmyoTurretModel = adminBean.OnmyoTurretModel;
+            PentagramSystemModel = adminBean.PentagramSystemModel;
+            PentagramTurnTableView = adminBean.PentagramTurnTableView;
+            PentagramTurnTableModel = adminBean.PentagramTurnTableModel;
+            PlayerModel = adminBean.PlayerModel;
+        }
+    }
+
+    [System.Serializable]
+    public class EnemyModel
+    {
+        public prop prop = new prop(1f, 3);
+        public DamageSufferedZoneOfEnemyModel DamageSufferedZoneOfEnemyModel = new DamageSufferedZoneOfEnemyModel(0f);
+    }
+
+    [System.Serializable]
+    public class DamageSufferedZoneOfEnemyModel
+    {
+        public float invincibleTimeSec;
+        public DamageSufferedZoneOfEnemyModel() {}
+        public DamageSufferedZoneOfEnemyModel(float invincibleTimeSec)
+        {
+            this.invincibleTimeSec = invincibleTimeSec;
+        }
+    }
+
+    [System.Serializable]
+    public class prop
+    {
+        public float moveSpeed;
+        public int hpMax;
+        public prop()
+        {
+
+        }
+        public prop(float moveSpeed, int hpMax)
+        {
+            this.moveSpeed = moveSpeed;
+            this.hpMax = hpMax;
+        }
+    }
+
+    [System.Serializable]
+    public class EnemiesSpawnModel
+    {
+        public float invincibleTimeSec = .5f;
+    }
+
+    [System.Serializable]
+    public class ObjectsPoolModel
+    {
+        public int countLimit = 100;
+    }
+
+    [System.Serializable]
+    public class PentagramSystemModel
+    {
+        public float autoSpinSpeed = .01f;
+    }
+
+    [System.Serializable]
+    public class OnmyoBulletModel
+    {
+        /// <summary>移動方向</summary>
+        public Vector2 moveDirection = Vector2.down;
+        /// <summary>移動速度</summary>
+        public float moveSpeed = 8f;
+    }
+
+    [System.Serializable]
+    public class OnmyoTurretModel
+    {
+        public float instanceRateTimeSec = .5f;
+    }
+
+    [System.Serializable]
+    public class PentagramTurnTableView
+    {
+        public float angleCorrectionValue = 5f;
+    }
+
+    [System.Serializable]
+    public class PentagramTurnTableModel
+    {
+        public float distance = 4.5f;
+    }
+
+    [System.Serializable]
+    public class PlayerModel
+    {
+        public prop prop = new prop(4f, 10);
+        public DamageSufferedZoneOfPlayerModel DamageSufferedZoneOfPlayerModel = new DamageSufferedZoneOfPlayerModel(1f);
+    }
+
+    [System.Serializable]
+    public class DamageSufferedZoneOfPlayerModel
+    {
+        public float invincibleTimeSec;
+        public DamageSufferedZoneOfPlayerModel() {}
+        public DamageSufferedZoneOfPlayerModel(float invincibleTimeSec)
+        {
+            this.invincibleTimeSec = invincibleTimeSec;
         }
     }
 }

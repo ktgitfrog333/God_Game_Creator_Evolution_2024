@@ -7,6 +7,7 @@ using Main.Audio;
 using Main.Common;
 using UniRx;
 using UniRx.Triggers;
+using Universal.Common;
 
 namespace Main.View
 {
@@ -39,7 +40,7 @@ namespace Main.View
         }
 
         /// <summary>回転制御においてスティック入力感度の補正値小さいほど鈍く回転して、大きいほど素早く回転する。</summary>
-        [SerializeField, Range(.5f, 10f)] private float angleCorrectionValue = 5f;
+        [SerializeField, Range(.5f, 10f)] private float angleCorrectionValue;
         /// <summary>回転制御においてスティック入力感度の補正値小さいほど鈍く回転して、大きいほど素早く回転する。</summary>
         public float AngleCorrectionValue
         {
@@ -126,6 +127,15 @@ namespace Main.View
         private void Reset()
         {
             image = GetComponent<Image>();
+        }
+
+        private void Start()
+        {
+            var adminDataSingleton = AdminDataSingleton.Instance != null ?
+                AdminDataSingleton.Instance :
+                new GameObject(Universal.Common.ConstGameObjectNames.GAMEOBJECT_NAME_ADMINDATA_SINGLETON).AddComponent<AdminDataSingleton>()
+                    .GetComponent<AdminDataSingleton>();
+            angleCorrectionValue = adminDataSingleton.AdminBean.PentagramTurnTableView.angleCorrectionValue;
         }
     }
 

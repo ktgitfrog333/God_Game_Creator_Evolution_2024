@@ -28,7 +28,7 @@ namespace Main.Utility
                     .Subscribe(x =>
                     {
                         if (x)
-                            if (0 < hp.Value)
+                            if (1 < hp.Value)
                                 hp.Value--;
                             else
                             {

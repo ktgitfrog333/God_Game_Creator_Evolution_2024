@@ -6,6 +6,7 @@ using UniRx;
 using UniRx.Triggers;
 using Unity.Collections.LowLevel.Unsafe;
 using Main.Utility;
+using Universal.Common;
 
 namespace Main.Model
 {
@@ -21,13 +22,13 @@ namespace Main.Model
         /// <summary>Rectトランスフォーム</summary>
         private RectTransform RectTransform => Transform as RectTransform;
 
-        private void Reset()
-        {
-            instanceRateTimeSec = .5f;
-        }
-
         protected override void Start()
         {
+            var adminDataSingleton = AdminDataSingleton.Instance != null ?
+                AdminDataSingleton.Instance :
+                new GameObject(ConstGameObjectNames.GAMEOBJECT_NAME_ADMINDATA_SINGLETON).AddComponent<AdminDataSingleton>()
+                    .GetComponent<AdminDataSingleton>();
+            instanceRateTimeSec = adminDataSingleton.AdminBean.OnmyoTurretModel.instanceRateTimeSec;
             base.Start();
         }
 

@@ -7,6 +7,7 @@ using Main.Common;
 using Main.Audio;
 using DG.Tweening;
 using Main.Utility;
+using Universal.Common;
 
 namespace Main.Model
 {
@@ -67,12 +68,16 @@ namespace Main.Model
             base.Reset();
             distance = 0f;
             damageSufferedZoneModel = GetComponentInChildren<DamageSufferedZoneOfPlayerModel>();
-            prop.moveSpeed = 4f;
-            prop.hpMax = 10;
         }
 
         private void Awake()
         {
+            var adminDataSingleton = AdminDataSingleton.Instance != null ?
+                AdminDataSingleton.Instance :
+                new GameObject(Universal.Common.ConstGameObjectNames.GAMEOBJECT_NAME_ADMINDATA_SINGLETON).AddComponent<AdminDataSingleton>()
+                    .GetComponent<AdminDataSingleton>();
+            prop.moveSpeed = adminDataSingleton.AdminBean.PlayerModel.prop.moveSpeed;
+            prop.hpMax = adminDataSingleton.AdminBean.PlayerModel.prop.hpMax;
             State = new CharacterState(damageSufferedZoneModel.IsHit, prop.hpMax);
         }
 

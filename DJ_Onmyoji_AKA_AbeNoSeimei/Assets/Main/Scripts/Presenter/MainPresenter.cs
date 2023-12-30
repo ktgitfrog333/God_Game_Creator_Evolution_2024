@@ -63,22 +63,16 @@ namespace Main.Presenter
         [SerializeField] private FadeImageView fadeImageView;
         /// <summary>フェードのモデル</summary>
         [SerializeField] private FadeImageModel fadeImageModel;
-        /// <summary>プレイヤー開始位置のビュー</summary>
-        [SerializeField] private PlayerStartPointView playerStartPointView;
-        /// <summary>セーフゾーンのモデル</summary>
-        [SerializeField] private SafeZoneModel safeZoneModel;
-        /// <summary>ゴールポイントのビュー</summary>
-        [SerializeField] private GoalPointView goalPointView;
-        /// <summary>ゴールポイントのモデル</summary>
-        [SerializeField] private GoalPointModel goalPointModel;
-        /// <summary>プレイヤーのビュー</summary>
-        [SerializeField] private PlayerView playerView;
-        /// <summary>プレイヤーのモデル</summary>
-        [SerializeField] private PlayerModel playerModel;
+        /// <summary>カウントダウンタイマーの情報に合わせてUIを変化させる</summary>
+        [SerializeField] private ClearCountdownTimerTextView clearCountdownTimerTextView;
         /// <summary>クリア条件を満たす要素を管理するシステム</summary>
         [SerializeField] private ClearCountdownTimerSystemModel clearCountdownTimerSystemModel;
-        /// <summary>カウントダウンタイマーの情報に合わせてUIを変化させる</summary>
-        [SerializeField] private ClearCountdownTimerCircleView clearCountdownTimerCircleView;
+        /// <summary>ペンダグラムシステム</summary>
+        [SerializeField] private PentagramSystemModel pentagramSystemModel;
+        /// <summary>ペンダグラムターンテーブル</summary>
+        [SerializeField] private PentagramTurnTableView pentagramTurnTableView;
+        /// <summary>プレイヤーのHP</summary>
+        [SerializeField] private ClearCountdownTimerGaugeView playerHP;
 
         private void Reset()
         {
@@ -117,12 +111,22 @@ namespace Main.Presenter
             jumpGuideView = GameObject.Find("JumpGuide").GetComponent<JumpGuideView>();
             fadeImageView = GameObject.Find("FadeImage").GetComponent<FadeImageView>();
             fadeImageModel = GameObject.Find("FadeImage").GetComponent<FadeImageModel>();
+            clearCountdownTimerTextView = GameObject.Find("ClearCountdownTimerText").GetComponent<ClearCountdownTimerTextView>();
             clearCountdownTimerSystemModel = GameObject.Find("ClearCountdownTimerSystem").GetComponent<ClearCountdownTimerSystemModel>();
-            clearCountdownTimerCircleView = GameObject.Find("ClearCountdownTimerCircle").GetComponent<ClearCountdownTimerCircleView>();
+            pentagramSystemModel = GameObject.Find("PentagramSystem").GetComponent<PentagramSystemModel>();
+            pentagramTurnTableView = GameObject.Find("PentagramTurnTable").GetComponent<PentagramTurnTableView>();
+            playerHP = GameObject.Find("PlayerHP").GetComponent<ClearCountdownTimerGaugeView>();
         }
 
         public void OnStart()
         {
+            // プレイヤー開始位置のビュー
+            PlayerStartPointView playerStartPointView = null;
+            // プレイヤーのビュー
+            PlayerView playerView;
+            // プレイヤーのモデル
+            PlayerModel playerModel = null;
+
             var common = new MainPresenterCommon();
 
             // 初期設定
@@ -627,57 +631,40 @@ namespace Main.Presenter
                                     var player = GameObject.FindGameObjectWithTag(ConstTagNames.TAG_NAME_PLAYER);
                                     playerView = player.GetComponent<PlayerView>();
                                     playerModel = player.GetComponent<PlayerModel>();
+                                    playerModel.IsInstanced.ObserveEveryValueChanged(x => x.Value)
+                                        .Subscribe(x =>
+                                        {
+                                            if (x)
+                                                if (!pentagramTurnTableView.CalibrationToTarget(playerModel.transform))
+                                                    Debug.LogError("CalibrationToTarget");
+                                        });
+                                    IClearCountdownTimerViewAdapter playerHPView = new ClearCountdownTimerGaugeViewAdapter(playerHP);
+                                    playerModel.State.HP.ObserveEveryValueChanged(x => x.Value)
+                                        .Do(x => Debug.Log($"name:player_HP:[{x}]"))
+                                        .Subscribe(x =>
+                                        {
+                                            Debug.Log($"name:player_HPMax:[{playerModel.State.HPMax}]");
+                                            if (!playerHPView.Set(x, playerModel.State.HPMax))
+                                                Debug.LogError("Set");
+                                        });
+                                    playerModel.State.IsDead.ObserveEveryValueChanged(x => x.Value)
+                                        .Subscribe(x =>
+                                        {
+                                            if (x)
+                                            {
+                                                if (!playerHPView.Set(0f, playerModel.State.HPMax))
+                                                    Debug.LogError("Set");
+                                                isGoalReached.Value = true;
+                                            }
+                                        });
                                 }
-                            });
-                        safeZoneModel = GameObject.Find(ConstGameObjectNames.GAMEOBJECT_NAME_SAFEZONE).GetComponent<SafeZoneModel>();
-                        safeZoneModel.IsTriggerExited.ObserveEveryValueChanged(x => x.Value)
-                            .Subscribe(x =>
-                            {
-                                if (x &&
-                                MainGameManager.Instance != null &&
-                                moveGuideView != null &&
-                                jumpGuideView != null &&
-                                playerModel != null &&
-                                fadeImageView != null)
-                                {
-                                    MainGameManager.Instance.AudioOwner.PlaySFX(ClipToPlay.se_player_fall);
-                                    // チュートリアルUIを開いていたら閉じる
-                                    if (moveGuideView.isActiveAndEnabled)
-                                        // 移動操作クローズのアニメーション
-                                        Observable.FromCoroutine<bool>(observer => moveGuideView.PlayFadeAnimation(observer, EnumFadeState.Close))
-                                            .Subscribe(_ => moveGuideView.gameObject.SetActive(false))
-                                            .AddTo(gameObject);
-                                    if (jumpGuideView.isActiveAndEnabled)
-                                        // ジャンプ操作クローズのアニメーション
-                                        Observable.FromCoroutine<bool>(observer => jumpGuideView.PlayFadeAnimation(observer, EnumFadeState.Close))
-                                            .Subscribe(_ => jumpGuideView.gameObject.SetActive(false))
-                                            .AddTo(gameObject);
-                                    if (!playerModel.SetInputBan(true))
-                                        Debug.LogError("操作禁止フラグ更新呼び出しの失敗");
-                                    // T.B.D プレイヤーの挙動によって発生するイベント無効　など
-                                    if (!MainGameManager.Instance.InputSystemsOwner.Exit())
-                                        Debug.LogError("InputSystem終了呼び出しの失敗");
-                                    // シーン読み込み時のアニメーション
-                                    Observable.FromCoroutine<bool>(observer => fadeImageView.PlayFadeAnimation(observer, EnumFadeState.Close))
-                                        .Subscribe(_ => MainGameManager.Instance.SceneOwner.LoadMainScene())
-                                        .AddTo(gameObject);
-                                }
-                            });
-                        var goalPointObj = GameObject.Find(ConstGameObjectNames.GAMEOBJECT_NAME_GOALPOINT);
-                        goalPointView = goalPointObj.GetComponent<GoalPointView>();
-                        goalPointModel = goalPointObj.GetComponent<GoalPointModel>();
-                        goalPointModel.IsTriggerEntered.ObserveEveryValueChanged(x => x.Value)
-                            .Subscribe(x =>
-                            {
-                                if (x)
-                                    isGoalReached.Value = true;
                             });
                         clearCountdownTimerSystemModel.enabled = true;
-                        IClearCountdownTimerViewAdapter circleView = new ClearCountdownTimerCircleViewAdapter(clearCountdownTimerCircleView);
+                        IClearCountdownTimerViewAdapter textView = new ClearCountdownTimerTextViewAdapter(clearCountdownTimerTextView);
                         clearCountdownTimerSystemModel.TimeSec.ObserveEveryValueChanged(x => x.Value)
                             .Subscribe(x =>
                             {
-                                if (!circleView.Set(x, clearCountdownTimerSystemModel.LimitTimeSecMax))
+                                if (!textView.Set(x, clearCountdownTimerSystemModel.LimitTimeSecMax))
                                     Debug.LogError("SetAngle");
                             });
                         clearCountdownTimerSystemModel.IsTimeOut.ObserveEveryValueChanged(x => x.Value)
@@ -687,12 +674,20 @@ namespace Main.Presenter
                                 {
                                     if (!clearCountdownTimerSystemModel.isActiveAndEnabled)
                                         clearCountdownTimerSystemModel.enabled = false;
-                                    if (!circleView.Set(0f, clearCountdownTimerSystemModel.LimitTimeSecMax))
+                                    if (!textView.Set(0f, clearCountdownTimerSystemModel.LimitTimeSecMax))
                                         Debug.LogError("SetAngle");
                                     isGoalReached.Value = true;
                                 }
                             });
                     }
+                });
+            BgmConfDetails bgmConfDetails = new BgmConfDetails();
+            pentagramSystemModel.InputValue.ObserveEveryValueChanged(x => x.Value)
+                .Subscribe(x =>
+                {
+                    bgmConfDetails.InputValue = x;
+                    if (!pentagramTurnTableView.MoveSpin(bgmConfDetails))
+                        Debug.LogError("MoveSpin");
                 });
 
             this.UpdateAsObservable()
