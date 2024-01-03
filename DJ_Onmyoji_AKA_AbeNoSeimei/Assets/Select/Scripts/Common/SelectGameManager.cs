@@ -32,6 +32,10 @@ namespace Select.Common
         [SerializeField] private CursorVisible cursorVisible;
         /// <summary>カーソル表示</summary>
         public CursorVisible CursorVisible => cursorVisible;
+        /// <summary>アナリティクスのオーナー</summary>
+        [SerializeField] private AnalyticsOwner analyticsOwner;
+        /// <summary>アナリティクスのオーナー</summary>
+        public AnalyticsOwner AnalyticsOwner => analyticsOwner;
 
         private void Reset()
         {
@@ -39,6 +43,7 @@ namespace Select.Common
             audioOwner = GameObject.Find("AudioOwner").GetComponent<AudioOwner>();
             sceneOwner = GameObject.Find("SceneOwner").GetComponent<SceneOwner>();
             cursorVisible = GameObject.Find("CursorVisible").GetComponent<CursorVisible>();
+            analyticsOwner = GameObject.Find("AnalyticsOwner").GetComponent<AnalyticsOwner>();
         }
 
         private void Awake()

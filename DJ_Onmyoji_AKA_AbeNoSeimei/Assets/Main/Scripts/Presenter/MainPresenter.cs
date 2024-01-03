@@ -640,10 +640,8 @@ namespace Main.Presenter
                                         });
                                     IClearCountdownTimerViewAdapter playerHPView = new ClearCountdownTimerGaugeViewAdapter(playerHP);
                                     playerModel.State.HP.ObserveEveryValueChanged(x => x.Value)
-                                        .Do(x => Debug.Log($"name:player_HP:[{x}]"))
                                         .Subscribe(x =>
                                         {
-                                            Debug.Log($"name:player_HPMax:[{playerModel.State.HPMax}]");
                                             if (!playerHPView.Set(x, playerModel.State.HPMax))
                                                 Debug.LogError("Set");
                                         });

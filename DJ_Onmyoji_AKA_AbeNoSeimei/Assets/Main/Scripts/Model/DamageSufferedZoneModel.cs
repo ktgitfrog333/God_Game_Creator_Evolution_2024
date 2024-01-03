@@ -51,7 +51,6 @@ namespace Main.Model
 
         protected virtual void OnTriggerEnter2D(Collider2D other)
         {
-            Debug.Log("OnTriggerEnter2D");
             if (_utility.IsCompareTagAndUpdateReactiveFlag(other, tags, IsHit))
                 IsHit.Value = true;
         }
