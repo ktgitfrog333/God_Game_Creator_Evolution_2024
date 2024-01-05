@@ -27,15 +27,18 @@ namespace Main.Presenter
         [SerializeField] private ClearCountdownTimerTextView clearCountdownTimerTextView;
         [SerializeField] private PlayerModel playerModel;
         [SerializeField] private EnemyModel enemyModel;
+        [SerializeField] private SunMoonSystemModel sunMoonSystemModel;
+        [SerializeField] private SunMoonStateIconView sunMoonStateIconView;
+        [SerializeField] private SunMoonStateIconViewDemo sunMoonStateIconViewDemo;
         public void OnStart()
         {
-            playerModel.IsInstanced.ObserveEveryValueChanged(x => x.Value)
-                .Subscribe(x =>
-                {
-                    if (x)
-                        if (!pentagramTurnTableView.CalibrationToTarget(playerModel.transform))
-                            Debug.LogError("CalibrationToTarget");
-                });
+            // playerModel.IsInstanced.ObserveEveryValueChanged(x => x.Value)
+            //     .Subscribe(x =>
+            //     {
+            //         if (x)
+            //             if (!pentagramTurnTableView.CalibrationToTarget(playerModel.transform))
+            //                 Debug.LogError("CalibrationToTarget");
+            //     });
             // playerModel.IsDead.ObserveEveryValueChanged(x => x.Value)
             //     .Subscribe(x =>
             //     {
@@ -53,20 +56,20 @@ namespace Main.Presenter
             //             Debug.Log("無敵リセット");
             //     });
 
-            IClearCountdownTimerViewAdapter circleView = new ClearCountdownTimerCircleViewAdapter(clearCountdownTimerCircleView);
-            playerModel.State.HP.ObserveEveryValueChanged(x => x.Value)
-                .Subscribe(x =>
-                {
-                    if (!circleView.Set(x, playerModel.State.HPMax))
-                        Debug.LogError("Set");
-                });
-            IClearCountdownTimerViewAdapter circleView_1 = new ClearCountdownTimerCircleViewAdapter(clearCountdownTimerCircleView_1);
-            enemyModel.State.HP.ObserveEveryValueChanged(x => x.Value)
-                .Subscribe(x =>
-                {
-                    if (!circleView_1.Set(x, enemyModel.State.HPMax))
-                        Debug.LogError("Set");
-                });
+            // IClearCountdownTimerViewAdapter circleView = new ClearCountdownTimerCircleViewAdapter(clearCountdownTimerCircleView);
+            // playerModel.State.HP.ObserveEveryValueChanged(x => x.Value)
+            //     .Subscribe(x =>
+            //     {
+            //         if (!circleView.Set(x, playerModel.State.HPMax))
+            //             Debug.LogError("Set");
+            //     });
+            // IClearCountdownTimerViewAdapter circleView_1 = new ClearCountdownTimerCircleViewAdapter(clearCountdownTimerCircleView_1);
+            // enemyModel.State.HP.ObserveEveryValueChanged(x => x.Value)
+            //     .Subscribe(x =>
+            //     {
+            //         if (!circleView_1.Set(x, enemyModel.State.HPMax))
+            //             Debug.LogError("Set");
+            //     });
             // IClearCountdownTimerViewAdapter gaugeView = new ClearCountdownTimerGaugeViewAdapter(clearCountdownTimerGaugeView);
             // IClearCountdownTimerViewAdapter textView = new ClearCountdownTimerTextViewAdapter(clearCountdownTimerTextView);
 
@@ -96,30 +99,42 @@ namespace Main.Presenter
             //         }
             //     });
 
-            var inputValues = new List<float>();
-            BgmConfDetails bgmConfDetails = new BgmConfDetails();
-            pentagramSystemModel.InputValue.ObserveEveryValueChanged(x => x.Value)
-                .Subscribe(x =>
-                {
-                    ObserveEveryValueChangedCnt++;
-                    bgmConfDetails.InputValue = x;
-                    if (!pentagramTurnTableView.MoveSpin(bgmConfDetails))
-                        Debug.LogError("MoveSpin");
-                });
+            // var inputValues = new List<float>();
+            // BgmConfDetails bgmConfDetails = new BgmConfDetails();
+            // pentagramSystemModel.InputValue.ObserveEveryValueChanged(x => x.Value)
+            //     .Subscribe(x =>
+            //     {
+            //         ObserveEveryValueChangedCnt++;
+            //         bgmConfDetails.InputValue = x;
+            //         if (!pentagramTurnTableView.MoveSpin(bgmConfDetails))
+            //             Debug.LogError("MoveSpin");
+            //     });
+            sunMoonSystemModel.OnmyoState.ObserveEveryValueChanged(x => x.Value)
+                .Subscribe(x => sunMoonStateIconView.SetRotate(x));
+            // sunMoonStateIconViewDemo.OnmyoState.ObserveEveryValueChanged(x => x.Value)
+            //     .Subscribe(x =>
+            //     {
+            //         Debug.Log($"入力値:[{x}]");
+            //         var result = sunMoonStateIconView.SetRotate(x);
+            //         Debug.Log($"角度：[{result}]");
+            //     });
         }
 
         private void Reset()
         {
-            pentagramSystemModel = GameObject.Find("PentagramSystem").GetComponent<PentagramSystemModel>();
-            pentagramTurnTableView = GameObject.Find("PentagramTurnTable").GetComponent<PentagramTurnTableView>();
+            // pentagramSystemModel = GameObject.Find("PentagramSystem").GetComponent<PentagramSystemModel>();
+            // pentagramTurnTableView = GameObject.Find("PentagramTurnTable").GetComponent<PentagramTurnTableView>();
             // clearCountdownTimerSystemModel = GameObject.Find("ClearCountdownTimerSystem").GetComponent<ClearCountdownTimerSystemModel>();
-            clearCountdownTimerCircleView = GameObject.Find("ClearCountdownTimerCircle").GetComponent<ClearCountdownTimerCircleView>();
-            clearCountdownTimerCircleView_1 = GameObject.Find("ClearCountdownTimerCircle").GetComponent<ClearCountdownTimerCircleView>();
+            // clearCountdownTimerCircleView = GameObject.Find("ClearCountdownTimerCircle").GetComponent<ClearCountdownTimerCircleView>();
+            // clearCountdownTimerCircleView_1 = GameObject.Find("ClearCountdownTimerCircle").GetComponent<ClearCountdownTimerCircleView>();
             // clearCountdownTimerGaugeView = GameObject.Find("ClearCountdownTimerGauge").GetComponent<ClearCountdownTimerGaugeView>();
             // clearCountdownTimerTextView = GameObject.Find("ClearCountdownTimerText").GetComponent<ClearCountdownTimerTextView>();
-            playerModel = GameObject.Find("Player").GetComponent<PlayerModel>();
+            // playerModel = GameObject.Find("Player").GetComponent<PlayerModel>();
             // onmyoTurretModel = GameObject.Find("OnmyoTurret").GetComponent<OnmyoTurretModel>();
-            enemyModel = GameObject.Find("Enemy").GetComponent<EnemyModel>();
+            // enemyModel = GameObject.Find("Enemy").GetComponent<EnemyModel>();
+            sunMoonSystemModel = GameObject.Find("SunMoonSystem").GetComponent<SunMoonSystemModel>();
+            sunMoonStateIconView = GameObject.Find("SunMoonStateIcon").GetComponent<SunMoonStateIconView>();
+            sunMoonStateIconViewDemo = GetComponent<SunMoonStateIconViewDemo>();
         }
     }
 

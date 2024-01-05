@@ -52,6 +52,7 @@ namespace Universal.Bean
         public PentagramTurnTableView PentagramTurnTableView = new PentagramTurnTableView();
         public PentagramTurnTableModel PentagramTurnTableModel = new PentagramTurnTableModel();
         public PlayerModel PlayerModel = new PlayerModel();
+        public SunMoonSystemModel sunMoonSystemModel = new SunMoonSystemModel();
         public AdminBean()
         {
 
@@ -75,6 +76,7 @@ namespace Universal.Bean
             PentagramTurnTableView = adminBean.PentagramTurnTableView;
             PentagramTurnTableModel = adminBean.PentagramTurnTableModel;
             PlayerModel = adminBean.PlayerModel;
+            sunMoonSystemModel = adminBean.sunMoonSystemModel;
         }
     }
 
@@ -173,5 +175,14 @@ namespace Universal.Bean
         {
             this.invincibleTimeSec = invincibleTimeSec;
         }
+    }
+
+    [System.Serializable]
+    public class SunMoonSystemModel
+    {
+        public float[] durations =
+        {
+            1.75f,
+        };
     }
 }

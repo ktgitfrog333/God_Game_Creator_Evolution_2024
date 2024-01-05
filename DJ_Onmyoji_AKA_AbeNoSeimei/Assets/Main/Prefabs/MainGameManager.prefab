@@ -109,6 +109,7 @@ GameObject:
   - component: {fileID: 1827416086}
   - component: {fileID: 1827416085}
   - component: {fileID: 1827416084}
+  - component: {fileID: 5705664735581028094}
   m_Layer: 0
   m_Name: InputSystemsOwner
   m_TagString: Untagged
@@ -149,6 +150,7 @@ MonoBehaviour:
   rightMotor: 0
   delayTime: 0.3
   isVibrationEnabled: 0
+  inputHistroy: {fileID: 5705664735581028094}
 --- !u!114 &1827416085
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -173,6 +175,24 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 47840192a3460fc43a5874995ebde72b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &5705664735581028094
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1827416082}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e10dbf9484dc48149b1dcd85fd98454d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  resultPatternState:
+  - inputTypeID: 0
+    targetPattern: 00000000ffffffff00000000
+  - inputTypeID: 1
+    targetPattern: 01000000ffffffff01000000
+  cmdAcceptanceTimeMs: 0.25
 --- !u!1 &1369696454595932813
 GameObject:
   m_ObjectHideFlags: 0
