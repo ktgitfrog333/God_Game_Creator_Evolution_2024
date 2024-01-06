@@ -14,11 +14,20 @@ namespace Main.Utility
         /// <summary>デフォルト表示</summary>
         private readonly float DEFAULT = 1f;
 
-        public bool SetFillAmountOfImage(Image image, float timeSec, float limitTimeSecMax)
+        public bool SetFillAmountOfImage(Image image, float timeSec, float limitTimeSecMax, float maskAngle=0f, Transform transform=null)
         {
             try
             {
-                image.fillAmount = limitTimeSecMax == 0f ? DEFAULT : (timeSec / limitTimeSecMax);
+                if (maskAngle < 0f || 1f < maskAngle)
+                    throw new System.Exception("不正な値セット:0fから1fの値を設定して下さい");
+                else if (0f < maskAngle && transform == null)
+                    throw new System.Exception("不正な値セット:maskAngle設定時はtransformも設定が必要です");
+
+                float baseAmount = limitTimeSecMax == 0f ? DEFAULT : (timeSec / limitTimeSecMax);
+                float calc = System.Math.Max(0f, maskAngle);
+                image.fillAmount = baseAmount * (1f - calc);
+                if (transform != null)
+                    transform.eulerAngles = new Vector3(0f, 0f, 360f) * (calc * .5f);
                 
                 return true;
             }
@@ -43,7 +52,9 @@ namespace Main.Utility
         /// <param name="image">イメージ</param>
         /// <param name="timeSec">タイマー</param>
         /// <param name="limitTimeSecMax">制限時間（秒）</param>
+        /// <param name="maskAngle">マスクする角度の割合（0f~1f）</param>
+        /// <param name="transform">トランスフォーム</param>
         /// <returns>成功／失敗</returns>
-        public bool SetFillAmountOfImage(Image image, float timeSec, float limitTimeSecMax);
+        public bool SetFillAmountOfImage(Image image, float timeSec, float limitTimeSecMax, float maskAngle=0f, Transform transform=null);
     }
 }

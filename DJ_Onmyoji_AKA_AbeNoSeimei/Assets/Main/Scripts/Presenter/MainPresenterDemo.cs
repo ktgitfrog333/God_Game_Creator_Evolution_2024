@@ -30,6 +30,7 @@ namespace Main.Presenter
         [SerializeField] private SunMoonSystemModel sunMoonSystemModel;
         [SerializeField] private SunMoonStateIconView sunMoonStateIconView;
         [SerializeField] private SunMoonStateIconViewDemo sunMoonStateIconViewDemo;
+        [SerializeField] private Test.ClearCountdownTimerCircleView clearCountdownTimerCircleViewTest;
         public void OnStart()
         {
             // playerModel.IsInstanced.ObserveEveryValueChanged(x => x.Value)
@@ -56,7 +57,13 @@ namespace Main.Presenter
             //             Debug.Log("無敵リセット");
             //     });
 
-            // IClearCountdownTimerViewAdapter circleView = new ClearCountdownTimerCircleViewAdapter(clearCountdownTimerCircleView);
+            IClearCountdownTimerViewAdapter circleView = new ClearCountdownTimerCircleViewAdapter(clearCountdownTimerCircleView);
+            clearCountdownTimerCircleViewTest.TimeSec.ObserveEveryValueChanged(x => x.Value)
+                .Subscribe(x =>
+                {
+                    if (!circleView.Set(x, clearCountdownTimerCircleViewTest.LimitTimeSecMax))
+                        Debug.LogError("Set");
+                });
             // playerModel.State.HP.ObserveEveryValueChanged(x => x.Value)
             //     .Subscribe(x =>
             //     {
@@ -109,8 +116,8 @@ namespace Main.Presenter
             //         if (!pentagramTurnTableView.MoveSpin(bgmConfDetails))
             //             Debug.LogError("MoveSpin");
             //     });
-            sunMoonSystemModel.OnmyoState.ObserveEveryValueChanged(x => x.Value)
-                .Subscribe(x => sunMoonStateIconView.SetRotate(x));
+            // sunMoonSystemModel.OnmyoState.ObserveEveryValueChanged(x => x.Value)
+            //     .Subscribe(x => sunMoonStateIconView.SetRotate(x));
             // sunMoonStateIconViewDemo.OnmyoState.ObserveEveryValueChanged(x => x.Value)
             //     .Subscribe(x =>
             //     {
@@ -125,16 +132,17 @@ namespace Main.Presenter
             // pentagramSystemModel = GameObject.Find("PentagramSystem").GetComponent<PentagramSystemModel>();
             // pentagramTurnTableView = GameObject.Find("PentagramTurnTable").GetComponent<PentagramTurnTableView>();
             // clearCountdownTimerSystemModel = GameObject.Find("ClearCountdownTimerSystem").GetComponent<ClearCountdownTimerSystemModel>();
-            // clearCountdownTimerCircleView = GameObject.Find("ClearCountdownTimerCircle").GetComponent<ClearCountdownTimerCircleView>();
+            clearCountdownTimerCircleView = GameObject.Find("ClearCountdownTimerCircle").GetComponent<ClearCountdownTimerCircleView>();
             // clearCountdownTimerCircleView_1 = GameObject.Find("ClearCountdownTimerCircle").GetComponent<ClearCountdownTimerCircleView>();
             // clearCountdownTimerGaugeView = GameObject.Find("ClearCountdownTimerGauge").GetComponent<ClearCountdownTimerGaugeView>();
             // clearCountdownTimerTextView = GameObject.Find("ClearCountdownTimerText").GetComponent<ClearCountdownTimerTextView>();
             // playerModel = GameObject.Find("Player").GetComponent<PlayerModel>();
             // onmyoTurretModel = GameObject.Find("OnmyoTurret").GetComponent<OnmyoTurretModel>();
             // enemyModel = GameObject.Find("Enemy").GetComponent<EnemyModel>();
-            sunMoonSystemModel = GameObject.Find("SunMoonSystem").GetComponent<SunMoonSystemModel>();
-            sunMoonStateIconView = GameObject.Find("SunMoonStateIcon").GetComponent<SunMoonStateIconView>();
-            sunMoonStateIconViewDemo = GetComponent<SunMoonStateIconViewDemo>();
+            // sunMoonSystemModel = GameObject.Find("SunMoonSystem").GetComponent<SunMoonSystemModel>();
+            // sunMoonStateIconView = GameObject.Find("SunMoonStateIcon").GetComponent<SunMoonStateIconView>();
+            // sunMoonStateIconViewDemo = GetComponent<SunMoonStateIconViewDemo>();
+            clearCountdownTimerCircleViewTest = GetComponent<Test.ClearCountdownTimerCircleView>();
         }
     }
 

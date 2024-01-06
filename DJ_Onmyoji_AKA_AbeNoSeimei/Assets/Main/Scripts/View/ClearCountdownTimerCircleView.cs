@@ -17,6 +17,12 @@ namespace Main.View
         [SerializeField] private Image image;
         /// <summary>ユーティリティ</summary>
         private MainViewUtility _utility = new MainViewUtility();
+        /// <summary>マスクする角度の割合（0f~1f）</summary>
+        [SerializeField, Range(0f, 1f)] private float maskAngle = .2f;
+        /// <summary>トランスフォーム</summary>
+        private Transform _transform;
+        /// <summary>トランスフォーム</summary>
+        public Transform Transform => _transform != null ? _transform : _transform = transform;
 
         private void Reset()
         {
@@ -29,7 +35,7 @@ namespace Main.View
 
         public bool SetAngle(float timeSec, float limitTimeSecMax)
         {
-            return _utility.SetFillAmountOfImage(image, timeSec, limitTimeSecMax);
+            return _utility.SetFillAmountOfImage(image, timeSec, limitTimeSecMax, maskAngle, Transform);
         }
     }
 
