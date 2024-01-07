@@ -89,6 +89,18 @@ namespace Main.InputSystem
             _inputActions.UI.ChargeMoon.started += inputUI.OnChargeMoon;
             _inputActions.UI.ChargeMoon.performed += inputUI.OnChargeMoon;
             _inputActions.UI.ChargeMoon.canceled += inputUI.OnChargeMoon;
+            _inputActions.UI.ChargeRFader.started += inputUI.OnChargeRFader;
+            _inputActions.UI.ChargeRFader.performed += inputUI.OnChargeRFader;
+            _inputActions.UI.ChargeRFader.canceled += inputUI.OnChargeRFader;
+            _inputActions.UI.ChargeLFader.started += inputUI.OnChargeLFader;
+            _inputActions.UI.ChargeLFader.performed += inputUI.OnChargeLFader;
+            _inputActions.UI.ChargeLFader.canceled += inputUI.OnChargeLFader;
+            _inputActions.UI.ReleaseRFader.started += inputUI.OnReleaseRFader;
+            _inputActions.UI.ReleaseRFader.performed += inputUI.OnReleaseRFader;
+            _inputActions.UI.ReleaseRFader.canceled += inputUI.OnReleaseRFader;
+            _inputActions.UI.ReleaseLFader.started += inputUI.OnReleaseLFader;
+            _inputActions.UI.ReleaseLFader.performed += inputUI.OnReleaseLFader;
+            _inputActions.UI.ReleaseLFader.canceled += inputUI.OnReleaseLFader;
 
             _inputActions.Enable();
 

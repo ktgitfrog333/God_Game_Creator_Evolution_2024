@@ -18,12 +18,8 @@ namespace Main.Model
     {
         /// <summary>陰陽（昼夜）の状態</summary>
         public IReactiveProperty<float> OnmyoState { get; private set; } = new FloatReactiveProperty();
-        /// <summary>最小値</summary>
-        public const float MIN = -1f;
-        /// <summary>最大値</summary>
-        public const float MAX = 1f;
         /// <summary>陰陽（昼夜）の状態デフォルト</summary>
-        [SerializeField, Range(MIN, MAX)] private float defaultOnmyoStateValue = 1f;
+        [SerializeField, Range(InputSystemUtility.MIN, InputSystemUtility.MAX)] private float defaultOnmyoStateValue = 1f;
         /// <summary>
         /// ボタン押下の時間管理
         /// [0]長押し
