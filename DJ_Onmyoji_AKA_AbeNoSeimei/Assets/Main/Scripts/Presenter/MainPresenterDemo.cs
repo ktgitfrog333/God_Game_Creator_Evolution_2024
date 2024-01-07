@@ -32,6 +32,8 @@ namespace Main.Presenter
         [SerializeField] private SunMoonStateIconViewDemo sunMoonStateIconViewDemo;
         [SerializeField] private Test.ClearCountdownTimerCircleView clearCountdownTimerCircleViewTest;
         [SerializeField] private ShikigamiSkillSystemModel shikigamiSkillSystemModel;
+        [SerializeField] private FaderUniversalView[] faderUniversalViews;
+        [SerializeField] private SpGaugeView spGaugeView;
         public void OnStart()
         {
             _demo.types = new ShikigamiType[3];
@@ -43,12 +45,19 @@ namespace Main.Presenter
                         _demo.types[item.Index] = item.Content.prop.type;
                         _demo.tempoLevels[item.Index] = x;
                         // Debug.Log($"{item.prop.type}:[{x}]");
+                        foreach (var faderUniversalView in faderUniversalViews)
+                        {
+                            if (!faderUniversalView.SetSliderValue(x, item.Content.prop.type))
+                                Debug.LogError("SetSliderValue");
+                        }
                     });
             shikigamiSkillSystemModel.CandleInfo.CandleResource.ObserveEveryValueChanged(x => x.Value)
                 .Subscribe(x =>
                 {
                     _demo.candleResource = x;
                     // Debug.Log($"CandleResource:[{x}]");
+                    if (!spGaugeView.SetVertical(x, shikigamiSkillSystemModel.CandleInfo.LimitCandleResorceMax))
+                        Debug.LogError("SetVertical");
                 });
             shikigamiSkillSystemModel.CandleInfo.IsOutCost.ObserveEveryValueChanged(x => x.Value)
                 .Subscribe(x =>
@@ -152,6 +161,13 @@ namespace Main.Presenter
 
         private void Reset()
         {
+            spGaugeView = GameObject.Find("SpGauge").GetComponent<SpGaugeView>();
+            faderUniversalViews = new FaderUniversalView[]
+            {
+                GameObject.Find($"Fader{ShikigamiType.Wrap}").GetComponent<FaderUniversalView>(),
+                GameObject.Find($"Fader{ShikigamiType.Dance}").GetComponent<FaderUniversalView>(),
+                GameObject.Find($"Fader{ShikigamiType.Graffiti}").GetComponent<FaderUniversalView>(),
+            };
             shikigamiSkillSystemModel = GameObject.Find("ShikigamiSkillSystem").GetComponent<ShikigamiSkillSystemModel>();
             // pentagramSystemModel = GameObject.Find("PentagramSystem").GetComponent<PentagramSystemModel>();
             // pentagramTurnTableView = GameObject.Find("PentagramTurnTable").GetComponent<PentagramTurnTableView>();

@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Main.Common;
 using Main.Test.Stub;
 using Main.Utility;
 using UniRx;
@@ -140,18 +141,5 @@ namespace Main.Model
             /// <summary>テンポレベル</summary>
             public IReactiveProperty<float> tempoLevel;
         }
-    }
-
-    /// <summary>
-    /// 式神タイプ
-    /// </summary>
-    public enum ShikigamiType
-    {
-        /// <summary>ラップ</summary>
-        Wrap,
-        /// <summary>ダンス</summary>
-        Dance,
-        /// <summary>グラフィティ</summary>
-        Graffiti,
     }
 }

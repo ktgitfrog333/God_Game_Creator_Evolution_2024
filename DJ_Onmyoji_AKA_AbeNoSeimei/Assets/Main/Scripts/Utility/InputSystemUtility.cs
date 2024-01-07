@@ -231,6 +231,11 @@ namespace Main.Utility
         {
             try
             {
+                System.IDisposable[] modelUpdObservable = new System.IDisposable[]
+                {
+                    model.UpdateAsObservable().Subscribe(_ => {}),
+                    model.UpdateAsObservable().Subscribe(_ => {}),
+                };
                 isOutCost.ObserveEveryValueChanged(x => x.Value)
                     .Subscribe(x =>
                     {
@@ -239,11 +244,6 @@ namespace Main.Utility
                         {
                             // 残リソースが有り
                             const int L = 0, R = 1;
-                            System.IDisposable[] modelUpdObservable = new System.IDisposable[]
-                            {
-                                model.UpdateAsObservable().Subscribe(_ => {}),
-                                model.UpdateAsObservable().Subscribe(_ => {}),
-                            };
                             IntReactiveProperty[] priority = new IntReactiveProperty[]
                             {
                                 new IntReactiveProperty((int)TempLevelPriority.L.None),
@@ -327,6 +327,9 @@ namespace Main.Utility
                         }
                         else
                         {
+                            // SPゲージが尽きた場合にフェーダーのチャージをDisposeできないのでここで行う
+                            for (var i = 0; i < modelUpdObservable.Length; i++)
+                                modelUpdObservable[i].Dispose();
                             // 残リソースが無し
                             foreach (var item in shikigamiInfos)
                                 item.state.tempoLevel.Value = REDEFAULT;
