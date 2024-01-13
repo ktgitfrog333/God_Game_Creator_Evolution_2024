@@ -50,8 +50,12 @@ namespace Main.View
                 shikigamiType = ShikigamiType.Wrap;
             else if (name.Equals($"Fader{ShikigamiType.Dance}"))
                 shikigamiType = ShikigamiType.Dance;
-            else
+            else if (name.Equals($"Fader{ShikigamiType.Graffiti}"))
                 shikigamiType = ShikigamiType.Graffiti;
+            else
+            {
+                // 陰陽玉は処理無し
+            }
         }
     }
 

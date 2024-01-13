@@ -53,6 +53,7 @@ namespace Universal.Bean
         public PentagramTurnTableModel PentagramTurnTableModel = new PentagramTurnTableModel();
         public PlayerModel PlayerModel = new PlayerModel();
         public SunMoonSystemModel sunMoonSystemModel = new SunMoonSystemModel();
+        public LevelDesign levelDesign = new LevelDesign();
         public AdminBean()
         {
 
@@ -184,5 +185,20 @@ namespace Universal.Bean
         {
             1.75f,
         };
+    }
+
+    [System.Serializable]
+    public class LevelDesign
+    {
+        public MainSkillList[] mainSkillLists;
+    }
+
+    [System.Serializable]
+    public class MainSkillList
+    {
+        public int shikigamiType;
+        public int mainSkillType;
+        public int skillRank;
+        public float value;
     }
 }

@@ -159,6 +159,227 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: -20, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!1 &21203010
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 21203013}
+  - component: {fileID: 21203012}
+  - component: {fileID: 21203011}
+  m_Layer: 0
+  m_Name: ShikigamiParameterUtilityTest
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 0
+--- !u!114 &21203011
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 21203010}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e0bebd14dfdc144419709e907095910f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  inputs:
+  - caseId: 0
+    shikigamiInfo:
+      prop:
+        type: 0
+        level: 0
+        mainSkills:
+        - type: 3
+          rank: 0
+        subSkills: []
+    mainSkillType: 3
+  - caseId: 1000
+    shikigamiInfo:
+      prop:
+        type: 0
+        level: 0
+        mainSkills:
+        - type: 1
+          rank: 0
+        subSkills: []
+    mainSkillType: 7
+  - caseId: 1001
+    shikigamiInfo:
+      prop:
+        type: 0
+        level: 0
+        mainSkills: []
+        subSkills: []
+    mainSkillType: 1
+  - caseId: 2000
+    shikigamiInfo:
+      prop:
+        type: 0
+        level: 0
+        mainSkills:
+        - type: 1
+          rank: 0
+        subSkills: []
+    mainSkillType: 1
+  - caseId: 2001
+    shikigamiInfo:
+      prop:
+        type: 0
+        level: 0
+        mainSkills:
+        - type: 2
+          rank: 0
+        subSkills: []
+    mainSkillType: 2
+  - caseId: 2002
+    shikigamiInfo:
+      prop:
+        type: 0
+        level: 0
+        mainSkills:
+        - type: 6
+          rank: 0
+        subSkills: []
+    mainSkillType: 6
+  - caseId: 2003
+    shikigamiInfo:
+      prop:
+        type: 0
+        level: 0
+        mainSkills:
+        - type: 7
+          rank: 0
+        subSkills: []
+    mainSkillType: 7
+  - caseId: 2004
+    shikigamiInfo:
+      prop:
+        type: 0
+        level: 0
+        mainSkills:
+        - type: 1
+          rank: 0
+        subSkills: []
+    mainSkillType: 1
+  - caseId: 2005
+    shikigamiInfo:
+      prop:
+        type: 0
+        level: 0
+        mainSkills:
+        - type: 1
+          rank: 1
+        subSkills: []
+    mainSkillType: 1
+  - caseId: 2006
+    shikigamiInfo:
+      prop:
+        type: 0
+        level: 0
+        mainSkills:
+        - type: 1
+          rank: 3
+        subSkills: []
+    mainSkillType: 1
+  - caseId: 2007
+    shikigamiInfo:
+      prop:
+        type: 0
+        level: 0
+        mainSkills:
+        - type: 1
+          rank: 4
+        subSkills: []
+    mainSkillType: 1
+  - caseId: 3000
+    shikigamiInfo:
+      prop:
+        type: 0
+        level: 0
+        mainSkills:
+        - type: 1
+          rank: 0
+        - type: 3
+          rank: 1
+        - type: 2
+          rank: 2
+        - type: 6
+          rank: 3
+        - type: 7
+          rank: 4
+        subSkills: []
+    mainSkillType: 3
+  outputs:
+  - caseId: 0
+    skillRank: 0
+    throwMessage: 
+  - caseId: 1000
+    skillRank: 0
+    throwMessage: "1\u3064\u306E\u30E1\u30A4\u30F3\u30B9\u30AD\u30EB\u30D7\u30ED\u30D1\u30C6\u30A3\u304B\u3089\u53D6\u5F97\u3067\u304D\u306A\u3044[DevelopmentTime]"
+  - caseId: 1001
+    skillRank: 0
+    throwMessage: "0\u3064\u306E\u30E1\u30A4\u30F3\u30B9\u30AD\u30EB\u30D7\u30ED\u30D1\u30C6\u30A3\u304B\u3089\u53D6\u5F97\u3067\u304D\u306A\u3044"
+  - caseId: 2000
+    skillRank: 0
+    throwMessage: 
+  - caseId: 2001
+    skillRank: 0
+    throwMessage: 
+  - caseId: 2002
+    skillRank: 0
+    throwMessage: 
+  - caseId: 2003
+    skillRank: 0
+    throwMessage: 
+  - caseId: 2004
+    skillRank: 0
+    throwMessage: 
+  - caseId: 2005
+    skillRank: 1
+    throwMessage: 
+  - caseId: 2006
+    skillRank: 3
+    throwMessage: 
+  - caseId: 2007
+    skillRank: 4
+    throwMessage: 
+  - caseId: 3000
+    skillRank: 1
+    throwMessage: 
+--- !u!114 &21203012
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 21203010}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 44e22fe0ec15b084ab3de67313cccdf6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!4 &21203013
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 21203010}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &64682571 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 1314640648620590542, guid: fa3dd35a5b9f8764db1da1ca923e54f9, type: 3}
@@ -191,33 +412,18 @@ MonoBehaviour:
   - prop:
       type: 0
       level: 1
-      wrap:
-        attackRate: 0.2
-        attackLevel: 0
-      dance:
-        attackRate: 0
-      graffiti:
-        doRate: 0
+      mainSkills: []
+      subSkills: []
   - prop:
       type: 1
       level: 1
-      wrap:
-        attackRate: 0
-        attackLevel: 0
-      dance:
-        attackRate: 0.2
-      graffiti:
-        doRate: 0
+      mainSkills: []
+      subSkills: []
   - prop:
       type: 2
       level: 1
-      wrap:
-        attackRate: 0
-        attackLevel: 0
-      dance:
-        attackRate: 0
-      graffiti:
-        doRate: 0.2
+      mainSkills: []
+      subSkills: []
 --- !u!224 &66940082 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 418250158116223227, guid: 3d5d427c34a7ad241923bfa89394d80e, type: 3}
@@ -843,6 +1049,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: MainGameManager
       objectReference: {fileID: 0}
+    - target: {fileID: 1369696456132551610, guid: 898ade031a3ce554b8df63abbf1da280, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5705664735581028094, guid: 898ade031a3ce554b8df63abbf1da280, type: 3}
       propertyPath: cmdAcceptanceTimeMs
       value: 0.25
@@ -1458,7 +1668,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &542423178
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3184,6 +3394,171 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 938255216}
   m_CullTransparentMesh: 1
+--- !u!1 &968504352
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 968504355}
+  - component: {fileID: 968504354}
+  - component: {fileID: 968504353}
+  m_Layer: 0
+  m_Name: ShikigamiParameterUtilityTest1
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 0
+--- !u!114 &968504353
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 968504352}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8139ce423764b724987241f8ac13b540, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  inputs:
+  - caseId: 0
+    levelDesign:
+      mainSkillLists:
+      - shikigamiType: 0
+        mainSkillType: 1
+        skillRank: 0
+        value: 1.234
+    shikigamiInfo:
+      prop:
+        type: 0
+        level: 0
+        mainSkills:
+        - type: 1
+          rank: 0
+        subSkills: []
+    mainSkillType: 1
+  - caseId: 1000
+    levelDesign:
+      mainSkillLists:
+      - shikigamiType: 0
+        mainSkillType: 1
+        skillRank: 0
+        value: 1.234
+    shikigamiInfo:
+      prop:
+        type: 1
+        level: 0
+        mainSkills:
+        - type: 1
+          rank: 0
+        subSkills: []
+    mainSkillType: 1
+  - caseId: 1001
+    levelDesign:
+      mainSkillLists: []
+    shikigamiInfo:
+      prop:
+        type: 1
+        level: 0
+        mainSkills:
+        - type: 1
+          rank: 0
+        subSkills: []
+    mainSkillType: 1
+  - caseId: 3000
+    levelDesign:
+      mainSkillLists:
+      - shikigamiType: 0
+        mainSkillType: 1
+        skillRank: 0
+        value: 1.234
+      - shikigamiType: 0
+        mainSkillType: 1
+        skillRank: 1
+        value: 2.345
+      - shikigamiType: 0
+        mainSkillType: 1
+        skillRank: 2
+        value: 3.456
+      - shikigamiType: 0
+        mainSkillType: 1
+        skillRank: 3
+        value: 4.567
+      - shikigamiType: 0
+        mainSkillType: 1
+        skillRank: 4
+        value: 5.678
+      - shikigamiType: 0
+        mainSkillType: 3
+        skillRank: 0
+        value: 10.123
+      - shikigamiType: 1
+        mainSkillType: 1
+        skillRank: 0
+        value: 20.123
+    shikigamiInfo:
+      prop:
+        type: 0
+        level: 0
+        mainSkills:
+        - type: 1
+          rank: 0
+        - type: 1
+          rank: 1
+        - type: 1
+          rank: 2
+        - type: 1
+          rank: 3
+        - type: 1
+          rank: 4
+        - type: 3
+          rank: 0
+        subSkills: []
+    mainSkillType: 1
+  outputs:
+  - caseId: 0
+    value: 1.234
+    throwMessage: 
+  - caseId: 1000
+    value: 1.234
+    throwMessage: "1\u3064\u306E\u30E1\u30A4\u30F3\u30B9\u30AD\u30EB\u30D7\u30ED\u30D1\u30C6\u30A3\u304B\u3089\u53D6\u5F97\u3067\u304D\u306A\u3044[Dance][ActionRate]"
+  - caseId: 1001
+    value: 1.234
+    throwMessage: "0\u3064\u306E\u30E1\u30A4\u30F3\u30B9\u30AD\u30EB\u30D7\u30ED\u30D1\u30C6\u30A3\u304B\u3089\u53D6\u5F97\u3067\u304D\u306A\u3044"
+  - caseId: 3000
+    value: 1.234
+    throwMessage: 
+--- !u!114 &968504354
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 968504352}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a98a717fcd356c54682c417fc25087da, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!4 &968504355
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 968504352}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &986238002
 GameObject:
   m_ObjectHideFlags: 0
@@ -5066,6 +5441,37 @@ RectTransform:
   m_AnchoredPosition: {x: -5, y: 0}
   m_SizeDelta: {x: -20, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!1 &2028995779
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2028995780}
+  m_Layer: 0
+  m_Name: ----- FIXED -----
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2028995780
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2028995779}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2099570206
 GameObject:
   m_ObjectHideFlags: 0
@@ -5621,67 +6027,115 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3150588151539996473, guid: 632711e78d59c1245a461badb453deb2, type: 3}
       propertyPath: m_AnchorMax.x
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3150588151539996473, guid: 632711e78d59c1245a461badb453deb2, type: 3}
       propertyPath: m_AnchorMax.y
-      value: 0
+      value: 0.5
       objectReference: {fileID: 0}
     - target: {fileID: 3287174284796922483, guid: 632711e78d59c1245a461badb453deb2, type: 3}
       propertyPath: m_AnchorMax.x
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3287174284796922483, guid: 632711e78d59c1245a461badb453deb2, type: 3}
       propertyPath: m_AnchorMax.y
-      value: 0
+      value: 0.5
       objectReference: {fileID: 0}
     - target: {fileID: 3371661588493250157, guid: 632711e78d59c1245a461badb453deb2, type: 3}
       propertyPath: m_AnchorMax.x
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3371661588493250157, guid: 632711e78d59c1245a461badb453deb2, type: 3}
       propertyPath: m_AnchorMax.y
-      value: 0
+      value: 0.5
       objectReference: {fileID: 0}
     - target: {fileID: 3371661588493250157, guid: 632711e78d59c1245a461badb453deb2, type: 3}
       propertyPath: m_AnchorMin.y
-      value: 0
+      value: 0.5
       objectReference: {fileID: 0}
     - target: {fileID: 3532000598167864044, guid: 632711e78d59c1245a461badb453deb2, type: 3}
       propertyPath: m_AnchorMax.x
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3532000598167864044, guid: 632711e78d59c1245a461badb453deb2, type: 3}
       propertyPath: m_AnchorMax.y
-      value: 0
+      value: 0.5
       objectReference: {fileID: 0}
     - target: {fileID: 3625608900564608754, guid: 632711e78d59c1245a461badb453deb2, type: 3}
       propertyPath: m_AnchorMax.x
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3625608900564608754, guid: 632711e78d59c1245a461badb453deb2, type: 3}
       propertyPath: m_AnchorMax.y
-      value: 0
+      value: 0.5
       objectReference: {fileID: 0}
     - target: {fileID: 3625608900564608754, guid: 632711e78d59c1245a461badb453deb2, type: 3}
       propertyPath: m_AnchorMin.y
-      value: 0
+      value: 0.5
       objectReference: {fileID: 0}
     - target: {fileID: 3780631932625484728, guid: 632711e78d59c1245a461badb453deb2, type: 3}
       propertyPath: m_AnchorMax.x
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3780631932625484728, guid: 632711e78d59c1245a461badb453deb2, type: 3}
       propertyPath: m_AnchorMax.y
-      value: 0
+      value: 0.5
       objectReference: {fileID: 0}
     - target: {fileID: 3780631932625484728, guid: 632711e78d59c1245a461badb453deb2, type: 3}
       propertyPath: m_AnchorMin.y
-      value: 0
+      value: 0.5
       objectReference: {fileID: 0}
     - target: {fileID: 7413195091202341872, guid: 632711e78d59c1245a461badb453deb2, type: 3}
       propertyPath: m_Name
       value: FadersGroup
+      objectReference: {fileID: 0}
+    - target: {fileID: 7680374968084515583, guid: 632711e78d59c1245a461badb453deb2, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7680374968084515583, guid: 632711e78d59c1245a461badb453deb2, type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7680374968084515583, guid: 632711e78d59c1245a461badb453deb2, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 92.56916
+      objectReference: {fileID: 0}
+    - target: {fileID: 7680374968084515583, guid: 632711e78d59c1245a461badb453deb2, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -156.21045
+      objectReference: {fileID: 0}
+    - target: {fileID: 8082589934317281066, guid: 632711e78d59c1245a461badb453deb2, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8082589934317281066, guid: 632711e78d59c1245a461badb453deb2, type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8082589934317281066, guid: 632711e78d59c1245a461badb453deb2, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 462.8458
+      objectReference: {fileID: 0}
+    - target: {fileID: 8082589934317281066, guid: 632711e78d59c1245a461badb453deb2, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -156.21045
+      objectReference: {fileID: 0}
+    - target: {fileID: 8506279467191566944, guid: 632711e78d59c1245a461badb453deb2, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8506279467191566944, guid: 632711e78d59c1245a461badb453deb2, type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8506279467191566944, guid: 632711e78d59c1245a461badb453deb2, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 277.7075
+      objectReference: {fileID: 0}
+    - target: {fileID: 8506279467191566944, guid: 632711e78d59c1245a461badb453deb2, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -156.21045
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -5797,6 +6251,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: ShikigamiSkillSystem
       objectReference: {fileID: 0}
+    - target: {fileID: 1314640648620590542, guid: fa3dd35a5b9f8764db1da1ca923e54f9, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 6710908899353717239, guid: fa3dd35a5b9f8764db1da1ca923e54f9, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -5855,9 +6313,12 @@ SceneRoots:
   m_Roots:
   - {fileID: 2140067654}
   - {fileID: 1514134976}
-  - {fileID: 763555472}
   - {fileID: 1616231022}
+  - {fileID: 763555472}
   - {fileID: 925175836}
+  - {fileID: 21203013}
+  - {fileID: 968504355}
+  - {fileID: 2028995780}
   - {fileID: 542423181}
   - {fileID: 464994368}
   - {fileID: 6831081724681878350}

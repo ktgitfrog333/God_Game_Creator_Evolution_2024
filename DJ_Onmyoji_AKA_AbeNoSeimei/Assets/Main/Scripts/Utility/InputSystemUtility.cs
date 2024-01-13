@@ -188,6 +188,7 @@ namespace Main.Utility
                 //  ●0以下の場合は下記の処理を実行
                 //      ○後続の処理内でテンポスライダーのレベルを0にする
                 // 3.蝋燭の残リソースを更新
+                var utility = new ShikigamiParameterUtility();
                 model.UpdateAsObservable()
                     .Subscribe(_ =>
                     {
@@ -196,14 +197,8 @@ namespace Main.Utility
                         {
                             var tempoLv = item.state.tempoLevel.Value;
                             var shikigamiLv = item.prop.level;
-                            float attackRate = item.prop.type switch
-                            {
-                                ShikigamiType.Wrap => item.prop.wrap.attackRate,
-                                ShikigamiType.Dance => item.prop.dance.attackRate,
-                                ShikigamiType.Graffiti => item.prop.graffiti.doRate,
-                                _ => throw new System.Exception("例外エラー"),
-                            };
-                            costSum += tempoLv * shikigamiLv * attackRate;
+                            float actionRate = utility.GetActionRate(item, MainSkillType.ActionRate);
+                            costSum += tempoLv * shikigamiLv * actionRate;
                         }
                         var calcResult = candleInfo.CandleResource.Value - costSum * Time.deltaTime;
                         candleInfo.CandleResource.Value = System.Math.Clamp(calcResult, 0f, candleInfo.LimitCandleResorceMax);
