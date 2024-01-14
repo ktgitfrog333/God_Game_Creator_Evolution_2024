@@ -78,7 +78,7 @@ namespace Main.Model
                     .GetComponent<AdminDataSingleton>();
             prop.moveSpeed = adminDataSingleton.AdminBean.PlayerModel.prop.moveSpeed;
             prop.hpMax = adminDataSingleton.AdminBean.PlayerModel.prop.hpMax;
-            State = new CharacterState(damageSufferedZoneModel.IsHit, prop.hpMax);
+            State = new CharacterState(damageSufferedZoneModel.IsHit, prop.hpMax, damageSufferedZoneModel.Damage);
         }
 
         private void Start()
@@ -132,7 +132,7 @@ namespace Main.Model
                 });
             // 敵から攻撃を受ける
             State.HP.Value = prop.hpMax;
-            if (!_utility.UpdateStateHPAndIsDead(State.IsHit, State.HP, prop.hpMax, State.IsDead))
+            if (!_utility.UpdateStateHPAndIsDead(State))
                 Debug.LogError("UpdateStateHPAndIsDead");
             // 死亡判定
             State.IsDead.ObserveEveryValueChanged(x => x.Value)

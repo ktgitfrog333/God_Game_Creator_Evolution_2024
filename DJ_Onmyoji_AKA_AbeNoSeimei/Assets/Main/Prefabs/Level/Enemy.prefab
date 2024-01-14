@@ -93,6 +93,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8480559042889348421}
   - component: {fileID: 6320770800134237935}
+  - component: {fileID: 6154129831138059817}
   m_Layer: 0
   m_Name: AttackColliderOfEnemy
   m_TagString: Enemy
@@ -150,6 +151,21 @@ CircleCollider2D:
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
   m_Radius: 1
+--- !u!114 &6154129831138059817
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4223737698729547346}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6ecbd0506ca00e14292e3e1b6966e500, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  tags:
+  - Enemy
+  invincibleTimeSec: 1
 --- !u!1 &7776762512387094233
 GameObject:
   m_ObjectHideFlags: 0
@@ -318,4 +334,4 @@ MonoBehaviour:
   prop:
     moveSpeed: 1
     hpMax: 3
-  adminDataSingletonPrefab: {fileID: 361428817640117176, guid: 0e2e0d5bd277e4848930627fd43306a7, type: 3}
+  attackColliderOfEnemy: {fileID: 6154129831138059817}

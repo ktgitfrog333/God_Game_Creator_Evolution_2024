@@ -15,5 +15,7 @@ namespace Main.Common
         public static readonly string GAMEOBJECT_NAME_SAFEZONE = "SafeZone";
         /// <summary>ゴールポイント</summary>
         public static readonly string GAMEOBJECT_NAME_GOALPOINT = "GoalPoint";
+        /// <summary>ペンダグラムターンテーブル</summary>
+        public static readonly string GAMEOBJECT_NAME_PENTAGRAMTURNTABLE = "PentagramTurnTable";
     }
 }

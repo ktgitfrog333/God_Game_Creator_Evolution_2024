@@ -32,6 +32,8 @@ namespace Main.Model
         [SerializeField] private CharacterProp prop;
         /// <summary>ステータス</summary>
         public CharacterState State { get; private set; }
+        /// <summary>攻撃を与える判定のトリガー</summary>
+        [SerializeField] private AttackColliderOfEnemy attackColliderOfEnemy;
 
         public bool Initialize(Vector2 position, Transform target)
         {
@@ -41,6 +43,9 @@ namespace Main.Model
                 Transform.position = position;
                 if (_target == null)
                     _target = target;
+                // TODO:攻撃力のパラメータ追加
+                if (!attackColliderOfEnemy.SetAttackPoint(1))
+                    Debug.LogError("SetAttackPoint");
 
                 return true;
             }
@@ -66,7 +71,7 @@ namespace Main.Model
                     .GetComponent<AdminDataSingleton>();
             prop.moveSpeed = adminDataSingleton.AdminBean.EnemyModel.prop.moveSpeed;
             prop.hpMax = adminDataSingleton.AdminBean.EnemyModel.prop.hpMax;
-            State = new CharacterState(damageSufferedZoneModel.IsHit, prop.hpMax);
+            State = new CharacterState(damageSufferedZoneModel.IsHit, prop.hpMax, damageSufferedZoneModel.Damage);
             base.Awake();
         }
 
@@ -74,7 +79,7 @@ namespace Main.Model
         {
             // プレイヤーから攻撃を受ける
             State.HP.Value = prop.hpMax;
-            if (!_utility.UpdateStateHPAndIsDead(State.IsHit, State.HP, prop.hpMax, State.IsDead))
+            if (!_utility.UpdateStateHPAndIsDead(State))
                 Debug.LogError("UpdateStateHPAndIsDead");
             // 死亡判定
             State.IsDead.ObserveEveryValueChanged(x => x.Value)
@@ -124,14 +129,17 @@ namespace Main.Model
         public int HPMax { get; private set; }
         /// <summary>HP</summary>
         public IReactiveProperty<int> HP { get; private set; } = new IntReactiveProperty();
+        /// <summary>ダメージ値</summary>
+        public IReactiveProperty<int> Damage { get; private set; } = new IntReactiveProperty();
         /// <summary>
         /// キャラクターのステータス
         /// コンストラクタ
         /// </summary>
-        public CharacterState(IReactiveProperty<bool> isHit, int hpMax)
+        public CharacterState(IReactiveProperty<bool> isHit, int hpMax, IReactiveProperty<int> damage)
         {
             IsHit = isHit;
             HPMax = hpMax;
+            Damage = damage;
         }
     }
 

@@ -10,7 +10,7 @@ using Universal.Common;
 
 namespace Main.Test.Driver
 {
-    public class ShikigamiParameterUtilityTest1 : CommonUtilityTest
+    public class ShikigamiParameterUtilityTest2 : CommonUtilityTest
     {
         protected override void Start()
         {
@@ -27,23 +27,18 @@ namespace Main.Test.Driver
         protected override void Case(int caseId, bool isAbnormal=false)
         {
             var utility = new ShikigamiParameterUtility();
-            var input = GetComponent<Stub.ShikigamiParameterUtilityTest1>().Inputs
+            var input = GetComponent<Stub.ShikigamiParameterUtilityTest2>().Inputs
                 .Where(q => q.caseId == caseId)
                 .Select(q => q)
                 .ToArray()[0];
-            var output = GetComponent<Stub.ShikigamiParameterUtilityTest1>().Outputs
+            var output = GetComponent<Stub.ShikigamiParameterUtilityTest2>().Outputs
                 .Where(q => q.caseId == caseId)
                 .Select(q => q)
                 .ToArray()[0];
-            var adminDataSingleton = AdminDataSingleton.Instance != null ?
-                AdminDataSingleton.Instance :
-                new GameObject(Universal.Common.ConstGameObjectNames.GAMEOBJECT_NAME_ADMINDATA_SINGLETON).AddComponent<AdminDataSingleton>()
-                    .GetComponent<AdminDataSingleton>();
-            adminDataSingleton.AdminBean.levelDesign = input.levelDesign;
             if (!isAbnormal)
-                OutputResult(utility.GetMainSkillValue(input.shikigamiInfo, input.mainSkillType).Equals(output.value), caseId);
+                OutputResult(utility.GetShikigamiInfo(input.pentagramTurnTableInfo, input.instanceId).prop.type.Equals(output.shikigamiInfo.prop.type), caseId);
             else
-                ExceptionResult(() => utility.GetMainSkillValue(input.shikigamiInfo, input.mainSkillType), caseId, output.throwMessage);
+                ExceptionResult(() => utility.GetShikigamiInfo(input.pentagramTurnTableInfo, input.instanceId), caseId, output.throwMessage);
         }
     }
 }

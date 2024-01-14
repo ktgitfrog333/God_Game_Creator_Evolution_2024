@@ -47,13 +47,38 @@ namespace Universal.Bean
         public EnemiesSpawnModel EnemiesSpawnModel = new EnemiesSpawnModel();
         public ObjectsPoolModel ObjectsPoolModel = new ObjectsPoolModel();
         public OnmyoBulletModel OnmyoBulletModel = new OnmyoBulletModel();
-        public OnmyoTurretModel OnmyoTurretModel = new OnmyoTurretModel();
         public PentagramSystemModel PentagramSystemModel = new PentagramSystemModel();
         public PentagramTurnTableView PentagramTurnTableView = new PentagramTurnTableView();
         public PentagramTurnTableModel PentagramTurnTableModel = new PentagramTurnTableModel();
         public PlayerModel PlayerModel = new PlayerModel();
         public SunMoonSystemModel sunMoonSystemModel = new SunMoonSystemModel();
-        public LevelDesign levelDesign = new LevelDesign();
+        public LevelDesign levelDesign = new LevelDesign()
+        {
+            mainSkillLists = new MainSkillList[]
+            {
+                new MainSkillList()
+                {
+                    shikigamiType = 3,
+                    mainSkillType = 1,
+                    skillRank = 0,
+                    value = .5f,
+                },
+                new MainSkillList()
+                {
+                    shikigamiType = 3,
+                    mainSkillType = 3,
+                    skillRank = 0,
+                    value = 1f,
+                },
+                new MainSkillList()
+                {
+                    shikigamiType = 3,
+                    mainSkillType = 2,
+                    skillRank = 0,
+                    value = 10f,
+                },
+            },
+        };
         public AdminBean()
         {
 
@@ -72,12 +97,12 @@ namespace Universal.Bean
             EnemiesSpawnModel = adminBean.EnemiesSpawnModel;
             ObjectsPoolModel = adminBean.ObjectsPoolModel;
             OnmyoBulletModel = adminBean.OnmyoBulletModel;
-            OnmyoTurretModel = adminBean.OnmyoTurretModel;
             PentagramSystemModel = adminBean.PentagramSystemModel;
             PentagramTurnTableView = adminBean.PentagramTurnTableView;
             PentagramTurnTableModel = adminBean.PentagramTurnTableModel;
             PlayerModel = adminBean.PlayerModel;
             sunMoonSystemModel = adminBean.sunMoonSystemModel;
+            levelDesign = adminBean.levelDesign;
         }
     }
 
@@ -140,12 +165,6 @@ namespace Universal.Bean
         public Vector2 moveDirection = Vector2.down;
         /// <summary>移動速度</summary>
         public float moveSpeed = 8f;
-    }
-
-    [System.Serializable]
-    public class OnmyoTurretModel
-    {
-        public float instanceRateTimeSec = .5f;
     }
 
     [System.Serializable]

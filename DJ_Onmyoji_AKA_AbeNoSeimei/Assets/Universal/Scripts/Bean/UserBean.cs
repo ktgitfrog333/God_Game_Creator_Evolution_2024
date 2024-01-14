@@ -62,6 +62,67 @@ namespace Universal.Bean
         /// </summary>
         public int vibrationEnableIndex = 0;
 
+        public PentagramTurnTableInfo pentagramTurnTableInfo = new PentagramTurnTableInfo()
+        {
+            slots = new PentagramTurnTableInfo.Slot[]
+            {
+                new PentagramTurnTableInfo.Slot()
+                {
+                    slotId = 0,
+                    shikigamiInfo = new ShikigamiInfo()
+                    {
+                        type = 3,
+                        level = 1,
+                        mainSkills = new ShikigamiInfo.MainSkill[]
+                        {
+                            new ShikigamiInfo.MainSkill
+                            {
+                                type = 1,
+                                rank = 0,
+                            },
+                            new ShikigamiInfo.MainSkill
+                            {
+                                type = 3,
+                                rank = 0,
+                            },
+                            new ShikigamiInfo.MainSkill
+                            {
+                                type = 2,
+                                rank = 0,
+                            },
+                        },
+                    },
+                },
+                new PentagramTurnTableInfo.Slot()
+                {
+                    slotId = 1,
+                    shikigamiInfo = new ShikigamiInfo()
+                    {
+                        type = 3,
+                        level = 1,
+                        mainSkills = new ShikigamiInfo.MainSkill[]
+                        {
+                            new ShikigamiInfo.MainSkill
+                            {
+                                type = 1,
+                                rank = 0,
+                            },
+                            new ShikigamiInfo.MainSkill
+                            {
+                                type = 3,
+                                rank = 0,
+                            },
+                            new ShikigamiInfo.MainSkill
+                            {
+                                type = 2,
+                                rank = 0,
+                            },
+                        },
+                    },
+                },
+            }
+        };
+
         /// <summary>
         /// ユーザー情報を保持するクラス
         /// </summary>
@@ -85,6 +146,70 @@ namespace Universal.Bean
         }
 
         /// <summary>
+        /// 式神の情報
+        /// </summary>
+        /// <see cref="Main.Common.ShikigamiInfo"/>
+        [System.Serializable]
+        public class ShikigamiInfo
+        {
+            /// <summary>式神タイプ</summary>
+            public int type;
+            /// <summary>レベル</summary>
+            public int level;
+            /// <summary>メインスキル</summary>
+            public MainSkill[] mainSkills;
+            /// <summary>サブスキル</summary>
+            public SubSkill[] subSkills;
+
+            /// <summary>
+            /// メインスキル
+            /// </summary>
+            [System.Serializable]
+            public class MainSkill
+            {
+                /// <summary>メインスキルタイプ</summary>
+                public int type;
+                /// <summary>スキルランク</summary>
+                public int rank;
+            }
+
+            /// <summary>
+            /// サブスキル
+            /// </summary>
+            [System.Serializable]
+            public class SubSkill
+            {
+                /// <summary>サブスキルタイプ</summary>
+                public int type;
+                /// <summary>スキルランク</summary>
+                public int rank;
+            }
+        }
+
+        /// <summary>
+        /// ペンダグラムターンテーブル情報
+        /// </summary>
+        /// <see cref="Main.Common.PentagramTurnTableInfo"/>
+        [System.Serializable]
+        public class PentagramTurnTableInfo
+        {
+            /// <summary>スロット</summary>
+            public Slot[] slots;
+
+            /// <summary>
+            /// スロット
+            /// </summary>
+            [System.Serializable]
+            public class Slot
+            {
+                /// <summary>スロット番号</summary>
+                public int slotId;
+                /// <summary>式神の情報</summary>
+                public ShikigamiInfo shikigamiInfo;
+            }
+        }
+
+        /// <summary>
         /// ユーザー情報を保持するクラス
         /// </summary>
         public UserBean(UserBean userBean)
@@ -95,6 +220,7 @@ namespace Universal.Bean
             bgmVolumeIndex = userBean.bgmVolumeIndex;
             seVolumeIndex = userBean.seVolumeIndex;
             vibrationEnableIndex = userBean.vibrationEnableIndex;
+            pentagramTurnTableInfo = userBean.pentagramTurnTableInfo;
         }
     }
 }

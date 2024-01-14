@@ -10,7 +10,7 @@ using Universal.Common;
 
 namespace Main.Test.Driver
 {
-    public class ShikigamiParameterUtilityTest1 : CommonUtilityTest
+    public class ShikigamiParameterUtilityTest4 : CommonUtilityTest
     {
         protected override void Start()
         {
@@ -18,7 +18,6 @@ namespace Main.Test.Driver
             CaseNormalSystem(0000);
             // 異常系
             CaseAbnormalSystem(1000);
-            CaseAbnormalSystem(1001);
             // 境界値分析
             // 複数パターン
             CaseMultiplePatterns(3000);
@@ -27,23 +26,28 @@ namespace Main.Test.Driver
         protected override void Case(int caseId, bool isAbnormal=false)
         {
             var utility = new ShikigamiParameterUtility();
-            var input = GetComponent<Stub.ShikigamiParameterUtilityTest1>().Inputs
+            var input = GetComponent<Stub.ShikigamiParameterUtilityTest4>().Inputs
                 .Where(q => q.caseId == caseId)
                 .Select(q => q)
                 .ToArray()[0];
-            var output = GetComponent<Stub.ShikigamiParameterUtilityTest1>().Outputs
+            var output = GetComponent<Stub.ShikigamiParameterUtilityTest4>().Outputs
                 .Where(q => q.caseId == caseId)
                 .Select(q => q)
                 .ToArray()[0];
-            var adminDataSingleton = AdminDataSingleton.Instance != null ?
-                AdminDataSingleton.Instance :
-                new GameObject(Universal.Common.ConstGameObjectNames.GAMEOBJECT_NAME_ADMINDATA_SINGLETON).AddComponent<AdminDataSingleton>()
-                    .GetComponent<AdminDataSingleton>();
-            adminDataSingleton.AdminBean.levelDesign = input.levelDesign;
             if (!isAbnormal)
-                OutputResult(utility.GetMainSkillValue(input.shikigamiInfo, input.mainSkillType).Equals(output.value), caseId);
+                OutputResult(((IShikigamiParameterUtilityTest4)utility).ConvertMainSkills(input.mainSkills).SequenceEqual(output.mainSkills), caseId);
             else
-                ExceptionResult(() => utility.GetMainSkillValue(input.shikigamiInfo, input.mainSkillType), caseId, output.throwMessage);
+                ExceptionResult(() => ((IShikigamiParameterUtilityTest4)utility).ConvertMainSkills(input.mainSkills), caseId, output.throwMessage);
         }
+    }
+
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <see cref="Main.Utility.ShikigamiParameterUtility"/>
+    public interface IShikigamiParameterUtilityTest4
+    {
+        /// <see cref="Main.Utility.ShikigamiParameterUtility.ConvertMainSkills(UserBean.ShikigamiInfo.MainSkill[])"/>
+        public ShikigamiInfo.Prop.MainSkill[] ConvertMainSkills(UserBean.ShikigamiInfo.MainSkill[] mainSkills);
     }
 }

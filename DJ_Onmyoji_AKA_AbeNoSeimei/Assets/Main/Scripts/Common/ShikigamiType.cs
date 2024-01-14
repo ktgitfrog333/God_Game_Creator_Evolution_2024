@@ -5,6 +5,18 @@ using UnityEngine;
 namespace Main.Common
 {
     /// <summary>
+    /// スロット番号
+    /// </summary>
+    public enum SlotId
+    {
+        SL00,
+        SL01,
+        SL02,
+        SL03,
+        SL04,
+    }
+
+    /// <summary>
     /// 式神タイプ
     /// </summary>
     public enum ShikigamiType

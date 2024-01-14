@@ -2,7 +2,11 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using Main.Common;
+using Main.Model;
+using Main.Test.Driver;
+using MoonSharp.Interpreter;
 using UnityEngine;
+using Universal.Bean;
 using Universal.Common;
 
 namespace Main.Utility
@@ -15,8 +19,11 @@ namespace Main.Utility
     /// <see href="https://www.notion.so/a72678495bbf42b2af5f88bcfcc29198?pvs=4"/>
     public class ShikigamiParameterUtility : IShikigamiParameterUtility
     {
+        /// <summary>管理者データ</summary>
         private AdminDataSingleton _adminDataSingleton;
+        /// <summary>管理者データ</summary>
         public AdminDataSingleton AdminDataSingleton => _adminDataSingleton != null ? _adminDataSingleton : GetAdminDataSingleton();
+        /// <summary>管理者データ</summary>
         private AdminDataSingleton GetAdminDataSingleton()
         {
             var adminDataSingleton = AdminDataSingleton.Instance != null ?
@@ -25,15 +32,25 @@ namespace Main.Utility
                     .GetComponent<AdminDataSingleton>();
             return adminDataSingleton;
         }
-
+        /// <summary>ユーザデータ</summary>
+        private UserDataSingleton _userDataSingleton;
+        /// <summary>ユーザデータ</summary>
+        public UserDataSingleton UserDataSingleton => _userDataSingleton != null ? _userDataSingleton : GetUserDataSingleton();
+        /// <summary>ユーザデータ</summary>
+        private UserDataSingleton GetUserDataSingleton()
+        {
+            var singleton = UserDataSingleton.Instance != null ?
+                UserDataSingleton.Instance :
+                new GameObject(Universal.Common.ConstGameObjectNames.GAMEOBJECT_NAME_USERDATA_SINGLETON).AddComponent<UserDataSingleton>()
+                    .GetComponent<UserDataSingleton>();
+            return singleton;
+        }
         /// <summary>
-        /// 時間間隔の取得
+        /// スロット番号が未セットであることを表す定数
         /// </summary>
-        /// <param name="shikigamiInfo">式神の情報</param>
-        /// <param name="mainSkillType">スキルタイプ</param>
-        /// <returns>時間間隔</returns>
-        /// <exception cref="System.Exception">メインスキルプロパティが1つもない場合、または指定したスキルタイプのメインスキルプロパティが1つもない場合にスローされます</exception>
-        public float GetActionRate(ShikigamiInfo shikigamiInfo, MainSkillType mainSkillType)
+        private const int UNSET_SLOT_NUMBER = -1;
+
+        public float GetMainSkillValue(ShikigamiInfo shikigamiInfo, MainSkillType mainSkillType)
         {
             var skillLists = AdminDataSingleton.AdminBean.levelDesign.mainSkillLists;
             if (skillLists.Length < 1)
@@ -71,6 +88,108 @@ namespace Main.Utility
 
             return array[0];
         }
+
+        public ShikigamiInfo GetShikigamiInfo(PentagramTurnTableInfo pentagramTurnTableInfo, int instanceId)
+        {
+            var slots = pentagramTurnTableInfo.slots;
+            if (slots.Length < 1)
+                throw new System.Exception($"{slots.Length}つのスロットから取得できない");
+            
+            var array = pentagramTurnTableInfo.slots.Where(q => q.instanceId == instanceId)
+                .Select(q => q.shikigamiInfo)
+                .ToArray();
+            if (array.Length < 1)
+                throw new System.Exception($"{slots.Length}つのスロットから取得できない[{instanceId}]");
+
+            return array[0];
+        }
+
+        public PentagramTurnTableInfo GetPentagramTurnTableInfo()
+        {
+            try
+            {
+                List<PentagramTurnTableInfo.Slot> slots = new List<PentagramTurnTableInfo.Slot>();
+                var bean = UserDataSingleton.UserBean;
+                if (bean.pentagramTurnTableInfo == null ||
+                    bean.pentagramTurnTableInfo.slots == null ||
+                    bean.pentagramTurnTableInfo.slots.Length < 2)
+                    throw new System.Exception("スロットから取得できない");
+
+                foreach (var item in bean.pentagramTurnTableInfo.slots)
+                {
+                    slots.Add(new PentagramTurnTableInfo.Slot()
+                    {
+                        slotId = (SlotId)item.slotId,
+                        shikigamiInfo = new ShikigamiInfo()
+                        {
+                            prop = new ShikigamiInfo.Prop()
+                            {
+                                type = (ShikigamiType)item.shikigamiInfo.type,
+                                level = item.shikigamiInfo.level,
+                                mainSkills = ConvertMainSkills(item.shikigamiInfo.mainSkills),
+                                subSkills = ConvertSubSkills(item.shikigamiInfo.subSkills),
+                            }
+                        },
+                        instanceId = UNSET_SLOT_NUMBER,
+                    });
+                }
+                PentagramTurnTableInfo info = new PentagramTurnTableInfo()
+                {
+                    slots = slots.ToArray()
+                };
+
+                return info;
+            }
+            catch (System.Exception)
+            {
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// メインスキルを変換
+        /// </summary>
+        /// <param name="mainSkills">Bean側のメインスキル</param>
+        /// <returns>変換後のメインスキル</returns>
+        /// <exception cref="System.Exception">引数データが存在しない場合に例外をスロー</exception>
+        private ShikigamiInfo.Prop.MainSkill[] ConvertMainSkills(UserBean.ShikigamiInfo.MainSkill[] mainSkills)
+        {
+            if (mainSkills == null ||
+                mainSkills.Length < 1)
+                throw new System.Exception("mainSkillsが空またはnullです");
+            
+            List<ShikigamiInfo.Prop.MainSkill> skills = new List<ShikigamiInfo.Prop.MainSkill>();
+            foreach (var item in mainSkills)
+                skills.Add(new ShikigamiInfo.Prop.MainSkill()
+                {
+                    type = (MainSkillType)item.type,
+                    rank = (SkillRank)item.rank,
+                });
+            return skills.ToArray();
+        }
+
+        /// <summary>
+        /// サブスキルを変換
+        /// </summary>
+        /// <param name="subSkills">Bean側のサブスキル</param>
+        /// <returns>変換後のサブスキル</returns>
+        /// <exception cref="System.Exception">引数データが存在しない場合に例外をスロー</exception>
+        private ShikigamiInfo.Prop.SubSkill[] ConvertSubSkills(UserBean.ShikigamiInfo.SubSkill[] subSkills)
+        {
+            // subSkillsが空またはnullは許容
+            if (subSkills == null ||
+                subSkills.Length < 1)
+                return new ShikigamiInfo.Prop.SubSkill[0];
+
+            List<ShikigamiInfo.Prop.SubSkill> skills = new List<ShikigamiInfo.Prop.SubSkill>();
+            foreach (var item in subSkills)
+                skills.Add(new ShikigamiInfo.Prop.SubSkill()
+                {
+                    type = (SubSkillType)item.type,
+                    rank = (SkillRank)item.rank,
+                });
+            return skills.ToArray();
+        }
     }
 
     /// <summary>
@@ -81,11 +200,26 @@ namespace Main.Utility
     public interface IShikigamiParameterUtility
     {
         /// <summary>
-        /// 攻撃間隔の取得
+        /// メインスキル値の取得
         /// </summary>
         /// <param name="shikigamiInfo">式神の情報</param>
-        /// <param name="mainSkillType">メインスキルタイプ</param>
-        /// <returns>攻撃間隔</returns>
-        public float GetActionRate(ShikigamiInfo shikigamiInfo, MainSkillType mainSkillType);
+        /// <param name="mainSkillType">スキルタイプ</param>
+        /// <returns>メインスキル値</returns>
+        /// <exception cref="System.Exception">メインスキルプロパティが1つもない場合、または指定したスキルタイプのメインスキルプロパティが1つもない場合にスローされます</exception>
+        public float GetMainSkillValue(ShikigamiInfo shikigamiInfo, MainSkillType mainSkillType);
+        
+        /// <summary>
+        /// 式神の情報を取得
+        /// </summary>
+        /// <param name="pentagramTurnTableInfo">ペンダグラムターンテーブル情報</param>
+        /// <param name="instanceId">オブジェクトID</param>
+        /// <returns>式神の情報</returns>
+        public ShikigamiInfo GetShikigamiInfo(PentagramTurnTableInfo pentagramTurnTableInfo, int instanceId);
+        
+        /// <summary>
+        /// ペンダグラムターンテーブル情報を取得
+        /// </summary>
+        /// <returns>ペンダグラムテーブル情報</returns>
+        public PentagramTurnTableInfo GetPentagramTurnTableInfo();
     }
 }

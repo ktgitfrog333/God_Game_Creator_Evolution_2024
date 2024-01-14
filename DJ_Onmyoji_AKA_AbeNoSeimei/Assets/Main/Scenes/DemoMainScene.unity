@@ -512,6 +512,103 @@ RectTransform:
   m_AnchoredPosition: {x: -5, y: 0}
   m_SizeDelta: {x: -20, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!1001 &225512766
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 1282829459277629401, guid: 4635d262c477bfb42ac226f3ec0e1d0b, type: 3}
+      propertyPath: m_Pivot.x
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 1282829459277629401, guid: 4635d262c477bfb42ac226f3ec0e1d0b, type: 3}
+      propertyPath: m_Pivot.y
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 1282829459277629401, guid: 4635d262c477bfb42ac226f3ec0e1d0b, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1282829459277629401, guid: 4635d262c477bfb42ac226f3ec0e1d0b, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1282829459277629401, guid: 4635d262c477bfb42ac226f3ec0e1d0b, type: 3}
+      propertyPath: m_AnchorMin.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1282829459277629401, guid: 4635d262c477bfb42ac226f3ec0e1d0b, type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1282829459277629401, guid: 4635d262c477bfb42ac226f3ec0e1d0b, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 1920.0001
+      objectReference: {fileID: 0}
+    - target: {fileID: 1282829459277629401, guid: 4635d262c477bfb42ac226f3ec0e1d0b, type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 1080
+      objectReference: {fileID: 0}
+    - target: {fileID: 1282829459277629401, guid: 4635d262c477bfb42ac226f3ec0e1d0b, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1282829459277629401, guid: 4635d262c477bfb42ac226f3ec0e1d0b, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1282829459277629401, guid: 4635d262c477bfb42ac226f3ec0e1d0b, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1282829459277629401, guid: 4635d262c477bfb42ac226f3ec0e1d0b, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1282829459277629401, guid: 4635d262c477bfb42ac226f3ec0e1d0b, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1282829459277629401, guid: 4635d262c477bfb42ac226f3ec0e1d0b, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1282829459277629401, guid: 4635d262c477bfb42ac226f3ec0e1d0b, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1282829459277629401, guid: 4635d262c477bfb42ac226f3ec0e1d0b, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1282829459277629401, guid: 4635d262c477bfb42ac226f3ec0e1d0b, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1282829459277629401, guid: 4635d262c477bfb42ac226f3ec0e1d0b, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1282829459277629401, guid: 4635d262c477bfb42ac226f3ec0e1d0b, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1282829459277629401, guid: 4635d262c477bfb42ac226f3ec0e1d0b, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2410446419243973809, guid: 4635d262c477bfb42ac226f3ec0e1d0b, type: 3}
+      propertyPath: m_Name
+      value: uGUIOnPlayer0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 4635d262c477bfb42ac226f3ec0e1d0b, type: 3}
 --- !u!1 &226215060
 GameObject:
   m_ObjectHideFlags: 0
@@ -3814,6 +3911,106 @@ MonoBehaviour:
   audioOwner: {fileID: 1057128955}
   pbSpeed: 0
   invert: 0
+--- !u!1 &1148652702
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1148652705}
+  - component: {fileID: 1148652704}
+  - component: {fileID: 1148652703}
+  m_Layer: 0
+  m_Name: ShikigamiParameterUtilityTest4
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 0
+--- !u!114 &1148652703
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1148652702}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: de9e4c7b80253354cb45cf7650b63c86, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  inputs:
+  - caseId: 0
+    mainSkills:
+    - type: 1
+      rank: 0
+  - caseId: 1000
+    mainSkills: []
+  - caseId: 3000
+    mainSkills:
+    - type: 1
+      rank: 0
+    - type: 3
+      rank: 1
+    - type: 2
+      rank: 2
+    - type: 6
+      rank: 3
+    - type: 7
+      rank: 4
+  outputs:
+  - caseId: 0
+    throwMessage: 
+    mainSkills:
+    - type: 1
+      rank: 0
+  - caseId: 1000
+    throwMessage: "mainSkills\u304C\u7A7A\u307E\u305F\u306Fnull\u3067\u3059"
+    mainSkills:
+    - type: 1
+      rank: 0
+  - caseId: 3000
+    throwMessage: 
+    mainSkills:
+    - type: 1
+      rank: 0
+    - type: 3
+      rank: 1
+    - type: 2
+      rank: 2
+    - type: 6
+      rank: 3
+    - type: 7
+      rank: 4
+--- !u!114 &1148652704
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1148652702}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: afb97be47f869464d9bc586d174a716a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!4 &1148652705
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1148652702}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1215772376
 GameObject:
   m_ObjectHideFlags: 0
@@ -4142,6 +4339,106 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1350860696}
   m_CullTransparentMesh: 1
+--- !u!1 &1354063462
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1354063465}
+  - component: {fileID: 1354063464}
+  - component: {fileID: 1354063463}
+  m_Layer: 0
+  m_Name: ShikigamiParameterUtilityTest3
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 0
+--- !u!114 &1354063463
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1354063462}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4234b9a7fdd908e4c8b179e83ff17356, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  inputs:
+  - caseId: 0
+    subSkills:
+    - type: 1
+      rank: 0
+  - caseId: 1000
+    subSkills: []
+  - caseId: 3000
+    subSkills:
+    - type: 2
+      rank: 0
+    - type: 1
+      rank: 1
+    - type: 3
+      rank: 2
+    - type: 4
+      rank: 3
+    - type: 5
+      rank: 4
+  outputs:
+  - caseId: 0
+    throwMessage: 
+    subSkills:
+    - type: 1
+      rank: 0
+  - caseId: 1000
+    throwMessage: "subSkills\u304C\u7A7A\u307E\u305F\u306Fnull\u3067\u3059"
+    subSkills:
+    - type: 1
+      rank: 0
+  - caseId: 3000
+    throwMessage: 
+    subSkills:
+    - type: 2
+      rank: 0
+    - type: 1
+      rank: 1
+    - type: 3
+      rank: 2
+    - type: 4
+      rank: 3
+    - type: 5
+      rank: 4
+--- !u!114 &1354063464
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1354063462}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a877b2af07fb51f438b2eca5563fd099, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!4 &1354063465
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1354063462}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1381674939
 GameObject:
   m_ObjectHideFlags: 0
@@ -4724,6 +5021,349 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 50, y: -30, z: 0}
+--- !u!1 &1534838207
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1534838210}
+  - component: {fileID: 1534838209}
+  - component: {fileID: 1534838208}
+  m_Layer: 0
+  m_Name: ShikigamiParameterUtilityTest5
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 0
+--- !u!114 &1534838208
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1534838207}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c759a6fc42e5d92498a58726c5dc5d74, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  inputs:
+  - caseId: 0
+    slots:
+    - slotId: 0
+      shikigamiInfo:
+        type: 0
+        level: 0
+        mainSkills:
+        - type: 1
+          rank: 0
+        subSkills:
+        - type: 4
+          rank: 0
+    - slotId: 0
+      shikigamiInfo:
+        type: 0
+        level: 0
+        mainSkills:
+        - type: 1
+          rank: 0
+        subSkills:
+        - type: 4
+          rank: 0
+  - caseId: 1000
+    slots:
+    - slotId: 0
+      shikigamiInfo:
+        type: 0
+        level: 0
+        mainSkills:
+        - type: 1
+          rank: 0
+        subSkills:
+        - type: 4
+          rank: 0
+  - caseId: 1001
+    slots: []
+  - caseId: 2000
+    slots:
+    - slotId: 0
+      shikigamiInfo:
+        type: 0
+        level: 0
+        mainSkills:
+        - type: 1
+          rank: 0
+        subSkills:
+        - type: 4
+          rank: 0
+    - slotId: 0
+      shikigamiInfo:
+        type: 0
+        level: 0
+        mainSkills:
+        - type: 1
+          rank: 0
+        subSkills:
+        - type: 4
+          rank: 0
+    - slotId: 0
+      shikigamiInfo:
+        type: 0
+        level: 0
+        mainSkills:
+        - type: 1
+          rank: 0
+        subSkills:
+        - type: 4
+          rank: 0
+  - caseId: 3000
+    slots:
+    - slotId: 0
+      shikigamiInfo:
+        type: 0
+        level: 0
+        mainSkills:
+        - type: 1
+          rank: 0
+        subSkills:
+        - type: 4
+          rank: 0
+    - slotId: 1
+      shikigamiInfo:
+        type: 1
+        level: 1
+        mainSkills:
+        - type: 7
+          rank: 1
+        subSkills:
+        - type: 5
+          rank: 1
+    - slotId: 2
+      shikigamiInfo:
+        type: 2
+        level: 2
+        mainSkills:
+        - type: 6
+          rank: 2
+        subSkills:
+        - type: 2
+          rank: 2
+    - slotId: 3
+      shikigamiInfo:
+        type: 3
+        level: 3
+        mainSkills:
+        - type: 2
+          rank: 3
+        subSkills:
+        - type: 1
+          rank: 3
+    - slotId: 4
+      shikigamiInfo:
+        type: 3
+        level: 4
+        mainSkills:
+        - type: 7
+          rank: 4
+        subSkills:
+        - type: 5
+          rank: 4
+  outputs:
+  - caseId: 0
+    throwMessage: 
+    pentagramTurnTableInfo:
+      slots:
+      - slotId: 0
+        shikigamiInfo:
+          prop:
+            type: 0
+            level: 0
+            mainSkills:
+            - type: 1
+              rank: 0
+            subSkills:
+            - type: 4
+              rank: 0
+        instanceId: -1
+      - slotId: 0
+        shikigamiInfo:
+          prop:
+            type: 0
+            level: 0
+            mainSkills:
+            - type: 1
+              rank: 0
+            subSkills:
+            - type: 4
+              rank: 0
+        instanceId: -1
+  - caseId: 1000
+    throwMessage: "\u30B9\u30ED\u30C3\u30C8\u304B\u3089\u53D6\u5F97\u3067\u304D\u306A\u3044"
+    pentagramTurnTableInfo:
+      slots:
+      - slotId: 0
+        shikigamiInfo:
+          prop:
+            type: 0
+            level: 0
+            mainSkills:
+            - type: 1
+              rank: 0
+            subSkills:
+            - type: 4
+              rank: 0
+        instanceId: -1
+  - caseId: 1001
+    throwMessage: "\u30B9\u30ED\u30C3\u30C8\u304B\u3089\u53D6\u5F97\u3067\u304D\u306A\u3044"
+    pentagramTurnTableInfo:
+      slots:
+      - slotId: 0
+        shikigamiInfo:
+          prop:
+            type: 0
+            level: 0
+            mainSkills:
+            - type: 1
+              rank: 0
+            subSkills:
+            - type: 4
+              rank: 0
+        instanceId: -1
+  - caseId: 2000
+    throwMessage: 
+    pentagramTurnTableInfo:
+      slots:
+      - slotId: 0
+        shikigamiInfo:
+          prop:
+            type: 0
+            level: 0
+            mainSkills:
+            - type: 1
+              rank: 0
+            subSkills:
+            - type: 4
+              rank: 0
+        instanceId: -1
+      - slotId: 0
+        shikigamiInfo:
+          prop:
+            type: 0
+            level: 0
+            mainSkills:
+            - type: 1
+              rank: 0
+            subSkills:
+            - type: 4
+              rank: 0
+        instanceId: -1
+      - slotId: 0
+        shikigamiInfo:
+          prop:
+            type: 0
+            level: 0
+            mainSkills:
+            - type: 1
+              rank: 0
+            subSkills:
+            - type: 4
+              rank: 0
+        instanceId: -1
+  - caseId: 3000
+    throwMessage: 
+    pentagramTurnTableInfo:
+      slots:
+      - slotId: 0
+        shikigamiInfo:
+          prop:
+            type: 0
+            level: 0
+            mainSkills:
+            - type: 1
+              rank: 0
+            subSkills:
+            - type: 4
+              rank: 0
+        instanceId: -1
+      - slotId: 1
+        shikigamiInfo:
+          prop:
+            type: 1
+            level: 1
+            mainSkills:
+            - type: 7
+              rank: 1
+            subSkills:
+            - type: 5
+              rank: 1
+        instanceId: -1
+      - slotId: 2
+        shikigamiInfo:
+          prop:
+            type: 2
+            level: 2
+            mainSkills:
+            - type: 6
+              rank: 2
+            subSkills:
+            - type: 2
+              rank: 2
+        instanceId: -1
+      - slotId: 3
+        shikigamiInfo:
+          prop:
+            type: 3
+            level: 3
+            mainSkills:
+            - type: 2
+              rank: 3
+            subSkills:
+            - type: 1
+              rank: 3
+        instanceId: -1
+      - slotId: 4
+        shikigamiInfo:
+          prop:
+            type: 3
+            level: 4
+            mainSkills:
+            - type: 7
+              rank: 4
+            subSkills:
+            - type: 5
+              rank: 4
+        instanceId: -1
+--- !u!114 &1534838209
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1534838207}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a8aaf5e891791024bbaad3249e14daaf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!4 &1534838210
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1534838207}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1561074341
 GameObject:
   m_ObjectHideFlags: 0
@@ -4808,6 +5448,169 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 2153262388613076126, guid: 632711e78d59c1245a461badb453deb2, type: 3}
   m_PrefabInstance: {fileID: 1874435737149665222}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1593121611
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1593121614}
+  - component: {fileID: 1593121613}
+  - component: {fileID: 1593121612}
+  m_Layer: 0
+  m_Name: ShikigamiParameterUtilityTest2
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 0
+--- !u!114 &1593121612
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1593121611}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9f568f61542daf248926ab14fed69e56, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  inputs:
+  - caseId: 0
+    pentagramTurnTableInfo:
+      slots:
+      - slotId: 0
+        shikigamiInfo:
+          prop:
+            type: 0
+            level: 0
+            mainSkills: []
+            subSkills: []
+        instanceId: 0
+    instanceId: 0
+  - caseId: 1000
+    pentagramTurnTableInfo:
+      slots:
+      - slotId: 1
+        shikigamiInfo:
+          prop:
+            type: 1
+            level: 0
+            mainSkills: []
+            subSkills: []
+        instanceId: 1
+    instanceId: 0
+  - caseId: 1001
+    pentagramTurnTableInfo:
+      slots: []
+    instanceId: 0
+  - caseId: 3000
+    pentagramTurnTableInfo:
+      slots:
+      - slotId: 0
+        shikigamiInfo:
+          prop:
+            type: 0
+            level: 0
+            mainSkills: []
+            subSkills: []
+        instanceId: 0
+      - slotId: 1
+        shikigamiInfo:
+          prop:
+            type: 1
+            level: 0
+            mainSkills: []
+            subSkills: []
+        instanceId: 1
+      - slotId: 2
+        shikigamiInfo:
+          prop:
+            type: 2
+            level: 0
+            mainSkills: []
+            subSkills: []
+        instanceId: 2
+      - slotId: 3
+        shikigamiInfo:
+          prop:
+            type: 3
+            level: 0
+            mainSkills: []
+            subSkills: []
+        instanceId: 3
+      - slotId: 4
+        shikigamiInfo:
+          prop:
+            type: 3
+            level: 0
+            mainSkills: []
+            subSkills: []
+        instanceId: 4
+    instanceId: 3
+  outputs:
+  - caseId: 0
+    shikigamiInfo:
+      prop:
+        type: 0
+        level: 0
+        mainSkills: []
+        subSkills: []
+    throwMessage: 
+  - caseId: 1000
+    shikigamiInfo:
+      prop:
+        type: 0
+        level: 0
+        mainSkills: []
+        subSkills: []
+    throwMessage: "1\u3064\u306E\u30B9\u30ED\u30C3\u30C8\u304B\u3089\u53D6\u5F97\u3067\u304D\u306A\u3044[0]"
+  - caseId: 1001
+    shikigamiInfo:
+      prop:
+        type: 0
+        level: 0
+        mainSkills: []
+        subSkills: []
+    throwMessage: "0\u3064\u306E\u30B9\u30ED\u30C3\u30C8\u304B\u3089\u53D6\u5F97\u3067\u304D\u306A\u3044"
+  - caseId: 3000
+    shikigamiInfo:
+      prop:
+        type: 3
+        level: 0
+        mainSkills: []
+        subSkills: []
+    throwMessage: 
+--- !u!114 &1593121613
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1593121611}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 914f260c9b0106542a65aef626c76f99, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!4 &1593121614
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1593121611}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1616231019
 GameObject:
   m_ObjectHideFlags: 0
@@ -5105,6 +5908,63 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1895524202}
   m_CullTransparentMesh: 1
+--- !u!1001 &1903271266
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 3023802622660258064, guid: 5d7044c8d42de1540a3954615dee3f19, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -7.96
+      objectReference: {fileID: 0}
+    - target: {fileID: 3023802622660258064, guid: 5d7044c8d42de1540a3954615dee3f19, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 2.95
+      objectReference: {fileID: 0}
+    - target: {fileID: 3023802622660258064, guid: 5d7044c8d42de1540a3954615dee3f19, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3023802622660258064, guid: 5d7044c8d42de1540a3954615dee3f19, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3023802622660258064, guid: 5d7044c8d42de1540a3954615dee3f19, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3023802622660258064, guid: 5d7044c8d42de1540a3954615dee3f19, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3023802622660258064, guid: 5d7044c8d42de1540a3954615dee3f19, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3023802622660258064, guid: 5d7044c8d42de1540a3954615dee3f19, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3023802622660258064, guid: 5d7044c8d42de1540a3954615dee3f19, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3023802622660258064, guid: 5d7044c8d42de1540a3954615dee3f19, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7776762512387094233, guid: 5d7044c8d42de1540a3954615dee3f19, type: 3}
+      propertyPath: m_Name
+      value: Enemy
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 5d7044c8d42de1540a3954615dee3f19, type: 3}
 --- !u!1 &1905701252
 GameObject:
   m_ObjectHideFlags: 0
@@ -6318,7 +7178,13 @@ SceneRoots:
   - {fileID: 925175836}
   - {fileID: 21203013}
   - {fileID: 968504355}
-  - {fileID: 2028995780}
+  - {fileID: 1593121614}
+  - {fileID: 1354063465}
+  - {fileID: 1148652705}
+  - {fileID: 1534838210}
   - {fileID: 542423181}
+  - {fileID: 2028995780}
   - {fileID: 464994368}
   - {fileID: 6831081724681878350}
+  - {fileID: 225512766}
+  - {fileID: 1903271266}

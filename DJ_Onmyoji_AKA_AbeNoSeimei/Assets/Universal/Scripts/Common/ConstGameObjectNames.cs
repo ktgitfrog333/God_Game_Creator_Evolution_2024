@@ -11,5 +11,7 @@ namespace Universal.Common
     {
         /// <summary>管理者データシングルトン</summary>
         public static readonly string GAMEOBJECT_NAME_ADMINDATA_SINGLETON = "AdminDataSingleton";
+        /// <summary>管理者データシングルトン</summary>
+        public static readonly string GAMEOBJECT_NAME_USERDATA_SINGLETON = "UserDataSingleton";
     }
 }

@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using Main.Model;
 using UniRx;
 using UnityEngine;
 
@@ -20,20 +21,20 @@ namespace Main.Utility
             !isHit.Value;
         }
 
-        public bool UpdateStateHPAndIsDead(IReactiveProperty<bool> isHit, IReactiveProperty<int> hp, int hpMax, IReactiveProperty<bool> isDead)
+        public bool UpdateStateHPAndIsDead(CharacterState state)
         {
             try
             {
-                isHit.ObserveEveryValueChanged(x => x.Value)
+                state.IsHit.ObserveEveryValueChanged(x => x.Value)
                     .Subscribe(x =>
                     {
                         if (x)
-                            if (1 < hp.Value)
-                                hp.Value--;
+                            if (state.Damage.Value < state.HP.Value)
+                                state.HP.Value -= state.Damage.Value;
                             else
                             {
-                                hp.Value = 0;
-                                isDead.Value = x;
+                                state.HP.Value = 0;
+                                state.IsDead.Value = x;
                             }
                     });
 
@@ -71,6 +72,6 @@ namespace Main.Utility
         /// <param name="hpMax">最大HP</param>
         /// <param name="isDead">死亡フラグ</param>
         /// <returns>成功／失敗</returns>
-        public bool UpdateStateHPAndIsDead(IReactiveProperty<bool> isHit, IReactiveProperty<int> hp, int hpMax, IReactiveProperty<bool> isDead);
+        public bool UpdateStateHPAndIsDead(CharacterState state);
     }
 }

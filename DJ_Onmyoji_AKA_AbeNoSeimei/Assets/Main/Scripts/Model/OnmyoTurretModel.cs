@@ -7,6 +7,8 @@ using UniRx.Triggers;
 using Unity.Collections.LowLevel.Unsafe;
 using Main.Utility;
 using Universal.Common;
+using Main.Common;
+using Universal.Bean;
 
 namespace Main.Model
 {
@@ -21,14 +23,22 @@ namespace Main.Model
         private Transform Transform => _transform != null ? _transform : _transform = transform;
         /// <summary>Rectトランスフォーム</summary>
         private RectTransform RectTransform => Transform as RectTransform;
+        /// <summary>式神タイプ別パラメータ管理</summary>
+        private ShikigamiParameterUtility _utility = new ShikigamiParameterUtility();
+        /// <summary>式神の情報</summary>
+        private ShikigamiInfo _shikigamiInfo;
+        public int InstanceID { get; private set; }
+
+        private void Awake()
+        {
+            InstanceID = GetInstanceID();
+        }
 
         protected override void Start()
         {
-            var adminDataSingleton = AdminDataSingleton.Instance != null ?
-                AdminDataSingleton.Instance :
-                new GameObject(ConstGameObjectNames.GAMEOBJECT_NAME_ADMINDATA_SINGLETON).AddComponent<AdminDataSingleton>()
-                    .GetComponent<AdminDataSingleton>();
-            instanceRateTimeSec = adminDataSingleton.AdminBean.OnmyoTurretModel.instanceRateTimeSec;
+            var model = GameObject.Find(Common.ConstGameObjectNames.GAMEOBJECT_NAME_PENTAGRAMTURNTABLE).GetComponent<PentagramTurnTableModel>();
+            _shikigamiInfo = _utility.GetShikigamiInfo(model.PentagramTurnTableInfo, InstanceID);
+            instanceRateTimeSec = _utility.GetMainSkillValue(_shikigamiInfo, MainSkillType.ActionRate);
             base.Start();
         }
 
@@ -38,7 +48,10 @@ namespace Main.Model
             while (true)
             {
                 var bullet = objectsPoolModel.GetOnmyoBulletModel();
-                if (!bullet.Initialize(CalibrationFromTarget(RectTransform), RectTransform.parent.eulerAngles))
+                if (!bullet.Initialize(CalibrationFromTarget(RectTransform),
+                    RectTransform.parent.eulerAngles,
+                    _utility.GetMainSkillValue(_shikigamiInfo, MainSkillType.BulletLifeTime),
+                    (int)_utility.GetMainSkillValue(_shikigamiInfo, MainSkillType.AttackPoint)))
                     Debug.LogError("Initialize");
                 if (!bullet.isActiveAndEnabled)
                     bullet.gameObject.SetActive(true);

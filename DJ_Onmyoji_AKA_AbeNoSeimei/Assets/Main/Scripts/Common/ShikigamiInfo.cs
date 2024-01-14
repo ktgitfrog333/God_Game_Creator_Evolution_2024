@@ -31,17 +31,27 @@ namespace Main.Common
             /// <summary>サブスキル</summary>
             public SubSkill[] subSkills;
 
+            /// <summary>
+            /// メインスキル
+            /// </summary>
             [System.Serializable]
             public struct MainSkill
             {
+                /// <summary>メインスキルタイプ</summary>
                 public MainSkillType type;
+                /// <summary>スキルランク</summary>
                 public SkillRank rank;
             }
 
+            /// <summary>
+            /// サブスキル
+            /// </summary>
             [System.Serializable]
             public struct SubSkill
             {
+                /// <summary>サブスキルタイプ</summary>
                 public SubSkillType type;
+                /// <summary>スキルランク</summary>
                 public SkillRank rank;
             }
         }

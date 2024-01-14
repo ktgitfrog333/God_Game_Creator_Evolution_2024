@@ -51,8 +51,8 @@ MonoBehaviour:
   onmyoBulletConfig:
     moveDirection: {x: 0, y: -1}
     moveSpeed: 8
-    disableTimeSec: 10
   searchRangeOfEnemyCollider: {fileID: 2578331227085221079}
+  attackColliderOfOnmyoBullet: {fileID: 5613219771800739048}
 --- !u!1 &4814003594807145739
 GameObject:
   m_ObjectHideFlags: 0

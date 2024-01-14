@@ -29,15 +29,19 @@ namespace Main.Model
         /// <summary>敵が攻撃範囲へ侵入した判定のトリガー</summary>
         [Tooltip("敵が攻撃範囲へ侵入した判定のトリガー")]
         [SerializeField] private SearchRangeOfEnemyCollider searchRangeOfEnemyCollider;
+        /// <summary>攻撃を与える判定のトリガー</summary>
+        [SerializeField] private AttackColliderOfOnmyoBullet attackColliderOfOnmyoBullet;
 
-        public bool Initialize(Vector2 position, Vector3 eulerAngles)
+        public bool Initialize(Vector2 position, Vector3 eulerAngles, float disableTimeSec, int attackPoint)
         {
             try
             {
                 _moveDirection = Quaternion.Euler(eulerAngles) * onmyoBulletConfig.moveDirection;
                 _moveSpeed = onmyoBulletConfig.moveSpeed;
-                _disableTimeSec = onmyoBulletConfig.disableTimeSec;
+                _disableTimeSec = disableTimeSec;
                 Transform.position = position;
+                if (!attackColliderOfOnmyoBullet.SetAttackPoint(attackPoint))
+                    Debug.LogError("SetAttackPoint");
 
                 return true;
             }
@@ -50,8 +54,8 @@ namespace Main.Model
 
         protected override void Reset()
         {
-            onmyoBulletConfig.disableTimeSec = 10f;
             searchRangeOfEnemyCollider = GetComponentInChildren<SearchRangeOfEnemyCollider>();
+            attackColliderOfOnmyoBullet = GetComponentInChildren<AttackColliderOfOnmyoBullet>();
             base.Reset();
         }
 
@@ -95,9 +99,6 @@ namespace Main.Model
         /// <summary>移動速度</summary>
         [Tooltip("移動速度")]
         public float moveSpeed;
-        /// <summary>停止するまでの時間</summary>
-        [Tooltip("停止するまでの時間")]
-        public float disableTimeSec;
     }
 
     public interface IOnmyoBulletModel
@@ -107,7 +108,9 @@ namespace Main.Model
         /// </summary>
         /// <param name="position">生成位置</param>
         /// <param name="eulerAngles">初期角度</param>
+        /// <param name="disableTimeSec">停止するまでの時間</param>
+        /// <param name="attackPoint">攻撃力</param>
         /// <returns>成功／失敗</returns>
-        public bool Initialize(Vector2 position, Vector3 eulerAngles);
+        public bool Initialize(Vector2 position, Vector3 eulerAngles, float disableTimeSec, int attackPoint);
     }
 }

@@ -197,7 +197,7 @@ namespace Main.Utility
                         {
                             var tempoLv = item.state.tempoLevel.Value;
                             var shikigamiLv = item.prop.level;
-                            float actionRate = utility.GetActionRate(item, MainSkillType.ActionRate);
+                            float actionRate = utility.GetMainSkillValue(item, MainSkillType.ActionRate);
                             costSum += tempoLv * shikigamiLv * actionRate;
                         }
                         var calcResult = candleInfo.CandleResource.Value - costSum * Time.deltaTime;

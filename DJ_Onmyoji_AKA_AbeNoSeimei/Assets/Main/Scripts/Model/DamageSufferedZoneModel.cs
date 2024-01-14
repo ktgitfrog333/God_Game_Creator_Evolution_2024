@@ -14,7 +14,7 @@ namespace Main.Model
     /// 攻撃を受ける判定のトリガー
     /// </summary>
     [RequireComponent(typeof(CircleCollider2D))]
-    public class DamageSufferedZoneModel : MonoBehaviour
+    public class DamageSufferedZoneModel : MonoBehaviour, IDamageSufferedZoneModel
     {
         /// <summary>当たったか</summary>
         public IReactiveProperty<bool> IsHit { get; private set; } = new BoolReactiveProperty();
@@ -30,6 +30,10 @@ namespace Main.Model
         private CircleCollider2D _collider2D;
         /// <summary>2Dコライダー</summary>
         private CircleCollider2D Collider2D => _collider2D != null ? _collider2D : _collider2D = GetComponent<CircleCollider2D>();
+        /// <summary>ダメージ値</summary>
+        public IReactiveProperty<int> Damage { get; private set; } = new IntReactiveProperty();
+        /// <summary>攻撃力</summary>
+        protected int AttackPoint { get; private set; }
 
         protected virtual void Start()
         {
@@ -52,13 +56,35 @@ namespace Main.Model
         protected virtual void OnTriggerEnter2D(Collider2D other)
         {
             if (_utility.IsCompareTagAndUpdateReactiveFlag(other, tags, IsHit))
+            {
+                var atttack = other.GetComponent<DamageSufferedZoneModel>();
+                if (atttack != null)
+                    Damage.Value = atttack.AttackPoint;
+                else
+                    Damage.Value = 1;
                 IsHit.Value = true;
+            }
         }
 
         protected virtual void OnDisable()
         {
             if (!ResetState(IsHit, Collider2D))
                 Debug.LogError("ResetState");
+        }
+
+        public bool SetAttackPoint(int attackPoint)
+        {
+            try
+            {
+                AttackPoint = attackPoint;
+
+                return true;
+            }
+            catch (System.Exception e)
+            {
+                Debug.LogError(e);
+                return false;
+            }
         }
 
         /// <summary>
@@ -82,5 +108,19 @@ namespace Main.Model
                 return false;
             }
         }
+    }
+
+    /// <summary>
+    /// 攻撃を与える判定のトリガー
+    /// インターフェース
+    /// </summary>
+    public interface IDamageSufferedZoneModel
+    {
+        /// <summary>
+        /// 攻撃力をセット
+        /// </summary>
+        /// <param name="attackPoint">攻撃力</param>
+        /// <returns>成功／失敗</returns>
+        public bool SetAttackPoint(int attackPoint);
     }
 }
