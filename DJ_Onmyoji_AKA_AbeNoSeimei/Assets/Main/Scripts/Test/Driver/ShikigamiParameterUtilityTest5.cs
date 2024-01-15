@@ -36,7 +36,8 @@ namespace Main.Test.Driver
                 .Where(q => q.caseId == caseId)
                 .Select(q => q)
                 .ToArray()[0];
-            utility.UserDataSingleton.UserBean.pentagramTurnTableInfo.slots = input.slots;
+            var utilityCommon = new MainCommonUtility();
+            utilityCommon.UserDataSingleton.UserBean.pentagramTurnTableInfo.slots = input.slots;
             if (!isAbnormal)
                 OutputResult(SequenceEqualAddOption(utility.GetPentagramTurnTableInfo().slots, output.pentagramTurnTableInfo.slots), caseId);
             else

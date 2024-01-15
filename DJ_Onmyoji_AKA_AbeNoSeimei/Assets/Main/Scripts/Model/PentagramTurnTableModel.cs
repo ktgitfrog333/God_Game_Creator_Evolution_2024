@@ -19,6 +19,8 @@ namespace Main.Model
         /// <summary>陰陽玉（陰陽砲台）プレハブ</summary>
         [Tooltip("陰陽玉（陰陽砲台）プレハブ")]
         [SerializeField] private Transform onmyoTurretPrefab;
+        /// <summary>ラッププレハブ</summary>
+        [SerializeField] private Transform wrapTurretModel;
         /// <summary>円の中心から外周への距離</summary>
         [Tooltip("円の中心から外周への距離")]
         [SerializeField] private float distance;
@@ -54,7 +56,7 @@ namespace Main.Model
                     Vector3 position = new Vector3(Mathf.Cos(angle), Mathf.Sin(angle), 0) * distance;
                     var slot = slots[item.Index];
                     Transform turret = Instantiate(GetTargetOfPrefab(slot.shikigamiInfo.prop.type), position, Quaternion.identity);
-                    slot.instanceId = turret.GetComponent<OnmyoTurretModel>().InstanceID;
+                    slot.instanceId = turret.GetComponent<TurretModel>().InstanceID;
                     slots[item.Index] = slot;
                     turret.SetParent(t, false);
                 }
@@ -73,7 +75,7 @@ namespace Main.Model
             switch (shikigamiType)
             {
                 case ShikigamiType.Wrap:
-                    throw new System.NotImplementedException("ラップのプレハブ未実装");
+                    return wrapTurretModel;
                 case ShikigamiType.Dance:
                     throw new System.NotImplementedException("ダンスのプレハブ未実装");
                 case ShikigamiType.Graffiti:

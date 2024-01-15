@@ -32,11 +32,12 @@ namespace Main.Model
         /// <summary>攻撃を与える判定のトリガー</summary>
         [SerializeField] private AttackColliderOfOnmyoBullet attackColliderOfOnmyoBullet;
 
-        public bool Initialize(Vector2 position, Vector3 eulerAngles, float disableTimeSec, int attackPoint)
+        public bool Initialize(Vector2 position, Vector3 eulerAngles, float disableTimeSec, int attackPoint, Vector2 moveDirection=new Vector2())
         {
             try
             {
-                _moveDirection = Quaternion.Euler(eulerAngles) * onmyoBulletConfig.moveDirection;
+                _moveDirection = Quaternion.Euler(eulerAngles) * (!moveDirection.Equals(Vector2.zero) ?
+                    moveDirection : onmyoBulletConfig.moveDirection);
                 _moveSpeed = onmyoBulletConfig.moveSpeed;
                 _disableTimeSec = disableTimeSec;
                 Transform.position = position;
@@ -110,7 +111,8 @@ namespace Main.Model
         /// <param name="eulerAngles">初期角度</param>
         /// <param name="disableTimeSec">停止するまでの時間</param>
         /// <param name="attackPoint">攻撃力</param>
+        /// <param name="moveDirection">移動方向</param>
         /// <returns>成功／失敗</returns>
-        public bool Initialize(Vector2 position, Vector3 eulerAngles, float disableTimeSec, int attackPoint);
+        public bool Initialize(Vector2 position, Vector3 eulerAngles, float disableTimeSec, int attackPoint, Vector2 moveDirection=new Vector2());
     }
 }

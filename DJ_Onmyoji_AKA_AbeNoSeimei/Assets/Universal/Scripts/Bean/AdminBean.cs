@@ -47,6 +47,7 @@ namespace Universal.Bean
         public EnemiesSpawnModel EnemiesSpawnModel = new EnemiesSpawnModel();
         public ObjectsPoolModel ObjectsPoolModel = new ObjectsPoolModel();
         public OnmyoBulletModel OnmyoBulletModel = new OnmyoBulletModel();
+        public WrapTurretModel WrapTurretModel = new WrapTurretModel();
         public PentagramSystemModel PentagramSystemModel = new PentagramSystemModel();
         public PentagramTurnTableView PentagramTurnTableView = new PentagramTurnTableView();
         public PentagramTurnTableModel PentagramTurnTableModel = new PentagramTurnTableModel();
@@ -97,6 +98,7 @@ namespace Universal.Bean
             EnemiesSpawnModel = adminBean.EnemiesSpawnModel;
             ObjectsPoolModel = adminBean.ObjectsPoolModel;
             OnmyoBulletModel = adminBean.OnmyoBulletModel;
+            WrapTurretModel = adminBean.WrapTurretModel;
             PentagramSystemModel = adminBean.PentagramSystemModel;
             PentagramTurnTableView = adminBean.PentagramTurnTableView;
             PentagramTurnTableModel = adminBean.PentagramTurnTableModel;
@@ -165,6 +167,13 @@ namespace Universal.Bean
         public Vector2 moveDirection = Vector2.down;
         /// <summary>移動速度</summary>
         public float moveSpeed = 8f;
+    }
+
+    [System.Serializable]
+    public class WrapTurretModel
+    {
+        /// <summary>移動方向</summary>
+        public Vector2 moveDirection = Vector2.up;
     }
 
     [System.Serializable]

@@ -19,32 +19,9 @@ namespace Main.Utility
     /// <see href="https://www.notion.so/a72678495bbf42b2af5f88bcfcc29198?pvs=4"/>
     public class ShikigamiParameterUtility : IShikigamiParameterUtility
     {
-        /// <summary>管理者データ</summary>
-        private AdminDataSingleton _adminDataSingleton;
-        /// <summary>管理者データ</summary>
-        public AdminDataSingleton AdminDataSingleton => _adminDataSingleton != null ? _adminDataSingleton : GetAdminDataSingleton();
-        /// <summary>管理者データ</summary>
-        private AdminDataSingleton GetAdminDataSingleton()
-        {
-            var adminDataSingleton = AdminDataSingleton.Instance != null ?
-                AdminDataSingleton.Instance :
-                new GameObject(Universal.Common.ConstGameObjectNames.GAMEOBJECT_NAME_ADMINDATA_SINGLETON).AddComponent<AdminDataSingleton>()
-                    .GetComponent<AdminDataSingleton>();
-            return adminDataSingleton;
-        }
-        /// <summary>ユーザデータ</summary>
-        private UserDataSingleton _userDataSingleton;
-        /// <summary>ユーザデータ</summary>
-        public UserDataSingleton UserDataSingleton => _userDataSingleton != null ? _userDataSingleton : GetUserDataSingleton();
-        /// <summary>ユーザデータ</summary>
-        private UserDataSingleton GetUserDataSingleton()
-        {
-            var singleton = UserDataSingleton.Instance != null ?
-                UserDataSingleton.Instance :
-                new GameObject(Universal.Common.ConstGameObjectNames.GAMEOBJECT_NAME_USERDATA_SINGLETON).AddComponent<UserDataSingleton>()
-                    .GetComponent<UserDataSingleton>();
-            return singleton;
-        }
+        /// <summary>共通のユーティリティ</summary>
+        private MainCommonUtility _common = new MainCommonUtility();
+
         /// <summary>
         /// スロット番号が未セットであることを表す定数
         /// </summary>
@@ -52,7 +29,7 @@ namespace Main.Utility
 
         public float GetMainSkillValue(ShikigamiInfo shikigamiInfo, MainSkillType mainSkillType)
         {
-            var skillLists = AdminDataSingleton.AdminBean.levelDesign.mainSkillLists;
+            var skillLists = _common.AdminDataSingleton.AdminBean.levelDesign.mainSkillLists;
             if (skillLists.Length < 1)
                 throw new System.Exception($"{skillLists.Length}つのメインスキルプロパティから取得できない");
 
@@ -109,7 +86,7 @@ namespace Main.Utility
             try
             {
                 List<PentagramTurnTableInfo.Slot> slots = new List<PentagramTurnTableInfo.Slot>();
-                var bean = UserDataSingleton.UserBean;
+                var bean = _common.UserDataSingleton.UserBean;
                 if (bean.pentagramTurnTableInfo == null ||
                     bean.pentagramTurnTableInfo.slots == null ||
                     bean.pentagramTurnTableInfo.slots.Length < 2)
