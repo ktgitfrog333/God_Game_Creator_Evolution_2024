@@ -20,7 +20,9 @@ namespace Main.Model
         [Tooltip("陰陽玉（陰陽砲台）プレハブ")]
         [SerializeField] private Transform onmyoTurretPrefab;
         /// <summary>ラッププレハブ</summary>
-        [SerializeField] private Transform wrapTurretModel;
+        [SerializeField] private Transform wrapTurretPrefab;
+        /// <summary>ダンスプレハブ</summary>
+        [SerializeField] private Transform danceTurretPrefab;
         /// <summary>円の中心から外周への距離</summary>
         [Tooltip("円の中心から外周への距離")]
         [SerializeField] private float distance;
@@ -75,9 +77,9 @@ namespace Main.Model
             switch (shikigamiType)
             {
                 case ShikigamiType.Wrap:
-                    return wrapTurretModel;
+                    return wrapTurretPrefab;
                 case ShikigamiType.Dance:
-                    throw new System.NotImplementedException("ダンスのプレハブ未実装");
+                    return danceTurretPrefab;
                 case ShikigamiType.Graffiti:
                     throw new System.NotImplementedException("グラフィティのプレハブ未実装");
                 case ShikigamiType.OnmyoTurret:

@@ -155,6 +155,30 @@
 				"mainSkillType": 2,
 				"skillRank": 0,
 				"value": 10
+			},
+			{
+				"shikigamiType": 1,
+				"mainSkillType": 1,
+				"skillRank": 0,
+				"value": 0.5
+			},
+			{
+				"shikigamiType": 1,
+				"mainSkillType": 3,
+				"skillRank": 0,
+				"value": 1
+			},
+			{
+				"shikigamiType": 1,
+				"mainSkillType": 2,
+				"skillRank": 0,
+				"value": 0.1
+			},
+			{
+				"shikigamiType": 1,
+				"mainSkillType": 6,
+				"skillRank": 0,
+				"value": 1.5
 			}
 		]
 	}

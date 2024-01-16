@@ -12,33 +12,21 @@ namespace Main.Model
     /// </summary>
     public class WrapTurretModel : TurretModel
     {
-        /// <summary>設定</summary>
-        [SerializeField] private OnmyoBulletConfig onmyoBulletConfig;
-
-        protected override void Awake()
+        protected override OnmyoBulletConfig GetOnmyoBulletConfig()
         {
-            var utility = new MainCommonUtility();
-            // 陰陽玉と発射角度が異なるため再設定
-            onmyoBulletConfig.moveDirection = utility.AdminDataSingleton.AdminBean.WrapTurretModel.moveDirection;
-            base.Awake();
+            return new OnmyoBulletConfig()
+            {
+                actionRate = _shikigamiUtility.GetMainSkillValue(_shikigamiInfo, MainSkillType.ActionRate),
+                attackPoint = (int)_shikigamiUtility.GetMainSkillValue(_shikigamiInfo, MainSkillType.AttackPoint),
+                bulletLifeTime = _shikigamiUtility.GetMainSkillValue(_shikigamiInfo, MainSkillType.BulletLifeTime),
+                // 陰陽玉と発射角度が異なるため再設定
+                moveDirection = new MainCommonUtility().AdminDataSingleton.AdminBean.WrapTurretModel.moveDirection,
+            };
         }
 
-        protected override IEnumerator InstanceCloneObjects(float instanceRateTimeSec, ObjectsPoolModel objectsPoolModel)
+        protected override bool ActionOfBullet(ObjectsPoolModel objectsPoolModel, OnmyoBulletConfig onmyoBulletConfig)
         {
-            // 一定間隔で弾を生成するための実装
-            while (true)
-            {
-                var bullet = objectsPoolModel.GetOnmyoBulletModel();
-                if (!bullet.Initialize(CalibrationFromTarget(RectTransform),
-                    RectTransform.parent.eulerAngles,
-                    _utility.GetMainSkillValue(_shikigamiInfo, MainSkillType.BulletLifeTime),
-                    (int)_utility.GetMainSkillValue(_shikigamiInfo, MainSkillType.AttackPoint),
-                    onmyoBulletConfig.moveDirection))
-                    Debug.LogError("Initialize");
-                if (!bullet.isActiveAndEnabled)
-                    bullet.gameObject.SetActive(true);
-                yield return new WaitForSeconds(instanceRateTimeSec);
-            }
+            return _turretUtility.CallInitialize(objectsPoolModel.GetWrapBulletModel(), RectTransform, onmyoBulletConfig);
         }
     }
 }

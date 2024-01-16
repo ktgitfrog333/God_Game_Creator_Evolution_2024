@@ -22,6 +22,14 @@ namespace Main.Model
         [SerializeField] private Transform onmyoBulletPrefab;
         /// <summary>魔力弾配列</summary>
         private List<OnmyoBulletModel> _onmyoBulletModels = new List<OnmyoBulletModel>();
+        /// <summary>魔力弾（ラップ用）のプレハブ</summary>
+        [SerializeField] private Transform wrapBulletPrefab;
+        /// <summary>魔力弾（ラップ用）配列</summary>
+        private List<WrapBulletModel> _wrapBulletModels = new List<WrapBulletModel>();
+        /// <summary>ダンスホールのプレハブ</summary>
+        [SerializeField] private Transform danceHallPrefab;
+        /// <summary>ダンスホール配列</summary>
+        private List<DanceHallModel> _danceHallModels = new List<DanceHallModel>();
         /// <summary>敵のプレハブ</summary>
         [Tooltip("敵のプレハブ")]
         [SerializeField] private Transform enemyPrefab;
@@ -31,6 +39,16 @@ namespace Main.Model
         public OnmyoBulletModel GetOnmyoBulletModel()
         {
             return GetInactiveComponent(_onmyoBulletModels, onmyoBulletPrefab, _transform);
+        }
+
+        public WrapBulletModel GetWrapBulletModel()
+        {
+            return GetInactiveComponent(_wrapBulletModels, wrapBulletPrefab, _transform);
+        }
+
+        public DanceHallModel GetDanceHallModel()
+        {
+            return GetInactiveComponent(_danceHallModels, danceHallPrefab, _transform);
         }
 
         public EnemyModel GetEnemyModel()
@@ -52,6 +70,8 @@ namespace Main.Model
             {
                 // プレハブを生成してプールする
                 _onmyoBulletModels.Add(GetClone(onmyoBulletPrefab, _transform).GetComponent<OnmyoBulletModel>());
+                _wrapBulletModels.Add(GetClone(wrapBulletPrefab, _transform).GetComponent<WrapBulletModel>());
+                _danceHallModels.Add(GetClone(danceHallPrefab, _transform).GetComponent<DanceHallModel>());
                 _enemyModels.Add(GetClone(enemyPrefab, _transform).GetComponent<EnemyModel>());
             }
             Debug.Log("プール完了");
@@ -93,6 +113,16 @@ namespace Main.Model
         /// </summary>
         /// <returns>魔力弾</returns>
         public OnmyoBulletModel GetOnmyoBulletModel();
+        /// <summary>
+        /// 魔力弾（ラップ用）を取り出す
+        /// </summary>
+        /// <returns>魔力弾（ラップ用）</returns>
+        public WrapBulletModel GetWrapBulletModel();
+        /// <summary>
+        /// ダンスホールを取り出す
+        /// </summary>
+        /// <returns>ダンスホール</returns>
+        public DanceHallModel GetDanceHallModel();
         /// <summary>
         /// 敵を取り出す
         /// </summary>

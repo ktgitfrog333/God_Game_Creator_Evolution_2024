@@ -13,7 +13,9 @@ namespace Main.Model
     {
         /// <summary>ユーティリティ</summary>
         private EnemyPlayerModelUtility _utility = new EnemyPlayerModelUtility();
+        /// <summary>ターゲット</summary>
         public Transform Target { get; private set; }
+
         private void Reset()
         {
             tags = new string[1];

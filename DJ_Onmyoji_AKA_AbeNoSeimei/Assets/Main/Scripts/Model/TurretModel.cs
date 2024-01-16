@@ -19,9 +19,12 @@ namespace Main.Model
         /// <summary>Rectトランスフォーム</summary>
         protected RectTransform RectTransform => Transform as RectTransform;
         /// <summary>式神タイプ別パラメータ管理</summary>
-        protected ShikigamiParameterUtility _utility = new ShikigamiParameterUtility();
+        protected ShikigamiParameterUtility _shikigamiUtility = new ShikigamiParameterUtility();
+        /// <summary>砲台系ユーティリティ</summary>
+        protected TurretUtility _turretUtility = new TurretUtility();
         /// <summary>式神の情報</summary>
         protected ShikigamiInfo _shikigamiInfo;
+        /// <summary>インスタンスID</summary>
         public int InstanceID { get; private set; }
 
         protected virtual void Awake()
@@ -32,23 +35,34 @@ namespace Main.Model
         protected override void Start()
         {
             var model = GameObject.Find(ConstGameObjectNames.GAMEOBJECT_NAME_PENTAGRAMTURNTABLE).GetComponent<PentagramTurnTableModel>();
-            _shikigamiInfo = _utility.GetShikigamiInfo(model.PentagramTurnTableInfo, InstanceID);
-            instanceRateTimeSec = _utility.GetMainSkillValue(_shikigamiInfo, MainSkillType.ActionRate);
+            _shikigamiInfo = _shikigamiUtility.GetShikigamiInfo(model.PentagramTurnTableInfo, InstanceID);
+            instanceRateTimeSec = _shikigamiUtility.GetMainSkillValue(_shikigamiInfo, MainSkillType.ActionRate);
             base.Start();
         }
 
         /// <summary>
-        /// ターゲット位置を元に調整（From）
+        /// 初期化処理
         /// </summary>
-        /// <param name="rectTransform">UIターゲット情報</param>
+        /// <returns>魔力弾の設定</returns>
+        protected abstract OnmyoBulletConfig GetOnmyoBulletConfig();
+
+        /// <summary>
+        /// 魔力弾／円舞範囲／デバフ魔力弾の制御
+        /// </summary>
+        /// <param name="objectsPoolModel">オブジェクトプール</param>
         /// <returns>成功／失敗</returns>
-        protected Vector3 CalibrationFromTarget(RectTransform rectTransform)
+        protected abstract bool ActionOfBullet(ObjectsPoolModel objectsPoolModel, OnmyoBulletConfig onmyoBulletConfig);
+
+        protected override IEnumerator InstanceCloneObjects(float instanceRateTimeSec, ObjectsPoolModel objectsPoolModel)
         {
-            // UI要素のローカル座標を取得
-            Vector3 localPosition = rectTransform.localPosition;
-            // ローカル座標をワールド座標に変換
-            Vector3 worldPosition = rectTransform.parent.TransformPoint(localPosition);
-            return worldPosition;
+            var config = GetOnmyoBulletConfig();
+            // 一定間隔で弾を生成するための実装
+            while (true)
+            {
+                if (!ActionOfBullet(objectsPoolModel, config))
+                    Debug.LogError("ActionOfBullet");
+                yield return new WaitForSeconds(instanceRateTimeSec);
+            }
         }
     }
 }

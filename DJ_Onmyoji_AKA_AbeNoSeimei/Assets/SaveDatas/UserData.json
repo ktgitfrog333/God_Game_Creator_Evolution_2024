@@ -88,6 +88,32 @@
 					],
 					"subSkills": []
 				}
+			},
+			{
+				"slotId": 3,
+				"shikigamiInfo": {
+					"type": 1,
+					"level": 1,
+					"mainSkills": [
+						{
+							"type": 1,
+							"rank": 0
+						},
+						{
+							"type": 3,
+							"rank": 0
+						},
+						{
+							"type": 2,
+							"rank": 0
+						},
+						{
+							"type": 6,
+							"rank": 0
+						}
+					],
+					"subSkills": []
+				}
 			}
 		]
 	}
