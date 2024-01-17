@@ -48,6 +48,7 @@ namespace Universal.Bean
         public ObjectsPoolModel ObjectsPoolModel = new ObjectsPoolModel();
         public OnmyoBulletModel OnmyoBulletModel = new OnmyoBulletModel();
         public WrapTurretModel WrapTurretModel = new WrapTurretModel();
+        public GraffitiTurretModel GraffitiTurretModel = new GraffitiTurretModel();
         public PentagramSystemModel PentagramSystemModel = new PentagramSystemModel();
         public PentagramTurnTableView PentagramTurnTableView = new PentagramTurnTableView();
         public PentagramTurnTableModel PentagramTurnTableModel = new PentagramTurnTableModel();
@@ -171,6 +172,13 @@ namespace Universal.Bean
 
     [System.Serializable]
     public class WrapTurretModel
+    {
+        /// <summary>移動方向</summary>
+        public Vector2 moveDirection = Vector2.up;
+    }
+
+    [System.Serializable]
+    public class GraffitiTurretModel
     {
         /// <summary>移動方向</summary>
         public Vector2 moveDirection = Vector2.up;

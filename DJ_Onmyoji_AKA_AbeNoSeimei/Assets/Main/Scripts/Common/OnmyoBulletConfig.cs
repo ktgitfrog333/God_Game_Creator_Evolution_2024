@@ -26,5 +26,7 @@ namespace Main.Common
         public float range;
         /// <summary>トラッキング対象</summary>
         public RectTransform trackingOfAny;
+        /// <summary>デバフ効果時間</summary>
+        public float debuffEffectLifeTime;
     }
 }

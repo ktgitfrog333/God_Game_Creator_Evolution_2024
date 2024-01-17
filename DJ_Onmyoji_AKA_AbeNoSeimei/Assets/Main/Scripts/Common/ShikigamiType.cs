@@ -57,8 +57,8 @@ namespace Main.Common
         BulletLifeTime = 2,
         /// <summary>範囲</summary>
         Range = 6,
-        /// <summary>展開時間</summary>
-        DevelopmentTime = 7,
+        /// <summary>デバフ効果時間</summary>
+        DebuffEffectLifeTime = 7,
     }
 
     /// <summary>

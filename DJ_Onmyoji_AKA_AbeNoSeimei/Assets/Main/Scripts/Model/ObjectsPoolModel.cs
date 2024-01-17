@@ -30,6 +30,10 @@ namespace Main.Model
         [SerializeField] private Transform danceHallPrefab;
         /// <summary>ダンスホール配列</summary>
         private List<DanceHallModel> _danceHallModels = new List<DanceHallModel>();
+        /// <summary>魔力弾（グラフィティ用）のプレハブ</summary>
+        [SerializeField] private Transform graffitiBulletPrefab;
+        /// <summary>魔力弾（グラフィティ用）配列</summary>
+        private List<GraffitiBulletModel> _graffitiBulletModels = new List<GraffitiBulletModel>();
         /// <summary>敵のプレハブ</summary>
         [Tooltip("敵のプレハブ")]
         [SerializeField] private Transform enemyPrefab;
@@ -49,6 +53,11 @@ namespace Main.Model
         public DanceHallModel GetDanceHallModel()
         {
             return GetInactiveComponent(_danceHallModels, danceHallPrefab, _transform);
+        }
+
+        public GraffitiBulletModel GetGraffitiBulletModel()
+        {
+            return GetInactiveComponent(_graffitiBulletModels, graffitiBulletPrefab, _transform);
         }
 
         public EnemyModel GetEnemyModel()
@@ -72,6 +81,7 @@ namespace Main.Model
                 _onmyoBulletModels.Add(GetClone(onmyoBulletPrefab, _transform).GetComponent<OnmyoBulletModel>());
                 _wrapBulletModels.Add(GetClone(wrapBulletPrefab, _transform).GetComponent<WrapBulletModel>());
                 _danceHallModels.Add(GetClone(danceHallPrefab, _transform).GetComponent<DanceHallModel>());
+                _graffitiBulletModels.Add(GetClone(graffitiBulletPrefab, _transform).GetComponent<GraffitiBulletModel>());
                 _enemyModels.Add(GetClone(enemyPrefab, _transform).GetComponent<EnemyModel>());
             }
             Debug.Log("プール完了");
@@ -123,6 +133,11 @@ namespace Main.Model
         /// </summary>
         /// <returns>ダンスホール</returns>
         public DanceHallModel GetDanceHallModel();
+        /// <summary>
+        /// 魔力弾（グラフィティ用）を取り出す
+        /// </summary>
+        /// <returns>魔力弾（グラフィティ用）</returns>
+        public GraffitiBulletModel GetGraffitiBulletModel();
         /// <summary>
         /// 敵を取り出す
         /// </summary>

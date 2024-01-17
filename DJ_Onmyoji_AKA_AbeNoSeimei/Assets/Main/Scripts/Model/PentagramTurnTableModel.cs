@@ -23,6 +23,8 @@ namespace Main.Model
         [SerializeField] private Transform wrapTurretPrefab;
         /// <summary>ダンスプレハブ</summary>
         [SerializeField] private Transform danceTurretPrefab;
+        /// <summary>グラフィティプレハブ</summary>
+        [SerializeField] private Transform graffitiTurretPrefab;
         /// <summary>円の中心から外周への距離</summary>
         [Tooltip("円の中心から外周への距離")]
         [SerializeField] private float distance;
@@ -81,7 +83,7 @@ namespace Main.Model
                 case ShikigamiType.Dance:
                     return danceTurretPrefab;
                 case ShikigamiType.Graffiti:
-                    throw new System.NotImplementedException("グラフィティのプレハブ未実装");
+                    return graffitiTurretPrefab;
                 case ShikigamiType.OnmyoTurret:
                     return onmyoTurretPrefab;
                 default:

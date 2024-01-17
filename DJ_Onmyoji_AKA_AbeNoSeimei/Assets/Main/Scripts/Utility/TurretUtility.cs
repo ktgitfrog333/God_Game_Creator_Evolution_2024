@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Main.Common;
 using Main.Model;
+using UniRx;
 using UnityEngine;
 
 namespace Main.Utility
@@ -83,6 +84,30 @@ namespace Main.Utility
             Vector3 worldPosition = rectTransform.parent.TransformPoint(localPosition);
             return worldPosition;
         }
+
+        public bool UpdateScale(IReactiveProperty<float> elapsedTime, float disableTimeSec, float rangeMin, float rangeMax, AttackColliderOfOnmyoBullet attackColliderOfOnmyoBullet)
+        {
+            try
+            {
+                if (0f < rangeMax)
+                {
+                    if (elapsedTime.Value < disableTimeSec)
+                    {
+                        float newRadius = Mathf.Lerp(rangeMin, rangeMax, elapsedTime.Value / disableTimeSec);
+                        if (!attackColliderOfOnmyoBullet.SetRadiosOfCircleCollier2D(newRadius))
+                            throw new System.Exception("SetRadiosOfCircleCollier2D");
+                        elapsedTime.Value += Time.fixedDeltaTime;
+                    }
+                }
+
+                return true;
+            }
+            catch (System.Exception e)
+            {
+                Debug.LogError(e);
+                return false;
+            }
+        }
     }
 
     /// <summary>
@@ -116,5 +141,16 @@ namespace Main.Utility
         /// <param name="toTransform">自分トランスフォーム</param>
         /// <returns>成功／失敗</returns>
         public bool InitiateDance(RectTransform target, Transform toTransform);
+
+        /// <summary>
+        /// 大きさを調整
+        /// </summary>
+        /// <param name="elapsedTime">経過時間</param>
+        /// <param name="disableTimeSec">停止するまでの時間</param>
+        /// <param name="rangeMin">最小範囲</param>
+        /// <param name="rangeMax">最大範囲</param>
+        /// <param name="attackColliderOfOnmyoBullet">攻撃を与える判定のトリガー</param>
+        /// <returns>成功／失敗</returns>
+        public bool UpdateScale(IReactiveProperty<float> elapsedTime, float disableTimeSec, float rangeMin, float rangeMax, AttackColliderOfOnmyoBullet attackColliderOfOnmyoBullet);
     }
 }

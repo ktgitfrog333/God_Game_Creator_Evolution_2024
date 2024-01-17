@@ -52,7 +52,7 @@ namespace Main.Model
             base.Awake();
         }
 
-        private void OnEnable()
+        protected virtual void OnEnable()
         {
             StartCoroutine(GeneralUtility.ActionsAfterDelay(_disableTimeSec, () => gameObject.SetActive(false)));
         }

@@ -106,4 +106,5 @@ MonoBehaviour:
   onmyoTurretPrefab: {fileID: 587858414020859591, guid: 94017ce0763f49b4491760b6598ec82f, type: 3}
   wrapTurretPrefab: {fileID: 8449929004968720327, guid: 61a590fb2bd6da64d85c91e8040b6ad6, type: 3}
   danceTurretPrefab: {fileID: 6136139883152712860, guid: 914fb5ca29f11444796d568590529f68, type: 3}
+  graffitiTurretPrefab: {fileID: 4366619944616285173, guid: b18327039445bbb4fa26d519c049acd6, type: 3}
   distance: 4.5

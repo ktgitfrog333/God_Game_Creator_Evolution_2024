@@ -27,8 +27,6 @@ namespace Main.Model
                     if (!attackColliderOfOnmyoBullet.SetRadiosOfCircleCollier2D(updateConf.range))
                         throw new System.Exception("SetRadiosOfCircleCollier2D");
                 _target = updateConf.trackingOfAny;
-                // TODO:グラフティ
-                //  ●持続、効果時間、レート、範囲
 
                 return true;
             }

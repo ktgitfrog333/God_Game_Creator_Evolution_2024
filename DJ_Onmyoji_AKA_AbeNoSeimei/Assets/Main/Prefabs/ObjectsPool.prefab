@@ -48,4 +48,5 @@ MonoBehaviour:
   onmyoBulletPrefab: {fileID: 4834366604633499966, guid: 68d6ceab4a7da1640811081df065e9c7, type: 3}
   wrapBulletPrefab: {fileID: 7602168238787987095, guid: 6e9f744002eafcd489af94e03e94d125, type: 3}
   danceHallPrefab: {fileID: 6876326360387571097, guid: 761ac3def7997c04f858fb6a5239913a, type: 3}
+  graffitiBulletPrefab: {fileID: 2065689569945876403, guid: 71eb2df8991330748bfd00641d1eb038, type: 3}
   enemyPrefab: {fileID: 3023802622660258064, guid: 5d7044c8d42de1540a3954615dee3f19, type: 3}

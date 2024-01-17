@@ -95,6 +95,12 @@
 			"y": 1
 		}
 	},
+	"GraffitiTurretModel": {
+		"moveDirection": {
+			"x": 0,
+			"y": 1
+		}
+	},
 	"PentagramSystemModel": {
 		"autoSpinSpeed": 0.009999999776482582
 	},
@@ -179,6 +185,30 @@
 				"mainSkillType": 6,
 				"skillRank": 0,
 				"value": 1.5
+			},
+			{
+				"shikigamiType": 2,
+				"mainSkillType": 1,
+				"skillRank": 0,
+				"value": 0.5
+			},
+			{
+				"shikigamiType": 2,
+				"mainSkillType": 2,
+				"skillRank": 0,
+				"value": 10
+			},
+			{
+				"shikigamiType": 2,
+				"mainSkillType": 6,
+				"skillRank": 0,
+				"value": 1.5
+			},
+			{
+				"shikigamiType": 2,
+				"mainSkillType": 7,
+				"skillRank": 0,
+				"value": 10
 			}
 		]
 	}
