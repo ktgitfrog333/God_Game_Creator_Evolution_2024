@@ -5,9 +5,7 @@ using UniRx;
 using UniRx.Triggers;
 using Main.Common;
 using Main.Audio;
-using DG.Tweening;
 using Main.Utility;
-using Universal.Common;
 
 namespace Main.Model
 {
@@ -72,10 +70,8 @@ namespace Main.Model
 
         private void Awake()
         {
-            var adminDataSingleton = AdminDataSingleton.Instance != null ?
-                AdminDataSingleton.Instance :
-                new GameObject(Universal.Common.ConstGameObjectNames.GAMEOBJECT_NAME_ADMINDATA_SINGLETON).AddComponent<AdminDataSingleton>()
-                    .GetComponent<AdminDataSingleton>();
+            var utility = new MainCommonUtility();
+            var adminDataSingleton = utility.AdminDataSingleton;
             prop.moveSpeed = adminDataSingleton.AdminBean.PlayerModel.prop.moveSpeed;
             prop.hpMax = adminDataSingleton.AdminBean.PlayerModel.prop.hpMax;
             State = new CharacterState(damageSufferedZoneModel.IsHit, prop.hpMax, damageSufferedZoneModel.Damage);

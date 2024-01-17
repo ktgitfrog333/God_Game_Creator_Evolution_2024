@@ -123,6 +123,9 @@ namespace Universal.Bean
             }
         };
 
+        /// <summary>魂のお金</summary>
+        public int soulMoney = 0;
+
         /// <summary>
         /// ユーザー情報を保持するクラス
         /// </summary>
