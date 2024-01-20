@@ -200,10 +200,50 @@ namespace Main.Utility
                             float actionRate = utility.GetMainSkillValue(item, MainSkillType.ActionRate);
                             costSum += tempoLv * shikigamiLv * actionRate;
                         }
-                        var calcResult = candleInfo.CandleResource.Value - costSum * Time.deltaTime;
-                        candleInfo.CandleResource.Value = System.Math.Clamp(calcResult, 0f, candleInfo.LimitCandleResorceMax);
-                        candleInfo.IsOutCost.Value = calcResult <= 0f;
+                        if (!UpdateCandleResource(candleInfo, costSum * Time.deltaTime))
+                            Debug.LogError("UpdateCandleResource");
                     });
+
+                return true;
+            }
+            catch (System.Exception e)
+            {
+                Debug.LogError(e);
+                return false;
+            }
+        }
+
+        public bool UpdateCandleResourceByPentagram(float inputValue, CandleInfo candleInfo, float autoSpinSpeed, float corrected)
+        {
+            try
+            {
+                var inputValueAbs = Mathf.Abs(inputValue);
+                float costSum = autoSpinSpeed < inputValueAbs ? inputValueAbs : 0f;
+                if (!UpdateCandleResource(candleInfo, costSum * corrected))
+                    throw new System.Exception("UpdateCandleResource");
+
+                return true;
+            }
+            catch (System.Exception e)
+            {
+                Debug.LogError(e);
+                return false;
+            }
+        }
+
+        /// <summary>
+        /// リソースを更新
+        /// </summary>
+        /// <param name="candleInfo">蠟燭の情報</param>
+        /// <param name="costSum">コスト</param>
+        /// <returns>成功／失敗</returns>
+        private bool UpdateCandleResource(CandleInfo candleInfo, float costSum)
+        {
+            try
+            {
+                var calcResult = candleInfo.CandleResource.Value - costSum;
+                candleInfo.CandleResource.Value = System.Math.Clamp(calcResult, 0f, candleInfo.LimitCandleResorceMax);
+                candleInfo.IsOutCost.Value = calcResult <= 0f;
 
                 return true;
             }
@@ -451,6 +491,11 @@ namespace Main.Utility
             }
         }
 
+        public bool ResetCandleResourceAndBuffAllTempoLevelsByPentagram(CandleInfo candleInfo, ShikigamiInfo[] shikigamiInfos, float rapidRecoveryTimeSec, ShikigamiSkillSystemModel model)
+        {
+            throw new System.NotImplementedException();
+        }
+
         /// <summary>
         /// 昼／夜の状態変更の優先度
         /// </summary>
@@ -537,5 +582,25 @@ namespace Main.Utility
         /// <param name="model">式神スキル管理システムモデル</param>
         /// <returns>成功／失敗</returns>
         public bool SetCandleResourceAndTempoLevelsInModel(CandleInfo candleInfo, ShikigamiInfo[] shikigamiInfos, float updateCorrected, ShikigamiSkillSystemModel model);
+        /// <summary>
+        /// リソースを更新
+        /// 引数の+-は考慮せずリソースは消費される
+        /// </summary>
+        /// <param name="inputValue">入力角度</param>
+        /// <param name="candleInfo">蠟燭の情報</param>
+        /// <param name="autoSpinSpeed">自動回転の速度</param>
+        /// <param name="corrected">加算減算の補正値</param>
+        /// <returns>成功／失敗</returns>
+        public bool UpdateCandleResourceByPentagram(float inputValue, CandleInfo candleInfo, float autoSpinSpeed, float corrected);
+        /// <summary>
+        /// リソースをリセットさせる
+        /// また、一時的にテンポスライダーへ自動回復効果を付与
+        /// </summary>
+        /// <param name="candleInfo">蠟燭の情報</param>
+        /// <param name="shikigamiInfos">式神の情報</param>
+        /// <param name="rapidRecoveryTimeSec">急速回復を行う時間（秒）</param>
+        /// <param name="model">式神スキル管理システムモデル</param>
+        /// <returns>成功／失敗</returns>
+        public bool ResetCandleResourceAndBuffAllTempoLevelsByPentagram(CandleInfo candleInfo, ShikigamiInfo[] shikigamiInfos, float rapidRecoveryTimeSec, ShikigamiSkillSystemModel model);
     }
 }

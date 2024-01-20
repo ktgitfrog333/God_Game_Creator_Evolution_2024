@@ -10,7 +10,7 @@ namespace Main.Model
     /// 砲台系
     /// モデル
     /// </summary>
-    public abstract class TurretModel : SpawnModel
+    public abstract class TurretModel : SpawnModel, ITurretModel
     {
         /// <summary>トランスフォーム</summary>
         private Transform _transform;
@@ -26,6 +26,12 @@ namespace Main.Model
         protected ShikigamiInfo _shikigamiInfo;
         /// <summary>インスタンスID</summary>
         public int InstanceID { get; private set; }
+        /// <summary>ジョッキーコマンドタイプ</summary>
+        private JockeyCommandType _jockeyCommandType;
+        /// <summary>クローンオブジェクトを生成する時間間隔（秒）のバフ補正値</summary>
+        [SerializeField] private float instanceRateTimeSecCorrection = 2f;
+        /// <summary>クローンオブジェクトを生成する時間間隔（秒）のホールド補正値</summary>
+        private const float INSTANCE_RATE_TIME_SEC_STOP = 60f * 60f;
 
         protected virtual void Awake()
         {
@@ -61,8 +67,53 @@ namespace Main.Model
             {
                 if (!ActionOfBullet(objectsPoolModel, config))
                     Debug.LogError("ActionOfBullet");
-                yield return new WaitForSeconds(instanceRateTimeSec);
+                var timeSec = instanceRateTimeSec;
+                switch (_jockeyCommandType)
+                {
+                    case JockeyCommandType.Hold:
+                        timeSec = INSTANCE_RATE_TIME_SEC_STOP;
+
+                        break;
+                    case JockeyCommandType.Scratch:
+                        timeSec = instanceRateTimeSec / instanceRateTimeSecCorrection;
+
+                        break;
+                    default:
+                        // それ以外はデフォルト値
+                        break;
+                }
+                yield return new WaitForSeconds(timeSec);
             }
         }
+
+        public bool SetJockeyCommandType(JockeyCommandType jockeyCommandType)
+        {
+            try
+            {
+                _jockeyCommandType = jockeyCommandType;
+
+                return true;
+            }
+            catch (System.Exception e)
+            {
+                Debug.LogError(e);
+                return false;
+            }
+        }
+    }
+
+    /// <summary>
+    /// 砲台系
+    /// モデル
+    /// インターフェース
+    /// </summary>
+    public interface ITurretModel
+    {
+        /// <summary>
+        /// ジョッキーコマンドタイプをセット
+        /// </summary>
+        /// <param name="jockeyCommandType">ジョッキーコマンドタイプ</param>
+        /// <returns>成功／失敗</returns>
+        public bool SetJockeyCommandType(JockeyCommandType jockeyCommandType);
     }
 }

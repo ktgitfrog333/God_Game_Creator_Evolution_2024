@@ -1,7 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using Main.Common;
-using Main.Test.Stub;
 using Main.Utility;
 using UniRx;
 using UnityEngine;
@@ -19,7 +19,7 @@ namespace Main.Model
     /// コントローラーの操作に合わせてコストとレベルを更新
     /// モデル
     /// </summary>
-    public class ShikigamiSkillSystemModel : MonoBehaviour
+    public class ShikigamiSkillSystemModel : MonoBehaviour, IShikigamiSkillSystemModel
     {
         /// <summary>蠟燭の情報</summary>
         [SerializeField] private CandleInfo candleInfo;
@@ -30,7 +30,11 @@ namespace Main.Model
         /// <summary>式神の情報</summary>
         public ShikigamiInfo[] ShikigamiInfos => _shikigamiInfos;
         /// <summary>更新の補正値</summary>
-        [SerializeField] private float updateCorrected = 1f;
+        [SerializeField] private float[] updateCorrected = { 1f, .1f};
+        /// <summary>InputSystemのユーティリティ</summary>
+        private InputSystemUtility _inputSysUtility = new InputSystemUtility();
+        /// <summary>急速回復を行う時間（秒）</summary>
+        [SerializeField] private float rapidRecoveryTimeSec = 40f;
 
         private void Reset()
         {
@@ -41,15 +45,43 @@ namespace Main.Model
         {
             candleInfo.CandleResource = new FloatReactiveProperty(candleInfo.LimitCandleResorceMax);
             candleInfo.IsOutCost = new BoolReactiveProperty();
-
-            var utility = new InputSystemUtility();
-            // TODO:StubからBeanへ変更
-            var shikigamis = GetComponent<ShikigamiSkillSystemModelTest>();
-            for (var i = 0; i < shikigamis.Shikigamis.Length; i++)
-                shikigamis.Shikigamis[i].state.tempoLevel = new FloatReactiveProperty();
-            _shikigamiInfos = shikigamis.Shikigamis;
-            if (!utility.SetCandleResourceAndTempoLevelsInModel(candleInfo, _shikigamiInfos, updateCorrected, this))
+            var utility = new ShikigamiParameterUtility();
+            var shikigamis = utility.GetPentagramTurnTableInfo().slots.Select(q => q.prop.shikigamiInfo).ToArray();
+            for (var i = 0; i < shikigamis.Length; i++)
+                shikigamis[i].state.tempoLevel = new FloatReactiveProperty();
+            _shikigamiInfos = shikigamis;
+            if (!_inputSysUtility.SetCandleResourceAndTempoLevelsInModel(candleInfo, _shikigamiInfos, updateCorrected[0], this))
                 Debug.LogError("SetCandleResourceAndTempoLevels");
+        }
+
+        public bool UpdateCandleResource(float inputValue, float autoSpinSpeed)
+        {
+            return _inputSysUtility.UpdateCandleResourceByPentagram(inputValue, candleInfo, autoSpinSpeed, updateCorrected[1]);
+        }
+
+        public bool ForceZeroAndRapidRecoveryCandleResource(JockeyCommandType jockeyCommandType)
+        {
+            try
+            {
+                switch (jockeyCommandType)
+                {
+                    case JockeyCommandType.BackSpin:
+                        if (!_inputSysUtility.ResetCandleResourceAndBuffAllTempoLevelsByPentagram(candleInfo, _shikigamiInfos, rapidRecoveryTimeSec, this))
+                            throw new System.Exception("ResetCandleResourceAndBuffAllTempoLevelsByPentagram");
+
+                        break;
+                    default:
+                        // 他のコマンドはここでは扱わない
+                        break;
+                }
+
+                return true;
+            }
+            catch (System.Exception e)
+            {
+                Debug.LogError(e);
+                return false;
+            }
         }
     }
 
@@ -67,5 +99,29 @@ namespace Main.Model
         public float limitCandleResorceMax;
         /// <summary>蠟燭リソース最大値</summary>
         public float LimitCandleResorceMax => limitCandleResorceMax;
+    }
+
+    /// <summary>
+    /// 式神スキル管理システム
+    /// モデル
+    /// インターフェース
+    /// </summary>
+    public interface IShikigamiSkillSystemModel
+    {
+        /// <summary>
+        /// リソースを更新
+        /// 引数の+-は考慮せずリソースは消費される
+        /// </summary>
+        /// <param name="inputValue">入力角度</param>
+        /// <param name="autoSpinSpeed">自動回転の速度</param>
+        /// <returns>成功／失敗</returns>
+        public bool UpdateCandleResource(float inputValue, float autoSpinSpeed);
+        /// <summary>
+        /// 強制的にリソースが0になり、
+        /// その後リソースの急速回復が始まる
+        /// </summary>
+        /// <param name="jockeyCommandType">ジョッキーコマンドタイプ</param>
+        /// <returns>成功／失敗</returns>
+        public bool ForceZeroAndRapidRecoveryCandleResource(JockeyCommandType jockeyCommandType);
     }
 }

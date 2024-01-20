@@ -48,12 +48,12 @@ namespace Main.Test.Driver
         {
             for (var i = 0; i < slots.Length; i++)
             {
-                if (!slots[i].slotId.Equals(slots_2[i].slotId) ||
-                    !slots[i].shikigamiInfo.prop.type.Equals(slots_2[i].shikigamiInfo.prop.type) ||
-                    !slots[i].shikigamiInfo.prop.level.Equals(slots_2[i].shikigamiInfo.prop.level) ||
-                    !slots[i].shikigamiInfo.prop.mainSkills.SequenceEqual(slots_2[i].shikigamiInfo.prop.mainSkills) ||
-                    !slots[i].shikigamiInfo.prop.subSkills.SequenceEqual(slots_2[i].shikigamiInfo.prop.subSkills) ||
-                    slots[i].instanceId != slots_2[i].instanceId)
+                if (!slots[i].prop.slotId.Equals(slots_2[i].prop.slotId) ||
+                    !slots[i].prop.shikigamiInfo.prop.type.Equals(slots_2[i].prop.shikigamiInfo.prop.type) ||
+                    !slots[i].prop.shikigamiInfo.prop.level.Equals(slots_2[i].prop.shikigamiInfo.prop.level) ||
+                    !slots[i].prop.shikigamiInfo.prop.mainSkills.SequenceEqual(slots_2[i].prop.shikigamiInfo.prop.mainSkills) ||
+                    !slots[i].prop.shikigamiInfo.prop.subSkills.SequenceEqual(slots_2[i].prop.shikigamiInfo.prop.subSkills) ||
+                    slots[i].prop.instanceId != slots_2[i].prop.instanceId)
                     return false;
             }
 

@@ -19,12 +19,33 @@ namespace Main.Common
         [System.Serializable]
         public struct Slot
         {
-            /// <summary>スロット番号</summary>
-            public SlotId slotId;
-            /// <summary>式神の情報</summary>
-            public ShikigamiInfo shikigamiInfo;
-            /// <summary>オブジェクトID</summary>
-            public int instanceId;
+            /// <summary>プロパティ</summary>
+            public Prop prop;
+            /// <summary>ステート</summary>
+            public State state;
+
+            /// <summary>
+            /// プロパティ
+            /// </summary>
+            [System.Serializable]
+            public struct Prop
+            {
+                /// <summary>スロット番号</summary>
+                public SlotId slotId;
+                /// <summary>式神の情報</summary>
+                public ShikigamiInfo shikigamiInfo;
+                /// <summary>オブジェクトID</summary>
+                public int instanceId;
+            }
+
+            /// <summary>
+            /// ステート
+            /// </summary>
+            [System.Serializable]
+            public struct State
+            {
+                
+            }
         }
     }
 }

@@ -34,16 +34,17 @@ namespace Main.Presenter
         [SerializeField] private ShikigamiSkillSystemModel shikigamiSkillSystemModel;
         [SerializeField] private FaderUniversalView[] faderUniversalViews;
         [SerializeField] private SpGaugeView spGaugeView;
+        [SerializeField] private PentagramTurnTableModel pentagramTurnTableModel;
         public void OnStart()
         {
-            _demo.types = new ShikigamiType[3];
-            _demo.tempoLevels = new float[3];
+            // _demo.types = new ShikigamiType[3];
+            // _demo.tempoLevels = new float[3];
             foreach (var item in shikigamiSkillSystemModel.ShikigamiInfos.Select((p, i) => new { Content = p, Index = i }))
                 item.Content.state.tempoLevel.ObserveEveryValueChanged(x => x.Value)
                     .Subscribe(x =>
                     {
-                        _demo.types[item.Index] = item.Content.prop.type;
-                        _demo.tempoLevels[item.Index] = x;
+                        // _demo.types[item.Index] = item.Content.prop.type;
+                        // _demo.tempoLevels[item.Index] = x;
                         // Debug.Log($"{item.prop.type}:[{x}]");
                         foreach (var faderUniversalView in faderUniversalViews)
                         {
@@ -54,7 +55,7 @@ namespace Main.Presenter
             shikigamiSkillSystemModel.CandleInfo.CandleResource.ObserveEveryValueChanged(x => x.Value)
                 .Subscribe(x =>
                 {
-                    _demo.candleResource = x;
+                    // _demo.candleResource = x;
                     // Debug.Log($"CandleResource:[{x}]");
                     if (!spGaugeView.SetVertical(x, shikigamiSkillSystemModel.CandleInfo.LimitCandleResorceMax))
                         Debug.LogError("SetVertical");
@@ -62,7 +63,7 @@ namespace Main.Presenter
             shikigamiSkillSystemModel.CandleInfo.IsOutCost.ObserveEveryValueChanged(x => x.Value)
                 .Subscribe(x =>
                 {
-                    _demo.isOutCost = x;
+                    // _demo.isOutCost = x;
                     // Debug.Log($"IsOutCost:[{x}]");
                 });
             // playerModel.IsInstanced.ObserveEveryValueChanged(x => x.Value)
@@ -140,14 +141,24 @@ namespace Main.Presenter
 
             // var inputValues = new List<float>();
             // BgmConfDetails bgmConfDetails = new BgmConfDetails();
-            // pentagramSystemModel.InputValue.ObserveEveryValueChanged(x => x.Value)
-            //     .Subscribe(x =>
-            //     {
-            //         ObserveEveryValueChangedCnt++;
-            //         bgmConfDetails.InputValue = x;
-            //         if (!pentagramTurnTableView.MoveSpin(bgmConfDetails))
-            //             Debug.LogError("MoveSpin");
-            //     });
+            pentagramSystemModel.InputValue.ObserveEveryValueChanged(x => x.Value)
+                .Subscribe(x =>
+                {
+                    // ObserveEveryValueChangedCnt++;
+                    // bgmConfDetails.InputValue = x;
+                    // if (!pentagramTurnTableView.MoveSpin(bgmConfDetails))
+                    //     Debug.LogError("MoveSpin");
+                    if (!shikigamiSkillSystemModel.UpdateCandleResource(x, pentagramSystemModel.AutoSpinSpeed))
+                        Debug.LogError("UpdateCandleResource");
+                });
+            pentagramSystemModel.JockeyCommandType.ObserveEveryValueChanged(x => x.Value)
+                .Subscribe(x =>
+                {
+                    if (!pentagramTurnTableModel.BuffAllTurrets((JockeyCommandType)x))
+                        Debug.LogError("BuffAllTurrets");
+                    if (!shikigamiSkillSystemModel.ForceZeroAndRapidRecoveryCandleResource((JockeyCommandType)x))
+                        Debug.LogError("ForceZeroAndRapidRecoveryCandleResource");
+                });
             // sunMoonSystemModel.OnmyoState.ObserveEveryValueChanged(x => x.Value)
             //     .Subscribe(x => sunMoonStateIconView.SetRotate(x));
             // sunMoonStateIconViewDemo.OnmyoState.ObserveEveryValueChanged(x => x.Value)
@@ -161,6 +172,7 @@ namespace Main.Presenter
 
         private void Reset()
         {
+            pentagramTurnTableModel = GameObject.Find("PentagramTurnTable").GetComponent<PentagramTurnTableModel>();
             spGaugeView = GameObject.Find("SpGauge").GetComponent<SpGaugeView>();
             faderUniversalViews = new FaderUniversalView[]
             {
@@ -169,7 +181,7 @@ namespace Main.Presenter
                 GameObject.Find($"Fader{ShikigamiType.Graffiti}").GetComponent<FaderUniversalView>(),
             };
             shikigamiSkillSystemModel = GameObject.Find("ShikigamiSkillSystem").GetComponent<ShikigamiSkillSystemModel>();
-            // pentagramSystemModel = GameObject.Find("PentagramSystem").GetComponent<PentagramSystemModel>();
+            pentagramSystemModel = GameObject.Find("PentagramSystem").GetComponent<PentagramSystemModel>();
             // pentagramTurnTableView = GameObject.Find("PentagramTurnTable").GetComponent<PentagramTurnTableView>();
             // clearCountdownTimerSystemModel = GameObject.Find("ClearCountdownTimerSystem").GetComponent<ClearCountdownTimerSystemModel>();
             // clearCountdownTimerCircleView = GameObject.Find("ClearCountdownTimerCircle").GetComponent<ClearCountdownTimerCircleView>();

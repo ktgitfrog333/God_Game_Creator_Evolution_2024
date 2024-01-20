@@ -46,4 +46,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   candleInfo:
     limitCandleResorceMax: 10
-  updateCorrected: 1
+  updateCorrected:
+  - 1
+  - 0.1
+  rapidRecoveryTimeSec: 40

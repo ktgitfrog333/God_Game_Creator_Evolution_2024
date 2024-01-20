@@ -2,7 +2,6 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UniRx;
-using Universal.Common;
 using Main.Utility;
 
 namespace Main.Model
@@ -21,18 +20,20 @@ namespace Main.Model
         /// <summary>自動回転の速度</summary>
         [Tooltip("自動回転の速度")]
         [SerializeField] private float autoSpinSpeed = .01f;
+        /// <summary>自動回転の速度</summary>
+        public float AutoSpinSpeed => autoSpinSpeed;
+        /// <summary>ジョッキーコマンドタイプ</summary>
+        /// TODO:コマンドを可変させるロジックを実装
+        public IReactiveProperty<int> JockeyCommandType { get; private set; } = new IntReactiveProperty((int)Common.JockeyCommandType.None);
 
         private void Start()
         {
-            var adminDataSingleton = AdminDataSingleton.Instance != null ?
-                AdminDataSingleton.Instance :
-                new GameObject(Universal.Common.ConstGameObjectNames.GAMEOBJECT_NAME_ADMINDATA_SINGLETON).AddComponent<AdminDataSingleton>()
-                    .GetComponent<AdminDataSingleton>();
-            autoSpinSpeed = adminDataSingleton.AdminBean.PentagramSystemModel.autoSpinSpeed;
+            var utilityCommon = new MainCommonUtility();
+            autoSpinSpeed = utilityCommon.AdminDataSingleton.AdminBean.PentagramSystemModel.autoSpinSpeed;
             Vector2ReactiveProperty previousInput = new Vector2ReactiveProperty(Vector2.zero); // 前回の入力を保存する変数
             var utility = new InputSystemUtility();
             if (!utility.SetInputValueInModel(InputValue, _multiDistanceCorrected, previousInput, autoSpinSpeed, this))
-                Debug.LogError("SetInputValue");
+                Debug.LogError("SetInputValueInModel");
         }
     }
 }

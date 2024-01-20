@@ -72,8 +72,8 @@ namespace Main.Utility
             if (slots.Length < 1)
                 throw new System.Exception($"{slots.Length}つのスロットから取得できない");
             
-            var array = pentagramTurnTableInfo.slots.Where(q => q.instanceId == instanceId)
-                .Select(q => q.shikigamiInfo)
+            var array = pentagramTurnTableInfo.slots.Where(q => q.prop.instanceId == instanceId)
+                .Select(q => q.prop.shikigamiInfo)
                 .ToArray();
             if (array.Length < 1)
                 throw new System.Exception($"{slots.Length}つのスロットから取得できない[{instanceId}]");
@@ -96,18 +96,21 @@ namespace Main.Utility
                 {
                     slots.Add(new PentagramTurnTableInfo.Slot()
                     {
-                        slotId = (SlotId)item.slotId,
-                        shikigamiInfo = new ShikigamiInfo()
+                        prop = new PentagramTurnTableInfo.Slot.Prop()
                         {
-                            prop = new ShikigamiInfo.Prop()
+                            slotId = (SlotId)item.slotId,
+                            shikigamiInfo = new ShikigamiInfo()
                             {
-                                type = (ShikigamiType)item.shikigamiInfo.type,
-                                level = item.shikigamiInfo.level,
-                                mainSkills = ConvertMainSkills(item.shikigamiInfo.mainSkills),
-                                subSkills = ConvertSubSkills(item.shikigamiInfo.subSkills),
-                            }
+                                prop = new ShikigamiInfo.Prop()
+                                {
+                                    type = (ShikigamiType)item.shikigamiInfo.type,
+                                    level = item.shikigamiInfo.level,
+                                    mainSkills = ConvertMainSkills(item.shikigamiInfo.mainSkills),
+                                    subSkills = ConvertSubSkills(item.shikigamiInfo.subSkills),
+                                }
+                            },
+                            instanceId = UNSET_SLOT_NUMBER,
                         },
-                        instanceId = UNSET_SLOT_NUMBER,
                     });
                 }
                 PentagramTurnTableInfo info = new PentagramTurnTableInfo()

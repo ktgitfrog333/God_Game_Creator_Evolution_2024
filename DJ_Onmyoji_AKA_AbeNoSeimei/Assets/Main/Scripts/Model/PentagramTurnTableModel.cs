@@ -14,7 +14,7 @@ namespace Main.Model
     /// Imageコンポーネントへ入力操作を行う
     /// モデル
     /// </summary>
-    public class PentagramTurnTableModel : MonoBehaviour
+    public class PentagramTurnTableModel : MonoBehaviour, IPentagramTurnTableModel
     {
         /// <summary>陰陽玉（陰陽砲台）プレハブ</summary>
         [Tooltip("陰陽玉（陰陽砲台）プレハブ")]
@@ -32,6 +32,10 @@ namespace Main.Model
         private PentagramTurnTableInfo _pentagramTurnTableInfo;
         /// <summary>ペンダグラムターンテーブル情報</summary>
         public PentagramTurnTableInfo PentagramTurnTableInfo => _pentagramTurnTableInfo;
+        /// <summary>トランスフォーム</summary>
+        private Transform _transform;
+        /// <summary>トランスフォーム</summary>
+        private Transform Transform => _transform != null ? _transform : _transform = transform;
 
         private void Start()
         {
@@ -49,20 +53,19 @@ namespace Main.Model
             // 対象位置は下記の条件に従う
             // ・中心から五角形とした場合に各頂点を座標とする
             distance = adminDataSingleton.AdminBean.PentagramTurnTableModel.distance;
-            var t = transform;
             float angleStep = 360f / 5;
             for (int i = 0; i < 5; i++)
             {
                 foreach (var item in slots.Select((p, i) => new { Content = p, Index = i})
-                    .Where(q => q.Content.slotId.Equals((SlotId)i)))
+                    .Where(q => q.Content.prop.slotId.Equals((SlotId)i)))
                 {
                     float angle = (angleStep * i + 15) * Mathf.Deg2Rad;
                     Vector3 position = new Vector3(Mathf.Cos(angle), Mathf.Sin(angle), 0) * distance;
                     var slot = slots[item.Index];
-                    Transform turret = Instantiate(GetTargetOfPrefab(slot.shikigamiInfo.prop.type), position, Quaternion.identity);
-                    slot.instanceId = turret.GetComponent<TurretModel>().InstanceID;
+                    Transform turret = Instantiate(GetTargetOfPrefab(slot.prop.shikigamiInfo.prop.type), position, Quaternion.identity);
+                    slot.prop.instanceId = turret.GetComponent<TurretModel>().InstanceID;
                     slots[item.Index] = slot;
-                    turret.SetParent(t, false);
+                    turret.SetParent(Transform, false);
                 }
             }
         }
@@ -90,5 +93,48 @@ namespace Main.Model
                     throw new System.Exception("例外エラー");
             }
         }
+
+        public bool BuffAllTurrets(JockeyCommandType jockeyCommandType)
+        {
+            try
+            {
+                switch (jockeyCommandType)
+                {
+                    case JockeyCommandType.Scratch:
+                        foreach (Transform child in Transform)
+                        {
+                            if (!child.GetComponent<TurretModel>().SetJockeyCommandType(jockeyCommandType))
+                                throw new System.Exception("SetJockeyCommandType");
+                        }
+
+                        break;
+                    default:
+                        // 他のコマンドはここでは扱わない
+                        break;
+                }
+
+                return true;
+            }
+            catch (System.Exception e)
+            {
+                Debug.LogError(e);
+                return false;
+            }
+        }
+    }
+
+    /// <summary>
+    /// ペンダグラムターンテーブル
+    /// モデル
+    /// インターフェース
+    /// </summary>
+    public interface IPentagramTurnTableModel
+    {
+        /// <summary>
+        /// 全てのタレットへバフをかける
+        /// </summary>
+        /// <param name="jockeyCommandType">ジョッキーコマンドタイプ</param>
+        /// <returns>成功／失敗</returns>
+        public bool BuffAllTurrets(JockeyCommandType jockeyCommandType);
     }
 }
