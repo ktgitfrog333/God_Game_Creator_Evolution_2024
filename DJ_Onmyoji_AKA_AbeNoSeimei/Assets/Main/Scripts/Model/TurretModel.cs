@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using Main.Utility;
 using Main.Common;
+using UniRx;
+using Universal.Utility;
 
 namespace Main.Model
 {
@@ -27,7 +29,7 @@ namespace Main.Model
         /// <summary>インスタンスID</summary>
         public int InstanceID { get; private set; }
         /// <summary>ジョッキーコマンドタイプ</summary>
-        private JockeyCommandType _jockeyCommandType;
+        private JockeyCommandType _jockeyCommandType = JockeyCommandType.None;
         /// <summary>クローンオブジェクトを生成する時間間隔（秒）のバフ補正値</summary>
         [SerializeField] private float instanceRateTimeSecCorrection = 2f;
         /// <summary>クローンオブジェクトを生成する時間間隔（秒）のホールド補正値</summary>
@@ -62,12 +64,11 @@ namespace Main.Model
         protected override IEnumerator InstanceCloneObjects(float instanceRateTimeSec, ObjectsPoolModel objectsPoolModel)
         {
             var config = GetOnmyoBulletConfig();
+            float elapsedTime = 0f;
+            float timeSec;
             // 一定間隔で弾を生成するための実装
             while (true)
             {
-                if (!ActionOfBullet(objectsPoolModel, config))
-                    Debug.LogError("ActionOfBullet");
-                var timeSec = instanceRateTimeSec;
                 switch (_jockeyCommandType)
                 {
                     case JockeyCommandType.Hold:
@@ -79,10 +80,23 @@ namespace Main.Model
 
                         break;
                     default:
-                        // それ以外はデフォルト値
+                        // デフォルト値
+                        timeSec = instanceRateTimeSec;
+
                         break;
                 }
-                yield return new WaitForSeconds(timeSec);
+
+                // 待機時間に到達していない場合はスキップ、到達していれば実行
+                if (timeSec <= elapsedTime)
+                {
+                    if (!ActionOfBullet(objectsPoolModel, config))
+                        Debug.LogError("ActionOfBullet");
+                    elapsedTime = 0f;
+                }
+                else
+                    elapsedTime += Time.deltaTime;
+
+                yield return null;
             }
         }
 

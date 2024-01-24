@@ -148,15 +148,16 @@ namespace Main.Presenter
                     // bgmConfDetails.InputValue = x;
                     // if (!pentagramTurnTableView.MoveSpin(bgmConfDetails))
                     //     Debug.LogError("MoveSpin");
-                    if (!shikigamiSkillSystemModel.UpdateCandleResource(x, pentagramSystemModel.AutoSpinSpeed))
-                        Debug.LogError("UpdateCandleResource");
                 });
             pentagramSystemModel.JockeyCommandType.ObserveEveryValueChanged(x => x.Value)
-                .Subscribe(x =>
+                .Pairwise()
+                .Subscribe(pair =>
                 {
-                    if (!pentagramTurnTableModel.BuffAllTurrets((JockeyCommandType)x))
+                    if (!shikigamiSkillSystemModel.UpdateCandleResource((JockeyCommandType)pair.Current, (JockeyCommandType)pair.Previous))
+                        Debug.LogError("UpdateCandleResource");
+                    if (!pentagramTurnTableModel.BuffAllTurrets((JockeyCommandType)pair.Current))
                         Debug.LogError("BuffAllTurrets");
-                    if (!shikigamiSkillSystemModel.ForceZeroAndRapidRecoveryCandleResource((JockeyCommandType)x))
+                    if (!shikigamiSkillSystemModel.ForceZeroAndRapidRecoveryCandleResource((JockeyCommandType)pair.Current))
                         Debug.LogError("ForceZeroAndRapidRecoveryCandleResource");
                 });
             // sunMoonSystemModel.OnmyoState.ObserveEveryValueChanged(x => x.Value)

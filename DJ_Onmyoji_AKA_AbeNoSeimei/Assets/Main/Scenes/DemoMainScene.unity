@@ -5250,166 +5250,130 @@ MonoBehaviour:
     throwMessage: 
     pentagramTurnTableInfo:
       slots:
-      - slotId: 0
-        shikigamiInfo:
-          prop:
-            type: 0
-            level: 0
-            mainSkills:
-            - type: 1
-              rank: 0
-            subSkills:
-            - type: 4
-              rank: 0
-        instanceId: -1
-      - slotId: 0
-        shikigamiInfo:
-          prop:
-            type: 0
-            level: 0
-            mainSkills:
-            - type: 1
-              rank: 0
-            subSkills:
-            - type: 4
-              rank: 0
-        instanceId: -1
+      - prop:
+          slotId: 0
+          shikigamiInfo:
+            prop:
+              type: 0
+              level: 0
+              mainSkills: []
+              subSkills: []
+          instanceId: 0
+      - prop:
+          slotId: 0
+          shikigamiInfo:
+            prop:
+              type: 0
+              level: 0
+              mainSkills: []
+              subSkills: []
+          instanceId: 0
   - caseId: 1000
     throwMessage: "\u30B9\u30ED\u30C3\u30C8\u304B\u3089\u53D6\u5F97\u3067\u304D\u306A\u3044"
     pentagramTurnTableInfo:
       slots:
-      - slotId: 0
-        shikigamiInfo:
-          prop:
-            type: 0
-            level: 0
-            mainSkills:
-            - type: 1
-              rank: 0
-            subSkills:
-            - type: 4
-              rank: 0
-        instanceId: -1
+      - prop:
+          slotId: 0
+          shikigamiInfo:
+            prop:
+              type: 0
+              level: 0
+              mainSkills: []
+              subSkills: []
+          instanceId: 0
   - caseId: 1001
     throwMessage: "\u30B9\u30ED\u30C3\u30C8\u304B\u3089\u53D6\u5F97\u3067\u304D\u306A\u3044"
     pentagramTurnTableInfo:
       slots:
-      - slotId: 0
-        shikigamiInfo:
-          prop:
-            type: 0
-            level: 0
-            mainSkills:
-            - type: 1
-              rank: 0
-            subSkills:
-            - type: 4
-              rank: 0
-        instanceId: -1
+      - prop:
+          slotId: 0
+          shikigamiInfo:
+            prop:
+              type: 0
+              level: 0
+              mainSkills: []
+              subSkills: []
+          instanceId: 0
   - caseId: 2000
     throwMessage: 
     pentagramTurnTableInfo:
       slots:
-      - slotId: 0
-        shikigamiInfo:
-          prop:
-            type: 0
-            level: 0
-            mainSkills:
-            - type: 1
-              rank: 0
-            subSkills:
-            - type: 4
-              rank: 0
-        instanceId: -1
-      - slotId: 0
-        shikigamiInfo:
-          prop:
-            type: 0
-            level: 0
-            mainSkills:
-            - type: 1
-              rank: 0
-            subSkills:
-            - type: 4
-              rank: 0
-        instanceId: -1
-      - slotId: 0
-        shikigamiInfo:
-          prop:
-            type: 0
-            level: 0
-            mainSkills:
-            - type: 1
-              rank: 0
-            subSkills:
-            - type: 4
-              rank: 0
-        instanceId: -1
+      - prop:
+          slotId: 0
+          shikigamiInfo:
+            prop:
+              type: 0
+              level: 0
+              mainSkills: []
+              subSkills: []
+          instanceId: 0
+      - prop:
+          slotId: 0
+          shikigamiInfo:
+            prop:
+              type: 0
+              level: 0
+              mainSkills: []
+              subSkills: []
+          instanceId: 0
+      - prop:
+          slotId: 0
+          shikigamiInfo:
+            prop:
+              type: 0
+              level: 0
+              mainSkills: []
+              subSkills: []
+          instanceId: 0
   - caseId: 3000
     throwMessage: 
     pentagramTurnTableInfo:
       slots:
-      - slotId: 0
-        shikigamiInfo:
-          prop:
-            type: 0
-            level: 0
-            mainSkills:
-            - type: 1
-              rank: 0
-            subSkills:
-            - type: 4
-              rank: 0
-        instanceId: -1
-      - slotId: 1
-        shikigamiInfo:
-          prop:
-            type: 1
-            level: 1
-            mainSkills:
-            - type: 7
-              rank: 1
-            subSkills:
-            - type: 5
-              rank: 1
-        instanceId: -1
-      - slotId: 2
-        shikigamiInfo:
-          prop:
-            type: 2
-            level: 2
-            mainSkills:
-            - type: 6
-              rank: 2
-            subSkills:
-            - type: 2
-              rank: 2
-        instanceId: -1
-      - slotId: 3
-        shikigamiInfo:
-          prop:
-            type: 3
-            level: 3
-            mainSkills:
-            - type: 2
-              rank: 3
-            subSkills:
-            - type: 1
-              rank: 3
-        instanceId: -1
-      - slotId: 4
-        shikigamiInfo:
-          prop:
-            type: 3
-            level: 4
-            mainSkills:
-            - type: 7
-              rank: 4
-            subSkills:
-            - type: 5
-              rank: 4
-        instanceId: -1
+      - prop:
+          slotId: 0
+          shikigamiInfo:
+            prop:
+              type: 0
+              level: 0
+              mainSkills: []
+              subSkills: []
+          instanceId: 0
+      - prop:
+          slotId: 0
+          shikigamiInfo:
+            prop:
+              type: 0
+              level: 0
+              mainSkills: []
+              subSkills: []
+          instanceId: 0
+      - prop:
+          slotId: 0
+          shikigamiInfo:
+            prop:
+              type: 0
+              level: 0
+              mainSkills: []
+              subSkills: []
+          instanceId: 0
+      - prop:
+          slotId: 0
+          shikigamiInfo:
+            prop:
+              type: 0
+              level: 0
+              mainSkills: []
+              subSkills: []
+          instanceId: 0
+      - prop:
+          slotId: 0
+          shikigamiInfo:
+            prop:
+              type: 0
+              level: 0
+              mainSkills: []
+              subSkills: []
+          instanceId: 0
 --- !u!114 &1534838209
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5555,26 +5519,28 @@ MonoBehaviour:
   - caseId: 0
     pentagramTurnTableInfo:
       slots:
-      - slotId: 0
-        shikigamiInfo:
-          prop:
-            type: 0
-            level: 0
-            mainSkills: []
-            subSkills: []
-        instanceId: 0
+      - prop:
+          slotId: 0
+          shikigamiInfo:
+            prop:
+              type: 0
+              level: 0
+              mainSkills: []
+              subSkills: []
+          instanceId: 0
     instanceId: 0
   - caseId: 1000
     pentagramTurnTableInfo:
       slots:
-      - slotId: 1
-        shikigamiInfo:
-          prop:
-            type: 1
-            level: 0
-            mainSkills: []
-            subSkills: []
-        instanceId: 1
+      - prop:
+          slotId: 0
+          shikigamiInfo:
+            prop:
+              type: 0
+              level: 0
+              mainSkills: []
+              subSkills: []
+          instanceId: 0
     instanceId: 0
   - caseId: 1001
     pentagramTurnTableInfo:
@@ -5583,46 +5549,51 @@ MonoBehaviour:
   - caseId: 3000
     pentagramTurnTableInfo:
       slots:
-      - slotId: 0
-        shikigamiInfo:
-          prop:
-            type: 0
-            level: 0
-            mainSkills: []
-            subSkills: []
-        instanceId: 0
-      - slotId: 1
-        shikigamiInfo:
-          prop:
-            type: 1
-            level: 0
-            mainSkills: []
-            subSkills: []
-        instanceId: 1
-      - slotId: 2
-        shikigamiInfo:
-          prop:
-            type: 2
-            level: 0
-            mainSkills: []
-            subSkills: []
-        instanceId: 2
-      - slotId: 3
-        shikigamiInfo:
-          prop:
-            type: 3
-            level: 0
-            mainSkills: []
-            subSkills: []
-        instanceId: 3
-      - slotId: 4
-        shikigamiInfo:
-          prop:
-            type: 3
-            level: 0
-            mainSkills: []
-            subSkills: []
-        instanceId: 4
+      - prop:
+          slotId: 0
+          shikigamiInfo:
+            prop:
+              type: 0
+              level: 0
+              mainSkills: []
+              subSkills: []
+          instanceId: 0
+      - prop:
+          slotId: 0
+          shikigamiInfo:
+            prop:
+              type: 0
+              level: 0
+              mainSkills: []
+              subSkills: []
+          instanceId: 0
+      - prop:
+          slotId: 0
+          shikigamiInfo:
+            prop:
+              type: 0
+              level: 0
+              mainSkills: []
+              subSkills: []
+          instanceId: 0
+      - prop:
+          slotId: 0
+          shikigamiInfo:
+            prop:
+              type: 0
+              level: 0
+              mainSkills: []
+              subSkills: []
+          instanceId: 0
+      - prop:
+          slotId: 0
+          shikigamiInfo:
+            prop:
+              type: 0
+              level: 0
+              mainSkills: []
+              subSkills: []
+          instanceId: 0
     instanceId: 3
   outputs:
   - caseId: 0
@@ -7192,7 +7163,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8030262654354652867, guid: fa3dd35a5b9f8764db1da1ca923e54f9, type: 3}
       propertyPath: updateCorrected.Array.data[1]
-      value: 0.1
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8030262654354652867, guid: fa3dd35a5b9f8764db1da1ca923e54f9, type: 3}
+      propertyPath: updateCorrected.Array.data[2]
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8030262654354652867, guid: fa3dd35a5b9f8764db1da1ca923e54f9, type: 3}
       propertyPath: candleInfo.limitCandleResorceMax

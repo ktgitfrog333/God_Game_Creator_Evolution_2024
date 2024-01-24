@@ -48,5 +48,5 @@ MonoBehaviour:
     limitCandleResorceMax: 10
   updateCorrected:
   - 1
-  - 0.1
+  - 1
   rapidRecoveryTimeSec: 40

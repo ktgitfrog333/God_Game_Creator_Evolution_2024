@@ -98,20 +98,9 @@ namespace Main.Model
         {
             try
             {
-                switch (jockeyCommandType)
-                {
-                    case JockeyCommandType.Scratch:
-                        foreach (Transform child in Transform)
-                        {
-                            if (!child.GetComponent<TurretModel>().SetJockeyCommandType(jockeyCommandType))
-                                throw new System.Exception("SetJockeyCommandType");
-                        }
-
-                        break;
-                    default:
-                        // 他のコマンドはここでは扱わない
-                        break;
-                }
+                foreach (Transform child in Transform)
+                    if (!child.GetComponent<TurretModel>().SetJockeyCommandType(jockeyCommandType))
+                        throw new System.Exception("SetJockeyCommandType");
 
                 return true;
             }

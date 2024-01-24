@@ -19,6 +19,8 @@ namespace Main.Utility
         public const float MIN = -1f;
         /// <summary>最大値</summary>
         public const float MAX = 1f;
+        /// <summary>リソース更新のUpdateオブサーバー</summary>
+        private System.IDisposable _modelUpdObservable;
 
         public bool SetInputValueInModel(IReactiveProperty<float> inputValue, float multiDistanceCorrected, Vector2ReactiveProperty previousInput, float autoSpinSpeed, PentagramSystemModel model)
         {
@@ -36,7 +38,7 @@ namespace Main.Utility
                             inputValue.Value = Mathf.Clamp(distance * multiDistanceCorrected, -1f, 1f);
                         }
                         else
-                            inputValue.Value = inputValue.Value != autoSpinSpeed ? autoSpinSpeed : 0f;
+                            inputValue.Value = autoSpinSpeed;
                         previousInput.Value = currentInput; // 現在の入力を保存
                     })
                     .AddTo(model);
@@ -60,6 +62,78 @@ namespace Main.Utility
         {
             return 0f < prevMagnitude &&
                 0f < currentMagnitude;
+        }
+
+        public bool UpdateJockeyCommandType(IReactiveProperty<float> inputValue, IReactiveProperty<int> jockeyCommandType, float autoSpinSpeed, int inputHistoriesLimit)
+        {
+            try
+            {
+                // 入力履歴を保持するリスト
+                List<float> inputHistory = new List<float>();
+
+                // inputValueの変更を購読
+                inputValue.ObserveEveryValueChanged(x => x.Value)
+                    .Subscribe(value => 
+                    {
+                        // 入力履歴が10を超えた場合、最初の要素を削除
+                        if (inputHistory.Count >= inputHistoriesLimit)
+                            inputHistory.RemoveAt(0);
+
+                        // 最後の入力と異なる場合のみ履歴に追加
+                        if (inputHistory.Count == 0 ||
+                            inputHistory[inputHistory.Count - 1] != value)
+                            inputHistory.Add(value);
+
+                        // 最後の入力が0の場合、jockeyCommandTypeをHoldに設定
+                        if (value == 0 ||
+                            isScratch(inputHistory, autoSpinSpeed))
+                        {
+                            if (value == 0)
+                                jockeyCommandType.Value = (int)JockeyCommandType.Hold;
+                            if (isScratch(inputHistory, autoSpinSpeed))
+                            {
+                                jockeyCommandType.Value = (int)JockeyCommandType.Scratch;
+                                if (0 < inputHistory.Count)
+                                    inputHistory.Clear();
+                            }
+                        }
+                        else if (value == autoSpinSpeed)
+                        {
+                            jockeyCommandType.Value = (int)JockeyCommandType.None;
+                            if (0 < inputHistory.Count)
+                                inputHistory.Clear();
+                        }
+                    });
+
+                return true;
+            }
+            catch (System.Exception e)
+            {
+                Debug.LogError(e);
+                return false;
+            }
+        }
+
+        private bool isScratch(List<float> inputHistory, float autoSpinSpeed)
+        {
+            if (inputHistory.Count < 3)
+                return false;
+
+            var ignoreZeroGroup = inputHistory.Where(q => (0f < q || q < 0f) &&
+                q != autoSpinSpeed)
+                .Select((p, i) => new { Content = 0f < p ? 1f : (p < 0f ? -1f : 0f), Index = i })
+                .OrderBy(q => q.Content).ThenByDescending(q => q.Index)
+                .GroupBy(x => x.Content);
+            var ignoreZero = ignoreZeroGroup.Select(g => g.First())
+                .Union(ignoreZeroGroup.Select(g => g.Last()))
+                .Select(q => q.Content)
+                .ToArray();
+
+            if (2 < ignoreZero.Length)
+                return (ignoreZero[ignoreZero.Length - 3] > 0 && ignoreZero[ignoreZero.Length - 2] < 0 && ignoreZero[ignoreZero.Length - 1] > 0) ||
+                    (ignoreZero[ignoreZero.Length - 3] < 0 && ignoreZero[ignoreZero.Length - 2] > 0 && ignoreZero[ignoreZero.Length - 1] < 0);
+            else
+                return false;
         }
 
         public bool SetOnmyoStateInModel(IReactiveProperty<float> onmyoState, float[] durations, SunMoonSystemModel model)
@@ -213,15 +287,81 @@ namespace Main.Utility
             }
         }
 
-        public bool UpdateCandleResourceByPentagram(float inputValue, CandleInfo candleInfo, float autoSpinSpeed, float corrected)
+        public bool UpdateCandleResourceByPentagram(JockeyCommandType jkeyCmdTypeCurrent, JockeyCommandType jkeyCmdTypePrevious, CandleInfo candleInfo, float downValue, ShikigamiSkillSystemModel model)
         {
             try
             {
-                var inputValueAbs = Mathf.Abs(inputValue);
-                float costSum = autoSpinSpeed < inputValueAbs ? inputValueAbs : 0f;
-                if (!UpdateCandleResource(candleInfo, costSum * corrected))
-                    throw new System.Exception("UpdateCandleResource");
+                if (_modelUpdObservable == null)
+                    _modelUpdObservable = model.UpdateAsObservable().Subscribe(_ => {}); 
+                switch (jkeyCmdTypeCurrent)
+                {
+                    case JockeyCommandType.None:
+                        _modelUpdObservable.Dispose();
 
+                        break;
+                    case JockeyCommandType.Hold:
+                        if (jkeyCmdTypePrevious.Equals(JockeyCommandType.Scratch))
+                            // Hold⇔Scratchの場合は何もしない
+                            return true;
+                        else
+                        {
+                            if (!CallUpdateCandleResource(ref _modelUpdObservable, candleInfo, downValue, model))
+                                throw new System.Exception("CallUpdateCandleResource");
+                        }
+
+                        break;
+                    case JockeyCommandType.Scratch:
+                        if (jkeyCmdTypePrevious.Equals(JockeyCommandType.Hold))
+                            // Hold⇔Scratchの場合は何もしない
+                            return true;
+                        else
+                        {
+                            if (!CallUpdateCandleResource(ref _modelUpdObservable, candleInfo, downValue, model))
+                                throw new System.Exception("CallUpdateCandleResource");
+                        }
+
+                        break;
+                    case JockeyCommandType.BackSpin:
+                        _modelUpdObservable.Dispose();
+                        // 何もしない
+                        break;
+                    case JockeyCommandType.SlipLoop:
+                        _modelUpdObservable.Dispose();
+                        // 何もしない
+                        break;
+                    default:
+                        throw new System.Exception("未定義のジョッキーコマンドタイプ");
+                }
+
+                return true;
+            }
+            catch (System.Exception e)
+            {
+                Debug.LogError(e);
+                return false;
+            }
+        }
+
+        /// <summary>
+        /// リソースを更新メソッドを呼び出す
+        /// </summary>
+        /// <param name="modelUpdObservable">リソース更新のUpdateオブサーバー</param>
+        /// <param name="candleInfo">蝋燭の情報</param>
+        /// <param name="downValue">更新の補正値</param>
+        /// <param name="model">式神スキル管理システムモデル</param>
+        /// <returns>成功／失敗</returns>
+        private bool CallUpdateCandleResource(ref System.IDisposable modelUpdObservable, CandleInfo candleInfo, float downValue, ShikigamiSkillSystemModel model)
+        {
+            try
+            {
+                modelUpdObservable.Dispose();
+                modelUpdObservable = model.UpdateAsObservable()
+                    .Subscribe(_ =>
+                    {
+                        if (!UpdateCandleResource(candleInfo, downValue * Time.deltaTime))
+                            throw new System.Exception("UpdateCandleResource");
+                    });
+                
                 return true;
             }
             catch (System.Exception e)
@@ -564,6 +704,15 @@ namespace Main.Utility
         /// <returns>成功／失敗</returns>
         public bool SetInputValueInModel(IReactiveProperty<float> inputValue, float multiDistanceCorrected, Vector2ReactiveProperty previousInput, float autoSpinSpeed, PentagramSystemModel model);
         /// <summary>
+        /// ジョッキーコマンドタイプを更新
+        /// </summary>
+        /// <param name="inputValue">入力角度</param>
+        /// <param name="jockeyCommandType">ジョッキーコマンドタイプ</param>
+        /// <param name="autoSpinSpeed">自動回転の速度</param>
+        /// <param name="inputHistoriesLimit">コマンドの入力数</param>
+        /// <returns>成功／失敗</returns>
+        public bool UpdateJockeyCommandType(IReactiveProperty<float> inputValue, IReactiveProperty<int> jockeyCommandType, float autoSpinSpeed, int inputHistoriesLimit);
+        /// <summary>
         /// モデルコンポーネントを監視して第1引数へセットされた値を更新
         /// 入力された内容に基づいて昼／夜の状態を変更
         /// </summary>
@@ -586,12 +735,13 @@ namespace Main.Utility
         /// リソースを更新
         /// 引数の+-は考慮せずリソースは消費される
         /// </summary>
-        /// <param name="inputValue">入力角度</param>
+        /// <param name="jkeyCmdTypeCurrent">ジョッキーコマンドタイプ</param>
+        /// <param name="jkeyCmdTypePrevious">1つ前のジョッキーコマンドタイプ</param>
         /// <param name="candleInfo">蠟燭の情報</param>
-        /// <param name="autoSpinSpeed">自動回転の速度</param>
-        /// <param name="corrected">加算減算の補正値</param>
+        /// <param name="downValue">更新の補正値</param>
+        /// <param name="model">式神スキル管理システムモデル</param>
         /// <returns>成功／失敗</returns>
-        public bool UpdateCandleResourceByPentagram(float inputValue, CandleInfo candleInfo, float autoSpinSpeed, float corrected);
+        public bool UpdateCandleResourceByPentagram(JockeyCommandType jkeyCmdTypeCurrent, JockeyCommandType jkeyCmdTypePrevious, CandleInfo candleInfo, float downValue, ShikigamiSkillSystemModel model);
         /// <summary>
         /// リソースをリセットさせる
         /// また、一時的にテンポスライダーへ自動回復効果を付与

@@ -30,7 +30,7 @@ namespace Main.Model
         /// <summary>式神の情報</summary>
         public ShikigamiInfo[] ShikigamiInfos => _shikigamiInfos;
         /// <summary>更新の補正値</summary>
-        [SerializeField] private float[] updateCorrected = { 1f, .1f};
+        [SerializeField] private float[] updateCorrected = { 1f, 1f};
         /// <summary>InputSystemのユーティリティ</summary>
         private InputSystemUtility _inputSysUtility = new InputSystemUtility();
         /// <summary>急速回復を行う時間（秒）</summary>
@@ -54,9 +54,9 @@ namespace Main.Model
                 Debug.LogError("SetCandleResourceAndTempoLevels");
         }
 
-        public bool UpdateCandleResource(float inputValue, float autoSpinSpeed)
+        public bool UpdateCandleResource(JockeyCommandType jkeyCmdTypeCurrent, JockeyCommandType jkeyCmdTypePrevious)
         {
-            return _inputSysUtility.UpdateCandleResourceByPentagram(inputValue, candleInfo, autoSpinSpeed, updateCorrected[1]);
+            return _inputSysUtility.UpdateCandleResourceByPentagram(jkeyCmdTypeCurrent, jkeyCmdTypePrevious, candleInfo, updateCorrected[1], this);
         }
 
         public bool ForceZeroAndRapidRecoveryCandleResource(JockeyCommandType jockeyCommandType)
@@ -112,10 +112,10 @@ namespace Main.Model
         /// リソースを更新
         /// 引数の+-は考慮せずリソースは消費される
         /// </summary>
-        /// <param name="inputValue">入力角度</param>
-        /// <param name="autoSpinSpeed">自動回転の速度</param>
+        /// <param name="jkeyCmdTypeCurrent">ジョッキーコマンドタイプ</param>
+        /// <param name="jkeyCmdTypePrevious">1つ前のジョッキーコマンドタイプ</param>
         /// <returns>成功／失敗</returns>
-        public bool UpdateCandleResource(float inputValue, float autoSpinSpeed);
+        public bool UpdateCandleResource(JockeyCommandType jkeyCmdTypeCurrent, JockeyCommandType jkeyCmdTypePrevious);
         /// <summary>
         /// 強制的にリソースが0になり、
         /// その後リソースの急速回復が始まる
