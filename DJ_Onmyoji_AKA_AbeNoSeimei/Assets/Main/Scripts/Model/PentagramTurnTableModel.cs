@@ -110,6 +110,23 @@ namespace Main.Model
                 return false;
             }
         }
+
+        public bool UpdateTempoLvValues(float tempoLevel, ShikigamiType shikigamiType)
+        {
+            try
+            {
+                foreach (Transform child in Transform)
+                    if (!child.GetComponent<TurretModel>().UpdateTempoLvValue(tempoLevel, shikigamiType))
+                        throw new System.Exception("UpdateTempoLvValue");
+
+                return true;
+            }
+            catch (System.Exception e)
+            {
+                Debug.LogError(e);
+                return false;
+            }
+        }
     }
 
     /// <summary>
@@ -125,5 +142,12 @@ namespace Main.Model
         /// <param name="jockeyCommandType">ジョッキーコマンドタイプ</param>
         /// <returns>成功／失敗</returns>
         public bool BuffAllTurrets(JockeyCommandType jockeyCommandType);
+        /// <summary>
+        /// いくつかのテンポレベルを更新
+        /// </summary>
+        /// <param name="tempoLevel">テンポレベル</param>
+        /// <param name="shikigamiType">式神タイプ</param>
+        /// <returns>成功／失敗</returns>
+        public bool UpdateTempoLvValues(float tempoLevel, ShikigamiType shikigamiType);
     }
 }

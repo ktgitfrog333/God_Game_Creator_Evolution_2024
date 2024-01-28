@@ -11,7 +11,7 @@ namespace Main.Model
     /// </summary>
     public class DanceTurretModel : TurretModel
     {
-        protected override OnmyoBulletConfig GetOnmyoBulletConfig()
+        protected override OnmyoBulletConfig InitializeOnmyoBulletConfig()
         {
             return new OnmyoBulletConfig()
             {
@@ -25,9 +25,41 @@ namespace Main.Model
             };
         }
 
+        protected override OnmyoBulletConfig ReLoadOnmyoBulletConfig(OnmyoBulletConfig config)
+        {
+            config.actionRate = _shikigamiUtility.GetMainSkillValueAddValueBuffMax(_shikigamiInfo, MainSkillType.ActionRate);
+            config.attackPoint = (int)_shikigamiUtility.GetMainSkillValueAddValueBuffMax(_shikigamiInfo, MainSkillType.AttackPoint);
+
+            return config;
+        }
+
         protected override bool ActionOfBullet(ObjectsPoolModel objectsPoolModel, OnmyoBulletConfig onmyoBulletConfig)
         {
             return _turretUtility.CallInitialize(objectsPoolModel.GetDanceHallModel(), RectTransform, onmyoBulletConfig);
+        }
+
+        public override bool UpdateTempoLvValue(float tempoLevel, ShikigamiType shikigamiType)
+        {
+            try
+            {
+                switch (shikigamiType)
+                {
+                    case ShikigamiType.Dance:
+                        if (_shikigamiInfo.state.tempoLevel != null)
+                            _shikigamiInfo.state.tempoLevel.Value = tempoLevel;
+
+                        break;
+                    default:
+                        break;
+                }
+
+                return true;
+            }
+            catch (System.Exception e)
+            {
+                Debug.LogError(e);
+                return false;
+            }
         }
     }
 }

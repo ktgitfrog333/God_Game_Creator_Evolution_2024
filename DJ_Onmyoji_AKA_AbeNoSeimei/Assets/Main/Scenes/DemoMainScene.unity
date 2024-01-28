@@ -322,7 +322,7 @@ MonoBehaviour:
     throwMessage: 
   - caseId: 1000
     skillRank: 0
-    throwMessage: "1\u3064\u306E\u30E1\u30A4\u30F3\u30B9\u30AD\u30EB\u30D7\u30ED\u30D1\u30C6\u30A3\u304B\u3089\u53D6\u5F97\u3067\u304D\u306A\u3044[DevelopmentTime]"
+    throwMessage: "1\u3064\u306E\u30E1\u30A4\u30F3\u30B9\u30AD\u30EB\u30D7\u30ED\u30D1\u30C6\u30A3\u304B\u3089\u53D6\u5F97\u3067\u304D\u306A\u3044[DebuffEffectLifeTime]"
   - caseId: 1001
     skillRank: 0
     throwMessage: "0\u3064\u306E\u30E1\u30A4\u30F3\u30B9\u30AD\u30EB\u30D7\u30ED\u30D1\u30C6\u30A3\u304B\u3089\u53D6\u5F97\u3067\u304D\u306A\u3044"
@@ -3534,6 +3534,7 @@ MonoBehaviour:
         mainSkillType: 1
         skillRank: 0
         value: 1.234
+        valueBuffMax: 0
     shikigamiInfo:
       prop:
         type: 0
@@ -3550,6 +3551,7 @@ MonoBehaviour:
         mainSkillType: 1
         skillRank: 0
         value: 1.234
+        valueBuffMax: 0
     shikigamiInfo:
       prop:
         type: 1
@@ -3578,30 +3580,37 @@ MonoBehaviour:
         mainSkillType: 1
         skillRank: 0
         value: 1.234
+        valueBuffMax: 0
       - shikigamiType: 0
         mainSkillType: 1
         skillRank: 1
         value: 2.345
+        valueBuffMax: 0
       - shikigamiType: 0
         mainSkillType: 1
         skillRank: 2
         value: 3.456
+        valueBuffMax: 0
       - shikigamiType: 0
         mainSkillType: 1
         skillRank: 3
         value: 4.567
+        valueBuffMax: 0
       - shikigamiType: 0
         mainSkillType: 1
         skillRank: 4
         value: 5.678
+        valueBuffMax: 0
       - shikigamiType: 0
         mainSkillType: 3
         skillRank: 0
         value: 10.123
+        valueBuffMax: 0
       - shikigamiType: 1
         mainSkillType: 1
         skillRank: 0
         value: 20.123
+        valueBuffMax: 0
     shikigamiInfo:
       prop:
         type: 0
@@ -4149,6 +4158,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: PentagramSystem
       objectReference: {fileID: 0}
+    - target: {fileID: 365837792146043846, guid: 6d2f8d5056dd236418c528ecd6ecb21d, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 3865822074106363652, guid: 6d2f8d5056dd236418c528ecd6ecb21d, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -4447,7 +4460,7 @@ MonoBehaviour:
     subSkills:
     - type: 1
       rank: 0
-  - caseId: 1000
+  - caseId: 2000
     subSkills: []
   - caseId: 3000
     subSkills:
@@ -4467,11 +4480,9 @@ MonoBehaviour:
     subSkills:
     - type: 1
       rank: 0
-  - caseId: 1000
-    throwMessage: "subSkills\u304C\u7A7A\u307E\u305F\u306Fnull\u3067\u3059"
-    subSkills:
-    - type: 1
-      rank: 0
+  - caseId: 2000
+    throwMessage: 
+    subSkills: []
   - caseId: 3000
     throwMessage: 
     subSkills:
@@ -5000,6 +5011,352 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1499798815}
   m_CullTransparentMesh: 1
+--- !u!1 &1503472808
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1503472811}
+  - component: {fileID: 1503472810}
+  - component: {fileID: 1503472809}
+  m_Layer: 0
+  m_Name: ShikigamiParameterUtilityTest6
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 0
+--- !u!114 &1503472809
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1503472808}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 63d8b0db638efb34b9d85994111e7b7e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  inputs:
+  - caseId: 0
+    levelDesign:
+      mainSkillLists:
+      - shikigamiType: 0
+        mainSkillType: 1
+        skillRank: 0
+        value: 1
+        valueBuffMax: 1.234
+    shikigamiInfo:
+      prop:
+        type: 0
+        level: 0
+        mainSkills:
+        - type: 1
+          rank: 0
+        subSkills: []
+    mainSkillType: 1
+    tempoLevelValue: 1
+  - caseId: 1000
+    levelDesign:
+      mainSkillLists:
+      - shikigamiType: 0
+        mainSkillType: 1
+        skillRank: 0
+        value: 1.234
+        valueBuffMax: 0
+    shikigamiInfo:
+      prop:
+        type: 1
+        level: 0
+        mainSkills:
+        - type: 1
+          rank: 0
+        subSkills: []
+    mainSkillType: 1
+    tempoLevelValue: 0
+  - caseId: 1001
+    levelDesign:
+      mainSkillLists: []
+    shikigamiInfo:
+      prop:
+        type: 1
+        level: 0
+        mainSkills:
+        - type: 1
+          rank: 0
+        subSkills: []
+    mainSkillType: 1
+    tempoLevelValue: 0
+  - caseId: 3000
+    levelDesign:
+      mainSkillLists:
+      - shikigamiType: 0
+        mainSkillType: 1
+        skillRank: 0
+        value: 0
+        valueBuffMax: 1.234
+      - shikigamiType: 0
+        mainSkillType: 1
+        skillRank: 1
+        value: 0
+        valueBuffMax: 2.345
+      - shikigamiType: 0
+        mainSkillType: 1
+        skillRank: 2
+        value: 0
+        valueBuffMax: 3.456
+      - shikigamiType: 0
+        mainSkillType: 1
+        skillRank: 3
+        value: 0
+        valueBuffMax: 4.567
+      - shikigamiType: 0
+        mainSkillType: 1
+        skillRank: 4
+        value: 0
+        valueBuffMax: 5.678
+      - shikigamiType: 0
+        mainSkillType: 3
+        skillRank: 0
+        value: 0
+        valueBuffMax: 10.123
+      - shikigamiType: 1
+        mainSkillType: 1
+        skillRank: 0
+        value: 0
+        valueBuffMax: 20.123
+    shikigamiInfo:
+      prop:
+        type: 0
+        level: 0
+        mainSkills:
+        - type: 1
+          rank: 0
+        - type: 1
+          rank: 1
+        - type: 1
+          rank: 2
+        - type: 1
+          rank: 3
+        - type: 1
+          rank: 4
+        - type: 3
+          rank: 0
+        subSkills: []
+    mainSkillType: 1
+    tempoLevelValue: 1
+  - caseId: 2000
+    levelDesign:
+      mainSkillLists:
+      - shikigamiType: 0
+        mainSkillType: 1
+        skillRank: 0
+        value: 0
+        valueBuffMax: 1.234
+    shikigamiInfo:
+      prop:
+        type: 0
+        level: 0
+        mainSkills:
+        - type: 1
+          rank: 0
+        subSkills: []
+    mainSkillType: 1
+    tempoLevelValue: 1.1
+  - caseId: 2001
+    levelDesign:
+      mainSkillLists:
+      - shikigamiType: 0
+        mainSkillType: 1
+        skillRank: 0
+        value: 0
+        valueBuffMax: 1.234
+    shikigamiInfo:
+      prop:
+        type: 0
+        level: 0
+        mainSkills:
+        - type: 1
+          rank: 0
+        subSkills: []
+    mainSkillType: 1
+    tempoLevelValue: 0.9
+  - caseId: 2002
+    levelDesign:
+      mainSkillLists:
+      - shikigamiType: 0
+        mainSkillType: 1
+        skillRank: 0
+        value: 0
+        valueBuffMax: 1.234
+    shikigamiInfo:
+      prop:
+        type: 0
+        level: 0
+        mainSkills:
+        - type: 1
+          rank: 0
+        subSkills: []
+    mainSkillType: 1
+    tempoLevelValue: 0.1
+  - caseId: 2003
+    levelDesign:
+      mainSkillLists:
+      - shikigamiType: 0
+        mainSkillType: 1
+        skillRank: 0
+        value: 0
+        valueBuffMax: 1.234
+    shikigamiInfo:
+      prop:
+        type: 0
+        level: 0
+        mainSkills:
+        - type: 1
+          rank: 0
+        subSkills: []
+    mainSkillType: 1
+    tempoLevelValue: 0
+  - caseId: 2004
+    levelDesign:
+      mainSkillLists:
+      - shikigamiType: 0
+        mainSkillType: 1
+        skillRank: 0
+        value: 0
+        valueBuffMax: 1.234
+    shikigamiInfo:
+      prop:
+        type: 0
+        level: 0
+        mainSkills:
+        - type: 1
+          rank: 0
+        subSkills: []
+    mainSkillType: 1
+    tempoLevelValue: -0.1
+  - caseId: 2005
+    levelDesign:
+      mainSkillLists:
+      - shikigamiType: 0
+        mainSkillType: 1
+        skillRank: 0
+        value: 0
+        valueBuffMax: 1.234
+    shikigamiInfo:
+      prop:
+        type: 0
+        level: 0
+        mainSkills:
+        - type: 1
+          rank: 0
+        subSkills: []
+    mainSkillType: 1
+    tempoLevelValue: -0.9
+  - caseId: 2006
+    levelDesign:
+      mainSkillLists:
+      - shikigamiType: 0
+        mainSkillType: 1
+        skillRank: 0
+        value: 0
+        valueBuffMax: 1.234
+    shikigamiInfo:
+      prop:
+        type: 0
+        level: 0
+        mainSkills:
+        - type: 1
+          rank: 0
+        subSkills: []
+    mainSkillType: 1
+    tempoLevelValue: -1
+  - caseId: 2007
+    levelDesign:
+      mainSkillLists:
+      - shikigamiType: 0
+        mainSkillType: 1
+        skillRank: 0
+        value: 0
+        valueBuffMax: 1.234
+    shikigamiInfo:
+      prop:
+        type: 0
+        level: 0
+        mainSkills:
+        - type: 1
+          rank: 0
+        subSkills: []
+    mainSkillType: 1
+    tempoLevelValue: -1.1
+  outputs:
+  - caseId: 0
+    value: 0.766
+    throwMessage: 
+  - caseId: 1000
+    value: 1.234
+    throwMessage: "1\u3064\u306E\u30E1\u30A4\u30F3\u30B9\u30AD\u30EB\u30D7\u30ED\u30D1\u30C6\u30A3\u304B\u3089\u53D6\u5F97\u3067\u304D\u306A\u3044[Dance][ActionRate]"
+  - caseId: 1001
+    value: 1.234
+    throwMessage: "0\u3064\u306E\u30E1\u30A4\u30F3\u30B9\u30AD\u30EB\u30D7\u30ED\u30D1\u30C6\u30A3\u304B\u3089\u53D6\u5F97\u3067\u304D\u306A\u3044"
+  - caseId: 3000
+    value: 0.766
+    throwMessage: 
+  - caseId: 2000
+    value: 0.7426
+    throwMessage: 
+  - caseId: 2001
+    value: 0.7894
+    throwMessage: 
+  - caseId: 2002
+    value: 0.9766
+    throwMessage: 
+  - caseId: 2003
+    value: 1
+    throwMessage: 
+  - caseId: 2004
+    value: 1.0234
+    throwMessage: 
+  - caseId: 2005
+    value: 1.2106
+    throwMessage: 
+  - caseId: 2006
+    value: 1.234
+    throwMessage: 
+  - caseId: 2007
+    value: 1.2574
+    throwMessage: 
+--- !u!114 &1503472810
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1503472808}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f711ce61501779b45922a5c7b8998ffe, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!4 &1503472811
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1503472808}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 5.5824585, y: 46.830593, z: -0.15204747}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1514134974
 GameObject:
   m_ObjectHideFlags: 0
@@ -5256,18 +5613,26 @@ MonoBehaviour:
             prop:
               type: 0
               level: 0
-              mainSkills: []
-              subSkills: []
-          instanceId: 0
+              mainSkills:
+              - type: 1
+                rank: 0
+              subSkills:
+              - type: 4
+                rank: 0
+          instanceId: -1
       - prop:
           slotId: 0
           shikigamiInfo:
             prop:
               type: 0
               level: 0
-              mainSkills: []
-              subSkills: []
-          instanceId: 0
+              mainSkills:
+              - type: 1
+                rank: 0
+              subSkills:
+              - type: 4
+                rank: 0
+          instanceId: -1
   - caseId: 1000
     throwMessage: "\u30B9\u30ED\u30C3\u30C8\u304B\u3089\u53D6\u5F97\u3067\u304D\u306A\u3044"
     pentagramTurnTableInfo:
@@ -5304,27 +5669,39 @@ MonoBehaviour:
             prop:
               type: 0
               level: 0
-              mainSkills: []
-              subSkills: []
-          instanceId: 0
+              mainSkills:
+              - type: 1
+                rank: 0
+              subSkills:
+              - type: 4
+                rank: 0
+          instanceId: -1
       - prop:
           slotId: 0
           shikigamiInfo:
             prop:
               type: 0
               level: 0
-              mainSkills: []
-              subSkills: []
-          instanceId: 0
+              mainSkills:
+              - type: 1
+                rank: 0
+              subSkills:
+              - type: 4
+                rank: 0
+          instanceId: -1
       - prop:
           slotId: 0
           shikigamiInfo:
             prop:
               type: 0
               level: 0
-              mainSkills: []
-              subSkills: []
-          instanceId: 0
+              mainSkills:
+              - type: 1
+                rank: 0
+              subSkills:
+              - type: 4
+                rank: 0
+          instanceId: -1
   - caseId: 3000
     throwMessage: 
     pentagramTurnTableInfo:
@@ -5335,45 +5712,65 @@ MonoBehaviour:
             prop:
               type: 0
               level: 0
-              mainSkills: []
-              subSkills: []
-          instanceId: 0
+              mainSkills:
+              - type: 1
+                rank: 0
+              subSkills:
+              - type: 4
+                rank: 0
+          instanceId: -1
       - prop:
-          slotId: 0
+          slotId: 1
           shikigamiInfo:
             prop:
-              type: 0
-              level: 0
-              mainSkills: []
-              subSkills: []
-          instanceId: 0
+              type: 1
+              level: 1
+              mainSkills:
+              - type: 7
+                rank: 1
+              subSkills:
+              - type: 5
+                rank: 1
+          instanceId: -1
       - prop:
-          slotId: 0
+          slotId: 2
           shikigamiInfo:
             prop:
-              type: 0
-              level: 0
-              mainSkills: []
-              subSkills: []
-          instanceId: 0
+              type: 2
+              level: 2
+              mainSkills:
+              - type: 6
+                rank: 2
+              subSkills:
+              - type: 2
+                rank: 2
+          instanceId: -1
       - prop:
-          slotId: 0
+          slotId: 3
           shikigamiInfo:
             prop:
-              type: 0
-              level: 0
-              mainSkills: []
-              subSkills: []
-          instanceId: 0
+              type: 3
+              level: 3
+              mainSkills:
+              - type: 2
+                rank: 3
+              subSkills:
+              - type: 1
+                rank: 3
+          instanceId: -1
       - prop:
-          slotId: 0
+          slotId: 4
           shikigamiInfo:
             prop:
-              type: 0
-              level: 0
-              mainSkills: []
-              subSkills: []
-          instanceId: 0
+              type: 3
+              level: 4
+              mainSkills:
+              - type: 7
+                rank: 4
+              subSkills:
+              - type: 5
+                rank: 4
+          instanceId: -1
 --- !u!114 &1534838209
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5540,7 +5937,7 @@ MonoBehaviour:
               level: 0
               mainSkills: []
               subSkills: []
-          instanceId: 0
+          instanceId: 1
     instanceId: 0
   - caseId: 1001
     pentagramTurnTableInfo:
@@ -5559,41 +5956,41 @@ MonoBehaviour:
               subSkills: []
           instanceId: 0
       - prop:
-          slotId: 0
+          slotId: 1
           shikigamiInfo:
             prop:
-              type: 0
+              type: 1
               level: 0
               mainSkills: []
               subSkills: []
-          instanceId: 0
+          instanceId: 1
       - prop:
-          slotId: 0
+          slotId: 2
           shikigamiInfo:
             prop:
-              type: 0
+              type: 2
               level: 0
               mainSkills: []
               subSkills: []
-          instanceId: 0
+          instanceId: 2
       - prop:
-          slotId: 0
+          slotId: 3
           shikigamiInfo:
             prop:
-              type: 0
+              type: 3
               level: 0
               mainSkills: []
               subSkills: []
-          instanceId: 0
+          instanceId: 3
       - prop:
-          slotId: 0
+          slotId: 4
           shikigamiInfo:
             prop:
-              type: 0
+              type: 3
               level: 0
               mainSkills: []
               subSkills: []
-          instanceId: 0
+          instanceId: 4
     instanceId: 3
   outputs:
   - caseId: 0
@@ -6947,6 +7344,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: FadersGroup
       objectReference: {fileID: 0}
+    - target: {fileID: 7413195091202341872, guid: 632711e78d59c1245a461badb453deb2, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 7680374968084515583, guid: 632711e78d59c1245a461badb453deb2, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
@@ -7092,6 +7493,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: SpGauge
       objectReference: {fileID: 0}
+    - target: {fileID: 1949926570869335037, guid: 3d5d427c34a7ad241923bfa89394d80e, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -7196,6 +7601,7 @@ SceneRoots:
   - {fileID: 1354063465}
   - {fileID: 1148652705}
   - {fileID: 1534838210}
+  - {fileID: 1503472811}
   - {fileID: 2028995780}
   - {fileID: 542423181}
   - {fileID: 464994368}

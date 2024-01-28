@@ -17,8 +17,8 @@ namespace Main.Test.Driver
             // 正常系
             CaseNormalSystem(0000);
             // 異常系
-            CaseAbnormalSystem(1000);
             // 境界値分析
+            CaseBoundaryValueAnalysis(2000);
             // 複数パターン
             CaseMultiplePatterns(3000);
         }

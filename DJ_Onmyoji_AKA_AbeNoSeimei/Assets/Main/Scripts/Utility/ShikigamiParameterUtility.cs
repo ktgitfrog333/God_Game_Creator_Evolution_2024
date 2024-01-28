@@ -4,7 +4,6 @@ using System.Linq;
 using Main.Common;
 using Main.Model;
 using Main.Test.Driver;
-using MoonSharp.Interpreter;
 using UnityEngine;
 using Universal.Bean;
 using Universal.Common;
@@ -22,12 +21,90 @@ namespace Main.Utility
         /// <summary>共通のユーティリティ</summary>
         private MainCommonUtility _common = new MainCommonUtility();
 
-        /// <summary>
-        /// スロット番号が未セットであることを表す定数
-        /// </summary>
+        /// <summary>スロット番号が未セットであることを表す</summary>
         private const int UNSET_SLOT_NUMBER = -1;
 
+        /// <summary>メインスキル倍率値（デフォルト）の取得</summary>
+        private const float MAIN_SKILL_VALUE_BUFF_MAX_DEFAULT = 1f;
+
         public float GetMainSkillValue(ShikigamiInfo shikigamiInfo, MainSkillType mainSkillType)
+        {
+            return GetMainSkills(shikigamiInfo, mainSkillType, q => q.value);
+        }
+
+        public float GetMainSkillValueAddValueBuffMax(ShikigamiInfo shikigamiInfo, MainSkillType mainSkillType)
+        {
+            var mainSkills = GetMainSkills(shikigamiInfo, mainSkillType, q => q.value);
+            var mainSkillValueBuffMax = GetMainSkillValueBuffMax(shikigamiInfo, mainSkillType);
+            switch (mainSkillType)
+            {
+                case MainSkillType.ActionRate:
+                    return mainSkills * mainSkillValueBuffMax;
+                case MainSkillType.AttackPoint:
+                    return mainSkills * mainSkillValueBuffMax;
+                case MainSkillType.BulletLifeTime:
+                    throw new System.NotImplementedException();
+                case MainSkillType.Range:
+                    throw new System.NotImplementedException();
+                case MainSkillType.DebuffEffectLifeTime:
+                    throw new System.NotImplementedException();
+                default:
+                    throw new System.Exception("未定義のメインスキル");
+            }
+        }
+
+        /// <summary>
+        /// メインスキル倍率値の取得
+        /// </summary>
+        /// <param name="shikigamiInfo">式神の情報</param>
+        /// <param name="mainSkillType">スキルタイプ</param>
+        /// <returns>メインスキル倍率値</returns>
+        /// <exception cref="System.Exception">メインスキルプロパティが1つもない場合、または指定したスキルタイプのメインスキルプロパティが1つもない場合にスローされます</exception>
+        private float GetMainSkillValueBuffMax(ShikigamiInfo shikigamiInfo, MainSkillType mainSkillType)
+        {
+            if (shikigamiInfo.state.tempoLevel.HasValue)
+            {
+                float tempoLevelMultiplier = 1f;
+                switch (mainSkillType)
+                {
+                    case MainSkillType.ActionRate:
+                        tempoLevelMultiplier = -1f;
+                        break;
+                    case MainSkillType.AttackPoint:
+                        // 変更不要
+                        break;
+                    case MainSkillType.BulletLifeTime:
+                        throw new System.NotImplementedException();
+                    case MainSkillType.Range:
+                        throw new System.NotImplementedException();
+                    case MainSkillType.DebuffEffectLifeTime:
+                        throw new System.NotImplementedException();
+                    default:
+                        throw new System.Exception("未定義のメインスキル");
+                }
+
+                float tempoLevel = shikigamiInfo.state.tempoLevel.Value;
+                var mainSkillValueBuffMax = GetMainSkills(shikigamiInfo, mainSkillType, q => q.valueBuffMax);
+                // 最低倍率をmainSkillValueBuffMaxに依存して計算
+                float minMultiplier = 2 * 1.0f - mainSkillValueBuffMax;
+                // 最大倍率はmainSkillValueBuffMaxに依存
+                float maxMultiplier = mainSkillValueBuffMax;
+                float multiplier = ((maxMultiplier - minMultiplier) * (tempoLevel * tempoLevelMultiplier + 1) / 2) + minMultiplier;
+
+                return multiplier;
+            }
+
+            return MAIN_SKILL_VALUE_BUFF_MAX_DEFAULT;
+        }
+
+        /// <summary>
+        /// メインスキルのいずれかの値の取得
+        /// </summary>
+        /// <param name="shikigamiInfo">式神の情報</param>
+        /// <param name="mainSkillType">スキルタイプ</param>
+        /// <returns>メインスキルのいずれかの値</returns>
+        /// <exception cref="System.Exception">メインスキルプロパティが1つもない場合、または指定したスキルタイプのメインスキルプロパティが1つもない場合にスローされます</exception>
+        private T GetMainSkills<T>(ShikigamiInfo shikigamiInfo, MainSkillType mainSkillType, System.Func<MainSkillList, T> selector)
         {
             var skillLists = _common.AdminDataSingleton.AdminBean.levelDesign.mainSkillLists;
             if (skillLists.Length < 1)
@@ -36,7 +113,7 @@ namespace Main.Utility
             var array = skillLists.Where(q => ((ShikigamiType)q.shikigamiType).Equals(shikigamiInfo.prop.type) &&
                 ((MainSkillType)q.mainSkillType).Equals(mainSkillType) &&
                 ((SkillRank)q.skillRank).Equals(GetMainSkillRank(shikigamiInfo, mainSkillType)))
-                .Select(q => q.value)
+                .Select(selector)
                 .ToArray();
             if (array.Length < 1)
                 throw new System.Exception($"{skillLists.Length}つのメインスキルプロパティから取得できない[{shikigamiInfo.prop.type}][{mainSkillType}]");
@@ -187,7 +264,16 @@ namespace Main.Utility
         /// <returns>メインスキル値</returns>
         /// <exception cref="System.Exception">メインスキルプロパティが1つもない場合、または指定したスキルタイプのメインスキルプロパティが1つもない場合にスローされます</exception>
         public float GetMainSkillValue(ShikigamiInfo shikigamiInfo, MainSkillType mainSkillType);
-        
+
+        /// <summary>
+        /// メインスキル値*倍率値の取得
+        /// </summary>
+        /// <param name="shikigamiInfo">式神の情報</param>
+        /// <param name="mainSkillType">スキルタイプ</param>
+        /// <returns>メインスキル値*倍率値</returns>
+        /// <exception cref="System.Exception">メインスキルプロパティが1つもない場合、または指定したスキルタイプのメインスキルプロパティが1つもない場合にスローされます</exception>
+        public float GetMainSkillValueAddValueBuffMax(ShikigamiInfo shikigamiInfo, MainSkillType mainSkillType);
+
         /// <summary>
         /// 式神の情報を取得
         /// </summary>

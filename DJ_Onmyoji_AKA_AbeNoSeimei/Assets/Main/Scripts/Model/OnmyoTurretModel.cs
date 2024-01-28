@@ -11,7 +11,7 @@ namespace Main.Model
     /// </summary>
     public class OnmyoTurretModel : TurretModel
     {
-        protected override OnmyoBulletConfig GetOnmyoBulletConfig()
+        protected override OnmyoBulletConfig InitializeOnmyoBulletConfig()
         {
             return new OnmyoBulletConfig()
             {
@@ -21,9 +21,21 @@ namespace Main.Model
             };
         }
 
+        protected override OnmyoBulletConfig ReLoadOnmyoBulletConfig(OnmyoBulletConfig config)
+        {
+            // 陰陽玉はレベルアップなし
+            return config;
+        }
+
         protected override bool ActionOfBullet(ObjectsPoolModel objectsPoolModel, OnmyoBulletConfig onmyoBulletConfig)
         {
             return _turretUtility.CallInitialize(objectsPoolModel.GetOnmyoBulletModel(), RectTransform, onmyoBulletConfig);
+        }
+
+        public override bool UpdateTempoLvValue(float tempoLevel, ShikigamiType shikigamiType)
+        {
+            // 陰陽玉はレベルアップなし
+            return true;
         }
     }
 }

@@ -51,6 +51,8 @@ namespace Main.Presenter
                             if (!faderUniversalView.SetSliderValue(x, item.Content.prop.type))
                                 Debug.LogError("SetSliderValue");
                         }
+                        if (!pentagramTurnTableModel.UpdateTempoLvValues(x, item.Content.prop.type))
+                            Debug.LogError("UpdateTempoLvValues");
                     });
             shikigamiSkillSystemModel.CandleInfo.CandleResource.ObserveEveryValueChanged(x => x.Value)
                 .Subscribe(x =>
@@ -149,17 +151,17 @@ namespace Main.Presenter
                     // if (!pentagramTurnTableView.MoveSpin(bgmConfDetails))
                     //     Debug.LogError("MoveSpin");
                 });
-            pentagramSystemModel.JockeyCommandType.ObserveEveryValueChanged(x => x.Value)
-                .Pairwise()
-                .Subscribe(pair =>
-                {
-                    if (!shikigamiSkillSystemModel.UpdateCandleResource((JockeyCommandType)pair.Current, (JockeyCommandType)pair.Previous))
-                        Debug.LogError("UpdateCandleResource");
-                    if (!pentagramTurnTableModel.BuffAllTurrets((JockeyCommandType)pair.Current))
-                        Debug.LogError("BuffAllTurrets");
-                    if (!shikigamiSkillSystemModel.ForceZeroAndRapidRecoveryCandleResource((JockeyCommandType)pair.Current))
-                        Debug.LogError("ForceZeroAndRapidRecoveryCandleResource");
-                });
+            // pentagramSystemModel.JockeyCommandType.ObserveEveryValueChanged(x => x.Value)
+            //     .Pairwise()
+            //     .Subscribe(pair =>
+            //     {
+            //         if (!shikigamiSkillSystemModel.UpdateCandleResource((JockeyCommandType)pair.Current, (JockeyCommandType)pair.Previous))
+            //             Debug.LogError("UpdateCandleResource");
+            //         if (!pentagramTurnTableModel.BuffAllTurrets((JockeyCommandType)pair.Current))
+            //             Debug.LogError("BuffAllTurrets");
+            //         if (!shikigamiSkillSystemModel.ForceZeroAndRapidRecoveryCandleResource((JockeyCommandType)pair.Current))
+            //             Debug.LogError("ForceZeroAndRapidRecoveryCandleResource");
+            //     });
             // sunMoonSystemModel.OnmyoState.ObserveEveryValueChanged(x => x.Value)
             //     .Subscribe(x => sunMoonStateIconView.SetRotate(x));
             // sunMoonStateIconViewDemo.OnmyoState.ObserveEveryValueChanged(x => x.Value)

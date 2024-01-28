@@ -44,7 +44,7 @@ namespace Main.Model
         {
             var model = GameObject.Find(ConstGameObjectNames.GAMEOBJECT_NAME_PENTAGRAMTURNTABLE).GetComponent<PentagramTurnTableModel>();
             _shikigamiInfo = _shikigamiUtility.GetShikigamiInfo(model.PentagramTurnTableInfo, InstanceID);
-            instanceRateTimeSec = _shikigamiUtility.GetMainSkillValue(_shikigamiInfo, MainSkillType.ActionRate);
+            _shikigamiInfo.state.tempoLevel = new FloatReactiveProperty();
             base.Start();
         }
 
@@ -52,7 +52,12 @@ namespace Main.Model
         /// 初期化処理
         /// </summary>
         /// <returns>魔力弾の設定</returns>
-        protected abstract OnmyoBulletConfig GetOnmyoBulletConfig();
+        protected abstract OnmyoBulletConfig InitializeOnmyoBulletConfig();
+        /// <summary>
+        /// 設定のリロード（テンポレベルによる可変効果）
+        /// </summary>
+        /// <returns>魔力弾の設定</returns>
+        protected abstract OnmyoBulletConfig ReLoadOnmyoBulletConfig(OnmyoBulletConfig config);
 
         /// <summary>
         /// 魔力弾／円舞範囲／デバフ魔力弾の制御
@@ -63,12 +68,13 @@ namespace Main.Model
 
         protected override IEnumerator InstanceCloneObjects(float instanceRateTimeSec, ObjectsPoolModel objectsPoolModel)
         {
-            var config = GetOnmyoBulletConfig();
+            var config = InitializeOnmyoBulletConfig();
             float elapsedTime = 0f;
             float timeSec;
             // 一定間隔で弾を生成するための実装
             while (true)
             {
+                config = ReLoadOnmyoBulletConfig(config);
                 switch (_jockeyCommandType)
                 {
                     case JockeyCommandType.Hold:
@@ -76,12 +82,12 @@ namespace Main.Model
 
                         break;
                     case JockeyCommandType.Scratch:
-                        timeSec = instanceRateTimeSec / instanceRateTimeSecCorrection;
+                        timeSec = config.actionRate / instanceRateTimeSecCorrection;
 
                         break;
                     default:
                         // デフォルト値
-                        timeSec = instanceRateTimeSec;
+                        timeSec = config.actionRate;
 
                         break;
                 }
@@ -114,6 +120,14 @@ namespace Main.Model
                 return false;
             }
         }
+
+        /// <summary>
+        /// テンポレベルを更新
+        /// </summary>
+        /// <param name="tempoLevel">テンポレベル</param>
+        /// <param name="shikigamiType">式神タイプ</param>
+        /// <returns>成功／失敗</returns>
+        public abstract bool UpdateTempoLvValue(float tempoLevel, ShikigamiType shikigamiType);
     }
 
     /// <summary>

@@ -12,7 +12,7 @@ namespace Main.Model
     /// </summary>
     public class GraffitiTurretModel : TurretModel
     {
-        protected override OnmyoBulletConfig GetOnmyoBulletConfig()
+        protected override OnmyoBulletConfig InitializeOnmyoBulletConfig()
         {
             return new OnmyoBulletConfig()
             {
@@ -25,9 +25,40 @@ namespace Main.Model
             };
         }
 
+        protected override OnmyoBulletConfig ReLoadOnmyoBulletConfig(OnmyoBulletConfig config)
+        {
+            config.actionRate = _shikigamiUtility.GetMainSkillValueAddValueBuffMax(_shikigamiInfo, MainSkillType.ActionRate);
+
+            return config;
+        }
+
         protected override bool ActionOfBullet(ObjectsPoolModel objectsPoolModel, OnmyoBulletConfig onmyoBulletConfig)
         {
             return _turretUtility.CallInitialize(objectsPoolModel.GetGraffitiBulletModel(), RectTransform, onmyoBulletConfig);
+        }
+
+        public override bool UpdateTempoLvValue(float tempoLevel, ShikigamiType shikigamiType)
+        {
+            try
+            {
+                switch (shikigamiType)
+                {
+                    case ShikigamiType.Graffiti:
+                        if (_shikigamiInfo.state.tempoLevel != null)
+                            _shikigamiInfo.state.tempoLevel.Value = tempoLevel;
+
+                        break;
+                    default:
+                        break;
+                }
+
+                return true;
+            }
+            catch (System.Exception e)
+            {
+                Debug.LogError(e);
+                return false;
+            }
         }
     }
 }

@@ -236,5 +236,6 @@ namespace Universal.Bean
         public int mainSkillType;
         public int skillRank;
         public float value;
+        public float valueBuffMax;
     }
 }
