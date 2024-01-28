@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using Main.Common;
+using Main.Utility;
 using UniRx;
 using UnityEngine;
 using Universal.Common;
@@ -10,7 +11,7 @@ namespace Main.Model
     /// <summary>
     /// 敵をスポーン
     /// </summary>
-    public class EnemiesSpawnModel : SpawnModel
+    public class EnemiesSpawnModel : SpawnModel, IEnemiesSpawnModel
     {
         /// <summary>最小半径</summary>
         [SerializeField] private float radiusMin = 10f;
@@ -18,14 +19,13 @@ namespace Main.Model
         [SerializeField] private float radiusMax = 12f;
         /// <summary>トランスフォーム</summary>
         private Transform _target;
+        /// <summary>陰陽（昼夜）の状態</summary>
+        private float _onmyoState;  // TODO:敵生成の実装の際に昼／夜の判定を行う
 
         protected override void Start()
         {
-            var adminDataSingleton = AdminDataSingleton.Instance != null ?
-                AdminDataSingleton.Instance :
-                new GameObject(Universal.Common.ConstGameObjectNames.GAMEOBJECT_NAME_ADMINDATA_SINGLETON).AddComponent<AdminDataSingleton>()
-                    .GetComponent<AdminDataSingleton>();
-            instanceRateTimeSec = adminDataSingleton.AdminBean.EnemiesSpawnModel.invincibleTimeSec;
+            var utility = new MainCommonUtility();
+            instanceRateTimeSec = utility.AdminDataSingleton.AdminBean.EnemiesSpawnModel.invincibleTimeSec;
 
             base.Start();
             Observable.FromCoroutine<Transform>(observer => WaitForTarget(observer))
@@ -91,5 +91,34 @@ namespace Main.Model
             Vector2 position = new Vector2(target.position.x + distance * Mathf.Cos(angle), target.position.y + distance * Mathf.Sin(angle));
             return position;
         }
+
+        public bool SetOnmyoState(float onmyoState)
+        {
+            try
+            {
+                _onmyoState = onmyoState;
+
+                return true;
+            }
+            catch (System.Exception e)
+            {
+                Debug.LogError(e);
+                return false;
+            }
+        }
+    }
+
+    /// <summary>
+    /// 敵をスポーン
+    /// インターフェース
+    /// </summary>
+    public interface IEnemiesSpawnModel
+    {
+        /// <summary>
+        /// 陰陽（昼夜）の状態をセット
+        /// </summary>
+        /// <param name="onmyoState">陰陽（昼夜）の状態</param>
+        /// <returns>成功／失敗</returns>
+        public bool SetOnmyoState(float onmyoState);
     }
 }
