@@ -31,7 +31,10 @@ namespace Main.Model
                 .Subscribe(x =>
                 {
                     if (x)
-                        StartCoroutine(InstanceCloneObjects(instanceRateTimeSec, poolModel));
+                    {
+                        if (!InstanceCloneObjects(instanceRateTimeSec, poolModel))
+                            Debug.LogError("InstanceCloneObjects");
+                    }
                 });
         }
 
@@ -40,7 +43,7 @@ namespace Main.Model
         /// </summary>
         /// <param name="instanceRateTimeSec">オブジェクトを生成する時間間隔（秒）</param>
         /// <param name="objectsPoolModel">オブジェクトプール</param>
-        /// <returns>コルーチン</returns>
-        protected abstract IEnumerator InstanceCloneObjects(float instanceRateTimeSec, ObjectsPoolModel objectsPoolModel);
+        /// <returns>成功／失敗</returns>
+        protected abstract bool InstanceCloneObjects(float instanceRateTimeSec, ObjectsPoolModel objectsPoolModel);
     }
 }

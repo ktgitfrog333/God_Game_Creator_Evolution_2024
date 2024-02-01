@@ -34,6 +34,10 @@ namespace Main.Model
         public CharacterState State { get; private set; }
         /// <summary>攻撃を与える判定のトリガー</summary>
         [SerializeField] private AttackColliderOfEnemy attackColliderOfEnemy;
+        /// <summary>敵ID</summary>
+        [SerializeField] private EnemiesID enemiesID;
+        /// <summary>敵ID</summary>
+        public EnemiesID EnemiesID => enemiesID;
 
         public bool Initialize(Vector2 position, Transform target)
         {

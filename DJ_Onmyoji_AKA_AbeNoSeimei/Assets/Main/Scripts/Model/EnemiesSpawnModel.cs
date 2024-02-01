@@ -3,8 +3,8 @@ using System.Collections.Generic;
 using Main.Common;
 using Main.Utility;
 using UniRx;
+using UniRx.Triggers;
 using UnityEngine;
-using Universal.Common;
 
 namespace Main.Model
 {
@@ -20,7 +20,9 @@ namespace Main.Model
         /// <summary>トランスフォーム</summary>
         private Transform _target;
         /// <summary>陰陽（昼夜）の状態</summary>
-        private float _onmyoState;  // TODO:敵生成の実装の際に昼／夜の判定を行う
+        private float _onmyoState;
+        /// <summary>敵のスポーンテーブル</summary>
+        private EnemiesSpawnTable _enemiesSpawnTable;
 
         protected override void Start()
         {
@@ -58,38 +60,38 @@ namespace Main.Model
             Gizmos.DrawWireSphere(_target != null ? _target.position : Vector2.zero, radiusMax);
         }
 
-        protected override IEnumerator InstanceCloneObjects(float instanceRateTimeSec, ObjectsPoolModel objectsPoolModel)
+        protected override bool InstanceCloneObjects(float instanceRateTimeSec, ObjectsPoolModel objectsPoolModel)
         {
-            // 一定間隔で敵を生成するための実装
-            while (true)
+            try
             {
-                if (_target != null)
-                {
-                    var enemy = objectsPoolModel.GetEnemyModel();
-                    if (!enemy.Initialize(GetPositionOfAroundThePlayer(_target, radiusMin, radiusMax), _target))
-                        Debug.LogError("Initialize");
-                    if (!enemy.isActiveAndEnabled)
-                        enemy.gameObject.SetActive(true);
-                    yield return new WaitForSeconds(instanceRateTimeSec);
-                }
-                else
-                    yield return null;
-            }
-        }
+                float elapsedTime = 0f;
+                var spawnUtility = new SpawnUtility();
+                // 一定間隔で敵を生成するための実装
+                this.UpdateAsObservable()
+                    .Subscribe(_ =>
+                    {
+                        if (isActiveAndEnabled)
+                        {
+                            if (!spawnUtility.ManageEnemiesSpawn(_enemiesSpawnTable,
+                                ref elapsedTime,
+                                _target,
+                                objectsPoolModel,
+                                radiusMin,
+                                radiusMax,
+                                _onmyoState))
+                                Debug.LogError("ManageEnemiesSpawn");
+                        }
+                    });
+                // 必要になるまではゲームオブジェクトを無効
+                gameObject.SetActive(false);
 
-        /// <summary>
-        /// ターゲットの指定半径範囲内にランダムで位置情報を返す
-        /// </summary>
-        /// <param name="target">ターゲット</param>
-        /// <param name="radiusMin">最小半径</param>
-        /// <param name="radiusMax">最大半径</param>
-        /// <returns>位置情報</returns>
-        private Vector2 GetPositionOfAroundThePlayer(Transform target, float radiusMin, float radiusMax)
-        {
-            float distance = Random.Range(radiusMin, radiusMax);
-            float angle = Random.Range(0, 2 * Mathf.PI);
-            Vector2 position = new Vector2(target.position.x + distance * Mathf.Cos(angle), target.position.y + distance * Mathf.Sin(angle));
-            return position;
+                return true;
+            }
+            catch (System.Exception e)
+            {
+                Debug.LogError(e);
+                return false;
+            }
         }
 
         public bool SetOnmyoState(float onmyoState)
@@ -106,6 +108,17 @@ namespace Main.Model
                 return false;
             }
         }
+
+        public void SetEnemiesSpawnTable(EnemiesSpawnTable enemiesSpawnTable)
+        {
+            if (0f <= _onmyoState &&
+                enemiesSpawnTable.sunMoonState.Equals(SunMoonState.Night) ||
+                _onmyoState < 0 &&
+                enemiesSpawnTable.sunMoonState.Equals(SunMoonState.Daytime))
+                return;
+
+            _enemiesSpawnTable = enemiesSpawnTable;
+        }
     }
 
     /// <summary>
@@ -120,5 +133,86 @@ namespace Main.Model
         /// <param name="onmyoState">陰陽（昼夜）の状態</param>
         /// <returns>成功／失敗</returns>
         public bool SetOnmyoState(float onmyoState);
+        /// <summary>
+        /// オブジェクトを生成
+        /// </summary>
+        /// <param name="enemiesSpawnTable"></param>
+        public void SetEnemiesSpawnTable(EnemiesSpawnTable enemiesSpawnTable);
+    }
+
+    /// <summary>
+    /// 敵のスポーンテーブル
+    /// </summary>
+    [System.Serializable]
+    public struct EnemiesSpawnTable
+    {
+        /// <summary>クローンオブジェクトを生成する時間間隔（秒）</summary>
+        public float instanceRateTimeSec;
+        /// <summary>クローンオブジェクトを生成する回数</summary>
+        public int instanceCount;
+        /// <summary>敵ID配列</summary>
+        public EnemiesID[] enemiesIDs;
+        /// <summary>昼夜の状態</summary>
+        public SunMoonState sunMoonState;
+    }
+
+    /// <summary>
+    /// 敵のスポーン登録情報
+    /// </summary>
+    [System.Serializable]
+    public struct EnemiesSpawnAssign
+    {
+        /// <summary>敵ID</summary>
+        public EnemiesID enemiesID;
+        /// <summary>敵のプレハブ</summary>
+        public Transform enemyPrefab;
+    }
+
+    /// <summary>
+    /// 敵ID
+    /// </summary>
+    public enum EnemiesID
+    {
+        /// <summary>雑魚敵A</summary>
+        EN0000,
+        /// <summary>雑魚敵B</summary>
+        EN0001,
+        /// <summary>雑魚敵C</summary>
+        EN0002,
+        /// <summary>雑魚敵D</summary>
+        EN0003,
+        /// <summary>雑魚敵E</summary>
+        EN0004,
+        /// <summary>中ボス敵A</summary>
+        EN1000,
+        /// <summary>中ボス敵B</summary>
+        EN1001,
+        /// <summary>中ボス敵C</summary>
+        EN1002,
+        /// <summary>中ボス敵D</summary>
+        EN1003,
+        /// <summary>中ボス敵E</summary>
+        EN1004,
+        /// <summary>大ボス敵A</summary>
+        EN2000,
+        /// <summary>大ボス敵B</summary>
+        EN2001,
+        /// <summary>大ボス敵C</summary>
+        EN2002,
+        /// <summary>大ボス敵D</summary>
+        EN2003,
+        /// <summary>大ボス敵E</summary>
+        EN2004,
+    }
+
+    /// <summary>
+    /// 昼夜の状態
+    /// </summary>
+    public enum SunMoonState
+    {
+        /// <summary>昼</summary>
+        Daytime,
+        /// <summary>夜</summary>
+        Night,
     }
 }

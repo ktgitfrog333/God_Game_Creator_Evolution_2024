@@ -5,6 +5,7 @@ using Main.Utility;
 using Main.Common;
 using UniRx;
 using Universal.Utility;
+using UniRx.Triggers;
 
 namespace Main.Model
 {
@@ -32,8 +33,6 @@ namespace Main.Model
         private JockeyCommandType _jockeyCommandType = JockeyCommandType.None;
         /// <summary>クローンオブジェクトを生成する時間間隔（秒）のバフ補正値</summary>
         [SerializeField] private float instanceRateTimeSecCorrection = 2f;
-        /// <summary>クローンオブジェクトを生成する時間間隔（秒）のホールド補正値</summary>
-        private const float INSTANCE_RATE_TIME_SEC_STOP = 60f * 60f;
 
         protected virtual void Awake()
         {
@@ -66,43 +65,33 @@ namespace Main.Model
         /// <returns>成功／失敗</returns>
         protected abstract bool ActionOfBullet(ObjectsPoolModel objectsPoolModel, OnmyoBulletConfig onmyoBulletConfig);
 
-        protected override IEnumerator InstanceCloneObjects(float instanceRateTimeSec, ObjectsPoolModel objectsPoolModel)
+        protected override bool InstanceCloneObjects(float instanceRateTimeSec, ObjectsPoolModel objectsPoolModel)
         {
-            var config = InitializeOnmyoBulletConfig();
-            float elapsedTime = 0f;
-            float timeSec;
-            // 一定間隔で弾を生成するための実装
-            while (true)
+            try
             {
-                config = ReLoadOnmyoBulletConfig(config);
-                switch (_jockeyCommandType)
-                {
-                    case JockeyCommandType.Hold:
-                        timeSec = INSTANCE_RATE_TIME_SEC_STOP;
+                var config = InitializeOnmyoBulletConfig();
+                float elapsedTime = 0f;
+                var spawnUtility = new SpawnUtility();
+                // 一定間隔で弾を生成するための実装
+                this.UpdateAsObservable()
+                    .Subscribe(_ =>
+                    {
+                        config = ReLoadOnmyoBulletConfig(config);
+                        if (!spawnUtility.ManageBulletSpawn(_jockeyCommandType,
+                            instanceRateTimeSecCorrection,
+                            objectsPoolModel,
+                            config,
+                            ref elapsedTime,
+                            ActionOfBullet))
+                            Debug.LogError("ManageBulletSpawn");
+                    });
 
-                        break;
-                    case JockeyCommandType.Scratch:
-                        timeSec = config.actionRate / instanceRateTimeSecCorrection;
-
-                        break;
-                    default:
-                        // デフォルト値
-                        timeSec = config.actionRate;
-
-                        break;
-                }
-
-                // 待機時間に到達していない場合はスキップ、到達していれば実行
-                if (timeSec <= elapsedTime)
-                {
-                    if (!ActionOfBullet(objectsPoolModel, config))
-                        Debug.LogError("ActionOfBullet");
-                    elapsedTime = 0f;
-                }
-                else
-                    elapsedTime += Time.deltaTime;
-
-                yield return null;
+                return true;
+            }
+            catch (System.Exception e)
+            {
+                Debug.LogError(e);
+                return false;
             }
         }
 

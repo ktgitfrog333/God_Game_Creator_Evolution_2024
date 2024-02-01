@@ -34,9 +34,8 @@ namespace Main.Model
         [SerializeField] private Transform graffitiBulletPrefab;
         /// <summary>魔力弾（グラフィティ用）配列</summary>
         private List<GraffitiBulletModel> _graffitiBulletModels = new List<GraffitiBulletModel>();
-        /// <summary>敵のプレハブ</summary>
-        [Tooltip("敵のプレハブ")]
-        [SerializeField] private Transform enemyPrefab;
+        /// <summary>敵のスポーンテーブル配列</summary>
+        [SerializeField] private EnemiesSpawnAssign[] enemiesSpawnAssigns;
         /// <summary>敵配列</summary>
         private List<EnemyModel> _enemyModels = new List<EnemyModel>();
 
@@ -60,9 +59,20 @@ namespace Main.Model
             return GetInactiveComponent(_graffitiBulletModels, graffitiBulletPrefab, _transform);
         }
 
-        public EnemyModel GetEnemyModel()
+        public EnemyModel GetEnemyModel(EnemiesID enemiesID)
         {
-            return GetInactiveComponent(_enemyModels, enemyPrefab, _transform);
+            var enemies = enemiesSpawnAssigns.Where(q => q.enemiesID.Equals(enemiesID))
+                .Select(q => q.enemyPrefab)
+                .ToArray();
+            if (enemies.Length < 1)
+            {
+                Debug.LogError($"存在しないIDを指定:[{enemiesID}]");
+                return null;
+            }
+
+            return GetInactiveComponent(_enemyModels.Where(q => q.EnemiesID.Equals(enemiesID))
+                .Select(q => q)
+                .ToList(), enemies[0], _transform);
         }
 
         private void Start()
@@ -82,7 +92,8 @@ namespace Main.Model
                 _wrapBulletModels.Add(GetClone(wrapBulletPrefab, _transform).GetComponent<WrapBulletModel>());
                 _danceHallModels.Add(GetClone(danceHallPrefab, _transform).GetComponent<DanceHallModel>());
                 _graffitiBulletModels.Add(GetClone(graffitiBulletPrefab, _transform).GetComponent<GraffitiBulletModel>());
-                _enemyModels.Add(GetClone(enemyPrefab, _transform).GetComponent<EnemyModel>());
+                foreach (var enemyPrefab in enemiesSpawnAssigns.Select(q => q.enemyPrefab))
+                    _enemyModels.Add(GetClone(enemyPrefab, _transform).GetComponent<EnemyModel>());
             }
             Debug.Log("プール完了");
             IsCompleted.Value = true;
@@ -141,7 +152,8 @@ namespace Main.Model
         /// <summary>
         /// 敵を取り出す
         /// </summary>
+        /// <param name="enemiesID">敵ID</param>
         /// <returns>敵</returns>
-        public EnemyModel GetEnemyModel();
+        public EnemyModel GetEnemyModel(EnemiesID enemiesID);
     }
 }

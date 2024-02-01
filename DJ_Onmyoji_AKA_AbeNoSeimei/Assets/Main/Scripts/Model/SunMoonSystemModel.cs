@@ -1,12 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
-using Main.Common;
-using Main.InputSystem;
 using Main.Utility;
 using UniRx;
-using UniRx.Triggers;
 using UnityEngine;
-using Universal.Common;
 
 namespace Main.Model
 {
@@ -31,11 +27,8 @@ namespace Main.Model
 
         private void Start()
         {
-            var adminDataSingleton = AdminDataSingleton.Instance != null ?
-                AdminDataSingleton.Instance :
-                new GameObject(Universal.Common.ConstGameObjectNames.GAMEOBJECT_NAME_ADMINDATA_SINGLETON).AddComponent<AdminDataSingleton>()
-                    .GetComponent<AdminDataSingleton>();
-            durations[0] = adminDataSingleton.AdminBean.sunMoonSystemModel.durations[0];
+            var commonUtility = new MainCommonUtility();
+            durations[0] = commonUtility.AdminDataSingleton.AdminBean.sunMoonSystemModel.durations[0];
             var utility = new InputSystemUtility();
             OnmyoState.Value = defaultOnmyoStateValue;
             if (!utility.SetOnmyoStateInModel(OnmyoState, durations, this))
