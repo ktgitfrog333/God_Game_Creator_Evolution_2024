@@ -63,16 +63,30 @@ namespace Main.Presenter
         [SerializeField] private FadeImageView fadeImageView;
         /// <summary>フェードのモデル</summary>
         [SerializeField] private FadeImageModel fadeImageModel;
-        /// <summary>カウントダウンタイマーの情報に合わせてUIを変化させる</summary>
+        /// <summary>カウントダウンタイマーの情報に合わせてUIを変化させるビュー</summary>
         [SerializeField] private ClearCountdownTimerTextView clearCountdownTimerTextView;
-        /// <summary>クリア条件を満たす要素を管理するシステム</summary>
+        /// <summary>クリア条件を満たす要素を管理するシステムのモデル</summary>
         [SerializeField] private ClearCountdownTimerSystemModel clearCountdownTimerSystemModel;
-        /// <summary>ペンダグラムシステム</summary>
+        /// <summary>ペンダグラムシステムのモデル</summary>
         [SerializeField] private PentagramSystemModel pentagramSystemModel;
-        /// <summary>ペンダグラムターンテーブル</summary>
+        /// <summary>ペンダグラムターンテーブルのビュー</summary>
         [SerializeField] private PentagramTurnTableView pentagramTurnTableView;
-        /// <summary>プレイヤーのHP</summary>
+        /// <summary>プレイヤーのHPのビュー</summary>
         [SerializeField] private ClearCountdownTimerGaugeView playerHP;
+        /// <summary>式神スキル管理システムのモデル</summary>
+        [SerializeField] private ShikigamiSkillSystemModel shikigamiSkillSystemModel;
+        /// <summary>魂の財布、獲得したソウルの管理のモデル</summary>
+        [SerializeField] private SoulWalletModel soulWalletModel;
+        /// <summary>陰陽（昼夜）の切り替えのモデル</summary>
+        [SerializeField] private SunMoonSystemModel sunMoonSystemModel;
+        /// <summary>フェーダーのビュー</summary>
+        [SerializeField] private FaderUniversalView[] faderUniversalViews;
+        /// <summary>蝋燭リソースの情報に合わせてUIを変化させるビュー</summary>
+        [SerializeField] private SpGaugeView spGaugeView;
+        /// <summary>陰陽（昼夜）のアイコンビュー</summary>
+        [SerializeField] private SunMoonStateIconView sunMoonStateIconView;
+        /// <summary>ペンダグラムターンテーブルのモデル</summary>
+        [SerializeField] private PentagramTurnTableModel pentagramTurnTableModel;
 
         private void Reset()
         {
@@ -114,8 +128,20 @@ namespace Main.Presenter
             clearCountdownTimerTextView = GameObject.Find("ClearCountdownTimerText").GetComponent<ClearCountdownTimerTextView>();
             clearCountdownTimerSystemModel = GameObject.Find("ClearCountdownTimerSystem").GetComponent<ClearCountdownTimerSystemModel>();
             pentagramSystemModel = GameObject.Find("PentagramSystem").GetComponent<PentagramSystemModel>();
-            pentagramTurnTableView = GameObject.Find("PentagramTurnTable").GetComponent<PentagramTurnTableView>();
+            pentagramTurnTableView = GameObject.Find(ConstGameObjectNames.GAMEOBJECT_NAME_PENTAGRAMTURNTABLE).GetComponent<PentagramTurnTableView>();
+            pentagramTurnTableModel = GameObject.Find(ConstGameObjectNames.GAMEOBJECT_NAME_PENTAGRAMTURNTABLE).GetComponent<PentagramTurnTableModel>();
             playerHP = GameObject.Find("PlayerHP").GetComponent<ClearCountdownTimerGaugeView>();
+            shikigamiSkillSystemModel = GameObject.Find("ShikigamiSkillSystem").GetComponent<ShikigamiSkillSystemModel>();
+            soulWalletModel = GameObject.Find("SoulWallet").GetComponent<SoulWalletModel>();
+            sunMoonSystemModel = GameObject.Find("SunMoonSystem").GetComponent<SunMoonSystemModel>();
+            faderUniversalViews = new FaderUniversalView[]
+            {
+                GameObject.Find($"Fader{ShikigamiType.Wrap}").GetComponent<FaderUniversalView>(),
+                GameObject.Find($"Fader{ShikigamiType.Dance}").GetComponent<FaderUniversalView>(),
+                GameObject.Find($"Fader{ShikigamiType.Graffiti}").GetComponent<FaderUniversalView>(),
+            };
+            spGaugeView = GameObject.Find("SpGauge").GetComponent<SpGaugeView>();
+            sunMoonStateIconView = GameObject.Find("SunMoonStateIcon").GetComponent<SunMoonStateIconView>();
         }
 
         public void OnStart()
@@ -614,7 +640,8 @@ namespace Main.Presenter
                     }
                 });
             // レベルのインスタンスに合わせてメンバー変数をセット
-            MainGameManager.Instance.LevelOwner.IsInstanced.ObserveEveryValueChanged(x => x.Value)
+            var levelOwner = MainGameManager.Instance.LevelOwner;
+            levelOwner.IsInstanced.ObserveEveryValueChanged(x => x.Value)
                 .Subscribe(x =>
                 {
                     if (x)
@@ -677,6 +704,21 @@ namespace Main.Presenter
                                     isGoalReached.Value = true;
                                 }
                             });
+                        this.UpdateAsObservable()
+                            .Select(_ => levelOwner.InstancedLevel.GetComponentInChildren<EnemiesSpawnModel>())
+                            .Where(model => model != null)
+                            .Take(1)
+                            .Subscribe(model =>
+                            {
+                                // enemiesSpawnModelがnullでないときの処理を設定
+                                sunMoonSystemModel.OnmyoState.ObserveEveryValueChanged(x => x.Value)
+                                    .Subscribe(x =>
+                                    {
+                                        sunMoonStateIconView.SetRotate(x);
+                                        if (!model.SetOnmyoState(x))
+                                            Debug.LogError("SetOnmyoState");
+                                    });
+                            });
                     }
                 });
             BgmConfDetails bgmConfDetails = new BgmConfDetails();
@@ -686,6 +728,47 @@ namespace Main.Presenter
                     bgmConfDetails.InputValue = x;
                     if (!pentagramTurnTableView.MoveSpin(bgmConfDetails))
                         Debug.LogError("MoveSpin");
+                });
+            this.UpdateAsObservable()
+                .Select(_ => shikigamiSkillSystemModel.ShikigamiInfos)
+                .Where(x => x != null)
+                .Take(1)
+                .Subscribe(x =>
+                {
+                    foreach (var item in x.Select((p, i) => new { Content = p, Index = i }))
+                        item.Content.state.tempoLevel.ObserveEveryValueChanged(x => x.Value)
+                            .Subscribe(x =>
+                            {
+                                foreach (var faderUniversalView in faderUniversalViews)
+                                {
+                                    if (!faderUniversalView.SetSliderValue(x, item.Content.prop.type))
+                                        Debug.LogError("SetSliderValue");
+                                }
+                                if (!pentagramTurnTableModel.UpdateTempoLvValues(x, item.Content.prop.type))
+                                    Debug.LogError("UpdateTempoLvValues");
+                            });
+                });
+            shikigamiSkillSystemModel.CandleInfo.CandleResource.ObserveEveryValueChanged(x => x.Value)
+                .Subscribe(x =>
+                {
+                    if (!spGaugeView.SetVertical(x, shikigamiSkillSystemModel.CandleInfo.LimitCandleResorceMax))
+                        Debug.LogError("SetVertical");
+                });
+            shikigamiSkillSystemModel.CandleInfo.IsOutCost.ObserveEveryValueChanged(x => x.Value)
+                .Subscribe(x =>
+                {
+                    Debug.Log($"IsOutCost:[{x}]");
+                });
+            pentagramSystemModel.JockeyCommandType.ObserveEveryValueChanged(x => x.Value)
+                .Pairwise()
+                .Subscribe(pair =>
+                {
+                    if (!shikigamiSkillSystemModel.UpdateCandleResource((JockeyCommandType)pair.Current, (JockeyCommandType)pair.Previous))
+                        Debug.LogError("UpdateCandleResource");
+                    if (!pentagramTurnTableModel.BuffAllTurrets((JockeyCommandType)pair.Current))
+                        Debug.LogError("BuffAllTurrets");
+                    if (!shikigamiSkillSystemModel.ForceZeroAndRapidRecoveryCandleResource((JockeyCommandType)pair.Current))
+                        Debug.LogError("ForceZeroAndRapidRecoveryCandleResource");
                 });
 
             this.UpdateAsObservable()

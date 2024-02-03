@@ -631,7 +631,7 @@ namespace Main.Utility
             }
         }
 
-        public bool ResetCandleResourceAndBuffAllTempoLevelsByPentagram(CandleInfo candleInfo, ShikigamiInfo[] shikigamiInfos, float rapidRecoveryTimeSec, ShikigamiSkillSystemModel model)
+        public bool ResetCandleResourceAndBuffAllTempoLevelsByPentagram(CandleInfo candleInfo, ShikigamiInfo[] shikigamiInfos, ShikigamiSkillSystemModel model)
         {
             throw new System.NotImplementedException();
         }
@@ -748,9 +748,8 @@ namespace Main.Utility
         /// </summary>
         /// <param name="candleInfo">蠟燭の情報</param>
         /// <param name="shikigamiInfos">式神の情報</param>
-        /// <param name="rapidRecoveryTimeSec">急速回復を行う時間（秒）</param>
         /// <param name="model">式神スキル管理システムモデル</param>
         /// <returns>成功／失敗</returns>
-        public bool ResetCandleResourceAndBuffAllTempoLevelsByPentagram(CandleInfo candleInfo, ShikigamiInfo[] shikigamiInfos, float rapidRecoveryTimeSec, ShikigamiSkillSystemModel model);
+        public bool ResetCandleResourceAndBuffAllTempoLevelsByPentagram(CandleInfo candleInfo, ShikigamiInfo[] shikigamiInfos, ShikigamiSkillSystemModel model);
     }
 }

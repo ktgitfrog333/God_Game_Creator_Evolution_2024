@@ -275,6 +275,16 @@ MonoBehaviour:
   pentagramSystemModel: {fileID: 0}
   pentagramTurnTableView: {fileID: 0}
   playerHP: {fileID: 0}
+  shikigamiSkillSystemModel: {fileID: 0}
+  soulWalletModel: {fileID: 0}
+  sunMoonSystemModel: {fileID: 0}
+  faderUniversalViews:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  spGaugeView: {fileID: 0}
+  sunMoonStateIconView: {fileID: 0}
+  pentagramTurnTableModel: {fileID: 0}
 --- !u!1 &1369696454729978949
 GameObject:
   m_ObjectHideFlags: 0

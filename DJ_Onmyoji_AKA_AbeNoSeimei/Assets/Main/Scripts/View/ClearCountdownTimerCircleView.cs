@@ -33,6 +33,12 @@ namespace Main.View
             image.fillClockwise = false;
         }
 
+        private void Start()
+        {
+            var utility = new MainCommonUtility();
+            maskAngle = utility.AdminDataSingleton.AdminBean.clearCountdownTimerCircleView.maskAngle;
+        }
+
         public bool SetAngle(float timeSec, float limitTimeSecMax)
         {
             return _utility.SetFillAmountOfImage(image, timeSec, limitTimeSecMax, maskAngle, Transform);

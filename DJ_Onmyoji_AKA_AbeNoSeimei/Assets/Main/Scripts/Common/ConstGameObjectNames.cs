@@ -17,5 +17,7 @@ namespace Main.Common
         public static readonly string GAMEOBJECT_NAME_GOALPOINT = "GoalPoint";
         /// <summary>ペンダグラムターンテーブル</summary>
         public static readonly string GAMEOBJECT_NAME_PENTAGRAMTURNTABLE = "PentagramTurnTable";
+        /// <summary>敵をスポーン</summary>
+        public static readonly string GAMEOBJECT_NAME_ENEMIESSPAWN = "EnemiesSpawn";
     }
 }

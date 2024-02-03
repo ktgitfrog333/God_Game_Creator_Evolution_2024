@@ -33,16 +33,13 @@ namespace Main.Model
         [SerializeField] private float[] updateCorrected = { 1f, 1f};
         /// <summary>InputSystemのユーティリティ</summary>
         private InputSystemUtility _inputSysUtility = new InputSystemUtility();
-        /// <summary>急速回復を行う時間（秒）</summary>
-        [SerializeField] private float rapidRecoveryTimeSec = 40f;
-
-        private void Reset()
-        {
-            candleInfo.limitCandleResorceMax = 10f;
-        }
 
         private void Start()
         {
+            var utilityCommon = new MainCommonUtility();
+            var adminDataSingleton = utilityCommon.AdminDataSingleton;
+            candleInfo.limitCandleResorceMax = adminDataSingleton.AdminBean.shikigamiSkillSystemModel.candleInfo.limitCandleResorceMax;
+            candleInfo.rapidRecoveryTimeSec = adminDataSingleton.AdminBean.shikigamiSkillSystemModel.candleInfo.rapidRecoveryTimeSec;
             candleInfo.CandleResource = new FloatReactiveProperty(candleInfo.LimitCandleResorceMax);
             candleInfo.IsOutCost = new BoolReactiveProperty();
             var utility = new ShikigamiParameterUtility();
@@ -66,7 +63,7 @@ namespace Main.Model
                 switch (jockeyCommandType)
                 {
                     case JockeyCommandType.BackSpin:
-                        if (!_inputSysUtility.ResetCandleResourceAndBuffAllTempoLevelsByPentagram(candleInfo, _shikigamiInfos, rapidRecoveryTimeSec, this))
+                        if (!_inputSysUtility.ResetCandleResourceAndBuffAllTempoLevelsByPentagram(candleInfo, _shikigamiInfos, this))
                             throw new System.Exception("ResetCandleResourceAndBuffAllTempoLevelsByPentagram");
 
                         break;
@@ -99,6 +96,8 @@ namespace Main.Model
         public float limitCandleResorceMax;
         /// <summary>蠟燭リソース最大値</summary>
         public float LimitCandleResorceMax => limitCandleResorceMax;
+        /// <summary>急速回復を行う時間（秒）</summary>
+        public float rapidRecoveryTimeSec;
     }
 
     /// <summary>

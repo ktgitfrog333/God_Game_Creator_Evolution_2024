@@ -44,7 +44,7 @@ namespace Main.Model
                 switch (shikigamiType)
                 {
                     case ShikigamiType.Wrap:
-                        if (_shikigamiInfo.state.tempoLevel.HasValue)
+                        if (_shikigamiInfo.state.tempoLevel != null)
                             _shikigamiInfo.state.tempoLevel.Value = tempoLevel;
 
                         break;

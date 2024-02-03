@@ -49,7 +49,11 @@ namespace Universal.Bean
         public OnmyoBulletModel OnmyoBulletModel = new OnmyoBulletModel();
         public WrapTurretModel WrapTurretModel = new WrapTurretModel();
         public GraffitiTurretModel GraffitiTurretModel = new GraffitiTurretModel();
-        public PentagramSystemModel PentagramSystemModel = new PentagramSystemModel();
+        public PentagramSystemModel PentagramSystemModel = new PentagramSystemModel()
+        {
+            autoSpinSpeed = .01f,
+            inputHistoriesLimit = 100,
+        };
         public PentagramTurnTableView PentagramTurnTableView = new PentagramTurnTableView();
         public PentagramTurnTableModel PentagramTurnTableModel = new PentagramTurnTableModel();
         public PlayerModel PlayerModel = new PlayerModel();
@@ -81,6 +85,19 @@ namespace Universal.Bean
                 },
             },
         };
+        public ClearCountdownTimerCircleView clearCountdownTimerCircleView = new ClearCountdownTimerCircleView()
+        {
+            maskAngle = .2f,
+        };
+        public ShikigamiSkillSystemModel shikigamiSkillSystemModel = new ShikigamiSkillSystemModel()
+        {
+            candleInfo = new CandleInfo()
+            {
+                limitCandleResorceMax = 10f,
+                rapidRecoveryTimeSec = 40f,
+            },
+        };
+
         public AdminBean()
         {
 
@@ -106,6 +123,8 @@ namespace Universal.Bean
             PlayerModel = adminBean.PlayerModel;
             sunMoonSystemModel = adminBean.sunMoonSystemModel;
             levelDesign = adminBean.levelDesign;
+            clearCountdownTimerCircleView = adminBean.clearCountdownTimerCircleView;
+            shikigamiSkillSystemModel = adminBean.shikigamiSkillSystemModel;
         }
     }
 
@@ -158,7 +177,8 @@ namespace Universal.Bean
     [System.Serializable]
     public class PentagramSystemModel
     {
-        public float autoSpinSpeed = .01f;
+        public float autoSpinSpeed;
+        public int inputHistoriesLimit;
     }
 
     [System.Serializable]
@@ -237,5 +257,24 @@ namespace Universal.Bean
         public int skillRank;
         public float value;
         public float valueBuffMax;
+    }
+
+    [System.Serializable]
+    public class ClearCountdownTimerCircleView
+    {
+        public float maskAngle;
+    }
+
+    [System.Serializable]
+    public class ShikigamiSkillSystemModel
+    {
+        public CandleInfo candleInfo;
+    }
+
+    [System.Serializable]
+    public class CandleInfo
+    {
+        public float limitCandleResorceMax;
+        public float rapidRecoveryTimeSec;
     }
 }

@@ -105,7 +105,7 @@ MonoBehaviour:
   m_Name: EnemiesSpawnClip
   m_EditorClassIdentifier: 
   enemiesSpawnInLevel:
-    exposedName: 
+    exposedName: 5e2a48797c1f73341b0558876538227f
     defaultValue: {fileID: 0}
   enemiesSpawnTable:
     instanceRateTimeSec: 0
@@ -125,7 +125,7 @@ MonoBehaviour:
   m_Name: EnemiesSpawnClip(Clone)
   m_EditorClassIdentifier: 
   enemiesSpawnInLevel:
-    exposedName: 
+    exposedName: 47bd5653730e5944784e38e959ec7022
     defaultValue: {fileID: 0}
   enemiesSpawnTable:
     instanceRateTimeSec: 0
