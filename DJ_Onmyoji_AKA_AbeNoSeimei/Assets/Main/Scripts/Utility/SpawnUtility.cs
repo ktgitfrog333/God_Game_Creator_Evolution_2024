@@ -1,8 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using Main.Common;
 using Main.Model;
-using Main.Test.Driver;
+using UniRx;
 using UnityEngine;
 
 namespace Main.Utility
@@ -10,7 +11,7 @@ namespace Main.Utility
     /// <summary>
     /// スポーンのユーティリティ
     /// </summary>
-    public class SpawnUtility : ISpawnUtility, ISpawnUtilityTest
+    public class SpawnUtility : ISpawnUtility
     {
         /// <summary>クローンオブジェクトを生成する時間間隔（秒）のホールド補正値</summary>
         private const float INSTANCE_RATE_TIME_SEC_STOP = 60f * 60f;
@@ -53,30 +54,34 @@ namespace Main.Utility
             }
         }
 
-        public bool ManageEnemiesSpawn(EnemiesSpawnTable enemiesSpawnTable, ref float elapsedTime, Transform target, ObjectsPoolModel objectsPoolModel, float radiusMin, float radiusMax, float onmyoState)
+        public bool ManageEnemiesSpawn(EnemiesSpawnTable[] enemiesSpawnTables, ref float elapsedTime, Transform target, ObjectsPoolModel objectsPoolModel, float radiusMin, float radiusMax, float onmyoState)
         {
             try
             {
-                float timeSec = enemiesSpawnTable.instanceRateTimeSec;
+                float timeSec = enemiesSpawnTables[0].instanceRateTimeSec;
 
                 // 待機時間に到達していない場合はスキップ、到達していれば実行
                 if (timeSec <= elapsedTime)
                 {
-                    for (int i = 0; i < enemiesSpawnTable.instanceCount; i++)
+                    foreach (var enemiesSpawnTable in enemiesSpawnTables)
                     {
-                        if (target != null)
+                        var resultMaxCount = GetCalcMaxCountAndAddRemaining(enemiesSpawnTable, onmyoState);
+                        for (int i = 0; i < resultMaxCount; i++)
                         {
-                            var enemy = objectsPoolModel.GetEnemyModel(GetRandomEnemiesID(enemiesSpawnTable.enemiesIDs));
-                            if (enemy == null)
-                                throw new System.Exception("GetEnemyModel");
-                            if (!enemy.Initialize(GetPositionOfAroundThePlayer(target, radiusMin, radiusMax), target))
-                                throw new System.Exception("Initialize");
-                            if (!enemy.isActiveAndEnabled)
-                                enemy.gameObject.SetActive(true);
-                            elapsedTime = 0f;
+                            if (target != null)
+                            {
+                                var enemy = objectsPoolModel.GetEnemyModel(GetRandomEnemiesID(enemiesSpawnTable.enemiesIDs));
+                                if (enemy == null)
+                                    throw new System.Exception("GetEnemyModel");
+                                if (!enemy.Initialize(GetPositionOfAroundThePlayer(target, radiusMin, radiusMax), target))
+                                    throw new System.Exception("Initialize");
+                                if (!enemy.isActiveAndEnabled)
+                                    enemy.gameObject.SetActive(true);
+                                elapsedTime = 0f;
+                            }
+                            else
+                                throw new System.Exception("ターゲット用のオブジェクトを配置して下さい");
                         }
-                        else
-                            throw new System.Exception("ターゲット用のオブジェクトを配置して下さい");
                     }
                 }
                 else
@@ -89,6 +94,36 @@ namespace Main.Utility
                 Debug.LogError(e);
                 return false;
             }
+        }
+
+        /// <summary>
+        /// 最大カウント数の計算を行い結果を取得
+        /// 計算後の端数（小数点以下の値）は格納しておく
+        /// </summary>
+        /// <param name="enemiesSpawnTable">敵のスポーンテーブル</param>
+        /// <param name="onmyoState">陰陽（昼夜）の状態</param>
+        /// <returns>端数切捨て後の最大カウント数</returns>
+        /// <exception cref="System.ArgumentOutOfRangeException">onmyoStateが想定範囲外である場合に例外をスロー</exception>
+        private int GetCalcMaxCountAndAddRemaining(EnemiesSpawnTable enemiesSpawnTable, float onmyoState)
+        {
+            if (onmyoState <= 1f &&
+                -1f <= onmyoState)
+            {
+                if (enemiesSpawnTable.instanceCountRemaining == null)
+                    enemiesSpawnTable.instanceCountRemaining = new FloatReactiveProperty();
+                var calcOnmyoState = enemiesSpawnTable.sunMoonState switch
+                {
+                    SunMoonState.Daytime => (onmyoState + 1) / 2,
+                    SunMoonState.Night => (onmyoState - 1) / 2,
+                    _ => throw new System.Exception("例外をスロー"),
+                };
+                var result = (enemiesSpawnTable.instanceCount + enemiesSpawnTable.instanceCountRemaining.Value) * Mathf.Abs(calcOnmyoState) / 1f;
+                enemiesSpawnTable.instanceCountRemaining.Value = result - Mathf.Floor(result);
+
+                return (int)result;
+            }
+            else
+                throw new System.ArgumentOutOfRangeException($"onmyoStateが範囲外:[{onmyoState}]");
         }
 
         /// <summary>
@@ -125,11 +160,6 @@ namespace Main.Utility
             Vector2 position = new Vector2(target.position.x + distance * Mathf.Cos(angle), target.position.y + distance * Mathf.Sin(angle));
             return position;
         }
-
-        EnemiesID ISpawnUtilityTest.GetRandomEnemiesID(EnemiesID[] enemiesIDs)
-        {
-            return GetRandomEnemiesID(enemiesIDs);
-        }
     }
 
     /// <summary>
@@ -152,13 +182,14 @@ namespace Main.Utility
         /// <summary>
         /// 敵系のスポーン制御
         /// </summary>
-        /// <param name="enemiesSpawnTable">敵のスポーンテーブル</param>
-        /// <param name="elapsedTime"></param>
-        /// <param name="target">経過時間</param>
+        /// <param name="enemiesSpawnTables">敵のスポーンテーブル配列</param>
+        /// <param name="elapsedTime">経過時間</param>
+        /// <param name="target">トランスフォーム</param>
         /// <param name="objectsPoolModel">オブジェクトプール</param>
         /// <param name="radiusMin">最小半径</param>
         /// <param name="radiusMax">最大半径</param>
+        /// <param name="onmyoState">陰陽（昼夜）の状態</param>
         /// <returns>成功／失敗</returns>
-        public bool ManageEnemiesSpawn(EnemiesSpawnTable enemiesSpawnTable, ref float elapsedTime, Transform target, ObjectsPoolModel objectsPoolModel, float radiusMin, float radiusMax, float onmyoState);
+        public bool ManageEnemiesSpawn(EnemiesSpawnTable[] enemiesSpawnTables, ref float elapsedTime, Transform target, ObjectsPoolModel objectsPoolModel, float radiusMin, float radiusMax, float onmyoState);
     }
 }

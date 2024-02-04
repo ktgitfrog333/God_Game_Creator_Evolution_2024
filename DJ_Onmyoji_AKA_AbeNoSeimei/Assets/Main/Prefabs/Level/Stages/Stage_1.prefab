@@ -18,14 +18,22 @@ PrefabInstance:
       objectReference: {fileID: 635188800816444178}
     - target: {fileID: 3997638729418344169, guid: 9c7b53c6032e8dd4f9734c836f288c3b, type: 3}
       propertyPath: m_ExposedReferences.m_References.Array.size
-      value: 2
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 3997638729418344169, guid: 9c7b53c6032e8dd4f9734c836f288c3b, type: 3}
       propertyPath: m_ExposedReferences.m_References.Array.data[0].first
-      value: 5e2a48797c1f73341b0558876538227f
+      value: bd58ffca207138c49a4671b81427a07b
       objectReference: {fileID: 0}
     - target: {fileID: 3997638729418344169, guid: 9c7b53c6032e8dd4f9734c836f288c3b, type: 3}
       propertyPath: m_ExposedReferences.m_References.Array.data[1].first
+      value: 5e2a48797c1f73341b0558876538227f
+      objectReference: {fileID: 0}
+    - target: {fileID: 3997638729418344169, guid: 9c7b53c6032e8dd4f9734c836f288c3b, type: 3}
+      propertyPath: m_ExposedReferences.m_References.Array.data[2].first
+      value: 9ae7b16352fddde448dcbdde0169098e
+      objectReference: {fileID: 0}
+    - target: {fileID: 3997638729418344169, guid: 9c7b53c6032e8dd4f9734c836f288c3b, type: 3}
+      propertyPath: m_ExposedReferences.m_References.Array.data[3].first
       value: 47bd5653730e5944784e38e959ec7022
       objectReference: {fileID: 0}
     - target: {fileID: 3997638729418344169, guid: 9c7b53c6032e8dd4f9734c836f288c3b, type: 3}
@@ -34,6 +42,14 @@ PrefabInstance:
       objectReference: {fileID: 7006226030554599824}
     - target: {fileID: 3997638729418344169, guid: 9c7b53c6032e8dd4f9734c836f288c3b, type: 3}
       propertyPath: m_ExposedReferences.m_References.Array.data[1].second
+      value: 
+      objectReference: {fileID: 7006226030554599824}
+    - target: {fileID: 3997638729418344169, guid: 9c7b53c6032e8dd4f9734c836f288c3b, type: 3}
+      propertyPath: m_ExposedReferences.m_References.Array.data[2].second
+      value: 
+      objectReference: {fileID: 7006226030554599824}
+    - target: {fileID: 3997638729418344169, guid: 9c7b53c6032e8dd4f9734c836f288c3b, type: 3}
+      propertyPath: m_ExposedReferences.m_References.Array.data[3].second
       value: 
       objectReference: {fileID: 7006226030554599824}
     - target: {fileID: 7145725760183925157, guid: 9c7b53c6032e8dd4f9734c836f288c3b, type: 3}

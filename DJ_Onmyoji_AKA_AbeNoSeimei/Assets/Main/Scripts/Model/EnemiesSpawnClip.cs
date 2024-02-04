@@ -13,7 +13,13 @@ namespace Main.Model
     {
         /// <summary>レベル内に存在する敵をスポーンするオブジェクト</summary>
         [SerializeField] private ExposedReference<GameObject> enemiesSpawnInLevel;
-        /// <summary>敵のスポーンテーブル</summary>
+        /// <summary>
+        /// 敵のスポーンテーブル
+        /// 但し、クリップの作成において下記のルールに従う
+        /// 1.昼トラックと夜トラックで全体の再生時間は統一させること
+        /// 2.生成する時間間隔 % 全体の再生時間 == 0 となること（余り無しとすること）
+        ///     a.余りがあっても良いが末尾のシークエンス到達 ⇒ 次のシークエンス再生のタイミングで敵が生成されない時間が僅かに生まれる
+        /// </summary>
         [SerializeField] private EnemiesSpawnTable enemiesSpawnTable;
 
         public override Playable CreatePlayable(PlayableGraph graph, GameObject owner)

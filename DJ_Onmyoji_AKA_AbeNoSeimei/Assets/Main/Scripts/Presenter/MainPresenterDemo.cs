@@ -160,13 +160,13 @@ namespace Main.Presenter
             //         if (!shikigamiSkillSystemModel.ForceZeroAndRapidRecoveryCandleResource((JockeyCommandType)pair.Current))
             //             Debug.LogError("ForceZeroAndRapidRecoveryCandleResource");
             //     });
-            // sunMoonSystemModel.OnmyoState.ObserveEveryValueChanged(x => x.Value)
-            //     .Subscribe(x =>
-            //     {
-            //         // sunMoonStateIconView.SetRotate(x);
-            //         if (!enemiesSpawnModel.SetOnmyoState(x))
-            //             Debug.LogError("SetOnmyoState");
-            //     });
+            sunMoonSystemModel.OnmyoState.ObserveEveryValueChanged(x => x.Value)
+                .Subscribe(x =>
+                {
+                    // sunMoonStateIconView.SetRotate(x);
+                    if (!enemiesSpawnModel.SetOnmyoState(x))
+                        Debug.LogError("SetOnmyoState");
+                });
             // sunMoonStateIconViewDemo.OnmyoState.ObserveEveryValueChanged(x => x.Value)
             //     .Subscribe(x =>
             //     {

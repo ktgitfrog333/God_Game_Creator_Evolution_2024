@@ -22,7 +22,7 @@ namespace Main.Model
         /// <summary>陰陽（昼夜）の状態</summary>
         private float _onmyoState;
         /// <summary>敵のスポーンテーブル</summary>
-        private EnemiesSpawnTable _enemiesSpawnTable;
+        private EnemiesSpawnTable[] _enemiesSpawnTables = new EnemiesSpawnTable[2];
 
         protected override void Start()
         {
@@ -72,7 +72,7 @@ namespace Main.Model
                     {
                         if (isActiveAndEnabled)
                         {
-                            if (!spawnUtility.ManageEnemiesSpawn(_enemiesSpawnTable,
+                            if (!spawnUtility.ManageEnemiesSpawn(_enemiesSpawnTables,
                                 ref elapsedTime,
                                 _target,
                                 objectsPoolModel,
@@ -111,13 +111,10 @@ namespace Main.Model
 
         public void SetEnemiesSpawnTable(EnemiesSpawnTable enemiesSpawnTable)
         {
-            if (0f <= _onmyoState &&
-                enemiesSpawnTable.sunMoonState.Equals(SunMoonState.Night) ||
-                _onmyoState < 0 &&
-                enemiesSpawnTable.sunMoonState.Equals(SunMoonState.Daytime))
-                return;
-
-            _enemiesSpawnTable = enemiesSpawnTable;
+            if (enemiesSpawnTable.sunMoonState.Equals(SunMoonState.Daytime))
+                _enemiesSpawnTables[(int)SunMoonState.Daytime] = enemiesSpawnTable;
+            if (enemiesSpawnTable.sunMoonState.Equals(SunMoonState.Night))
+                _enemiesSpawnTables[(int)SunMoonState.Night] = enemiesSpawnTable;
         }
     }
 
@@ -154,6 +151,8 @@ namespace Main.Model
         public EnemiesID[] enemiesIDs;
         /// <summary>昼夜の状態</summary>
         public SunMoonState sunMoonState;
+        /// <summary>クローンオブジェクトを生成する回数（次の加算値）</summary>
+        public IReactiveProperty<float> instanceCountRemaining;
     }
 
     /// <summary>
@@ -203,16 +202,5 @@ namespace Main.Model
         EN2003,
         /// <summary>大ボス敵E</summary>
         EN2004,
-    }
-
-    /// <summary>
-    /// 昼夜の状態
-    /// </summary>
-    public enum SunMoonState
-    {
-        /// <summary>昼</summary>
-        Daytime,
-        /// <summary>夜</summary>
-        Night,
     }
 }

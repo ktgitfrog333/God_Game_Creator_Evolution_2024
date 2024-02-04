@@ -24,7 +24,7 @@ namespace Main.Test.Common
             }
             catch (System.Exception e)
             {
-                OutputResult(0 < throwMessage.Length && e.Message.StartsWith(throwMessage), caseId);
+                OutputResult(0 < throwMessage.Length && (e.Message.StartsWith(throwMessage) || e.Message.EndsWith(throwMessage)), caseId);
             }
         }
 

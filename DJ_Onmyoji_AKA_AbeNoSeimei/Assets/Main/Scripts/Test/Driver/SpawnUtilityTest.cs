@@ -41,8 +41,10 @@ namespace Main.Test.Driver
         }
     }
 
+    /// <see cref="Main.Utility.SpawnUtility"/>
     public interface ISpawnUtilityTest
     {
+        /// <see cref="Main.Utility.SpawnUtility.GetRandomEnemiesID(EnemiesID[])"/>
         public EnemiesID GetRandomEnemiesID(EnemiesID[] enemiesIDs);
     }
 }
