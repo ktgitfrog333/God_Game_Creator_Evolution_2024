@@ -11,6 +11,7 @@ using Unity.Mathematics;
 using System.Linq;
 using Fungus;
 using Unity.Collections;
+using Main.Test.Driver;
 
 namespace Main.Presenter
 {
@@ -36,6 +37,9 @@ namespace Main.Presenter
         [SerializeField] private SpGaugeView spGaugeView;
         [SerializeField] private PentagramTurnTableModel pentagramTurnTableModel;
         [SerializeField] private EnemiesSpawnModel enemiesSpawnModel;
+        [SerializeField] private FadersGroupView fadersGroupView;
+        [SerializeField] private FadersGroupViewTest fadersGroupViewTest;
+
         public void OnStart()
         {
             // _demo.types = new ShikigamiType[3];
@@ -160,13 +164,13 @@ namespace Main.Presenter
             //         if (!shikigamiSkillSystemModel.ForceZeroAndRapidRecoveryCandleResource((JockeyCommandType)pair.Current))
             //             Debug.LogError("ForceZeroAndRapidRecoveryCandleResource");
             //     });
-            sunMoonSystemModel.OnmyoState.ObserveEveryValueChanged(x => x.Value)
-                .Subscribe(x =>
-                {
-                    // sunMoonStateIconView.SetRotate(x);
-                    if (!enemiesSpawnModel.SetOnmyoState(x))
-                        Debug.LogError("SetOnmyoState");
-                });
+            // sunMoonSystemModel.OnmyoState.ObserveEveryValueChanged(x => x.Value)
+            //     .Subscribe(x =>
+            //     {
+            //         // sunMoonStateIconView.SetRotate(x);
+            //         if (!enemiesSpawnModel.SetOnmyoState(x))
+            //             Debug.LogError("SetOnmyoState");
+            //     });
             // sunMoonStateIconViewDemo.OnmyoState.ObserveEveryValueChanged(x => x.Value)
             //     .Subscribe(x =>
             //     {
@@ -174,11 +178,19 @@ namespace Main.Presenter
             //         var result = sunMoonStateIconView.SetRotate(x);
             //         Debug.Log($"角度：[{result}]");
             //     });
+            fadersGroupViewTest.IsOpen.ObserveEveryValueChanged(x => x.Value)
+                .Subscribe(x =>
+                {
+                    if (!fadersGroupView.SetAnchorsBasedOnHeight((EnumFadeState)x))
+                        Debug.LogError("SetAnchorsBasedOnHeight");
+                });
         }
 
         private void Reset()
         {
-            enemiesSpawnModel = GameObject.Find("EnemiesSpawn").GetComponent<EnemiesSpawnModel>();
+            fadersGroupViewTest = GameObject.Find("FadersGroupViewTest").GetComponent<FadersGroupViewTest>();
+            fadersGroupView = GameObject.Find("FadersGroup").GetComponent<FadersGroupView>();
+            // enemiesSpawnModel = GameObject.Find("EnemiesSpawn").GetComponent<EnemiesSpawnModel>();
             // pentagramTurnTableModel = GameObject.Find("PentagramTurnTable").GetComponent<PentagramTurnTableModel>();
             // spGaugeView = GameObject.Find("SpGauge").GetComponent<SpGaugeView>();
             // faderUniversalViews = new FaderUniversalView[]
@@ -198,7 +210,7 @@ namespace Main.Presenter
             // playerModel = GameObject.Find("Player").GetComponent<PlayerModel>();
             // onmyoTurretModel = GameObject.Find("OnmyoTurret").GetComponent<OnmyoTurretModel>();
             // enemyModel = GameObject.Find("Enemy").GetComponent<EnemyModel>();
-            sunMoonSystemModel = GameObject.Find("SunMoonSystem").GetComponent<SunMoonSystemModel>();
+            // sunMoonSystemModel = GameObject.Find("SunMoonSystem").GetComponent<SunMoonSystemModel>();
             // sunMoonStateIconView = GameObject.Find("SunMoonStateIcon").GetComponent<SunMoonStateIconView>();
             // sunMoonStateIconViewDemo = GetComponent<SunMoonStateIconViewDemo>();
             // clearCountdownTimerCircleViewTest = GetComponent<Test.ClearCountdownTimerCircleView>();
