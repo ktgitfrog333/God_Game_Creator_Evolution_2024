@@ -292,7 +292,7 @@ namespace Main.Utility
             try
             {
                 if (_modelUpdObservable == null)
-                    _modelUpdObservable = model.UpdateAsObservable().Subscribe(_ => {}); 
+                    _modelUpdObservable = model.UpdateAsObservable().Subscribe(_ => {});
                 switch (jkeyCmdTypeCurrent)
                 {
                     case JockeyCommandType.None:

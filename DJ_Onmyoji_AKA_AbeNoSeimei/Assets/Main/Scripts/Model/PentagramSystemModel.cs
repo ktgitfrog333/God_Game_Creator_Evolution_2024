@@ -21,8 +21,6 @@ namespace Main.Model
         public IReactiveProperty<float> InputValue { get; private set; } = new FloatReactiveProperty(autoSpinSpeed);
         /// <summary>距離の補正乗算値</summary>
         private float _multiDistanceCorrected = 7.5f;
-        /// <summary>自動回転の速度</summary>
-        public float AutoSpinSpeed => autoSpinSpeed;
         /// <summary>ジョッキーコマンドタイプ</summary>
         /// TODO:コマンドを可変させるロジックを実装
         public IReactiveProperty<int> JockeyCommandType { get; private set; } = new IntReactiveProperty((int)Common.JockeyCommandType.None);

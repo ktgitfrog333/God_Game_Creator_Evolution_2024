@@ -34,11 +34,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1476893341508212702, guid: 7691e9e14c105c24280bd76b731b5100, type: 3}
       propertyPath: m_SizeDelta.x
-      value: 2
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1476893341508212702, guid: 7691e9e14c105c24280bd76b731b5100, type: 3}
       propertyPath: m_SizeDelta.y
-      value: 2
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1476893341508212702, guid: 7691e9e14c105c24280bd76b731b5100, type: 3}
       propertyPath: m_LocalPosition.x
@@ -123,3 +123,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   objectsPoolPrefab: {fileID: 7497276588651718180, guid: 4434f5da33952be4c941a59c25b13d50, type: 3}
   instanceRateTimeSec: 0.5
+  instanceRateTimeSecCorrection: 2

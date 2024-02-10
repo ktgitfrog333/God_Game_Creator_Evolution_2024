@@ -64,7 +64,7 @@ namespace Main.Presenter
         /// <summary>フェードのモデル</summary>
         [SerializeField] private FadeImageModel fadeImageModel;
         /// <summary>カウントダウンタイマーの情報に合わせてUIを変化させるビュー</summary>
-        [SerializeField] private ClearCountdownTimerTextView clearCountdownTimerTextView;
+        [SerializeField] private ClearCountdownTimerCircleView clearCountdownTimerCircleView;
         /// <summary>クリア条件を満たす要素を管理するシステムのモデル</summary>
         [SerializeField] private ClearCountdownTimerSystemModel clearCountdownTimerSystemModel;
         /// <summary>ペンダグラムシステムのモデル</summary>
@@ -87,6 +87,10 @@ namespace Main.Presenter
         [SerializeField] private SunMoonStateIconView sunMoonStateIconView;
         /// <summary>ペンダグラムターンテーブルのモデル</summary>
         [SerializeField] private PentagramTurnTableModel pentagramTurnTableModel;
+        /// <summary>フェーダーグループのビュー</summary>
+        [SerializeField] private FadersGroupView fadersGroupView;
+        /// <summary>式神レベル管理のビュー（蝋燭リソースの情報に合わせてUIを変化させるビューコンポーネントを再利用）</summary>
+        [SerializeField] private CandleUniversalGaugeView[] candleUniversalGaugeViews;
 
         private void Reset()
         {
@@ -125,7 +129,7 @@ namespace Main.Presenter
             jumpGuideView = GameObject.Find("JumpGuide").GetComponent<JumpGuideView>();
             fadeImageView = GameObject.Find("FadeImage").GetComponent<FadeImageView>();
             fadeImageModel = GameObject.Find("FadeImage").GetComponent<FadeImageModel>();
-            clearCountdownTimerTextView = GameObject.Find("ClearCountdownTimerText").GetComponent<ClearCountdownTimerTextView>();
+            clearCountdownTimerCircleView = GameObject.Find("SunMoonStateCircleGauge").GetComponent<ClearCountdownTimerCircleView>();
             clearCountdownTimerSystemModel = GameObject.Find("ClearCountdownTimerSystem").GetComponent<ClearCountdownTimerSystemModel>();
             pentagramSystemModel = GameObject.Find("PentagramSystem").GetComponent<PentagramSystemModel>();
             pentagramTurnTableView = GameObject.Find(ConstGameObjectNames.GAMEOBJECT_NAME_PENTAGRAMTURNTABLE).GetComponent<PentagramTurnTableView>();
@@ -142,6 +146,13 @@ namespace Main.Presenter
             };
             spGaugeView = GameObject.Find("SpGauge").GetComponent<SpGaugeView>();
             sunMoonStateIconView = GameObject.Find("SunMoonStateIcon").GetComponent<SunMoonStateIconView>();
+            fadersGroupView = GameObject.Find("FadersGroup").GetComponent<FadersGroupView>();
+            candleUniversalGaugeViews = new CandleUniversalGaugeView[]
+            {
+                GameObject.Find($"Candle{ShikigamiType.Wrap}Gauge").GetComponent<CandleUniversalGaugeView>(),
+                GameObject.Find($"Candle{ShikigamiType.Dance}Gauge").GetComponent<CandleUniversalGaugeView>(),
+                GameObject.Find($"Candle{ShikigamiType.Graffiti}Gauge").GetComponent<CandleUniversalGaugeView>(),
+            };
         }
 
         public void OnStart()
@@ -685,11 +696,11 @@ namespace Main.Presenter
                                 }
                             });
                         clearCountdownTimerSystemModel.enabled = true;
-                        IClearCountdownTimerViewAdapter textView = new ClearCountdownTimerTextViewAdapter(clearCountdownTimerTextView);
+                        IClearCountdownTimerViewAdapter circleView = new ClearCountdownTimerCircleViewAdapter(clearCountdownTimerCircleView);
                         clearCountdownTimerSystemModel.TimeSec.ObserveEveryValueChanged(x => x.Value)
                             .Subscribe(x =>
                             {
-                                if (!textView.Set(x, clearCountdownTimerSystemModel.LimitTimeSecMax))
+                                if (!circleView.Set(x, clearCountdownTimerSystemModel.LimitTimeSecMax))
                                     Debug.LogError("SetAngle");
                             });
                         clearCountdownTimerSystemModel.IsTimeOut.ObserveEveryValueChanged(x => x.Value)
@@ -699,7 +710,7 @@ namespace Main.Presenter
                                 {
                                     if (!clearCountdownTimerSystemModel.isActiveAndEnabled)
                                         clearCountdownTimerSystemModel.enabled = false;
-                                    if (!textView.Set(0f, clearCountdownTimerSystemModel.LimitTimeSecMax))
+                                    if (!circleView.Set(0f, clearCountdownTimerSystemModel.LimitTimeSecMax))
                                         Debug.LogError("SetAngle");
                                     isGoalReached.Value = true;
                                 }
@@ -722,12 +733,24 @@ namespace Main.Presenter
                     }
                 });
             BgmConfDetails bgmConfDetails = new BgmConfDetails();
-            pentagramSystemModel.InputValue.ObserveEveryValueChanged(x => x.Value)
+            this.UpdateAsObservable()
+                .Select(_ => pentagramSystemModel.InputValue)
                 .Subscribe(x =>
                 {
-                    bgmConfDetails.InputValue = x;
+                    bgmConfDetails.InputValue = x.Value;
                     if (!pentagramTurnTableView.MoveSpin(bgmConfDetails))
                         Debug.LogError("MoveSpin");
+                });
+            pentagramSystemModel.JockeyCommandType.ObserveEveryValueChanged(x => x.Value)
+                .Pairwise()
+                .Subscribe(pair =>
+                {
+                    if (!shikigamiSkillSystemModel.UpdateCandleResource((JockeyCommandType)pair.Current, (JockeyCommandType)pair.Previous))
+                        Debug.LogError("UpdateCandleResource");
+                    if (!pentagramTurnTableModel.BuffAllTurrets((JockeyCommandType)pair.Current))
+                        Debug.LogError("BuffAllTurrets");
+                    if (!shikigamiSkillSystemModel.ForceZeroAndRapidRecoveryCandleResource((JockeyCommandType)pair.Current))
+                        Debug.LogError("ForceZeroAndRapidRecoveryCandleResource");
                 });
             this.UpdateAsObservable()
                 .Select(_ => shikigamiSkillSystemModel.ShikigamiInfos)
@@ -744,31 +767,43 @@ namespace Main.Presenter
                                     if (!faderUniversalView.SetSliderValue(x, item.Content.prop.type))
                                         Debug.LogError("SetSliderValue");
                                 }
+                                foreach (var candleUniversalGaugeView in candleUniversalGaugeViews)
+                                {
+                                    if (!candleUniversalGaugeView.SetSliderValue(x, item.Content.prop.type))
+                                        Debug.LogError("SetSliderValue");
+                                }
                                 if (!pentagramTurnTableModel.UpdateTempoLvValues(x, item.Content.prop.type))
                                     Debug.LogError("UpdateTempoLvValues");
+                                Observable.FromCoroutine<bool>(observer => fadersGroupView.PlayMoveAnchorsBasedOnHeight(observer, EnumFadeState.Open))
+                                    .Subscribe(_ => {})
+                                    .AddTo(gameObject);
                             });
                 });
-            shikigamiSkillSystemModel.CandleInfo.CandleResource.ObserveEveryValueChanged(x => x.Value)
+            this.UpdateAsObservable()
+                .Select(_ => shikigamiSkillSystemModel.CandleInfo.CandleResource)
+                .Where(x => x != null)
+                .Take(1)
                 .Subscribe(x =>
                 {
-                    if (!spGaugeView.SetVertical(x, shikigamiSkillSystemModel.CandleInfo.LimitCandleResorceMax))
-                        Debug.LogError("SetVertical");
+                    x.ObserveEveryValueChanged(x => x.Value)
+                        .Subscribe(x =>
+                        {
+                            if (!spGaugeView.SetVertical(x, shikigamiSkillSystemModel.CandleInfo.LimitCandleResorceMax))
+                                Debug.LogError("SetVertical");
+                        });
                 });
-            shikigamiSkillSystemModel.CandleInfo.IsOutCost.ObserveEveryValueChanged(x => x.Value)
+            this.UpdateAsObservable()
+                .Select(_ => shikigamiSkillSystemModel.CandleInfo.IsOutCost)
+                .Where(x => x != null)
+                .Take(1)
                 .Subscribe(x =>
                 {
-                    Debug.Log($"IsOutCost:[{x}]");
-                });
-            pentagramSystemModel.JockeyCommandType.ObserveEveryValueChanged(x => x.Value)
-                .Pairwise()
-                .Subscribe(pair =>
-                {
-                    if (!shikigamiSkillSystemModel.UpdateCandleResource((JockeyCommandType)pair.Current, (JockeyCommandType)pair.Previous))
-                        Debug.LogError("UpdateCandleResource");
-                    if (!pentagramTurnTableModel.BuffAllTurrets((JockeyCommandType)pair.Current))
-                        Debug.LogError("BuffAllTurrets");
-                    if (!shikigamiSkillSystemModel.ForceZeroAndRapidRecoveryCandleResource((JockeyCommandType)pair.Current))
-                        Debug.LogError("ForceZeroAndRapidRecoveryCandleResource");
+                    x.ObserveEveryValueChanged(x => x.Value)
+                        .Subscribe(x =>
+                        {
+                            // TODO:SPゲージの急速回復が始まるの他にもし演出が必要ならここで処理を実行する
+                            Debug.Log($"IsOutCost:[{x}]");
+                        });
                 });
 
             this.UpdateAsObservable()
@@ -782,21 +817,15 @@ namespace Main.Presenter
                         {
                             // ショートカットキーの押下が None -> Any へ変わる
                             if (MainGameManager.Instance.InputSystemsOwner.GetComponent<InputSystemsOwner>().InputUI.Undoed &&
-                                !MainGameManager.Instance.InputSystemsOwner.GetComponent<InputSystemsOwner>().InputUI.Selected &&
-                                !MainGameManager.Instance.InputSystemsOwner.GetComponent<InputSystemsOwner>().InputUI.Manualed)
+                                !MainGameManager.Instance.InputSystemsOwner.GetComponent<InputSystemsOwner>().InputUI.Selected)
                                 inputUIActionsState.Value = (int)EnumShortcuActionMode.UndoAction;
-                            else if (MainGameManager.Instance.InputSystemsOwner.GetComponent<InputSystemsOwner>().InputUI.Selected &&
-                                !MainGameManager.Instance.InputSystemsOwner.GetComponent<InputSystemsOwner>().InputUI.Manualed)
+                            else if (MainGameManager.Instance.InputSystemsOwner.GetComponent<InputSystemsOwner>().InputUI.Selected)
                                 inputUIActionsState.Value = (int)EnumShortcuActionMode.SelectAction;
-                            else if (MainGameManager.Instance.InputSystemsOwner.GetComponent<InputSystemsOwner>().InputUI.Manualed)
-                                inputUIActionsState.Value = (int)EnumShortcuActionMode.CheckAction;
                         }
                         else if ((((EnumShortcuActionMode)inputUIActionsState.Value).Equals(EnumShortcuActionMode.UndoAction) &&
                             !MainGameManager.Instance.InputSystemsOwner.GetComponent<InputSystemsOwner>().InputUI.Undoed) ||
                             (((EnumShortcuActionMode)inputUIActionsState.Value).Equals(EnumShortcuActionMode.SelectAction) &&
-                            !MainGameManager.Instance.InputSystemsOwner.GetComponent<InputSystemsOwner>().InputUI.Selected) ||
-                            (((EnumShortcuActionMode)inputUIActionsState.Value).Equals(EnumShortcuActionMode.CheckAction) &&
-                            !MainGameManager.Instance.InputSystemsOwner.GetComponent<InputSystemsOwner>().InputUI.Manualed))
+                            !MainGameManager.Instance.InputSystemsOwner.GetComponent<InputSystemsOwner>().InputUI.Selected))
                         {
                             // ショートカットキーの押下が Any -> None へ変わる
                             inputUIActionsState.Value = (int)EnumShortcuActionMode.None;

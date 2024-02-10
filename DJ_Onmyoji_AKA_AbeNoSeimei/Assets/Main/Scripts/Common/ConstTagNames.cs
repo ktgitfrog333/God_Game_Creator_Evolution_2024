@@ -19,5 +19,7 @@ namespace Main.Common
         public static readonly string TAG_NAME_BULLET = "Bullet";
         /// <summary>オブジェクトプール</summary>
         public static readonly string TAG_NAME_OBJECTS_POOL = "ObjectsPool";
+        /// <summary>タレット</summary>
+        public static readonly string TAG_NAME_TURRET = "Turret";
     }
 }

@@ -171,25 +171,26 @@ namespace Main.Presenter
             //         if (!enemiesSpawnModel.SetOnmyoState(x))
             //             Debug.LogError("SetOnmyoState");
             //     });
-            // sunMoonStateIconViewDemo.OnmyoState.ObserveEveryValueChanged(x => x.Value)
-            //     .Subscribe(x =>
-            //     {
-            //         Debug.Log($"入力値:[{x}]");
-            //         var result = sunMoonStateIconView.SetRotate(x);
-            //         Debug.Log($"角度：[{result}]");
-            //     });
-            fadersGroupViewTest.IsOpen.ObserveEveryValueChanged(x => x.Value)
+            sunMoonStateIconViewDemo.OnmyoState.ObserveEveryValueChanged(x => x.Value)
                 .Subscribe(x =>
                 {
-                    if (!fadersGroupView.SetAnchorsBasedOnHeight((EnumFadeState)x))
-                        Debug.LogError("SetAnchorsBasedOnHeight");
+                    Debug.Log($"入力値:[{x}]");
+                    var result = sunMoonStateIconView.SetRotate(x);
+                    Debug.Log($"角度：[{result}]");
                 });
+            // fadersGroupViewTest.IsOpen.ObserveEveryValueChanged(x => x.Value)
+            //     .Subscribe(x =>
+            //     {
+            //         Observable.FromCoroutine<bool>(observer => fadersGroupView.PlayMoveAnchorsBasedOnHeight(observer, EnumFadeState.Open))
+            //             .Subscribe(_ => { })
+            //             .AddTo(gameObject);
+            //     });
         }
 
         private void Reset()
         {
-            fadersGroupViewTest = GameObject.Find("FadersGroupViewTest").GetComponent<FadersGroupViewTest>();
-            fadersGroupView = GameObject.Find("FadersGroup").GetComponent<FadersGroupView>();
+            // fadersGroupViewTest = GameObject.Find("FadersGroupViewTest").GetComponent<FadersGroupViewTest>();
+            // fadersGroupView = GameObject.Find("FadersGroup").GetComponent<FadersGroupView>();
             // enemiesSpawnModel = GameObject.Find("EnemiesSpawn").GetComponent<EnemiesSpawnModel>();
             // pentagramTurnTableModel = GameObject.Find("PentagramTurnTable").GetComponent<PentagramTurnTableModel>();
             // spGaugeView = GameObject.Find("SpGauge").GetComponent<SpGaugeView>();
@@ -211,8 +212,8 @@ namespace Main.Presenter
             // onmyoTurretModel = GameObject.Find("OnmyoTurret").GetComponent<OnmyoTurretModel>();
             // enemyModel = GameObject.Find("Enemy").GetComponent<EnemyModel>();
             // sunMoonSystemModel = GameObject.Find("SunMoonSystem").GetComponent<SunMoonSystemModel>();
-            // sunMoonStateIconView = GameObject.Find("SunMoonStateIcon").GetComponent<SunMoonStateIconView>();
-            // sunMoonStateIconViewDemo = GetComponent<SunMoonStateIconViewDemo>();
+            sunMoonStateIconView = GameObject.Find("SunMoonStateIcon").GetComponent<SunMoonStateIconView>();
+            sunMoonStateIconViewDemo = GameObject.Find("SunMoonStateIconViewDemo").GetComponent<SunMoonStateIconViewDemo>();
             // clearCountdownTimerCircleViewTest = GetComponent<Test.ClearCountdownTimerCircleView>();
         }
     }

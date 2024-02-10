@@ -1,3 +1,4 @@
+#if UNITY_EDITOR
 using UnityEngine;
 using UnityEditor;
 using UnityEngine.UI;
@@ -62,7 +63,7 @@ namespace Universal.Other
                     names[1] = spriteRenderer.GetType().Name;
                 }
                 // StringBuilderにオブジェクトの情報とテクスチャ名を追加します。
-                stringBuilder.AppendLine($"{path}\\t{string.Join("\\t", names)}");
+                stringBuilder.AppendLine($"{path}\t{string.Join("\t", names)}");
             }
         }
 
@@ -83,3 +84,4 @@ namespace Universal.Other
         }
     }    
 }
+#endif

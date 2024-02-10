@@ -14,16 +14,16 @@ namespace Main.View
     public class SpGaugeView : MonoBehaviour, ISpGaugeView
     {
         /// <summary>対象の画像</summary>
-        [SerializeField] private Image image;
+        [SerializeField] protected Image image;
         /// <summary>ユーティリティ</summary>
-        private MainViewUtility _utility = new MainViewUtility();
+        protected MainViewUtility _utility = new MainViewUtility();
 
         public bool SetVertical(float timeSec, float limitTimeSecMax)
         {
             return _utility.SetFillAmountOfImage(image, timeSec, limitTimeSecMax);
         }
 
-        private void Reset()
+        protected virtual void Reset()
         {
             image = GetComponent<Image>();
             image.type = Image.Type.Filled;

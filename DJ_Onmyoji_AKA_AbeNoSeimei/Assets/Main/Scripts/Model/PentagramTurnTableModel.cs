@@ -59,7 +59,7 @@ namespace Main.Model
                 foreach (var item in slots.Select((p, i) => new { Content = p, Index = i})
                     .Where(q => q.Content.prop.slotId.Equals((SlotId)i)))
                 {
-                    float angle = (angleStep * i + 15) * Mathf.Deg2Rad;
+                    float angle = (angleStep * i + 90f) * Mathf.Deg2Rad;
                     Vector3 position = new Vector3(Mathf.Cos(angle), Mathf.Sin(angle), 0) * distance;
                     var slot = slots[item.Index];
                     Transform turret = Instantiate(GetTargetOfPrefab(slot.prop.shikigamiInfo.prop.type), position, Quaternion.identity);
@@ -99,8 +99,9 @@ namespace Main.Model
             try
             {
                 foreach (Transform child in Transform)
-                    if (!child.GetComponent<TurretModel>().SetJockeyCommandType(jockeyCommandType))
-                        throw new System.Exception("SetJockeyCommandType");
+                    if (child.CompareTag(ConstTagNames.TAG_NAME_TURRET))
+                        if (!child.GetComponent<TurretModel>().SetJockeyCommandType(jockeyCommandType))
+                            throw new System.Exception("SetJockeyCommandType");
 
                 return true;
             }
@@ -116,8 +117,9 @@ namespace Main.Model
             try
             {
                 foreach (Transform child in Transform)
-                    if (!child.GetComponent<TurretModel>().UpdateTempoLvValue(tempoLevel, shikigamiType))
-                        throw new System.Exception("UpdateTempoLvValue");
+                    if (child.CompareTag(ConstTagNames.TAG_NAME_TURRET))
+                        if (!child.GetComponent<TurretModel>().UpdateTempoLvValue(tempoLevel, shikigamiType))
+                            throw new System.Exception("UpdateTempoLvValue");
 
                 return true;
             }

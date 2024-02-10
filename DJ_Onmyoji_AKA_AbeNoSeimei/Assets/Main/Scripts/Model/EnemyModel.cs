@@ -79,10 +79,16 @@ namespace Main.Model
             base.Awake();
         }
 
-        protected override void Start()
+        private void OnEnable()
         {
             // プレイヤーから攻撃を受ける
             State.HP.Value = prop.hpMax;
+            State.IsDead.Value = false;
+        }
+
+        protected override void Start()
+        {
+            // プレイヤーから攻撃を受ける
             if (!_utility.UpdateStateHPAndIsDead(State))
                 Debug.LogError("UpdateStateHPAndIsDead");
             // 死亡判定

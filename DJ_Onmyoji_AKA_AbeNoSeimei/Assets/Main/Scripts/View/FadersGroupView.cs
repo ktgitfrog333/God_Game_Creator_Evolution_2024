@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using DG.Tweening;
 using Main.Common;
 using UnityEngine;
 
@@ -17,28 +18,62 @@ namespace Main.View
         public RectTransform RectTransform => _transform != null ? (RectTransform)_transform : (RectTransform)(_transform = transform);
         /// <summary>UIメニューを閉じる範囲</summary>
         [SerializeField, Range(0f, 1f)] private float uiClosedRangeLevel = .8f;
+        /// <summary>アニメーション終了時間</summary>
+        [SerializeField] private float[] durations = { 1f, .5f };
+        /// <summary>アニメーション再生中</summary>
+        private bool _isPlaying;
+        /// <summary>シークエンス</summary>
+        private Sequence _sequence;
+        /// <summary>開始位置と終了位置の配列</summary>
+        [SerializeField] private Vector2[] betweenPoses;
 
-        public bool SetAnchorsBasedOnHeight(EnumFadeState state)
+        private void Reset()
         {
-            try
+            betweenPoses = new Vector2[]
             {
+                (transform as RectTransform).anchoredPosition,
+                new Vector2((transform as RectTransform).anchoredPosition.x, (transform as RectTransform).anchoredPosition.y -(transform as RectTransform).rect.height * uiClosedRangeLevel)
+            };
+        }
+
+        public IEnumerator PlayMoveAnchorsBasedOnHeight(System.IObserver<bool> observer, EnumFadeState state)
+        {
+            if (_isPlaying)
+            {
+                if (_sequence != null && _sequence.IsActive() && !_sequence.IsComplete())
+                    _sequence.Restart();
+            }
+            else
+            {
+                _isPlaying = true;
                 switch (state)
                 {
                     case EnumFadeState.Open:
-                        RectTransform.anchoredPosition = Vector2.zero;
+                        _sequence = DOTween.Sequence()
+                            .Append(RectTransform.DOAnchorPos(betweenPoses[0], 0f))
+                            .AppendInterval(durations[0])
+                            .Append(RectTransform.DOAnchorPos(betweenPoses[1], durations[1])
+                            .OnComplete(() =>
+                            {
+                                // ここでオブジェクトの破棄をチェック
+                                if (this == null || gameObject == null)
+                                    return;
+
+                                _isPlaying = false;
+                                observer.OnNext(true);
+                            }));
+
                         break;
                     case EnumFadeState.Close:
-                        RectTransform.anchoredPosition = new Vector2(RectTransform.anchoredPosition.x, -RectTransform.rect.height * uiClosedRangeLevel);
+                        // 処理無し
+                        break;
+                    default:
+                        // 処理無し
                         break;
                 }
+            }
 
-                return true;
-            }
-            catch (System.Exception e)
-            {
-                Debug.LogError(e);
-                return false;
-            }
+            yield return null;
         }
     }
 
@@ -51,8 +86,9 @@ namespace Main.View
         /// <summary>
         /// 高さに応じてアンカーを設定
         /// </summary>
+        /// <param name="observer">オブサーバー</param>
         /// <param name="state">フェードステータス</param>
-        /// <returns>成功／失敗</returns>
-        public bool SetAnchorsBasedOnHeight(EnumFadeState state);
+        /// <returns>コルーチン</returns>
+        public IEnumerator PlayMoveAnchorsBasedOnHeight(System.IObserver<bool> observer, EnumFadeState state);
     }
 }

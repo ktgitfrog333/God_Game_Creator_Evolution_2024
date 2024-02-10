@@ -5,9 +5,7 @@ using Main.Common;
 using Main.Test.Common;
 using Main.Utility;
 using UniRx;
-using UnityEditor.Build.Content;
 using UnityEngine;
-using Universal.Bean;
 using Universal.Common;
 
 namespace Main.Test.Driver

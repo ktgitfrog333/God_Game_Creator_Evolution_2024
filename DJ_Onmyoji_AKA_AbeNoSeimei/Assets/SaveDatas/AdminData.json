@@ -51,7 +51,7 @@
 		0
 	],
 	"clearCountdownTimer": [
-		300,
+		192,
 		5,
 		5,
 		5,
@@ -69,8 +69,8 @@
 	],
 	"EnemyModel": {
 		"prop": {
-			"moveSpeed": 1,
-			"hpMax": 3
+			"moveSpeed": 0.25,
+			"hpMax": 2
 		},
 		"DamageSufferedZoneOfEnemyModel": {
 			"invincibleTimeSec": 0
@@ -109,7 +109,7 @@
 		"angleCorrectionValue": 5
 	},
 	"PentagramTurnTableModel": {
-		"distance": 4.5
+		"distance": 1.5
 	},
 	"PlayerModel": {
 		"prop": {
