@@ -20,7 +20,7 @@ namespace Main.Model
                 bulletLifeTime = _shikigamiUtility.GetMainSkillValue(_shikigamiInfo, MainSkillType.BulletLifeTime),
                 // 陰陽玉と発射角度が異なるため再設定
                 range = _shikigamiUtility.GetMainSkillValue(_shikigamiInfo, MainSkillType.Range),
-                moveDirection = new MainCommonUtility().AdminDataSingleton.AdminBean.GraffitiTurretModel.moveDirection,
+                moveDirection = new MainCommonUtility().AdminDataSingleton.AdminBean.graffitiTurretModel.moveDirection,
                 debuffEffectLifeTime = _shikigamiUtility.GetMainSkillValue(_shikigamiInfo, MainSkillType.DebuffEffectLifeTime),
             };
         }

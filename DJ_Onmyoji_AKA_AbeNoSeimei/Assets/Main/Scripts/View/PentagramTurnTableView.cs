@@ -135,7 +135,7 @@ namespace Main.View
                 AdminDataSingleton.Instance :
                 new GameObject(Universal.Common.ConstGameObjectNames.GAMEOBJECT_NAME_ADMINDATA_SINGLETON).AddComponent<AdminDataSingleton>()
                     .GetComponent<AdminDataSingleton>();
-            angleCorrectionValue = adminDataSingleton.AdminBean.PentagramTurnTableView.angleCorrectionValue;
+            angleCorrectionValue = adminDataSingleton.AdminBean.pentagramTurnTableView.angleCorrectionValue;
         }
     }
 

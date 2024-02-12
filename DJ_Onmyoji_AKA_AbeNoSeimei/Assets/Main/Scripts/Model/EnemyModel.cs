@@ -73,8 +73,8 @@ namespace Main.Model
                 AdminDataSingleton.Instance :
                 new GameObject(ConstGameObjectNames.GAMEOBJECT_NAME_ADMINDATA_SINGLETON).AddComponent<AdminDataSingleton>()
                     .GetComponent<AdminDataSingleton>();
-            prop.moveSpeed = adminDataSingleton.AdminBean.EnemyModel.prop.moveSpeed;
-            prop.hpMax = adminDataSingleton.AdminBean.EnemyModel.prop.hpMax;
+            prop.moveSpeed = adminDataSingleton.AdminBean.enemyModel.prop.moveSpeed;
+            prop.hpMax = adminDataSingleton.AdminBean.enemyModel.prop.hpMax;
             State = new CharacterState(damageSufferedZoneModel.IsHit, prop.hpMax, damageSufferedZoneModel.Damage);
             base.Awake();
         }

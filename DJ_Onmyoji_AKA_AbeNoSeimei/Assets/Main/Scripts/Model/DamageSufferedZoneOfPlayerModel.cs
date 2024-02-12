@@ -23,7 +23,7 @@ namespace Main.Model
                 AdminDataSingleton.Instance :
                 new GameObject(Universal.Common.ConstGameObjectNames.GAMEOBJECT_NAME_ADMINDATA_SINGLETON).AddComponent<AdminDataSingleton>()
                     .GetComponent<AdminDataSingleton>();
-            invincibleTimeSec = adminDataSingleton.AdminBean.PlayerModel.DamageSufferedZoneOfPlayerModel.invincibleTimeSec;
+            invincibleTimeSec = adminDataSingleton.AdminBean.playerModel.damageSufferedZoneOfPlayerModel.invincibleTimeSec;
             base.Start();
         }
 

@@ -20,7 +20,7 @@ namespace Main.Model
                 attackPoint = (int)_shikigamiUtility.GetMainSkillValue(_shikigamiInfo, MainSkillType.AttackPoint),
                 bulletLifeTime = _shikigamiUtility.GetMainSkillValue(_shikigamiInfo, MainSkillType.BulletLifeTime),
                 // 陰陽玉と発射角度が異なるため再設定
-                moveDirection = new MainCommonUtility().AdminDataSingleton.AdminBean.WrapTurretModel.moveDirection,
+                moveDirection = new MainCommonUtility().AdminDataSingleton.AdminBean.wrapTurretModel.moveDirection,
             };
         }
 

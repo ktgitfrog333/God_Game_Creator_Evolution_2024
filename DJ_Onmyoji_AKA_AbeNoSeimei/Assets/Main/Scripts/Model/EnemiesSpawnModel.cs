@@ -27,7 +27,7 @@ namespace Main.Model
         protected override void Start()
         {
             var utility = new MainCommonUtility();
-            instanceRateTimeSec = utility.AdminDataSingleton.AdminBean.EnemiesSpawnModel.invincibleTimeSec;
+            // instanceRateTimeSec = utility.AdminDataSingleton.AdminBean.enemiesSpawnModel.invincibleTimeSec;
 
             base.Start();
             Observable.FromCoroutine<Transform>(observer => WaitForTarget(observer))

@@ -52,7 +52,7 @@ namespace Main.Model
             // オブジェクトを中心に5つの位置へプレハブを生成
             // 対象位置は下記の条件に従う
             // ・中心から五角形とした場合に各頂点を座標とする
-            distance = adminDataSingleton.AdminBean.PentagramTurnTableModel.distance;
+            distance = adminDataSingleton.AdminBean.pentagramTurnTableModel.distance;
             float angleStep = 360f / 5;
             for (int i = 0; i < 5; i++)
             {

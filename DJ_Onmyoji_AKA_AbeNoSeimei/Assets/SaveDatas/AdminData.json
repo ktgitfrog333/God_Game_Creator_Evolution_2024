@@ -67,56 +67,53 @@
 		5,
 		5
 	],
-	"EnemyModel": {
+	"enemyModel": {
 		"prop": {
 			"moveSpeed": 0.25,
 			"hpMax": 2
 		},
-		"DamageSufferedZoneOfEnemyModel": {
+		"damageSufferedZoneOfEnemyModel": {
 			"invincibleTimeSec": 0
 		}
 	},
-	"EnemiesSpawnModel": {
-		"invincibleTimeSec": 0.5
-	},
-	"ObjectsPoolModel": {
+	"objectsPoolModel": {
 		"countLimit": 100
 	},
-	"OnmyoBulletModel": {
+	"onmyoBulletModel": {
 		"moveDirection": {
 			"x": 0,
 			"y": -1
 		},
 		"moveSpeed": 8
 	},
-	"WrapTurretModel": {
+	"wrapTurretModel": {
 		"moveDirection": {
 			"x": 0,
 			"y": 1
 		}
 	},
-	"GraffitiTurretModel": {
+	"graffitiTurretModel": {
 		"moveDirection": {
 			"x": 0,
 			"y": 1
 		}
 	},
-	"PentagramSystemModel": {
+	"pentagramSystemModel": {
 		"autoSpinSpeed": 0.009999999776482582,
 		"inputHistoriesLimit": 100
 	},
-	"PentagramTurnTableView": {
+	"pentagramTurnTableView": {
 		"angleCorrectionValue": 5
 	},
-	"PentagramTurnTableModel": {
+	"pentagramTurnTableModel": {
 		"distance": 1.5
 	},
-	"PlayerModel": {
+	"playerModel": {
 		"prop": {
 			"moveSpeed": 4,
 			"hpMax": 10
 		},
-		"DamageSufferedZoneOfPlayerModel": {
+		"damageSufferedZoneOfPlayerModel": {
 			"invincibleTimeSec": 1
 		}
 	},

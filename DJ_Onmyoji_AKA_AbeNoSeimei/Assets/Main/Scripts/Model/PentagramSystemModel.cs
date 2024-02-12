@@ -31,8 +31,8 @@ namespace Main.Model
         {
             var utilityCommon = new MainCommonUtility();
             var adminDataSingleton = utilityCommon.AdminDataSingleton;
-            autoSpinSpeed = adminDataSingleton.AdminBean.PentagramSystemModel.autoSpinSpeed;
-            inputHistoriesLimit = adminDataSingleton.AdminBean.PentagramSystemModel.inputHistoriesLimit;
+            autoSpinSpeed = adminDataSingleton.AdminBean.pentagramSystemModel.autoSpinSpeed;
+            inputHistoriesLimit = adminDataSingleton.AdminBean.pentagramSystemModel.inputHistoriesLimit;
             Vector2ReactiveProperty previousInput = new Vector2ReactiveProperty(Vector2.zero); // 前回の入力を保存する変数
             var utility = new InputSystemUtility();
             if (!utility.SetInputValueInModel(InputValue, _multiDistanceCorrected, previousInput, autoSpinSpeed, this))

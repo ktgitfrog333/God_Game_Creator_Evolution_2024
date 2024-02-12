@@ -47,8 +47,8 @@ namespace Main.Model
                 AdminDataSingleton.Instance :
                 new GameObject(Universal.Common.ConstGameObjectNames.GAMEOBJECT_NAME_ADMINDATA_SINGLETON).AddComponent<AdminDataSingleton>()
                     .GetComponent<AdminDataSingleton>();
-            onmyoBulletConfig.moveDirection = adminDataSingleton.AdminBean.OnmyoBulletModel.moveDirection;
-            onmyoBulletConfig.moveSpeed = adminDataSingleton.AdminBean.OnmyoBulletModel.moveSpeed;
+            onmyoBulletConfig.moveDirection = adminDataSingleton.AdminBean.onmyoBulletModel.moveDirection;
+            onmyoBulletConfig.moveSpeed = adminDataSingleton.AdminBean.onmyoBulletModel.moveSpeed;
             base.Awake();
         }
 

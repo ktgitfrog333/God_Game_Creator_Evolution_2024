@@ -43,20 +43,19 @@ namespace Universal.Bean
         /// カウントダウンタイマー
         /// </summary>
         public float[] clearCountdownTimer = CLEAR_COUNTDOWN_TIMER_DEFAULT;
-        public EnemyModel EnemyModel = new EnemyModel();
-        public EnemiesSpawnModel EnemiesSpawnModel = new EnemiesSpawnModel();
-        public ObjectsPoolModel ObjectsPoolModel = new ObjectsPoolModel();
-        public OnmyoBulletModel OnmyoBulletModel = new OnmyoBulletModel();
-        public WrapTurretModel WrapTurretModel = new WrapTurretModel();
-        public GraffitiTurretModel GraffitiTurretModel = new GraffitiTurretModel();
-        public PentagramSystemModel PentagramSystemModel = new PentagramSystemModel()
+        public EnemyModel enemyModel = new EnemyModel();
+        public ObjectsPoolModel objectsPoolModel = new ObjectsPoolModel();
+        public OnmyoBulletModel onmyoBulletModel = new OnmyoBulletModel();
+        public WrapTurretModel wrapTurretModel = new WrapTurretModel();
+        public GraffitiTurretModel graffitiTurretModel = new GraffitiTurretModel();
+        public PentagramSystemModel pentagramSystemModel = new PentagramSystemModel()
         {
             autoSpinSpeed = .01f,
             inputHistoriesLimit = 100,
         };
-        public PentagramTurnTableView PentagramTurnTableView = new PentagramTurnTableView();
-        public PentagramTurnTableModel PentagramTurnTableModel = new PentagramTurnTableModel();
-        public PlayerModel PlayerModel = new PlayerModel();
+        public PentagramTurnTableView pentagramTurnTableView = new PentagramTurnTableView();
+        public PentagramTurnTableModel pentagramTurnTableModel = new PentagramTurnTableModel();
+        public PlayerModel playerModel = new PlayerModel();
         public SunMoonSystemModel sunMoonSystemModel = new SunMoonSystemModel();
         public LevelDesign levelDesign = new LevelDesign()
         {
@@ -112,15 +111,14 @@ namespace Universal.Bean
             finalStages = adminBean.finalStages;
             skyBoxs = adminBean.skyBoxs;
             clearCountdownTimer = adminBean.clearCountdownTimer;
-            EnemyModel = adminBean.EnemyModel;
-            EnemiesSpawnModel = adminBean.EnemiesSpawnModel;
-            ObjectsPoolModel = adminBean.ObjectsPoolModel;
-            OnmyoBulletModel = adminBean.OnmyoBulletModel;
-            WrapTurretModel = adminBean.WrapTurretModel;
-            PentagramSystemModel = adminBean.PentagramSystemModel;
-            PentagramTurnTableView = adminBean.PentagramTurnTableView;
-            PentagramTurnTableModel = adminBean.PentagramTurnTableModel;
-            PlayerModel = adminBean.PlayerModel;
+            enemyModel = adminBean.enemyModel;
+            objectsPoolModel = adminBean.objectsPoolModel;
+            onmyoBulletModel = adminBean.onmyoBulletModel;
+            wrapTurretModel = adminBean.wrapTurretModel;
+            pentagramSystemModel = adminBean.pentagramSystemModel;
+            pentagramTurnTableView = adminBean.pentagramTurnTableView;
+            pentagramTurnTableModel = adminBean.pentagramTurnTableModel;
+            playerModel = adminBean.playerModel;
             sunMoonSystemModel = adminBean.sunMoonSystemModel;
             levelDesign = adminBean.levelDesign;
             clearCountdownTimerCircleView = adminBean.clearCountdownTimerCircleView;
@@ -132,7 +130,7 @@ namespace Universal.Bean
     public class EnemyModel
     {
         public prop prop = new prop(1f, 3);
-        public DamageSufferedZoneOfEnemyModel DamageSufferedZoneOfEnemyModel = new DamageSufferedZoneOfEnemyModel(0f);
+        public DamageSufferedZoneOfEnemyModel damageSufferedZoneOfEnemyModel = new DamageSufferedZoneOfEnemyModel(0f);
     }
 
     [System.Serializable]
@@ -160,12 +158,6 @@ namespace Universal.Bean
             this.moveSpeed = moveSpeed;
             this.hpMax = hpMax;
         }
-    }
-
-    [System.Serializable]
-    public class EnemiesSpawnModel
-    {
-        public float invincibleTimeSec = .5f;
     }
 
     [System.Serializable]
@@ -220,7 +212,7 @@ namespace Universal.Bean
     public class PlayerModel
     {
         public prop prop = new prop(4f, 10);
-        public DamageSufferedZoneOfPlayerModel DamageSufferedZoneOfPlayerModel = new DamageSufferedZoneOfPlayerModel(1f);
+        public DamageSufferedZoneOfPlayerModel damageSufferedZoneOfPlayerModel = new DamageSufferedZoneOfPlayerModel(1f);
     }
 
     [System.Serializable]

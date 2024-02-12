@@ -81,7 +81,7 @@ namespace Main.Model
                 AdminDataSingleton.Instance :
                 new GameObject(ConstGameObjectNames.GAMEOBJECT_NAME_ADMINDATA_SINGLETON).AddComponent<AdminDataSingleton>()
                     .GetComponent<AdminDataSingleton>();
-            countLimit = adminDataSingleton.AdminBean.ObjectsPoolModel.countLimit;
+            countLimit = adminDataSingleton.AdminBean.objectsPoolModel.countLimit;
             if (_transform == null)
                 _transform = transform;
             Debug.Log("プール開始");

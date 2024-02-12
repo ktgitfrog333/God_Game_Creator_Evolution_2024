@@ -72,8 +72,8 @@ namespace Main.Model
         {
             var utility = new MainCommonUtility();
             var adminDataSingleton = utility.AdminDataSingleton;
-            prop.moveSpeed = adminDataSingleton.AdminBean.PlayerModel.prop.moveSpeed;
-            prop.hpMax = adminDataSingleton.AdminBean.PlayerModel.prop.hpMax;
+            prop.moveSpeed = adminDataSingleton.AdminBean.playerModel.prop.moveSpeed;
+            prop.hpMax = adminDataSingleton.AdminBean.playerModel.prop.hpMax;
             State = new CharacterState(damageSufferedZoneModel.IsHit, prop.hpMax, damageSufferedZoneModel.Damage);
         }
 
