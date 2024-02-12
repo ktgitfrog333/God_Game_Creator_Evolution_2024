@@ -230,6 +230,60 @@ public partial class @FutureContents3D_Main: IInputActionCollection2, IDisposabl
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": true
+                },
+                {
+                    ""name"": ""ChargeSun"",
+                    ""type"": ""Button"",
+                    ""id"": ""d0b5c5ce-8dc8-41de-9711-d8dc33f09e11"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""ChargeMoon"",
+                    ""type"": ""Button"",
+                    ""id"": ""5acaf0d3-9132-4a6f-9e9f-c66347c47571"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""ChargeRFader"",
+                    ""type"": ""Button"",
+                    ""id"": ""b40ba1d1-ee6f-4735-8c74-fcdb0c5f4211"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""ChargeLFader"",
+                    ""type"": ""Button"",
+                    ""id"": ""c9a3b790-f274-4c91-8510-56901ccb3bf2"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""ReleaseRFader"",
+                    ""type"": ""Button"",
+                    ""id"": ""15763a4f-7d05-4920-9e8e-d150dcd734a1"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""ReleaseLFader"",
+                    ""type"": ""Button"",
+                    ""id"": ""c4182a8e-1923-4a2f-839b-07608cf313b1"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -584,6 +638,72 @@ public partial class @FutureContents3D_Main: IInputActionCollection2, IDisposabl
                     ""action"": ""Scratch"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""cb1f701b-efe1-410f-bb31-2a58688a0627"",
+                    ""path"": ""<Gamepad>/buttonEast"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Gamepad"",
+                    ""action"": ""ChargeSun"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""e049bf45-e5e1-4ffe-b6e4-4e19a3564ea7"",
+                    ""path"": ""<Gamepad>/buttonWest"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Gamepad"",
+                    ""action"": ""ChargeMoon"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""9006cded-7295-4386-b319-46395f69e4cf"",
+                    ""path"": ""<Gamepad>/rightTrigger"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Gamepad"",
+                    ""action"": ""ChargeRFader"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""420cc03f-07ec-4cb5-8c78-0a403074e49e"",
+                    ""path"": ""<Gamepad>/leftTrigger"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Gamepad"",
+                    ""action"": ""ChargeLFader"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""86688b76-bc4c-4dee-ac51-0772dcef6b9e"",
+                    ""path"": ""<Gamepad>/rightShoulder"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Gamepad"",
+                    ""action"": ""ReleaseRFader"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""6984d09c-f35b-4ca8-b9e5-efef354b09a3"",
+                    ""path"": ""<Gamepad>/leftShoulder"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Gamepad"",
+                    ""action"": ""ReleaseLFader"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -667,6 +787,12 @@ public partial class @FutureContents3D_Main: IInputActionCollection2, IDisposabl
         m_UI_Select = m_UI.FindAction("Select", throwIfNotFound: true);
         m_UI_Manual = m_UI.FindAction("Manual", throwIfNotFound: true);
         m_UI_Scratch = m_UI.FindAction("Scratch", throwIfNotFound: true);
+        m_UI_ChargeSun = m_UI.FindAction("ChargeSun", throwIfNotFound: true);
+        m_UI_ChargeMoon = m_UI.FindAction("ChargeMoon", throwIfNotFound: true);
+        m_UI_ChargeRFader = m_UI.FindAction("ChargeRFader", throwIfNotFound: true);
+        m_UI_ChargeLFader = m_UI.FindAction("ChargeLFader", throwIfNotFound: true);
+        m_UI_ReleaseRFader = m_UI.FindAction("ReleaseRFader", throwIfNotFound: true);
+        m_UI_ReleaseLFader = m_UI.FindAction("ReleaseLFader", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -799,6 +925,12 @@ public partial class @FutureContents3D_Main: IInputActionCollection2, IDisposabl
     private readonly InputAction m_UI_Select;
     private readonly InputAction m_UI_Manual;
     private readonly InputAction m_UI_Scratch;
+    private readonly InputAction m_UI_ChargeSun;
+    private readonly InputAction m_UI_ChargeMoon;
+    private readonly InputAction m_UI_ChargeRFader;
+    private readonly InputAction m_UI_ChargeLFader;
+    private readonly InputAction m_UI_ReleaseRFader;
+    private readonly InputAction m_UI_ReleaseLFader;
     public struct UIActions
     {
         private @FutureContents3D_Main m_Wrapper;
@@ -812,6 +944,12 @@ public partial class @FutureContents3D_Main: IInputActionCollection2, IDisposabl
         public InputAction @Select => m_Wrapper.m_UI_Select;
         public InputAction @Manual => m_Wrapper.m_UI_Manual;
         public InputAction @Scratch => m_Wrapper.m_UI_Scratch;
+        public InputAction @ChargeSun => m_Wrapper.m_UI_ChargeSun;
+        public InputAction @ChargeMoon => m_Wrapper.m_UI_ChargeMoon;
+        public InputAction @ChargeRFader => m_Wrapper.m_UI_ChargeRFader;
+        public InputAction @ChargeLFader => m_Wrapper.m_UI_ChargeLFader;
+        public InputAction @ReleaseRFader => m_Wrapper.m_UI_ReleaseRFader;
+        public InputAction @ReleaseLFader => m_Wrapper.m_UI_ReleaseLFader;
         public InputActionMap Get() { return m_Wrapper.m_UI; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -848,6 +986,24 @@ public partial class @FutureContents3D_Main: IInputActionCollection2, IDisposabl
             @Scratch.started += instance.OnScratch;
             @Scratch.performed += instance.OnScratch;
             @Scratch.canceled += instance.OnScratch;
+            @ChargeSun.started += instance.OnChargeSun;
+            @ChargeSun.performed += instance.OnChargeSun;
+            @ChargeSun.canceled += instance.OnChargeSun;
+            @ChargeMoon.started += instance.OnChargeMoon;
+            @ChargeMoon.performed += instance.OnChargeMoon;
+            @ChargeMoon.canceled += instance.OnChargeMoon;
+            @ChargeRFader.started += instance.OnChargeRFader;
+            @ChargeRFader.performed += instance.OnChargeRFader;
+            @ChargeRFader.canceled += instance.OnChargeRFader;
+            @ChargeLFader.started += instance.OnChargeLFader;
+            @ChargeLFader.performed += instance.OnChargeLFader;
+            @ChargeLFader.canceled += instance.OnChargeLFader;
+            @ReleaseRFader.started += instance.OnReleaseRFader;
+            @ReleaseRFader.performed += instance.OnReleaseRFader;
+            @ReleaseRFader.canceled += instance.OnReleaseRFader;
+            @ReleaseLFader.started += instance.OnReleaseLFader;
+            @ReleaseLFader.performed += instance.OnReleaseLFader;
+            @ReleaseLFader.canceled += instance.OnReleaseLFader;
         }
 
         private void UnregisterCallbacks(IUIActions instance)
@@ -879,6 +1035,24 @@ public partial class @FutureContents3D_Main: IInputActionCollection2, IDisposabl
             @Scratch.started -= instance.OnScratch;
             @Scratch.performed -= instance.OnScratch;
             @Scratch.canceled -= instance.OnScratch;
+            @ChargeSun.started -= instance.OnChargeSun;
+            @ChargeSun.performed -= instance.OnChargeSun;
+            @ChargeSun.canceled -= instance.OnChargeSun;
+            @ChargeMoon.started -= instance.OnChargeMoon;
+            @ChargeMoon.performed -= instance.OnChargeMoon;
+            @ChargeMoon.canceled -= instance.OnChargeMoon;
+            @ChargeRFader.started -= instance.OnChargeRFader;
+            @ChargeRFader.performed -= instance.OnChargeRFader;
+            @ChargeRFader.canceled -= instance.OnChargeRFader;
+            @ChargeLFader.started -= instance.OnChargeLFader;
+            @ChargeLFader.performed -= instance.OnChargeLFader;
+            @ChargeLFader.canceled -= instance.OnChargeLFader;
+            @ReleaseRFader.started -= instance.OnReleaseRFader;
+            @ReleaseRFader.performed -= instance.OnReleaseRFader;
+            @ReleaseRFader.canceled -= instance.OnReleaseRFader;
+            @ReleaseLFader.started -= instance.OnReleaseLFader;
+            @ReleaseLFader.performed -= instance.OnReleaseLFader;
+            @ReleaseLFader.canceled -= instance.OnReleaseLFader;
         }
 
         public void RemoveCallbacks(IUIActions instance)
@@ -958,5 +1132,11 @@ public partial class @FutureContents3D_Main: IInputActionCollection2, IDisposabl
         void OnSelect(InputAction.CallbackContext context);
         void OnManual(InputAction.CallbackContext context);
         void OnScratch(InputAction.CallbackContext context);
+        void OnChargeSun(InputAction.CallbackContext context);
+        void OnChargeMoon(InputAction.CallbackContext context);
+        void OnChargeRFader(InputAction.CallbackContext context);
+        void OnChargeLFader(InputAction.CallbackContext context);
+        void OnReleaseRFader(InputAction.CallbackContext context);
+        void OnReleaseLFader(InputAction.CallbackContext context);
     }
 }

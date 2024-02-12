@@ -5,6 +5,10 @@ TagManager:
   serializedVersion: 2
   tags:
   - Level
+  - Enemy
+  - Bullet
+  - ObjectsPool
+  - Turret
   layers:
   - Default
   - TransparentFX
@@ -41,4 +45,7 @@ TagManager:
   m_SortingLayers:
   - name: Default
     uniqueID: 0
+    locked: 0
+  - name: uGUIOnPlayer
+    uniqueID: 3056992699
     locked: 0

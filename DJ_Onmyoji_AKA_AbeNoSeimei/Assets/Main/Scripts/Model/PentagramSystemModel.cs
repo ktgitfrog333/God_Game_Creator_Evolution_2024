@@ -1,11 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using Main.InputSystem;
 using UniRx;
+using Main.Utility;
 using UniRx.Triggers;
-using Main.Common;
-using UnityEngine.InputSystem;
 
 namespace Main.Model
 {
@@ -16,49 +14,31 @@ namespace Main.Model
     /// </summary>
     public class PentagramSystemModel : MonoBehaviour
     {
+        /// <summary>自動回転の速度</summary>
+        [Tooltip("自動回転の速度")]
+        [SerializeField] private static float autoSpinSpeed = .01f;
         /// <summary>入力角度</summary>
-        public IReactiveProperty<float> InputValue { get; private set; }
+        public IReactiveProperty<float> InputValue { get; private set; } = new FloatReactiveProperty(autoSpinSpeed);
         /// <summary>距離の補正乗算値</summary>
         private float _multiDistanceCorrected = 7.5f;
-        public int UpdateCnt {get; private set;}
+        /// <summary>ジョッキーコマンドタイプ</summary>
+        /// TODO:コマンドを可変させるロジックを実装
+        public IReactiveProperty<int> JockeyCommandType { get; private set; } = new IntReactiveProperty((int)Common.JockeyCommandType.None);
+        /// <summary>コマンドの最大入力数</summary>
+        [SerializeField] private int inputHistoriesLimit = 100;
 
         private void Start()
         {
-            InputSystemsOwner inputSystemsOwner = null;
-            InputValue = new FloatReactiveProperty();
-
+            var utilityCommon = new MainCommonUtility();
+            var adminDataSingleton = utilityCommon.AdminDataSingleton;
+            autoSpinSpeed = adminDataSingleton.AdminBean.pentagramSystemModel.autoSpinSpeed;
+            inputHistoriesLimit = adminDataSingleton.AdminBean.pentagramSystemModel.inputHistoriesLimit;
             Vector2ReactiveProperty previousInput = new Vector2ReactiveProperty(Vector2.zero); // 前回の入力を保存する変数
-            this.UpdateAsObservable()
-                .Subscribe(_ =>
-                {
-                    if (inputSystemsOwner == null)
-                        inputSystemsOwner = MainGameManager.Instance != null ? MainGameManager.Instance.InputSystemsOwner : null;
-                    else
-                    {
-                        Vector2 currentInput = inputSystemsOwner.InputUI.Scratch; // 現在の入力を取得
-                        if (isPerformed(previousInput.Value.sqrMagnitude, currentInput.sqrMagnitude)) // 前回と今回の入力が十分に大きい場合
-                        {
-                            float angle = Vector2.SignedAngle(previousInput.Value, currentInput) * -1f; // 前回の入力から今回の入力への角度を計算
-                            float distance = Mathf.PI * angle / 180; // 角度を円周の長さに変換
-                            // Debug.Log($"Update");
-                            UpdateCnt++;
-                            InputValue.Value = Mathf.Clamp(distance * _multiDistanceCorrected, -1f, 1f);
-                        }
-                        previousInput.Value = currentInput; // 現在の入力を保存
-                    }
-                });
-        }
-
-        /// <summary>
-        /// 回転の操作中か
-        /// </summary>
-        /// <param name="prevMagnitude">直前の入力値</param>
-        /// <param name="currentMagnitude">現在の入力値</param>
-        /// <returns>真／偽</returns>
-        private bool isPerformed(float prevMagnitude, float currentMagnitude)
-        {
-            return 0f < prevMagnitude &&
-                0f < currentMagnitude;
+            var utility = new InputSystemUtility();
+            if (!utility.SetInputValueInModel(InputValue, _multiDistanceCorrected, previousInput, autoSpinSpeed, this))
+                Debug.LogError("SetInputValueInModel");
+            if (!utility.UpdateJockeyCommandType(InputValue, JockeyCommandType, autoSpinSpeed, inputHistoriesLimit))
+                Debug.LogError("UpdateJockeyCommandType");
         }
     }
 }

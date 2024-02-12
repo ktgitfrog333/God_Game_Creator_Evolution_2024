@@ -42,7 +42,7 @@ namespace Main.View
                     break;
                 case 2:
                     // text = GetComponent<Text>();
-                    text.text = $"Update:\r\n[{pentagramSystemModel.UpdateCnt}]";
+                    // text.text = $"Update:\r\n[{pentagramSystemModel.UpdateCnt}]";
                     break;
                 case 3:
                     // text = GetComponent<Text>();
@@ -57,9 +57,9 @@ namespace Main.View
                     if (value != 0f)
                     {
                         float[] durations = {value};
-                        pentagramTurnTableView.Durations = durations;
+                        // pentagramTurnTableView.Durations = durations;
                     }
-                    text.text = $"durations:\r\n[{string.Join(", ", pentagramTurnTableView.Durations)}]";
+                    // text.text = $"durations:\r\n[{string.Join(", ", pentagramTurnTableView.Durations)}]";
                     break;
                 default:
                     break;

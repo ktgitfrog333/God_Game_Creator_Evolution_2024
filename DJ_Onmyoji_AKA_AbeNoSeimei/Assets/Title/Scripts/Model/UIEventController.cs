@@ -37,6 +37,39 @@ namespace Title.Model
         /// <summary>デフォルト選択させるかフラグ</summary>
         [SerializeField] private bool defaultSelectedGameObject;
 
+        private void Awake()
+        {
+            _eventState.ObserveEveryValueChanged(x => x.Value)
+                .Subscribe(x =>
+                {
+                    switch ((EnumEventCommand)x)
+                    {
+                        case EnumEventCommand.Default:
+                            break;
+                        case EnumEventCommand.Selected:
+                            if (!OnUpdateEventState(_eventState.Value))
+                                Debug.LogError("OnUpdateEventState");
+                            break;
+                        case EnumEventCommand.DeSelected:
+                            break;
+                        case EnumEventCommand.Submited:
+                            if (!OnUpdateEventState(_eventState.Value))
+                                Debug.LogError("OnUpdateEventState");
+                            break;
+                        case EnumEventCommand.Canceled:
+                            if (!OnUpdateEventState(_eventState.Value))
+                                Debug.LogError("OnUpdateEventState");
+                            break;
+                        case EnumEventCommand.AnyKeysPushed:
+                            if (!OnUpdateEventState(_eventState.Value))
+                                Debug.LogError("OnUpdateEventState");
+                            break;
+                        default:
+                            break;
+                    }
+                });
+        }
+
         protected virtual void OnEnable()
         {
             if (_eventSystem == null)
@@ -77,6 +110,33 @@ namespace Title.Model
         public void Canceled()
         {
             _eventState.Value = (int)EnumEventCommand.Canceled;
+        }
+
+        /// <summary>
+        /// UIイベントが更新された際に発火。イベント状態を取得。
+        /// </summary>
+        /// <param name="eventState">イベント状態</param>
+        /// <returns>成功／失敗</returns>
+        private bool OnUpdateEventState(int eventState)
+        {
+            try
+            {
+                var analyticsOwner = TitleGameManager.Instance.AnalyticsOwner;
+                analyticsOwner.InitializeAsyncSuccessed.ObserveEveryValueChanged(x => x.Value)
+                    .Subscribe(x =>
+                    {
+                        if (x)
+                            if (!analyticsOwner.OnUpdateEventState(eventState, name))
+                                Debug.LogError("OnUpdateEventState");
+                    });
+                
+                return true;
+            }
+            catch (System.Exception e)
+            {
+                Debug.LogError(e);
+                return false;
+            }
         }
     }
 }

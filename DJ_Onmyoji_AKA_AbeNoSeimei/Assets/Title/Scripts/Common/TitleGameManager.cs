@@ -36,6 +36,10 @@ namespace Title.Common
         [SerializeField] private InputSystemsOwner inputSystemsOwner;
         /// <summary>InputSystemのオーナー</summary>
         public InputSystemsOwner InputSystemsOwner => inputSystemsOwner;
+        /// <summary>アナリティクスのオーナー</summary>
+        [SerializeField] private AnalyticsOwner analyticsOwner;
+        /// <summary>アナリティクスのオーナー</summary>
+        public AnalyticsOwner AnalyticsOwner => analyticsOwner;
 
         private void Reset()
         {
@@ -44,6 +48,7 @@ namespace Title.Common
             sceneOwner = GameObject.Find("SceneOwner").GetComponent<SceneOwner>();
             cursorVisible = GameObject.Find("CursorVisible").GetComponent<CursorVisible>();
             inputSystemsOwner = GameObject.Find("InputSystemsOwner").GetComponent<InputSystemsOwner>();
+            analyticsOwner = GameObject.Find("AnalyticsOwner").GetComponent<AnalyticsOwner>();
         }
 
         private void Awake()

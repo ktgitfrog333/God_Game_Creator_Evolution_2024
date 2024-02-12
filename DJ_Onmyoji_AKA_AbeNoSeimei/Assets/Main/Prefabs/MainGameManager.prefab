@@ -109,6 +109,7 @@ GameObject:
   - component: {fileID: 1827416086}
   - component: {fileID: 1827416085}
   - component: {fileID: 1827416084}
+  - component: {fileID: 5705664735581028094}
   m_Layer: 0
   m_Name: InputSystemsOwner
   m_TagString: Untagged
@@ -149,6 +150,7 @@ MonoBehaviour:
   rightMotor: 0
   delayTime: 0.3
   isVibrationEnabled: 0
+  inputHistroy: {fileID: 5705664735581028094}
 --- !u!114 &1827416085
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -173,6 +175,24 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 47840192a3460fc43a5874995ebde72b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &5705664735581028094
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1827416082}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e10dbf9484dc48149b1dcd85fd98454d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  resultPatternState:
+  - inputTypeID: 0
+    targetPattern: 00000000ffffffff00000000
+  - inputTypeID: 1
+    targetPattern: 01000000ffffffff01000000
+  cmdAcceptanceTimeMs: 0.25
 --- !u!1 &1369696454595932813
 GameObject:
   m_ObjectHideFlags: 0
@@ -250,12 +270,21 @@ MonoBehaviour:
   jumpGuideView: {fileID: 0}
   fadeImageView: {fileID: 0}
   fadeImageModel: {fileID: 0}
-  playerStartPointView: {fileID: 0}
-  safeZoneModel: {fileID: 0}
-  goalPointView: {fileID: 0}
-  goalPointModel: {fileID: 0}
-  playerView: {fileID: 0}
-  playerModel: {fileID: 0}
+  clearCountdownTimerTextView: {fileID: 0}
+  clearCountdownTimerSystemModel: {fileID: 0}
+  pentagramSystemModel: {fileID: 0}
+  pentagramTurnTableView: {fileID: 0}
+  playerHP: {fileID: 0}
+  shikigamiSkillSystemModel: {fileID: 0}
+  soulWalletModel: {fileID: 0}
+  sunMoonSystemModel: {fileID: 0}
+  faderUniversalViews:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  spGaugeView: {fileID: 0}
+  sunMoonStateIconView: {fileID: 0}
+  pentagramTurnTableModel: {fileID: 0}
 --- !u!1 &1369696454729978949
 GameObject:
   m_ObjectHideFlags: 0
@@ -405,7 +434,10 @@ MonoBehaviour:
   - {fileID: 8300000, guid: d61a604cd573e354c99e5e73fc6682ec, type: 3}
   - {fileID: 8300000, guid: 99472434ca475e64db53f2a238cfc578, type: 3}
   - {fileID: 8300000, guid: 83b11e912e5ef9e4b8d5292505402f65, type: 3}
+  - {fileID: 8300000, guid: 7c15301f088fbb04d9eb408808892bbe, type: 3}
   sFXChannelPrefab: {fileID: 1821450510366777210, guid: 13aae3403db5d45428b59ad80eca3da0, type: 3}
+  delaies:
+  - 0.1
 --- !u!1 &1369696454850185356
 GameObject:
   m_ObjectHideFlags: 0
@@ -656,6 +688,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1369696456132551609}
   - component: {fileID: 1369696455142536824}
+  - component: {fileID: 6852052578744252393}
   m_Layer: 0
   m_Name: MainGameManager
   m_TagString: Untagged
@@ -683,6 +716,7 @@ Transform:
   - {fileID: 1827416083}
   - {fileID: 128176305}
   - {fileID: 1095801331}
+  - {fileID: 3148409972800998585}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1369696455142536824
@@ -704,3 +738,61 @@ MonoBehaviour:
   inputSystemsOwner: {fileID: 1827416086}
   skyBoxOwner: {fileID: 128176306}
   levelOwner: {fileID: 1095801332}
+  analyticsOwner: {fileID: 4065275089575535811}
+--- !u!114 &6852052578744252393
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1369696456132551610}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe586b76f8a03c2449dcfb3f9472c12e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  EveryCalcurationTime: 0.5
+--- !u!1 &6467925127883697106
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 3148409972800998585}
+  - component: {fileID: 4065275089575535811}
+  m_Layer: 0
+  m_Name: AnalyticsOwner
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &3148409972800998585
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6467925127883697106}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1369696456132551609}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &4065275089575535811
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6467925127883697106}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bfa6184fa04b22347907f78094956e7a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

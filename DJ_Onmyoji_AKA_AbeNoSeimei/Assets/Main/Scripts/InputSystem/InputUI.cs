@@ -151,6 +151,84 @@ namespace Main.InputSystem
             _scratch = context.ReadValue<Vector2>();
         }
 
+        /// <summary>昼チャージ入力</summary>
+        private bool _chargeSun;
+        /// <summary>昼チャージ入力</summary>
+        public bool ChargeSun => _chargeSun;
+        /// <summary>
+        /// 昼チャージ入力のアクションに応じてフラグを更新
+        /// </summary>
+        /// <param name="context">コールバック</param>
+        public void OnChargeSun(InputAction.CallbackContext context)
+        {
+            _chargeSun = context.ReadValueAsButton();
+        }
+
+        /// <summary>夜チャージ入力</summary>
+        private bool _chargeMoon;
+        /// <summary>夜チャージ入力</summary>
+        public bool ChargeMoon => _chargeMoon;
+        /// <summary>
+        /// 夜チャージ入力のアクションに応じてフラグを更新
+        /// </summary>
+        /// <param name="context">コールバック</param>
+        public void OnChargeMoon(InputAction.CallbackContext context)
+        {
+            _chargeMoon = context.ReadValueAsButton();
+        }
+
+        /// <summary>フェーダー（右）チャージ入力</summary>
+        private bool _chargeRFader;
+        /// <summary>フェーダー（右）チャージ入力</summary>
+        public bool ChargeRFader => _chargeRFader;
+        /// <summary>
+        /// フェーダー（右）チャージ入力のアクションに応じてフラグを更新
+        /// </summary>
+        /// <param name="context">コールバック</param>
+        public void OnChargeRFader(InputAction.CallbackContext context)
+        {
+            _chargeRFader = context.ReadValueAsButton();
+        }
+
+        /// <summary>フェーダー（左）チャージ入力</summary>
+        private bool _chargeLFader;
+        /// <summary>フェーダー（左）チャージ入力</summary>
+        public bool ChargeLFader => _chargeLFader;
+        /// <summary>
+        /// フェーダー（左）チャージ入力のアクションに応じてフラグを更新
+        /// </summary>
+        /// <param name="context">コールバック</param>
+        public void OnChargeLFader(InputAction.CallbackContext context)
+        {
+            _chargeLFader = context.ReadValueAsButton();
+        }
+
+        /// <summary>フェーダー（右）解放入力</summary>
+        private bool _releaseRFader;
+        /// <summary>フェーダー（右）解放入力</summary>
+        public bool ReleaseRFader => _releaseRFader;
+        /// <summary>
+        /// フェーダー（右）解放入力のアクションに応じてフラグを更新
+        /// </summary>
+        /// <param name="context">コールバック</param>
+        public void OnReleaseRFader(InputAction.CallbackContext context)
+        {
+            _releaseRFader = context.ReadValueAsButton();
+        }
+
+        /// <summary>フェーダー（左）解放入力</summary>
+        private bool _releaseLFader;
+        /// <summary>フェーダー（左）解放入力</summary>
+        public bool ReleaseLFader => _releaseLFader;
+        /// <summary>
+        /// フェーダー（左）解放入力のアクションに応じてフラグを更新
+        /// </summary>
+        /// <param name="context">コールバック</param>
+        public void OnReleaseLFader(InputAction.CallbackContext context)
+        {
+            _releaseLFader = context.ReadValueAsButton();
+        }
+
         public void DisableAll()
         {
             _navigated = new Vector2();
@@ -162,6 +240,11 @@ namespace Main.InputSystem
             _selected = false;
             _manualed = false;
             _scratch = new Vector2();
+            _chargeSun = false;
+            _chargeRFader = false;
+            _chargeLFader = false;
+            _releaseRFader = false;
+            _releaseLFader = false;
         }
     }
 }

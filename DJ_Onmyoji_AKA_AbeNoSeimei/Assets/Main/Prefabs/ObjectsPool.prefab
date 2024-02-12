@@ -1,0 +1,61 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &296471290223033406
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 7497276588651718180}
+  - component: {fileID: 2827088298547246209}
+  m_Layer: 0
+  m_Name: ObjectsPool
+  m_TagString: ObjectsPool
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &7497276588651718180
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 296471290223033406}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2827088298547246209
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 296471290223033406}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ed2ecb729ff1be4439e3ac40a83f4ec5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  countLimit: 100
+  onmyoBulletPrefab: {fileID: 4834366604633499966, guid: 68d6ceab4a7da1640811081df065e9c7, type: 3}
+  wrapBulletPrefab: {fileID: 7602168238787987095, guid: 6e9f744002eafcd489af94e03e94d125, type: 3}
+  danceHallPrefab: {fileID: 6876326360387571097, guid: 761ac3def7997c04f858fb6a5239913a, type: 3}
+  graffitiBulletPrefab: {fileID: 2065689569945876403, guid: 71eb2df8991330748bfd00641d1eb038, type: 3}
+  enemyPrefab: {fileID: 3023802622660258064, guid: 5d7044c8d42de1540a3954615dee3f19, type: 3}
+  enemiesSpawnAssigns:
+  - enemiesID: 0
+    enemyPrefab: {fileID: 3023802622660258064, guid: 5d7044c8d42de1540a3954615dee3f19, type: 3}
+  - enemiesID: 1
+    enemyPrefab: {fileID: 239967812871741223, guid: a18ebc4101e15cd49a06a2e1ffdce22d, type: 3}
+  - enemiesID: 2
+    enemyPrefab: {fileID: 5160813954540995226, guid: 581cdc8c0e70ca14ebe9e7e1ec7af716, type: 3}
+  - enemiesID: 3
+    enemyPrefab: {fileID: 3424201069143673290, guid: f64cbde276284d842ad304448648bdea, type: 3}

@@ -3,13 +3,11 @@ using System.Collections.Generic;
 using UnityEngine;
 using Main.Common;
 using UnityEngine.InputSystem;
-using System;
 using UniRx;
 using UniRx.Triggers;
 using DG.Tweening;
 using Universal.Template;
 using Universal.Common;
-using Universal.Bean;
 
 namespace Main.InputSystem
 {
@@ -46,11 +44,16 @@ namespace Main.InputSystem
         [SerializeField] private float delayTime = .3f;
         /// <summary>振動を有効フラグ</summary>
         [SerializeField] private bool isVibrationEnabled;
+        /// <summary>入力情報の履歴</summary>
+        [SerializeField] private InputHistroy inputHistroy;
+        /// <summary>入力情報の履歴</summary>
+        public InputHistroy InputHistroy => inputHistroy;
 
         private void Reset()
         {
             inputPlayer = GetComponent<InputPlayer>();
             inputUI = GetComponent<InputUI>();
+            inputHistroy = GetComponent<InputHistroy>();
         }
 
         public void OnStart()
@@ -80,6 +83,24 @@ namespace Main.InputSystem
             _inputActions.UI.Scratch.started += inputUI.OnScratch;
             _inputActions.UI.Scratch.performed += inputUI.OnScratch;
             _inputActions.UI.Scratch.canceled += inputUI.OnScratch;
+            _inputActions.UI.ChargeSun.started += inputUI.OnChargeSun;
+            _inputActions.UI.ChargeSun.performed += inputUI.OnChargeSun;
+            _inputActions.UI.ChargeSun.canceled += inputUI.OnChargeSun;
+            _inputActions.UI.ChargeMoon.started += inputUI.OnChargeMoon;
+            _inputActions.UI.ChargeMoon.performed += inputUI.OnChargeMoon;
+            _inputActions.UI.ChargeMoon.canceled += inputUI.OnChargeMoon;
+            _inputActions.UI.ChargeRFader.started += inputUI.OnChargeRFader;
+            _inputActions.UI.ChargeRFader.performed += inputUI.OnChargeRFader;
+            _inputActions.UI.ChargeRFader.canceled += inputUI.OnChargeRFader;
+            _inputActions.UI.ChargeLFader.started += inputUI.OnChargeLFader;
+            _inputActions.UI.ChargeLFader.performed += inputUI.OnChargeLFader;
+            _inputActions.UI.ChargeLFader.canceled += inputUI.OnChargeLFader;
+            _inputActions.UI.ReleaseRFader.started += inputUI.OnReleaseRFader;
+            _inputActions.UI.ReleaseRFader.performed += inputUI.OnReleaseRFader;
+            _inputActions.UI.ReleaseRFader.canceled += inputUI.OnReleaseRFader;
+            _inputActions.UI.ReleaseLFader.started += inputUI.OnReleaseLFader;
+            _inputActions.UI.ReleaseLFader.performed += inputUI.OnReleaseLFader;
+            _inputActions.UI.ReleaseLFader.canceled += inputUI.OnReleaseLFader;
 
             _inputActions.Enable();
 
@@ -107,6 +128,7 @@ namespace Main.InputSystem
             var datas = temp.LoadSaveDatasJsonOfUserBean(ConstResorcesNames.USER_DATA);
 
             isVibrationEnabled = datas.vibrationEnableIndex == 1;
+            inputHistroy.OnStart();
         }
 
         public bool Exit()
