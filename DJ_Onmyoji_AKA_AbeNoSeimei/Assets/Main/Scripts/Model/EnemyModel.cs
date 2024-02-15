@@ -2,10 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Main.Utility;
 using UniRx;
-using Unity.Collections;
-using UnityEditor;
 using UnityEngine;
-using Universal.Common;
 
 namespace Main.Model
 {
@@ -38,6 +35,12 @@ namespace Main.Model
         [SerializeField] private EnemiesID enemiesID;
         /// <summary>敵ID</summary>
         public EnemiesID EnemiesID => enemiesID;
+        /// <summary>敵のプロパティ</summary>
+        [SerializeField] private EnemiesProp enemiesProp;
+        /// <summary>敵のプロパティ</summary>
+        public EnemiesProp EnemiesProp => enemiesProp;
+        /// <summary>共通のユーティリティ</summary>
+        private MainCommonUtility _commonUtility = new MainCommonUtility();
 
         public bool Initialize(Vector2 position, Transform target)
         {
@@ -47,9 +50,6 @@ namespace Main.Model
                 Transform.position = position;
                 if (_target == null)
                     _target = target;
-                // TODO:攻撃力のパラメータ追加
-                if (!attackColliderOfEnemy.SetAttackPoint(1))
-                    Debug.LogError("SetAttackPoint");
 
                 return true;
             }
@@ -69,12 +69,12 @@ namespace Main.Model
 
         protected override void Awake()
         {
-            var adminDataSingleton = AdminDataSingleton.Instance != null ?
-                AdminDataSingleton.Instance :
-                new GameObject(ConstGameObjectNames.GAMEOBJECT_NAME_ADMINDATA_SINGLETON).AddComponent<AdminDataSingleton>()
-                    .GetComponent<AdminDataSingleton>();
-            prop.moveSpeed = adminDataSingleton.AdminBean.enemyModel.prop.moveSpeed;
-            prop.hpMax = adminDataSingleton.AdminBean.enemyModel.prop.hpMax;
+            prop.moveSpeed = _commonUtility.AdminDataSingleton.AdminBean.enemyModel.prop.moveSpeed;
+            prop.hpMax = _commonUtility.AdminDataSingleton.AdminBean.enemyModel.prop.hpMax;
+            enemiesProp.soulMoneyPoint = _commonUtility.AdminDataSingleton.AdminBean.enemyModel.enemiesProp.soulMoneyPoint;
+            enemiesProp.attackPoint = _commonUtility.AdminDataSingleton.AdminBean.enemyModel.enemiesProp.attackPoint;
+            if (!attackColliderOfEnemy.SetAttackPoint(enemiesProp.attackPoint))
+                Debug.LogError("SetAttackPoint");
             State = new CharacterState(damageSufferedZoneModel.IsHit, prop.hpMax, damageSufferedZoneModel.Damage);
             base.Awake();
         }
@@ -124,6 +124,17 @@ namespace Main.Model
         /// <summary>最大HP</summary>
         [Tooltip("最大HP")]
         public int hpMax;
+    }
+
+    /// <summary>
+    /// 敵のプロパティ
+    /// </summary>
+    public struct EnemiesProp
+    {
+        /// <summary>魂の経験値ポイント</summary>
+        public int soulMoneyPoint;
+        /// <summary>攻撃力</summary>
+        public int attackPoint;
     }
 
     /// <summary>

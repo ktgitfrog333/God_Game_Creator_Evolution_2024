@@ -1,35 +1,32 @@
 using System.Collections;
 using System.Collections.Generic;
-using UnityEngine;
-using UnityEngine.UI;
-using UniRx;
 using Main.Common;
 using Main.Utility;
+using UnityEngine;
+using UniRx;
 
 namespace Main.View
 {
     /// <summary>
+    /// ボディスプライト
     /// ビュー
-    /// フェードイメージ
     /// </summary>
-    [RequireComponent(typeof(Image))]
-    public class FadeImageView : MonoBehaviour, IFadeImageView
+    [RequireComponent(typeof(SpriteRenderer))]
+    public class BodySpriteView : MonoBehaviour, IBodySpriteView
     {
-        /// <summary>終了時間</summary>
-        [SerializeField] private float duration = 2.0f;
-        /// <summary>イメージ</summary>
-        [SerializeField] private Image image;
+        /// <summary>スプライトレンダラー</summary>
+        [SerializeField] private SpriteRenderer spriteRenderer;
         /// <summary>ユーティリティ</summary>
         private MainViewUtility _utility = new MainViewUtility();
 
         private void Reset()
         {
-            image = GetComponent<Image>();
+            spriteRenderer = GetComponent<SpriteRenderer>();
         }
 
-        public IEnumerator PlayFadeAnimation(System.IObserver<bool> observer, EnumFadeState state)
+        public IEnumerator PlayFadeAnimation(System.IObserver<bool> observer, EnumFadeState state, float duration)
         {
-            Observable.FromCoroutine<bool>(observer => _utility.PlayFadeAnimation(observer, state, duration, image))
+            Observable.FromCoroutine<bool>(observer => _utility.PlayFadeAnimation(observer, state, duration, spriteRenderer))
                 .Subscribe(x => observer.OnNext(x))
                 .AddTo(gameObject);
 
@@ -38,18 +35,19 @@ namespace Main.View
     }
 
     /// <summary>
+    /// ボディスプライト
     /// ビュー
-    /// フェードイメージ
     /// インターフェース
     /// </summary>
-    public interface IFadeImageView
+    public interface IBodySpriteView
     {
         /// <summary>
         /// フェードのDOTweenアニメーション再生
         /// </summary>
         /// <param name="observer">バインド</param>
         /// <param name="state">ステータス</param>
+        /// <param name="duration">終了時間</param>
         /// <returns>コルーチン</returns>
-        public IEnumerator PlayFadeAnimation(System.IObserver<bool> observer, EnumFadeState state);
+        public IEnumerator PlayFadeAnimation(System.IObserver<bool> observer, EnumFadeState state, float duration);
     }
 }

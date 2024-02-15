@@ -224,6 +224,7 @@ namespace Universal.Bean
             seVolumeIndex = userBean.seVolumeIndex;
             vibrationEnableIndex = userBean.vibrationEnableIndex;
             pentagramTurnTableInfo = userBean.pentagramTurnTableInfo;
+            soulMoney = userBean.soulMoney;
         }
     }
 }

@@ -39,6 +39,8 @@ namespace Main.Presenter
         [SerializeField] private EnemiesSpawnModel enemiesSpawnModel;
         [SerializeField] private FadersGroupView fadersGroupView;
         [SerializeField] private FadersGroupViewTest fadersGroupViewTest;
+        [SerializeField] private SpawnSoulMoneyModel spawnSoulMoneyModel;
+        [SerializeField] private SoulWalletModel soulWalletModel;
 
         public void OnStart()
         {
@@ -114,6 +116,34 @@ namespace Main.Presenter
             //         if (!circleView_1.Set(x, enemyModel.State.HPMax))
             //             Debug.LogError("Set");
             //     });
+            enemyModel.State.IsDead.ObserveEveryValueChanged(x => x.Value)
+                .Subscribe(x =>
+                {
+                    if (x)
+                    {
+                        if (!spawnSoulMoneyModel.InstanceCloneObjects(enemyModel.transform.position, enemyModel.EnemiesProp))
+                            Debug.LogError("InstanceCloneObjects");
+                    }
+                });
+            // SpawnSoulMoneyModelのOnSoulMoneyGetedを購読
+            spawnSoulMoneyModel.OnSoulMoneyGeted
+                .Subscribe(soulMoney =>
+                {
+                    if (soulMoney.IsGeted.Value)
+                    {
+                        var soulMoneyPoint = soulWalletModel.AddSoulMoney(soulMoney.EnemiesProp.soulMoneyPoint);
+                        if (soulMoneyPoint < 0)
+                            Debug.LogError("AddSoulMoney");
+                    }
+                    // ここでsoulMoney.IsGetedの変更に応じた処理を行う
+                    // Debug.Log($"SoulMoney Geted: {soulMoney.IsGeted}");
+                })
+                .AddTo(gameObject); // UniRxのAddToを使用して、このGameObjectが破棄されたときに購読を自動的に解除
+            soulWalletModel.SoulMoney.ObserveEveryValueChanged(x => x.Value)
+                .Subscribe(x =>
+                {
+                    Debug.Log($"経験値：[{x}]");
+                });
             // IClearCountdownTimerViewAdapter gaugeView = new ClearCountdownTimerGaugeViewAdapter(clearCountdownTimerGaugeView);
             // IClearCountdownTimerViewAdapter textView = new ClearCountdownTimerTextViewAdapter(clearCountdownTimerTextView);
 
@@ -171,13 +201,13 @@ namespace Main.Presenter
             //         if (!enemiesSpawnModel.SetOnmyoState(x))
             //             Debug.LogError("SetOnmyoState");
             //     });
-            sunMoonStateIconViewDemo.OnmyoState.ObserveEveryValueChanged(x => x.Value)
-                .Subscribe(x =>
-                {
-                    Debug.Log($"入力値:[{x}]");
-                    var result = sunMoonStateIconView.SetRotate(x);
-                    Debug.Log($"角度：[{result}]");
-                });
+            // sunMoonStateIconViewDemo.OnmyoState.ObserveEveryValueChanged(x => x.Value)
+            //     .Subscribe(x =>
+            //     {
+            //         Debug.Log($"入力値:[{x}]");
+            //         var result = sunMoonStateIconView.SetRotate(x);
+            //         Debug.Log($"角度：[{result}]");
+            //     });
             // fadersGroupViewTest.IsOpen.ObserveEveryValueChanged(x => x.Value)
             //     .Subscribe(x =>
             //     {
@@ -189,6 +219,8 @@ namespace Main.Presenter
 
         private void Reset()
         {
+            soulWalletModel = GameObject.Find("SoulWallet").GetComponent<SoulWalletModel>();
+            spawnSoulMoneyModel = GameObject.Find("SpawnSoulMoney").GetComponent<SpawnSoulMoneyModel>();
             // fadersGroupViewTest = GameObject.Find("FadersGroupViewTest").GetComponent<FadersGroupViewTest>();
             // fadersGroupView = GameObject.Find("FadersGroup").GetComponent<FadersGroupView>();
             // enemiesSpawnModel = GameObject.Find("EnemiesSpawn").GetComponent<EnemiesSpawnModel>();
@@ -210,10 +242,10 @@ namespace Main.Presenter
             // clearCountdownTimerTextView = GameObject.Find("ClearCountdownTimerText").GetComponent<ClearCountdownTimerTextView>();
             // playerModel = GameObject.Find("Player").GetComponent<PlayerModel>();
             // onmyoTurretModel = GameObject.Find("OnmyoTurret").GetComponent<OnmyoTurretModel>();
-            // enemyModel = GameObject.Find("Enemy").GetComponent<EnemyModel>();
+            enemyModel = GameObject.Find("EnemyA").GetComponent<EnemyModel>();
             // sunMoonSystemModel = GameObject.Find("SunMoonSystem").GetComponent<SunMoonSystemModel>();
-            sunMoonStateIconView = GameObject.Find("SunMoonStateIcon").GetComponent<SunMoonStateIconView>();
-            sunMoonStateIconViewDemo = GameObject.Find("SunMoonStateIconViewDemo").GetComponent<SunMoonStateIconViewDemo>();
+            // sunMoonStateIconView = GameObject.Find("SunMoonStateIcon").GetComponent<SunMoonStateIconView>();
+            // sunMoonStateIconViewDemo = GameObject.Find("SunMoonStateIconViewDemo").GetComponent<SunMoonStateIconViewDemo>();
             // clearCountdownTimerCircleViewTest = GetComponent<Test.ClearCountdownTimerCircleView>();
         }
     }

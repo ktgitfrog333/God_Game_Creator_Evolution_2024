@@ -74,6 +74,10 @@
 		},
 		"damageSufferedZoneOfEnemyModel": {
 			"invincibleTimeSec": 0
+		},
+		"enemiesProp": {
+			"soulMoneyPoint": 1,
+			"attackPoint": 1
 		}
 	},
 	"objectsPoolModel": {

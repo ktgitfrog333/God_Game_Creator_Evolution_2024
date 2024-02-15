@@ -160,6 +160,18 @@ namespace Main.Utility
             Vector2 position = new Vector2(target.position.x + distance * Mathf.Cos(angle), target.position.y + distance * Mathf.Sin(angle));
             return position;
         }
+
+        public ObjectsPoolModel FindOrInstantiateForGetObjectsPoolModel(Transform objectsPoolPrefab)
+        {
+            var pool = GameObject.FindGameObjectWithTag(ConstTagNames.TAG_NAME_OBJECTS_POOL);
+            ObjectsPoolModel poolModel;
+            if (pool == null)
+                poolModel = Object.Instantiate(objectsPoolPrefab).GetComponent<ObjectsPoolModel>();
+            else
+                poolModel = pool.GetComponent<ObjectsPoolModel>();
+
+            return poolModel;
+        }
     }
 
     /// <summary>
@@ -191,5 +203,12 @@ namespace Main.Utility
         /// <param name="onmyoState">陰陽（昼夜）の状態</param>
         /// <returns>成功／失敗</returns>
         public bool ManageEnemiesSpawn(EnemiesSpawnTable[] enemiesSpawnTables, ref float elapsedTime, Transform target, ObjectsPoolModel objectsPoolModel, float radiusMin, float radiusMax, float onmyoState);
+        /// <summary>
+        /// オブジェクトプールモデルを取得するために
+        /// 対象オブジェクトを検索または生成
+        /// </summary>
+        /// <param name="objectsPoolPrefab">オブジェクトプール</param>
+        /// <returns>オブジェクトプールモデル</returns>
+        public ObjectsPoolModel FindOrInstantiateForGetObjectsPoolModel(Transform objectsPoolPrefab);
     }
 }

@@ -11,6 +11,7 @@ namespace Universal.Utility
     {
         /// <summary>
         /// 遅延時間後にメソッドを実行
+        /// コルーチンのためStartCoroutineまたはFromCoroutineを使用すること
         /// </summary>
         /// <param name="delay">遅延時間</param>
         /// <param name="action">メソッド</param>

@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using Main.Common;
+using Main.Utility;
 using UniRx;
 using UnityEngine;
 
@@ -20,13 +21,8 @@ namespace Main.Model
 
         protected virtual void Start()
         {
-            var pool = GameObject.FindGameObjectWithTag(ConstTagNames.TAG_NAME_OBJECTS_POOL);
-            ObjectsPoolModel poolModel;
-            if (pool == null)
-                poolModel = Instantiate(objectsPoolPrefab).GetComponent<ObjectsPoolModel>();
-            else
-                poolModel = pool.GetComponent<ObjectsPoolModel>();
-            
+            var utility = new SpawnUtility();
+            ObjectsPoolModel poolModel = utility.FindOrInstantiateForGetObjectsPoolModel(objectsPoolPrefab);
             poolModel.IsCompleted.ObserveEveryValueChanged(x => x.Value)
                 .Subscribe(x =>
                 {

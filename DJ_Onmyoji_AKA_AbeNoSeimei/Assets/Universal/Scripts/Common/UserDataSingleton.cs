@@ -10,7 +10,7 @@ namespace Universal.Common
     /// ユーザデータ
     /// シングルトン
     /// </summary>
-    public class UserDataSingleton : MonoBehaviour
+    public class UserDataSingleton : MonoBehaviour, IUserDataSingleton
     {
         private static UserDataSingleton instance;
 
@@ -35,5 +35,37 @@ namespace Universal.Common
                 Destroy(gameObject);
             }
         }
+
+        public bool SetAndSaveUserBean(UserBean userBean)
+        {
+            try
+            {
+                _userBean = userBean;
+                if (!new TemplateResourcesAccessory().SaveDatasJsonOfUserBean(ConstResorcesNames.USER_DATA, _userBean))
+                    throw new System.Exception("SaveDatasJsonOfUserBean");
+
+                return true;
+            }
+            catch (System.Exception e)
+            {
+                Debug.LogError(e);
+                return false;
+            }
+        }
+    }
+
+    /// <summary>
+    /// ユーザデータ
+    /// シングルトン
+    /// インターフェース
+    /// </summary>
+    public interface IUserDataSingleton
+    {
+        /// <summary>
+        /// ユーザデータのセットとセーブ
+        /// </summary>
+        /// <param name="userBean">ユーザデータ</param>
+        /// <returns>成功／失敗</returns>
+        public bool SetAndSaveUserBean(UserBean userBean);
     }
 }

@@ -1,13 +1,17 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using Main.View;
 using UniRx;
-using Unity.VisualScripting;
 using UnityEngine;
 using Universal.Common;
 
 namespace Main.Model
 {
+    /// <summary>
+    /// オブジェクトプール
+    /// モデル
+    /// </summary>
     public class ObjectsPoolModel : MonoBehaviour, IObjectsPoolModel
     {
         /// <summary>トランスフォーム</summary>
@@ -38,6 +42,10 @@ namespace Main.Model
         [SerializeField] private EnemiesSpawnAssign[] enemiesSpawnAssigns;
         /// <summary>敵配列</summary>
         private List<EnemyModel> _enemyModels = new List<EnemyModel>();
+        /// <summary>魂の経験値のプレハブ</summary>
+        [SerializeField] private Transform soulMoneyPrefab;
+        /// <summary>魂の経験値配列</summary>
+        private List<SoulMoneyView> _soulMoneyViews = new List<SoulMoneyView>();
 
         public OnmyoBulletModel GetOnmyoBulletModel()
         {
@@ -75,6 +83,11 @@ namespace Main.Model
                 .ToList(), enemies[0], _transform);
         }
 
+        public SoulMoneyView GetSoulMoneyView()
+        {
+            return GetInactiveComponent(_soulMoneyViews, soulMoneyPrefab, _transform);
+        }
+
         private void Start()
         {
             var adminDataSingleton = AdminDataSingleton.Instance != null ?
@@ -94,6 +107,7 @@ namespace Main.Model
                 _graffitiBulletModels.Add(GetClone(graffitiBulletPrefab, _transform).GetComponent<GraffitiBulletModel>());
                 foreach (var enemyPrefab in enemiesSpawnAssigns.Select(q => q.enemyPrefab))
                     _enemyModels.Add(GetClone(enemyPrefab, _transform).GetComponent<EnemyModel>());
+                _soulMoneyViews.Add(GetClone(soulMoneyPrefab, _transform).GetComponent<SoulMoneyView>());
             }
             Debug.Log("プール完了");
             IsCompleted.Value = true;
@@ -155,5 +169,10 @@ namespace Main.Model
         /// <param name="enemiesID">敵ID</param>
         /// <returns>敵</returns>
         public EnemyModel GetEnemyModel(EnemiesID enemiesID);
+        /// <summary>
+        /// 魂の経験値を取り出す
+        /// </summary>
+        /// <returns>魂の経験値</returns>
+        public SoulMoneyView GetSoulMoneyView();
     }
 }

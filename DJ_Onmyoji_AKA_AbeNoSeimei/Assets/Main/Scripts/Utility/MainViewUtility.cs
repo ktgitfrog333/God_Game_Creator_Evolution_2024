@@ -1,7 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
+using Main.Common;
 using UnityEngine;
 using UnityEngine.UI;
+using DG.Tweening;
 
 namespace Main.Utility
 {
@@ -13,6 +15,32 @@ namespace Main.Utility
     {
         /// <summary>デフォルト表示</summary>
         private readonly float DEFAULT = 1f;
+
+        public IEnumerator PlayFadeAnimation<T>(System.IObserver<bool> observer, EnumFadeState state, float duration, T component) where T : Component
+        {
+            // componentがImageかSpriteRendererかをチェック
+            if (component is Image image)
+            {
+                // Imageの場合の処理
+                image.DOFade(endValue: state.Equals(EnumFadeState.Open) ? 0f : 1f, duration)
+                    .SetUpdate(true)
+                    .OnComplete(() => observer.OnNext(true));
+            }
+            else if (component is SpriteRenderer spriteRenderer)
+            {
+                // SpriteRendererの場合の処理
+                spriteRenderer.DOFade(endValue: state.Equals(EnumFadeState.Open) ? 1f : 0f, duration)
+                    .From(state.Equals(EnumFadeState.Open) ? 0f : 1f)
+                    .SetUpdate(true)
+                    .OnComplete(() => observer.OnNext(true));
+            }
+            else
+            {
+                throw new System.ArgumentException("Unsupported component type. Only Image and SpriteRenderer are supported.", nameof(component));
+            }
+
+            yield return null;
+        }
 
         public bool SetFillAmountOfImage(Image image, float timeSec, float limitTimeSecMax, float maskAngle=0f, Transform transform=null)
         {
@@ -56,5 +84,14 @@ namespace Main.Utility
         /// <param name="transform">トランスフォーム</param>
         /// <returns>成功／失敗</returns>
         public bool SetFillAmountOfImage(Image image, float timeSec, float limitTimeSecMax, float maskAngle=0f, Transform transform=null);
+        /// <summary>
+        /// フェードのDOTweenアニメーション再生
+        /// </summary>
+        /// <param name="observer">バインド</param>
+        /// <param name="state">ステータス</param>
+        /// <param name="duration">終了時間</param>
+        /// <param name="component">コンポーネント</param>
+        /// <returns>コルーチン</returns>
+        public IEnumerator PlayFadeAnimation<T>(System.IObserver<bool> observer, EnumFadeState state, float duration, T component) where T : Component;
     }
 }
