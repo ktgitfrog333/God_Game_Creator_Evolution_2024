@@ -92,7 +92,7 @@ MonoBehaviour:
     m_HSlider: 0
     m_VSlider: 0
     m_IgnoreScrollWheelUntilClicked: 0
-    m_EnableMouseInput: 0
+    m_EnableMouseInput: 1
     m_EnableSliderZoomHorizontal: 0
     m_EnableSliderZoomVertical: 0
     m_UniformScale: 1
@@ -172,7 +172,7 @@ MonoBehaviour:
   m_MinSize: {x: 200, y: 50}
   m_MaxSize: {x: 16192, y: 8096}
   vertical: 0
-  controlID: 41717
+  controlID: 14587
 --- !u!114 &5
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -582,9 +582,9 @@ MonoBehaviour:
   m_PlayAudio: 0
   m_AudioPlay: 0
   m_Position:
-    m_Target: {x: 2.3274071, y: -0.7192223, z: -0.030220427}
+    m_Target: {x: 0.23433393, y: 1.6140037, z: -0.028657325}
     speed: 2
-    m_Value: {x: 2.3274071, y: -0.7192223, z: -0.030220427}
+    m_Value: {x: 0.23433393, y: 1.6140037, z: -0.028657325}
   m_RenderMode: 0
   m_CameraMode:
     drawMode: 0
@@ -634,9 +634,9 @@ MonoBehaviour:
     speed: 2
     m_Value: {x: 0, y: 0, z: 0, w: 1}
   m_Size:
-    m_Target: 3.7959788
+    m_Target: 5.1751595
     speed: 2
-    m_Value: 3.7959788
+    m_Value: 5.1751595
   m_Ortho:
     m_Target: 1
     speed: 2
@@ -785,9 +785,9 @@ MonoBehaviour:
   m_SceneHierarchy:
     m_TreeViewState:
       scrollPos: {x: 0, y: 0}
-      m_SelectedIDs: 6cbdfeffb4bdfeff
-      m_LastClickedID: -82508
-      m_ExpandedIDs: 6abefefff6c5feffecc8feff04d1feffd29cffff18fbffff
+      m_SelectedIDs: a67a0000
+      m_LastClickedID: 0
+      m_ExpandedIDs: 00e8fffffafaffff
       m_RenameOverlay:
         m_UserAcceptedRename: 0
         m_Name: 
@@ -882,8 +882,8 @@ MonoBehaviour:
     y: 0
     width: 306
     height: 433
-  m_MinSize: {x: 100, y: 100}
-  m_MaxSize: {x: 4000, y: 4000}
+  m_MinSize: {x: 102, y: 121}
+  m_MaxSize: {x: 4002, y: 4021}
   m_ActualView: {fileID: 13}
   m_Panes:
   - {fileID: 13}
@@ -995,7 +995,7 @@ MonoBehaviour:
     m_SkipHidden: 0
     m_SearchArea: 1
     m_Folders:
-    - Assets/Main/Prefabs/Level/Enemies
+    - Assets/Main/Textures/Level
     m_Globs: []
     m_OriginalText: 
     m_ImportLogFlags: 0
@@ -1003,16 +1003,16 @@ MonoBehaviour:
   m_ViewMode: 1
   m_StartGridSize: 16
   m_LastFolders:
-  - Assets/Main/Prefabs/Level/Enemies
+  - Assets/Main/Textures/Level
   m_LastFoldersGridSize: 16
   m_LastProjectPath: C:\God_Game_Creator_Evolution_2024\DJ_Onmyoji_AKA_AbeNoSeimei
   m_LockTracker:
     m_IsLocked: 0
   m_FolderTreeState:
-    scrollPos: {x: 0, y: 60}
-    m_SelectedIDs: 64780000
-    m_LastClickedID: 30820
-    m_ExpandedIDs: 00000000827700008477000086770000887700008a7700008c7700008e77000090770000927700009477000096770000987700009a7700009c770000
+    scrollPos: {x: 0, y: 200}
+    m_SelectedIDs: de760000
+    m_LastClickedID: 30430
+    m_ExpandedIDs: 000000004e75000050750000527500005475000056750000587500005a7500005c7500005e750000607500006275000064750000667500006875000056760000
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -1040,7 +1040,7 @@ MonoBehaviour:
     scrollPos: {x: 0, y: 0}
     m_SelectedIDs: 
     m_LastClickedID: 0
-    m_ExpandedIDs: 00000000827700008477000086770000887700008a7700008c7700008e77000090770000927700009477000096770000987700009a7700009c770000
+    m_ExpandedIDs: 000000004e75000050750000527500005475000056750000587500005a7500005c7500005e750000607500006275000064750000667500006875000056760000
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -1065,10 +1065,10 @@ MonoBehaviour:
       m_Icon: {fileID: 0}
       m_ResourceFile: 
   m_ListAreaState:
-    m_SelectedInstanceIDs: 6cbdfeffb4bdfeff
-    m_LastClickedInstanceID: -82580
+    m_SelectedInstanceIDs: a67a0000
+    m_LastClickedInstanceID: 31398
     m_HadKeyboardFocusLastEvent: 1
-    m_ExpandedInstanceIDs: c6230000fe8d0000126e0000e4740000fa730000227c000016790000ee7400000a750000d47600007a1b0100e6060100de060100e2060100ee060100f6060100bc770000fe6d0100c07700006e710100107b0000f47a0000ac7d000086750100c47501009e6f010026710100387b00002467010080f10300fcd003004c7700000000000046770000487700004a770000087b00009e7b00003c770000ae7f00005885000098850000d08500000a8600004286000078860000b0860000
+    m_ExpandedInstanceIDs: c6230000fe8d0000126e0000e4740000fa730000227c000016790000ee7400000a750000d47600007a1b0100e6060100de060100e2060100ee060100f6060100bc770000fe6d0100c07700006e710100107b0000f47a0000ac7d000086750100c47501009e6f010026710100387b00002467010080f10300fcd003004c7700000000000046770000487700004a770000087b00009e7b00003c770000ae7f00005885000098850000d08500000a8600004286000078860000b0860000447300007a7700002e7a00006c7a00009c790000
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -1092,7 +1092,7 @@ MonoBehaviour:
       m_Icon: {fileID: 0}
       m_ResourceFile: 
     m_NewAssetIndexInList: -1
-    m_ScrollPosition: {x: 0, y: 0}
+    m_ScrollPosition: {x: 0, y: 9.5}
     m_GridSize: 16
   m_SkipHiddenPackages: 0
   m_DirectoriesAreaWidth: 173
@@ -1297,8 +1297,8 @@ MonoBehaviour:
     y: 0
     width: 532
     height: 947
-  m_MinSize: {x: 275, y: 50}
-  m_MaxSize: {x: 4000, y: 4000}
+  m_MinSize: {x: 276, y: 71}
+  m_MaxSize: {x: 4001, y: 4021}
   m_ActualView: {fileID: 18}
   m_Panes:
   - {fileID: 18}
@@ -1345,7 +1345,7 @@ MonoBehaviour:
     m_ControlHash: -371814159
     m_PrefName: Preview_InspectorPreview
   m_LastInspectedObjectInstanceID: -1
-  m_LastVerticalScrollValue: 0
+  m_LastVerticalScrollValue: 107
   m_GlobalObjectId: 
   m_InspectorMode: 0
   m_LockTracker:

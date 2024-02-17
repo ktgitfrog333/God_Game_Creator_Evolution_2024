@@ -63,16 +63,20 @@ namespace Main.Model
         protected override void Reset()
         {
             damageSufferedZoneModel = GetComponentInChildren<DamageSufferedZoneOfEnemyModel>();
-            prop.moveSpeed = 1f;
-            prop.hpMax = 3;
+            attackColliderOfEnemy = GetComponentInChildren<AttackColliderOfEnemy>();
+            prop.moveSpeed = .25f;
+            prop.hpMax = 2;
+            enemiesProp.soulMoneyPoint = 1;
+            enemiesProp.attackPoint = 1;
         }
 
         protected override void Awake()
         {
-            prop.moveSpeed = _commonUtility.AdminDataSingleton.AdminBean.enemyModel.prop.moveSpeed;
-            prop.hpMax = _commonUtility.AdminDataSingleton.AdminBean.enemyModel.prop.hpMax;
-            enemiesProp.soulMoneyPoint = _commonUtility.AdminDataSingleton.AdminBean.enemyModel.enemiesProp.soulMoneyPoint;
-            enemiesProp.attackPoint = _commonUtility.AdminDataSingleton.AdminBean.enemyModel.enemiesProp.attackPoint;
+            // TODO:余力あれば管理画面でパラメータ管理
+            // prop.moveSpeed = _commonUtility.AdminDataSingleton.AdminBean.enemyModel.prop.moveSpeed;
+            // prop.hpMax = _commonUtility.AdminDataSingleton.AdminBean.enemyModel.prop.hpMax;
+            // enemiesProp.soulMoneyPoint = _commonUtility.AdminDataSingleton.AdminBean.enemyModel.enemiesProp.soulMoneyPoint;
+            // enemiesProp.attackPoint = _commonUtility.AdminDataSingleton.AdminBean.enemyModel.enemiesProp.attackPoint;
             if (!attackColliderOfEnemy.SetAttackPoint(enemiesProp.attackPoint))
                 Debug.LogError("SetAttackPoint");
             State = new CharacterState(damageSufferedZoneModel.IsHit, prop.hpMax, damageSufferedZoneModel.Damage);
