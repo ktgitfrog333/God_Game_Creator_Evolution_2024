@@ -182,6 +182,16 @@ namespace Main.Model
         EN0003,
         /// <summary>雑魚敵E</summary>
         EN0004,
+        EN0005,
+        EN0006,
+        EN0007,
+        EN0008,
+        EN0009,
+        EN0010,
+        EN0011,
+        EN0012,
+        EN0013,
+        EN0014,
         /// <summary>中ボス敵A</summary>
         EN1000,
         /// <summary>中ボス敵B</summary>

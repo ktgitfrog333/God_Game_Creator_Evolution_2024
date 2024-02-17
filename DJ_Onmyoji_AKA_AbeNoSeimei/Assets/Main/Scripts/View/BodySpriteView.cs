@@ -18,6 +18,10 @@ namespace Main.View
         [SerializeField] private SpriteRenderer spriteRenderer;
         /// <summary>ユーティリティ</summary>
         private MainViewUtility _utility = new MainViewUtility();
+        /// <summary>トランスフォーム</summary>
+        private Transform _transform;
+        /// <summary>トランスフォーム</summary>
+        public Transform Transform => _transform != null ? _transform : _transform = transform;
 
         private void Reset()
         {
@@ -31,6 +35,11 @@ namespace Main.View
                 .AddTo(gameObject);
 
             yield return null;
+        }
+
+        public bool PlayScalingLoopAnimation(float[] durations, float[] scales)
+        {
+            return _utility.PlayScalingLoopAnimation(durations, scales, Transform);
         }
     }
 
@@ -49,5 +58,12 @@ namespace Main.View
         /// <param name="duration">終了時間</param>
         /// <returns>コルーチン</returns>
         public IEnumerator PlayFadeAnimation(System.IObserver<bool> observer, EnumFadeState state, float duration);
+        /// <summary>
+        /// スケーリングするDOTweenアニメーション再生
+        /// </summary>
+        /// <param name="durations">終了時間</param>
+        /// <param name="scales">スケールのパターン</param>
+        /// <returns>成功／失敗</returns>
+        public bool PlayScalingLoopAnimation(float[] durations, float[] scales);
     }
 }

@@ -129,6 +129,7 @@ namespace Main.Model
     /// <summary>
     /// 敵のプロパティ
     /// </summary>
+    [System.Serializable]
     public struct EnemiesProp
     {
         /// <summary>魂の経験値ポイント</summary>

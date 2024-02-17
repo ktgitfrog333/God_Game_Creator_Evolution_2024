@@ -15,6 +15,14 @@ namespace Main.Utility
     {
         /// <summary>デフォルト表示</summary>
         private readonly float DEFAULT = 1f;
+        /// <summary>ループアニメーションSeqence管理</summary>
+        private struct LoopAnimations
+        {
+            /// <summary>スケーリングするDOTweenアニメーション再生</summary>
+            public Sequence scaling;
+        }
+        /// <summary>ループアニメーションSeqence管理</summary>
+        private LoopAnimations _loopAnimations = new LoopAnimations();
 
         public IEnumerator PlayFadeAnimation<T>(System.IObserver<bool> observer, EnumFadeState state, float duration, T component) where T : Component
         {
@@ -40,6 +48,34 @@ namespace Main.Utility
             }
 
             yield return null;
+        }
+
+        public bool PlayScalingLoopAnimation(float[] durations, float[] scales, Transform transform)
+        {
+            try
+            {
+                if (_loopAnimations.scaling == null)
+                {
+                    transform.localScale = Vector3.one * scales[1];
+                    _loopAnimations.scaling = DOTween.Sequence()
+                        .Append(transform.DOScale(scales[0], durations[0]))
+                        .Append(transform.DOScale(scales[1], durations[1]))
+                        .SetLoops(-1, LoopType.Restart);
+                    _loopAnimations.scaling.Play();
+                }
+                else
+                {
+                    transform.localScale = Vector3.one * scales[1];
+                    _loopAnimations.scaling.Restart();
+                }
+
+                return true;
+            }
+            catch (System.Exception e)
+            {
+                Debug.LogError(e);
+                return false;
+            }
         }
 
         public bool SetFillAmountOfImage(Image image, float timeSec, float limitTimeSecMax, float maskAngle=0f, Transform transform=null)
@@ -93,5 +129,13 @@ namespace Main.Utility
         /// <param name="component">コンポーネント</param>
         /// <returns>コルーチン</returns>
         public IEnumerator PlayFadeAnimation<T>(System.IObserver<bool> observer, EnumFadeState state, float duration, T component) where T : Component;
+        /// <summary>
+        /// スケーリングするDOTweenアニメーション再生
+        /// </summary>
+        /// <param name="durations">終了時間</param>
+        /// <param name="scales">スケールのパターン</param>
+        /// <param name="transform">トランスフォーム</param>
+        /// <returns>成功／失敗</returns>
+        public bool PlayScalingLoopAnimation(float[] durations, float[] scales, Transform transform);
     }
 }

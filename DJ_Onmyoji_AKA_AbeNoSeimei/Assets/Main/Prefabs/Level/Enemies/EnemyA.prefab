@@ -93,6 +93,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4102846702884833961}
   - component: {fileID: 8649557881052449527}
+  - component: {fileID: 4932295687873472375}
   m_Layer: 0
   m_Name: BodySprite
   m_TagString: Untagged
@@ -156,8 +157,8 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 7aa744b55bd8add468cbd0a9e8c0a779, type: 3}
-  m_Color: {r: 1, g: 0, b: 0, a: 1}
+  m_Sprite: {fileID: 21300000, guid: a375dd71ac28dde41a28481db64d698f, type: 3}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -167,6 +168,19 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &4932295687873472375
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3244115084979143052}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 123fff3b1c6481542b663d21ece725a7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  spriteRenderer: {fileID: 8649557881052449527}
 --- !u!1 &4223737698729547346
 GameObject:
   m_ObjectHideFlags: 0
@@ -262,6 +276,7 @@ GameObject:
   - component: {fileID: 8472887421271399996}
   - component: {fileID: 1804034909931988326}
   - component: {fileID: 3678280287336115840}
+  - component: {fileID: 2198367664600045414}
   m_Layer: 0
   m_Name: EnemyA
   m_TagString: Untagged
@@ -368,3 +383,25 @@ MonoBehaviour:
     hpMax: 3
   attackColliderOfEnemy: {fileID: 6154129831138059817}
   enemiesID: 0
+  enemiesProp:
+    soulMoneyPoint: 1
+    attackPoint: 1
+--- !u!114 &2198367664600045414
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7776762512387094233}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4c15193a7a54e4e41832a1fc4c1b1c19, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  bodySpriteView: {fileID: 4932295687873472375}
+  durations:
+  - 1.25
+  - 1.25
+  scales:
+  - 1.1
+  - 0.9
