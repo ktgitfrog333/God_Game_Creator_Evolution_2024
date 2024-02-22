@@ -172,7 +172,7 @@ MonoBehaviour:
   m_MinSize: {x: 200, y: 50}
   m_MaxSize: {x: 16192, y: 8096}
   vertical: 0
-  controlID: 120208
+  controlID: 3322
 --- !u!114 &5
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -582,9 +582,9 @@ MonoBehaviour:
   m_PlayAudio: 0
   m_AudioPlay: 0
   m_Position:
-    m_Target: {x: 0.9007714, y: 0.3238525, z: -0.022491336}
+    m_Target: {x: 960, y: 540, z: 0}
     speed: 2
-    m_Value: {x: 0.9007714, y: 0.3238525, z: -0.022491336}
+    m_Value: {x: 960, y: 540, z: 0}
   m_RenderMode: 0
   m_CameraMode:
     drawMode: 0
@@ -634,9 +634,9 @@ MonoBehaviour:
     speed: 2
     m_Value: {x: 0, y: 0, z: 0, w: 1}
   m_Size:
-    m_Target: 3.5591705
+    m_Target: 1101.4536
     speed: 2
-    m_Value: 3.5591705
+    m_Value: 1101.4536
   m_Ortho:
     m_Target: 1
     speed: 2
@@ -785,9 +785,9 @@ MonoBehaviour:
   m_SceneHierarchy:
     m_TreeViewState:
       scrollPos: {x: 0, y: 0}
-      m_SelectedIDs: 3ab70400
+      m_SelectedIDs: 787f0000
       m_LastClickedID: 0
-      m_ExpandedIDs: 7adbffff9adbffffbadbffff38dfffff58dfffff78dfffff46f1ffff50f1ffff6af1ffff84f1ffffdaf1ffffd4f6ffffdef6ffffeaf6ffff18fbffff
+      m_ExpandedIDs: e8efffff18fbffff
       m_RenameOverlay:
         m_UserAcceptedRename: 0
         m_Name: 
@@ -995,7 +995,7 @@ MonoBehaviour:
     m_SkipHidden: 0
     m_SearchArea: 1
     m_Folders:
-    - Assets/Main/Textures/UI/Pentagram
+    - Assets/Main/Textures/UI/Background
     m_Globs: []
     m_OriginalText: 
     m_ImportLogFlags: 0
@@ -1003,16 +1003,16 @@ MonoBehaviour:
   m_ViewMode: 1
   m_StartGridSize: 16
   m_LastFolders:
-  - Assets/Main/Textures/UI/Pentagram
+  - Assets/Main/Textures/UI/Background
   m_LastFoldersGridSize: 16
   m_LastProjectPath: C:\God_Game_Creator_Evolution_2024\DJ_Onmyoji_AKA_AbeNoSeimei
   m_LockTracker:
     m_IsLocked: 0
   m_FolderTreeState:
-    scrollPos: {x: 0, y: 312}
-    m_SelectedIDs: 52770000
-    m_LastClickedID: 30546
-    m_ExpandedIDs: 00000000527600005476000056760000587600005a7600005c7600005e76000060760000627600006476000066760000687600006a7600006c7600006e760000
+    scrollPos: {x: 0, y: 91}
+    m_SelectedIDs: 6e7f0000
+    m_LastClickedID: 32622
+    m_ExpandedIDs: 000000002c7e00002e7e0000307e0000327e0000347e0000367e0000387e00003a7e00003c7e00003e7e0000407e0000427e0000447e0000467e0000487e00001c7f0000
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -1040,7 +1040,7 @@ MonoBehaviour:
     scrollPos: {x: 0, y: 0}
     m_SelectedIDs: 
     m_LastClickedID: 0
-    m_ExpandedIDs: 00000000527600005476000056760000587600005a7600005c7600005e76000060760000627600006476000066760000687600006a7600006c7600006e760000
+    m_ExpandedIDs: 000000002c7e00002e7e0000307e0000327e0000347e0000367e0000387e00003a7e00003c7e00003e7e0000407e0000427e0000447e0000467e0000487e0000
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -1065,21 +1065,21 @@ MonoBehaviour:
       m_Icon: {fileID: 0}
       m_ResourceFile: 
   m_ListAreaState:
-    m_SelectedInstanceIDs: 3ab70400
-    m_LastClickedInstanceID: 309050
+    m_SelectedInstanceIDs: 787f0000
+    m_LastClickedInstanceID: 32632
     m_HadKeyboardFocusLastEvent: 1
-    m_ExpandedInstanceIDs: c6230000fe8d0000126e0000e4740000fa730000227c000016790000ee7400000a750000d47600007a1b0100e6060100de060100e2060100ee060100f6060100bc770000fe6d0100c07700006e710100107b0000f47a0000ac7d000086750100c47501009e6f010026710100387b00002467010080f10300fcd003004c77000046770000487700004a770000087b00009e7b00003c770000ae7f00005885000098850000d08500000a8600004286000078860000b0860000447300007a7700002e7a00006c7a00009c79000000000000fa7e000022810000fe7e0000007f00008c8000008e8000001c810000708000008a8000001e81000088800000440d0300784a010086800000f0790000b6790000
+    m_ExpandedInstanceIDs: c6230000fe8d0000126e0000e4740000fa730000227c000016790000ee7400000a750000d47600007a1b0100e6060100de060100e2060100ee060100f6060100bc770000fe6d0100c07700006e710100107b0000f47a0000ac7d000086750100c47501009e6f010026710100387b00002467010080f10300fcd003004c77000046770000487700004a770000087b00009e7b00003c770000ae7f00005885000098850000d08500000a8600004286000078860000b0860000447300007a7700002e7a00006c7a00009c79000000000000fa7e000022810000fe7e0000007f00008c8000008e8000001c810000708000008a8000001e81000088800000440d0300784a010086800000f0790000b6790000747f0000
     m_RenameOverlay:
       m_UserAcceptedRename: 0
-      m_Name: djabe_gamemain_disk_stage
-      m_OriginalName: djabe_gamemain_disk_stage
+      m_Name: Background
+      m_OriginalName: Background
       m_EditFieldRect:
         serializedVersion: 2
         x: 0
         y: 0
         width: 0
         height: 0
-      m_UserData: 307182
+      m_UserData: 33048
       m_IsWaitingForDelay: 0
       m_IsRenaming: 0
       m_OriginalEventType: 0
