@@ -101,6 +101,34 @@ namespace Main.Utility
                 return false;
             }
         }
+
+        public bool SetColorOfImage(float onmyoStateValue, Image image, Color32[] colors)
+        {
+            try
+            {
+                Color32 colorToSet;
+                if (onmyoStateValue <= -1)
+                {
+                    colorToSet = colors[1];
+                }
+                else if (onmyoStateValue >= 1)
+                {
+                    colorToSet = colors[0];
+                }
+                else
+                {
+                    float blend = (onmyoStateValue + 1) / 2; // -1から1の値を0から1に変換
+                    colorToSet = Color32.Lerp(colors[1], colors[0], blend);
+                }
+                image.color = colorToSet;
+                return true;
+            }
+            catch (System.Exception e)
+            {
+                Debug.LogError(e);
+                return false;
+            }
+        }
     }
 
     /// <summary>
@@ -120,6 +148,14 @@ namespace Main.Utility
         /// <param name="transform">トランスフォーム</param>
         /// <returns>成功／失敗</returns>
         public bool SetFillAmountOfImage(Image image, float timeSec, float limitTimeSecMax, float maskAngle=0f, Transform transform=null);
+        /// <summary>
+        /// ImageのColor32をセットする
+        /// </summary>
+        /// <param name="onmyoStateValue">陰陽（昼夜）の状態</param>
+        /// <param name="image">イメージ</param>
+        /// <param name="colors">カラー</param>
+        /// <returns>成功／失敗</returns>
+        public bool SetColorOfImage(float onmyoStateValue, Image image, Color32[] colors);
         /// <summary>
         /// フェードのDOTweenアニメーション再生
         /// </summary>

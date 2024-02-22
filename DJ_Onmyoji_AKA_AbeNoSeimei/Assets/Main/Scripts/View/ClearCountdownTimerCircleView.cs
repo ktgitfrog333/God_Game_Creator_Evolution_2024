@@ -23,6 +23,23 @@ namespace Main.View
         private Transform _transform;
         /// <summary>トランスフォーム</summary>
         public Transform Transform => _transform != null ? _transform : _transform = transform;
+        [SerializeField] private Color32[] colors = new Color32[]
+        {
+            new Color32()
+            {
+                r = 248,
+                g = 167,
+                b = 46,
+                a = 255,
+            },
+            new Color32()
+            {
+                r = 46,
+                g = 158,
+                b = 248,
+                a = 255,
+            },
+        };
 
         private void Reset()
         {
@@ -43,6 +60,11 @@ namespace Main.View
         {
             return _utility.SetFillAmountOfImage(image, timeSec, limitTimeSecMax, maskAngle, Transform);
         }
+
+        public bool SetColor(float onmyoStateValue)
+        {
+            return _utility.SetColorOfImage(onmyoStateValue, image, colors);
+        }
     }
 
     /// <summary>
@@ -59,5 +81,11 @@ namespace Main.View
         /// <param name="limitTimeSecMax">制限時間（秒）</param>
         /// <returns>成功／失敗</returns>
         public bool SetAngle(float timeSec, float limitTimeSecMax);
+        /// <summary>
+        /// 色をセットする
+        /// </summary>
+        /// <param name="onmyoStateValue">陰陽（昼夜）の状態</param>
+        /// <returns>成功／失敗</returns>
+        public bool SetColor(float onmyoStateValue);
     }
 }

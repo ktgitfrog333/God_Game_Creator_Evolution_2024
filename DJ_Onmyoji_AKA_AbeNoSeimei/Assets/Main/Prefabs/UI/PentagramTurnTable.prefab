@@ -63,7 +63,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 0.19607843}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -149,11 +149,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8580255158742102449, guid: 597092d8a070ced479c452ef7a7d79ea, type: 3}
       propertyPath: m_SizeDelta.x
-      value: 0.15
+      value: 0.3
       objectReference: {fileID: 0}
     - target: {fileID: 8580255158742102449, guid: 597092d8a070ced479c452ef7a7d79ea, type: 3}
       propertyPath: m_SizeDelta.y
-      value: 1.3499999
+      value: 1.5
       objectReference: {fileID: 0}
     - target: {fileID: 8580255158742102449, guid: 597092d8a070ced479c452ef7a7d79ea, type: 3}
       propertyPath: m_LocalPosition.x
@@ -251,11 +251,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4170371719057285268, guid: b205577798b172c41a83c2781b33da44, type: 3}
       propertyPath: m_SizeDelta.x
-      value: 0.14999998
+      value: 0.3
       objectReference: {fileID: 0}
     - target: {fileID: 4170371719057285268, guid: b205577798b172c41a83c2781b33da44, type: 3}
       propertyPath: m_SizeDelta.y
-      value: 1.3499999
+      value: 1.5
       objectReference: {fileID: 0}
     - target: {fileID: 4170371719057285268, guid: b205577798b172c41a83c2781b33da44, type: 3}
       propertyPath: m_LocalPosition.x
@@ -353,11 +353,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1341848284483502549, guid: c3f0ff38717a15f4488b2834f64bfc63, type: 3}
       propertyPath: m_SizeDelta.x
-      value: 0.14999998
+      value: 0.3
       objectReference: {fileID: 0}
     - target: {fileID: 1341848284483502549, guid: c3f0ff38717a15f4488b2834f64bfc63, type: 3}
       propertyPath: m_SizeDelta.y
-      value: 1.3499999
+      value: 1.5
       objectReference: {fileID: 0}
     - target: {fileID: 1341848284483502549, guid: c3f0ff38717a15f4488b2834f64bfc63, type: 3}
       propertyPath: m_LocalPosition.x

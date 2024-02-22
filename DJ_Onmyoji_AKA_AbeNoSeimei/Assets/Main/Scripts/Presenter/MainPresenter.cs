@@ -728,6 +728,8 @@ namespace Main.Presenter
                                         sunMoonStateIconView.SetRotate(x);
                                         if (!model.SetOnmyoState(x))
                                             Debug.LogError("SetOnmyoState");
+                                        if (!clearCountdownTimerCircleView.SetColor(x))
+                                            Debug.LogError("SetColor");
                                     });
                             });
                     }
