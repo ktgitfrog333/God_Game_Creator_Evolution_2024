@@ -682,6 +682,8 @@ namespace Main.Presenter
                                         {
                                             if (!playerHPView.Set(x, playerModel.State.HPMax))
                                                 Debug.LogError("Set");
+                                            if (!pentagramTurnTableView.SetSpriteIndex(x, playerModel.State.HPMax))
+                                                Debug.LogError("SetSpriteIndex");
                                         });
                                     playerModel.State.IsDead.ObserveEveryValueChanged(x => x.Value)
                                         .Subscribe(x =>
@@ -690,6 +692,8 @@ namespace Main.Presenter
                                             {
                                                 if (!playerHPView.Set(0f, playerModel.State.HPMax))
                                                     Debug.LogError("Set");
+                                                if (!pentagramTurnTableView.SetSpriteIndex(0f, playerModel.State.HPMax))
+                                                    Debug.LogError("SetSpriteIndex");
                                                 isGoalReached.Value = true;
                                             }
                                         });

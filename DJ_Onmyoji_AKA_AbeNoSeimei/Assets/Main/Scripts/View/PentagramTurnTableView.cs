@@ -2,12 +2,12 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-using DG.Tweening;
 using Main.Audio;
 using Main.Common;
 using UniRx;
 using UniRx.Triggers;
 using Universal.Common;
+using Main.Utility;
 
 namespace Main.View
 {
@@ -51,6 +51,10 @@ namespace Main.View
         private Transform _transform;
         /// <summary>トランスフォーム</summary>
         private Transform Transform => _transform != null ? _transform : _transform = transform;
+        /// <summary>スプライト</summary>
+        [SerializeField] private Sprite[] sprites;
+        /// <summary>ユーティリティ</summary>
+        private MainViewUtility _utility = new MainViewUtility();
 
         public bool MoveSpin(BgmConfDetails bgmConfDetails)
         {
@@ -137,6 +141,11 @@ namespace Main.View
                     .GetComponent<AdminDataSingleton>();
             angleCorrectionValue = adminDataSingleton.AdminBean.pentagramTurnTableView.angleCorrectionValue;
         }
+
+        public bool SetSpriteIndex(float timeSec, float limitTimeSecMax)
+        {
+            return _utility.SetSpriteIndex(image, timeSec, limitTimeSecMax, sprites);
+        }
     }
 
     /// <summary>
@@ -158,5 +167,12 @@ namespace Main.View
         /// <param name="transform">ターゲット情報</param>
         /// <returns>成功／失敗</returns>
         public bool CalibrationToTarget(Transform transform);
+        /// <summary>
+        /// スプライトをセット
+        /// </summary>
+        /// <param name="timeSec">タイマー</param>
+        /// <param name="limitTimeSecMax">制限時間（秒）</param>
+        /// <returns>成功／失敗</returns>
+        public bool SetSpriteIndex(float timeSec, float limitTimeSecMax);
     }
 }

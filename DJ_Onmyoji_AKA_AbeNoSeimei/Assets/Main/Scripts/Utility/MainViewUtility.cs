@@ -157,6 +157,24 @@ namespace Main.Utility
                 return false;
             }
         }
+
+        public bool SetSpriteIndex(Image image, float timeSec, float limitTimeSecMax, Sprite[] sprites)
+        {
+            try
+            {
+                var baseIdx = GetRate(timeSec, limitTimeSecMax);
+                var length = sprites.Length;
+                var idx = Mathf.CeilToInt((1 - baseIdx) * (length - 1));
+                image.sprite = sprites[idx];
+
+                return true;
+            }
+            catch (System.Exception e)
+            {
+                Debug.LogError(e);
+                return false;
+            }
+        }
     }
 
     /// <summary>
@@ -186,6 +204,15 @@ namespace Main.Utility
         /// <param name="anchorPosMax">アンカー位置（最大）</param>
         /// <returns>成功／失敗</returns>
         public bool SetAnchorOfImage(RectTransform rectTransform, float timeSec, float limitTimeSecMax, Vector2 anchorPosMin, Vector2 anchorPosMax);
+        /// <summary>
+        /// スプライトをセット
+        /// </summary>
+        /// <param name="image">イメージ</param>
+        /// <param name="timeSec">タイマー</param>
+        /// <param name="limitTimeSecMax">制限時間（秒）</param>
+        /// <param name="sprites">スプライト</param>
+        /// <returns>成功／失敗</returns>
+        public bool SetSpriteIndex(Image image, float timeSec, float limitTimeSecMax, Sprite[] sprites);
         /// <summary>
         /// ImageのColor32をセットする
         /// </summary>
