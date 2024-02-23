@@ -790,8 +790,8 @@ namespace Main.Presenter
                     x.ObserveEveryValueChanged(x => x.Value)
                         .Subscribe(x =>
                         {
-                            if (!spGaugeView.SetVertical(x, shikigamiSkillSystemModel.CandleInfo.LimitCandleResorceMax))
-                                Debug.LogError("SetVertical");
+                            if (!spGaugeView.SetAnchor(x, shikigamiSkillSystemModel.CandleInfo.LimitCandleResorceMax))
+                                Debug.LogError("SetAnchor");
                         });
                 });
             this.UpdateAsObservable()

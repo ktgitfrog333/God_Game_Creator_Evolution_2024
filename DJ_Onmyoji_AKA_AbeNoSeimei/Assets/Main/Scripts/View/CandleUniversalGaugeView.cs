@@ -34,7 +34,7 @@ namespace Main.View
 
                 // amountオプションは0から1だが渡される値は-1fから1fの間になる
                 // x + 1して0fから2fの間と変換する
-                return _utility.SetFillAmountOfImage(image, tempoLevel + OFFSET, 1f + OFFSET);
+                return gaugeImage.SetSliderValue(tempoLevel + OFFSET, 1f + OFFSET);
             }
             catch (System.Exception e)
             {

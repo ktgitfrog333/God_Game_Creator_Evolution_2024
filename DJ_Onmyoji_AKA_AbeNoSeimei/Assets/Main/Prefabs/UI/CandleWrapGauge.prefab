@@ -12,6 +12,22 @@ PrefabInstance:
       propertyPath: m_Sprite
       value: 
       objectReference: {fileID: 21300000, guid: 177e50edc3e8f494dbd75080d9ccf924, type: 3}
+    - target: {fileID: 304619753930336046, guid: 3d5d427c34a7ad241923bfa89394d80e, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: 177e50edc3e8f494dbd75080d9ccf924, type: 3}
+    - target: {fileID: 337747629784651365, guid: 3d5d427c34a7ad241923bfa89394d80e, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 0.3
+      objectReference: {fileID: 0}
+    - target: {fileID: 337747629784651365, guid: 3d5d427c34a7ad241923bfa89394d80e, type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 1.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 337747629784651365, guid: 3d5d427c34a7ad241923bfa89394d80e, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 418250158116223227, guid: 3d5d427c34a7ad241923bfa89394d80e, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
@@ -92,9 +108,37 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 600753388951783159, guid: 3d5d427c34a7ad241923bfa89394d80e, type: 3}
+      propertyPath: anchorPosMin.y
+      value: -0.7
+      objectReference: {fileID: 0}
     - target: {fileID: 1949926570869335037, guid: 3d5d427c34a7ad241923bfa89394d80e, type: 3}
       propertyPath: m_Name
       value: CandleWrapGauge
+      objectReference: {fileID: 0}
+    - target: {fileID: 4871426474427878099, guid: 3d5d427c34a7ad241923bfa89394d80e, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 0.3
+      objectReference: {fileID: 0}
+    - target: {fileID: 4871426474427878099, guid: 3d5d427c34a7ad241923bfa89394d80e, type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 1.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 4871426474427878099, guid: 3d5d427c34a7ad241923bfa89394d80e, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5877340653241018891, guid: 3d5d427c34a7ad241923bfa89394d80e, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 0.3
+      objectReference: {fileID: 0}
+    - target: {fileID: 5877340653241018891, guid: 3d5d427c34a7ad241923bfa89394d80e, type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 0.3
+      objectReference: {fileID: 0}
+    - target: {fileID: 5877340653241018891, guid: 3d5d427c34a7ad241923bfa89394d80e, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -0.6
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 6427341066786924997, guid: 3d5d427c34a7ad241923bfa89394d80e, type: 3}
@@ -122,16 +166,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bd141889dc2aa574397f98b1a1ddad95, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  image: {fileID: 8205556826527221778}
+  gaugeImage: {fileID: 8829468495484342205}
   shikigamiType: 0
---- !u!114 &8205556826527221778 stripped
+--- !u!114 &8829468495484342205 stripped
 MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 216492343310827864, guid: 3d5d427c34a7ad241923bfa89394d80e, type: 3}
+  m_CorrespondingSourceObject: {fileID: 600753388951783159, guid: 3d5d427c34a7ad241923bfa89394d80e, type: 3}
   m_PrefabInstance: {fileID: 8277295980438456650}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7624975924153199287}
+  m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Script: {fileID: 11500000, guid: 1a7baf06307b83f4db5c15f5d6873636, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 

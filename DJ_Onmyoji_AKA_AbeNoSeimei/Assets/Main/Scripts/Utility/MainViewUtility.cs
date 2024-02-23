@@ -87,7 +87,7 @@ namespace Main.Utility
                 else if (0f < maskAngle && transform == null)
                     throw new System.Exception("不正な値セット:maskAngle設定時はtransformも設定が必要です");
 
-                float baseAmount = limitTimeSecMax == 0f ? DEFAULT : (timeSec / limitTimeSecMax);
+                float baseAmount = GetRate(timeSec, limitTimeSecMax);
                 float calc = System.Math.Max(0f, maskAngle);
                 image.fillAmount = baseAmount * (1f - calc);
                 if (transform != null)
@@ -100,6 +100,34 @@ namespace Main.Utility
                 Debug.LogError(e);
                 return false;
             }
+        }
+
+        public bool SetAnchorOfImage(RectTransform rectTransform, float timeSec, float limitTimeSecMax, Vector2 anchorPosMin, Vector2 anchorPosMax)
+        {
+            try
+            {
+                var basePos = GetRate(timeSec, limitTimeSecMax);
+                var movePos = new Vector2(rectTransform.anchoredPosition.x, (1f - basePos) * (anchorPosMax.y + anchorPosMin.y));
+                rectTransform.anchoredPosition = movePos;
+
+                return true;
+            }
+            catch (System.Exception e)
+            {
+                Debug.LogError(e);
+                return false;
+            }
+        }
+
+        /// <summary>
+        /// 割合を取得
+        /// </summary>
+        /// <param name="timeSec">タイマー</param>
+        /// <param name="limitTimeSecMax">制限時間（秒）</param>
+        /// <returns>割合</returns>
+        private float GetRate(float timeSec, float limitTimeSecMax)
+        {
+            return limitTimeSecMax == 0f ? DEFAULT : (timeSec / limitTimeSecMax);
         }
 
         public bool SetColorOfImage(float onmyoStateValue, Image image, Color32[] colors)
@@ -148,6 +176,16 @@ namespace Main.Utility
         /// <param name="transform">トランスフォーム</param>
         /// <returns>成功／失敗</returns>
         public bool SetFillAmountOfImage(Image image, float timeSec, float limitTimeSecMax, float maskAngle=0f, Transform transform=null);
+        /// <summary>
+        /// Imageのアンカーをセットする
+        /// </summary>
+        /// <param name="rectTransform">Rectトランスフォーム</param>
+        /// <param name="timeSec">タイマー</param>
+        /// <param name="limitTimeSecMax">制限時間（秒）</param>
+        /// <param name="anchorPosMin">アンカー位置（最小）</param>
+        /// <param name="anchorPosMax">アンカー位置（最大）</param>
+        /// <returns>成功／失敗</returns>
+        public bool SetAnchorOfImage(RectTransform rectTransform, float timeSec, float limitTimeSecMax, Vector2 anchorPosMin, Vector2 anchorPosMax);
         /// <summary>
         /// ImageのColor32をセットする
         /// </summary>

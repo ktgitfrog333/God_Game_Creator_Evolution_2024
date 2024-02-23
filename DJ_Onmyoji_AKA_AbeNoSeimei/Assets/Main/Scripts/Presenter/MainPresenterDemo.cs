@@ -116,34 +116,34 @@ namespace Main.Presenter
             //         if (!circleView_1.Set(x, enemyModel.State.HPMax))
             //             Debug.LogError("Set");
             //     });
-            enemyModel.State.IsDead.ObserveEveryValueChanged(x => x.Value)
-                .Subscribe(x =>
-                {
-                    if (x)
-                    {
-                        if (!spawnSoulMoneyModel.InstanceCloneObjects(enemyModel.transform.position, enemyModel.EnemiesProp))
-                            Debug.LogError("InstanceCloneObjects");
-                    }
-                });
+            //enemyModel.State.IsDead.ObserveEveryValueChanged(x => x.Value)
+            //    .Subscribe(x =>
+            //    {
+            //        if (x)
+            //        {
+            //            if (!spawnSoulMoneyModel.InstanceCloneObjects(enemyModel.transform.position, enemyModel.EnemiesProp))
+            //                Debug.LogError("InstanceCloneObjects");
+            //        }
+            //    });
             // SpawnSoulMoneyModelのOnSoulMoneyGetedを購読
-            spawnSoulMoneyModel.OnSoulMoneyGeted
-                .Subscribe(soulMoney =>
-                {
-                    if (soulMoney.IsGeted.Value)
-                    {
-                        var soulMoneyPoint = soulWalletModel.AddSoulMoney(soulMoney.EnemiesProp.soulMoneyPoint);
-                        if (soulMoneyPoint < 0)
-                            Debug.LogError("AddSoulMoney");
-                    }
-                    // ここでsoulMoney.IsGetedの変更に応じた処理を行う
-                    // Debug.Log($"SoulMoney Geted: {soulMoney.IsGeted}");
-                })
-                .AddTo(gameObject); // UniRxのAddToを使用して、このGameObjectが破棄されたときに購読を自動的に解除
-            soulWalletModel.SoulMoney.ObserveEveryValueChanged(x => x.Value)
-                .Subscribe(x =>
-                {
-                    Debug.Log($"経験値：[{x}]");
-                });
+            //spawnSoulMoneyModel.OnSoulMoneyGeted
+            //    .Subscribe(soulMoney =>
+            //    {
+            //        if (soulMoney.IsGeted.Value)
+            //        {
+            //            var soulMoneyPoint = soulWalletModel.AddSoulMoney(soulMoney.EnemiesProp.soulMoneyPoint);
+            //            if (soulMoneyPoint < 0)
+            //                Debug.LogError("AddSoulMoney");
+            //        }
+            //        // ここでsoulMoney.IsGetedの変更に応じた処理を行う
+            //        // Debug.Log($"SoulMoney Geted: {soulMoney.IsGeted}");
+            //    })
+            //    .AddTo(gameObject); // UniRxのAddToを使用して、このGameObjectが破棄されたときに購読を自動的に解除
+            //soulWalletModel.SoulMoney.ObserveEveryValueChanged(x => x.Value)
+            //    .Subscribe(x =>
+            //    {
+            //        Debug.Log($"経験値：[{x}]");
+            //    });
             // IClearCountdownTimerViewAdapter gaugeView = new ClearCountdownTimerGaugeViewAdapter(clearCountdownTimerGaugeView);
             // IClearCountdownTimerViewAdapter textView = new ClearCountdownTimerTextViewAdapter(clearCountdownTimerTextView);
 
