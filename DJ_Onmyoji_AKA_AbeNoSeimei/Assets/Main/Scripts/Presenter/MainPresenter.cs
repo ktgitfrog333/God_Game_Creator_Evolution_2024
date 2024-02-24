@@ -71,8 +71,6 @@ namespace Main.Presenter
         [SerializeField] private PentagramSystemModel pentagramSystemModel;
         /// <summary>ペンダグラムターンテーブルのビュー</summary>
         [SerializeField] private PentagramTurnTableView pentagramTurnTableView;
-        /// <summary>プレイヤーのHPのビュー</summary>
-        [SerializeField] private ClearCountdownTimerGaugeView playerHP;
         /// <summary>式神スキル管理システムのモデル</summary>
         [SerializeField] private ShikigamiSkillSystemModel shikigamiSkillSystemModel;
         /// <summary>魂の財布、獲得したソウルの管理のモデル</summary>
@@ -134,7 +132,6 @@ namespace Main.Presenter
             pentagramSystemModel = GameObject.Find("PentagramSystem").GetComponent<PentagramSystemModel>();
             pentagramTurnTableView = GameObject.Find(ConstGameObjectNames.GAMEOBJECT_NAME_PENTAGRAMTURNTABLE).GetComponent<PentagramTurnTableView>();
             pentagramTurnTableModel = GameObject.Find(ConstGameObjectNames.GAMEOBJECT_NAME_PENTAGRAMTURNTABLE).GetComponent<PentagramTurnTableModel>();
-            playerHP = GameObject.Find("PlayerHP").GetComponent<ClearCountdownTimerGaugeView>();
             shikigamiSkillSystemModel = GameObject.Find("ShikigamiSkillSystem").GetComponent<ShikigamiSkillSystemModel>();
             soulWalletModel = GameObject.Find("SoulWallet").GetComponent<SoulWalletModel>();
             sunMoonSystemModel = GameObject.Find("SunMoonSystem").GetComponent<SunMoonSystemModel>();
@@ -676,12 +673,9 @@ namespace Main.Presenter
                                                 if (!pentagramTurnTableView.CalibrationToTarget(playerModel.transform))
                                                     Debug.LogError("CalibrationToTarget");
                                         });
-                                    IClearCountdownTimerViewAdapter playerHPView = new ClearCountdownTimerGaugeViewAdapter(playerHP);
                                     playerModel.State.HP.ObserveEveryValueChanged(x => x.Value)
                                         .Subscribe(x =>
                                         {
-                                            if (!playerHPView.Set(x, playerModel.State.HPMax))
-                                                Debug.LogError("Set");
                                             if (!pentagramTurnTableView.SetSpriteIndex(x, playerModel.State.HPMax))
                                                 Debug.LogError("SetSpriteIndex");
                                         });
@@ -690,8 +684,6 @@ namespace Main.Presenter
                                         {
                                             if (x)
                                             {
-                                                if (!playerHPView.Set(0f, playerModel.State.HPMax))
-                                                    Debug.LogError("Set");
                                                 if (!pentagramTurnTableView.SetSpriteIndex(0f, playerModel.State.HPMax))
                                                     Debug.LogError("SetSpriteIndex");
                                                 isGoalReached.Value = true;

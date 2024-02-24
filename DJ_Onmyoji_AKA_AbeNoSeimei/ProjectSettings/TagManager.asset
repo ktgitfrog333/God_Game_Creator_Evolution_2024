@@ -49,12 +49,12 @@ TagManager:
   - name: Background
     uniqueID: 3300738851
     locked: 0
+  - name: uGUIOnPlayer
+    uniqueID: 3056992699
+    locked: 0
   - name: Player
     uniqueID: 2216914061
     locked: 0
   - name: Enemies
     uniqueID: 2645493153
-    locked: 0
-  - name: uGUIOnPlayer
-    uniqueID: 3056992699
     locked: 0

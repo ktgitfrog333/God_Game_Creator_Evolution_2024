@@ -93,8 +93,8 @@ MonoBehaviour:
   - 1
   - 0.5
   betweenPoses:
-  - {x: -692, y: -408}
-  - {x: -692, y: -619.2}
+  - {x: -634, y: -408}
+  - {x: -634, y: -619.2}
 --- !u!114 &6334079202993220316
 MonoBehaviour:
   m_ObjectHideFlags: 0
