@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using Main.Common;
+using Main.Utility;
 using UniRx;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -34,6 +35,8 @@ namespace Main.Model
         public IReactiveProperty<int> EventState => _eventState;
         /// <summary>イベントシステム</summary>
         private EventSystem _eventSystem;
+        /// <summary>uGUIオブジェクト制御ユーティリティ</summary>
+        protected MainUGUIsModelUtility _mainUGUIsModelUtility = new MainUGUIsModelUtility();
 
         private void Awake()
         {

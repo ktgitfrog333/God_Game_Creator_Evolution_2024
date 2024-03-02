@@ -14,7 +14,7 @@ namespace Main.Model
     [RequireComponent(typeof(Button))]
     [RequireComponent(typeof(EventTrigger))]
     [RequireComponent(typeof(GameContentsConfig))]
-    public class GameSelectButtonModel : UIEventController
+    public class GameSelectButtonModel : UIEventController, IButtonEventTriggerModel
     {
         /// <summary>ボタン</summary>
         private Button _button;
@@ -22,53 +22,24 @@ namespace Main.Model
         private EventTrigger _eventTrigger;
         /// <summary>設定ファイル</summary>
         [SerializeField] private GameContentsConfig gameContentsConfig;
+        /// <summary>トランスフォーム</summary>
+        private Transform _transform;
+        /// <summary>トランスフォーム</summary>
+        public Transform Transform => _transform != null ? _transform : _transform = transform;
 
         private void Reset()
         {
             gameContentsConfig = GetComponent<GameContentsConfig>();
         }
 
-        /// <summary>
-        /// ボタンのステータスを変更
-        /// </summary>
-        /// <param name="enabled">有効／無効</param>
-        /// <returns>成功／失敗</returns>
         public bool SetButtonEnabled(bool enabled)
         {
-            try
-            {
-                if (_button == null)
-                    _button = GetComponent<Button>();
-                _button.enabled = enabled;
-                return true;
-            }
-            catch (System.Exception e)
-            {
-                Debug.LogError(e);
-                return false;
-            }
+            return _mainUGUIsModelUtility.SetButtonEnabledOfButton(enabled, _button, Transform);
         }
 
-        /// <summary>
-        /// イベントトリガーのステータスを変更
-        /// </summary>
-        /// <param name="enabled">有効／無効</param>
-        /// <returns>成功／失敗</returns>
         public bool SetEventTriggerEnabled(bool enabled)
         {
-            try
-            {
-                if (_eventTrigger == null)
-                    _eventTrigger = GetComponent<EventTrigger>();
-                _eventTrigger.enabled = enabled;
-
-                return true;
-            }
-            catch (System.Exception e)
-            {
-                Debug.LogError(e);
-                return false;
-            }
+            return _mainUGUIsModelUtility.SetEventTriggerEnabledOfEventTrigger(enabled, _eventTrigger, Transform);
         }
     }
 }

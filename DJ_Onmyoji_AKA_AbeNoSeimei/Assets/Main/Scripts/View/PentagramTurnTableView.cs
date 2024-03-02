@@ -1,13 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
 using Main.Audio;
-using Main.Common;
 using UniRx;
 using UniRx.Triggers;
-using Universal.Common;
-using Main.Utility;
 
 namespace Main.View
 {
@@ -17,45 +13,8 @@ namespace Main.View
     /// Imageコンポーネントへ入力操作を行う
     /// ビュー
     /// </summary>
-    [RequireComponent(typeof(Image))]
-    public class PentagramTurnTableView : MonoBehaviour, IPentagramTurnTableView
+    public class PentagramTurnTableView : PentagramTurnTableCommonView, IPentagramTurnTableView
     {
-        /// <summary>ターンテーブル</summary>
-        [SerializeField] private Image image;
-        /// <summary>オーディオオーナー</summary>
-        private AudioOwner _audioOwner;
-        /// <summary>オーディオオーナー</summary>
-        private AudioOwner AudioOwner
-        {
-            get
-            {
-                if (_audioOwner != null)
-                    return _audioOwner;
-                else
-                {
-                    _audioOwner = MainGameManager.Instance.AudioOwner;
-                    return _audioOwner;
-                }
-            }
-        }
-
-        /// <summary>回転制御においてスティック入力感度の補正値小さいほど鈍く回転して、大きいほど素早く回転する。</summary>
-        [SerializeField, Range(.5f, 10f)] private float angleCorrectionValue;
-        /// <summary>回転制御においてスティック入力感度の補正値小さいほど鈍く回転して、大きいほど素早く回転する。</summary>
-        public float AngleCorrectionValue
-        {
-            get { return angleCorrectionValue; }
-            set { angleCorrectionValue = value; }
-        }
-        /// <summary>トランスフォーム</summary>
-        private Transform _transform;
-        /// <summary>トランスフォーム</summary>
-        private Transform Transform => _transform != null ? _transform : _transform = transform;
-        /// <summary>スプライト</summary>
-        [SerializeField] private Sprite[] sprites;
-        /// <summary>ユーティリティ</summary>
-        private MainViewUtility _utility = new MainViewUtility();
-
         public bool MoveSpin(BgmConfDetails bgmConfDetails)
         {
             try
@@ -126,20 +85,6 @@ namespace Main.View
                 Debug.LogError(e);
                 return false;
             }
-        }
-
-        private void Reset()
-        {
-            image = GetComponent<Image>();
-        }
-
-        private void Start()
-        {
-            var adminDataSingleton = AdminDataSingleton.Instance != null ?
-                AdminDataSingleton.Instance :
-                new GameObject(Universal.Common.ConstGameObjectNames.GAMEOBJECT_NAME_ADMINDATA_SINGLETON).AddComponent<AdminDataSingleton>()
-                    .GetComponent<AdminDataSingleton>();
-            angleCorrectionValue = adminDataSingleton.AdminBean.pentagramTurnTableView.angleCorrectionValue;
         }
 
         public bool SetSpriteIndex(float timeSec, float limitTimeSecMax)

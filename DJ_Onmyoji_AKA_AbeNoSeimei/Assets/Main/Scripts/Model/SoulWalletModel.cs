@@ -19,6 +19,8 @@ namespace Main.Model
         public IReactiveProperty<int> SoulMoney { get; private set; } = new IntReactiveProperty();
         /// <summary>プレイヤーの死亡フラグ</summary>
         private BoolReactiveProperty _isDeadOfPlayer;
+        /// <summary>経験値を更新をロック</summary>
+        public bool IsUnLockUpdateOfSoulMoney { get; private set; }
 
         private void Start()
         {
@@ -26,6 +28,7 @@ namespace Main.Model
             var userDataSingleton = utility.UserDataSingleton;
             SoulMoney.Value = userDataSingleton.UserBean.soulMoney;
             this.UpdateAsObservable()
+                .Where(_ => GameObject.Find("Player") != null)
                 .Select(_ => GameObject.Find("Player").GetComponent<PlayerModel>())
                 .Where(model => model != null)
                 .Take(1)
@@ -46,12 +49,31 @@ namespace Main.Model
         {
             try
             {
-                return SoulMoney.Value += soulMoney;
+                if (IsUnLockUpdateOfSoulMoney)
+                    return SoulMoney.Value += soulMoney;
+                else
+                    // ロック中は経験値を更新しない
+                    return SoulMoney.Value;
             }
             catch (System.Exception e)
             {
                 Debug.LogError(e);
                 return -1;
+            }
+        }
+
+        public bool SetIsUnLockUpdateOfSoulMoney(bool IsUnLock)
+        {
+            try
+            {
+                IsUnLockUpdateOfSoulMoney = IsUnLock;
+
+                return true;
+            }
+            catch (System.Exception e)
+            {
+                Debug.LogError(e);
+                return false;
             }
         }
     }
@@ -69,5 +91,11 @@ namespace Main.Model
         /// <param name="soulMoney">獲得ソウル</param>
         /// <returns>取得後の総数</returns>
         public int AddSoulMoney(int soulMoney);
+        /// <summary>
+        /// 更新アンロック状態をセット
+        /// </summary>
+        /// <param name="IsUnLock">アンロック状態／無効</param>
+        /// <returns>成功／失敗</returns>
+        public bool SetIsUnLockUpdateOfSoulMoney(bool IsUnLock);
     }
 }

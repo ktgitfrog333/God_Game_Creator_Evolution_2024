@@ -41,9 +41,248 @@ namespace Main.Presenter
         [SerializeField] private FadersGroupViewTest fadersGroupViewTest;
         [SerializeField] private SpawnSoulMoneyModel spawnSoulMoneyModel;
         [SerializeField] private SoulWalletModel soulWalletModel;
+        [SerializeField] private ClearView clearView;
+        [SerializeField] private ClearViewTest clearViewTest;
+        [SerializeField] private PentagramTurnTableOnModalView pentagramTurnTableOnModalView;
+        [SerializeField] private RewardSelectViewTest rewardSelectViewTest;
+        [SerializeField] private RewardSelectView rewardSelectView;
+        [SerializeField] private CursorIconTest cursorIconTest;
+        [SerializeField] private CursorIconView cursorIconView;
+        [SerializeField] private RewardSelectModel rewardSelectModel;
+        [SerializeField] private RewardSelectModelTest rewardSelectModelTest;
+        [SerializeField] private GameProceedButtonModel gameProceedButtonModel;
+        [SerializeField] private GameRetryButtonModel gameRetryButtonModel;
+        [SerializeField] private GameSelectButtonModel gameSelectButtonModel;
+        [SerializeField] private SoulWalletModelTeest soulWalletModelTeest;
 
         public void OnStart()
         {
+            soulWalletModelTeest.IsUnLockUpdateOfSoulMoney.ObserveEveryValueChanged(x => x.Value)
+                .Subscribe(x =>
+                {
+                    if (!soulWalletModel.SetIsUnLockUpdateOfSoulMoney(x))
+                        Debug.LogError("SetIsUnLockUpdateOfSoulMoney");
+                });
+            gameProceedButtonModel.EventState.ObserveEveryValueChanged(x => x.Value)
+                .Subscribe(x =>
+                {
+                    switch ((EnumEventCommand)x)
+                    {
+                        case EnumEventCommand.Default:
+                            break;
+                        case EnumEventCommand.Selected:
+                            // 選択された時の処理
+                            if (!cursorIconView.SetSelectAndScale(gameProceedButtonModel.transform.position, (gameProceedButtonModel.transform as RectTransform).sizeDelta))
+                                Debug.LogError("SetSelectAndScale");
+
+                            break;
+                        case EnumEventCommand.DeSelected:
+                            // 選択解除された時の処理
+                            break;
+                        case EnumEventCommand.Submited:
+                            // 実行された時の処理
+                            break;
+                        case EnumEventCommand.Canceled:
+                            // キャンセルされた時の処理
+                            break;
+                        default:
+                            break;
+                    }
+                });
+            gameRetryButtonModel.EventState.ObserveEveryValueChanged(x => x.Value)
+                .Subscribe(x =>
+                {
+                    switch ((EnumEventCommand)x)
+                    {
+                        case EnumEventCommand.Default:
+                            break;
+                        case EnumEventCommand.Selected:
+                            // 選択された時の処理
+                            if (!cursorIconView.SetSelectAndScale(gameRetryButtonModel.transform.position, (gameRetryButtonModel.transform as RectTransform).sizeDelta))
+                                Debug.LogError("SetSelectAndScale");
+
+                            break;
+                        case EnumEventCommand.DeSelected:
+                            // 選択解除された時の処理
+                            break;
+                        case EnumEventCommand.Submited:
+                            // 実行された時の処理
+                            break;
+                        case EnumEventCommand.Canceled:
+                            // キャンセルされた時の処理
+                            break;
+                        default:
+                            break;
+                    }
+                });
+            gameSelectButtonModel.EventState.ObserveEveryValueChanged(x => x.Value)
+                .Subscribe(x =>
+                {
+                    switch ((EnumEventCommand)x)
+                    {
+                        case EnumEventCommand.Default:
+                            break;
+                        case EnumEventCommand.Selected:
+                            // 選択された時の処理
+                            if (!cursorIconView.SetSelectAndScale(gameSelectButtonModel.transform.position, (gameSelectButtonModel.transform as RectTransform).sizeDelta))
+                                Debug.LogError("SetSelectAndScale");
+
+                            break;
+                        case EnumEventCommand.DeSelected:
+                            // 選択解除された時の処理
+                            break;
+                        case EnumEventCommand.Submited:
+                            // 実行された時の処理
+                            break;
+                        case EnumEventCommand.Canceled:
+                            // キャンセルされた時の処理
+                            break;
+                        default:
+                            break;
+                    }
+                });
+            soulWalletModel.SoulMoney.ObserveEveryValueChanged(x => x.Value)
+                .Subscribe(x =>
+                {
+                    if (!rewardSelectView.SetContents(new ClearRewardContentsState()
+                    {
+                        soulMoney = x,
+                    }))
+                        Debug.LogError("SetContents");
+                });
+            rewardSelectModelTest.TargetIndex.ObserveEveryValueChanged(x => x.Value)
+                .Subscribe(x =>
+                {
+                    rewardSelectModel.RewardContentModels[x].SetSelectedGameObject();
+                });
+            foreach (var item in rewardSelectModel.RewardContentModels.Select((p, i) => new { Content = p, Index = i}))
+            {
+                item.Content.IsChecked.ObserveEveryValueChanged(x => x.Value)
+                    .Subscribe(x =>
+                    {
+                        if (soulWalletModel.AddSoulMoney((x ? -1 : 1) * item.Content.RewardContentProp.soulMoney) < 0)
+                            Debug.LogError("AddSoulMoney");
+                    });
+                item.Content.EventState.ObserveEveryValueChanged(x => x.Value)
+                    .Subscribe(x =>
+                    {
+                        switch ((EnumEventCommand)x)
+                        {
+                            case EnumEventCommand.Default:
+                                // 処理無し
+                                break;
+                            case EnumEventCommand.Selected:
+                                if (!rewardSelectView.SetContents(item.Content.RewardContentProp.rewardType))
+                                    Debug.LogError("SetContents");
+                                if (!rewardSelectView.ScaleUp(item.Index))
+                                    Debug.LogError("ScaleUp");
+                                if (!cursorIconView.SetSelectAndScale(item.Content.transform.position, item.Content.CurrentSizeDelta))
+                                    Debug.LogError("SetSelectAndScale");
+
+                                break;
+                            case EnumEventCommand.DeSelected:
+                                if (!rewardSelectView.ScaleDown(item.Index))
+                                    Debug.LogError("ScaleDown");
+
+                                break;
+                            case EnumEventCommand.Submited:
+                                if (!rewardSelectView.Check(item.Index))
+                                    Debug.LogError("Check");
+
+                                break;
+                            case EnumEventCommand.Canceled:
+                                if (!rewardSelectView.UnCheck(item.Index))
+                                    Debug.LogError("UnCheck");
+
+                                break;
+                            default:
+                                // 処理無し
+                                break;
+                        }
+                    });
+            }
+
+            // cursorIconTest.UpdateAsObservable()
+            //     .Select(x => cursorIconTest.Position.Value)
+            //     .Subscribe(x =>
+            //     {
+            //         if (!cursorIconView.SetSelectAndScale(x, cursorIconTest.SizeDelta))
+            //             Debug.LogError("SetSelectAndScale");
+
+            //     });
+            // cursorIconTest.Position.ObserveEveryValueChanged(x => x.Value)
+            //     .Subscribe(x =>
+            //     {
+            //         if (!cursorIconView.SetSelect(x))
+            //             Debug.LogError("SetSelect");
+            //     });
+            // rewardSelectViewTest.SoulMoney.ObserveEveryValueChanged(x => x.Value)
+            //     .Subscribe(x =>
+            //     {
+            //         if (!rewardSelectView.SetContents(new ClearRewardContentsState()
+            //         {
+            //             soulMoney = x,
+            //         }))
+            //             Debug.LogError("SetContents");
+            //     });
+            // rewardSelectViewTest.UpdateAsObservable()
+            //     .Select(x => rewardSelectViewTest.RewardContentProps)
+            //     .Where(x => x != null)
+            //     .Take(1)
+            //     .Subscribe(x =>
+            //     {
+            //         if (!rewardSelectView.SetContents(x))
+            //             Debug.LogError("SetContents");
+            //     });
+            // rewardSelectViewTest.UpdateAsObservable()
+            //     .Select(x => rewardSelectViewTest.ClearRewardType)
+            //     .Subscribe(x =>
+            //     {
+            //         if (!rewardSelectView.SetContents(x))
+            //             Debug.LogError("SetContents");
+            //     });
+            // rewardSelectViewTest.IsScaleUpIndex.ObserveEveryValueChanged(x => x.Value)
+            //     .Subscribe(x =>
+            //     {
+            //         if (!rewardSelectView.ScaleUp(x))
+            //             Debug.LogError("ScaleUp");
+            //     });
+            // rewardSelectViewTest.IsScaleDownIndex.ObserveEveryValueChanged(x => x.Value)
+            //     .Subscribe(x =>
+            //     {
+            //         if (!rewardSelectView.ScaleDown(x))
+            //             Debug.LogError("ScaleDown");
+            //     });
+            // rewardSelectViewTest.CheckIndex.ObserveEveryValueChanged(x => x.Value)
+            //     .Subscribe(x =>
+            //     {
+            //         if (!rewardSelectView.Check(x))
+            //             Debug.LogError("Check");
+            //     });
+            // rewardSelectViewTest.UnCheckIndex.ObserveEveryValueChanged(x => x.Value)
+            //     .Subscribe(x =>
+            //     {
+            //         if (!rewardSelectView.UnCheck(x))
+            //             Debug.LogError("UnCheck");
+            //     });
+            // clearViewTest.TimeSec.ObserveEveryValueChanged(x => x.Value)
+            //     .Subscribe(x =>
+            //     {
+            //         if (!clearView.SetContents(new ClearResultContentsState()
+            //         {
+            //             timeSec = x,
+            //         }))
+            //             Debug.LogError("SetContents");
+            //     });
+            // clearViewTest.SoulMoney.ObserveEveryValueChanged(x => x.Value)
+            //     .Subscribe(x =>
+            //     {
+            //         if (!clearView.SetContents(new ClearResultContentsState()
+            //         {
+            //             soulMoney = x,
+            //         }))
+            //             Debug.LogError("SetContents");
+            //     });
             // _demo.types = new ShikigamiType[3];
             // _demo.tempoLevels = new float[3];
             // foreach (var item in shikigamiSkillSystemModel.ShikigamiInfos.Select((p, i) => new { Content = p, Index = i }))
@@ -219,8 +458,21 @@ namespace Main.Presenter
 
         private void Reset()
         {
+            soulWalletModelTeest = GameObject.Find("SoulWalletModelTeest").GetComponent<SoulWalletModelTeest>();
+            gameSelectButtonModel = GameObject.Find("GameSelectButton").GetComponent<GameSelectButtonModel>();
+            gameRetryButtonModel = GameObject.Find("GameRetryButton").GetComponent<GameRetryButtonModel>();
+            gameProceedButtonModel = GameObject.Find("GameProceedButton").GetComponent<GameProceedButtonModel>();
+            rewardSelectModelTest = GameObject.Find("RewardSelectModelTest").GetComponent<RewardSelectModelTest>();
+            rewardSelectModel = GameObject.Find("RewardSelect").GetComponent<RewardSelectModel>();
+            cursorIconView = GameObject.Find("CursorIcon").GetComponent<CursorIconView>();
+            // cursorIconTest = GameObject.Find("CursorIconTest").GetComponent<CursorIconTest>();
+            rewardSelectView = GameObject.Find("RewardSelect").GetComponent<RewardSelectView>();
+            // rewardSelectViewTest = GameObject.Find("RewardSelectViewTest").GetComponent<RewardSelectViewTest>();
+            // pentagramTurnTableOnModalView = GameObject.Find("PentagramTurnTableOnModal").GetComponent<PentagramTurnTableOnModalView>();
+            // clearViewTest = GameObject.Find("ClearViewTest").GetComponent<ClearViewTest>();
+            // clearView = GameObject.Find("Clear").GetComponent<ClearView>();
             soulWalletModel = GameObject.Find("SoulWallet").GetComponent<SoulWalletModel>();
-            spawnSoulMoneyModel = GameObject.Find("SpawnSoulMoney").GetComponent<SpawnSoulMoneyModel>();
+            // spawnSoulMoneyModel = GameObject.Find("SpawnSoulMoney").GetComponent<SpawnSoulMoneyModel>();
             // fadersGroupViewTest = GameObject.Find("FadersGroupViewTest").GetComponent<FadersGroupViewTest>();
             // fadersGroupView = GameObject.Find("FadersGroup").GetComponent<FadersGroupView>();
             // enemiesSpawnModel = GameObject.Find("EnemiesSpawn").GetComponent<EnemiesSpawnModel>();
@@ -242,7 +494,7 @@ namespace Main.Presenter
             // clearCountdownTimerTextView = GameObject.Find("ClearCountdownTimerText").GetComponent<ClearCountdownTimerTextView>();
             // playerModel = GameObject.Find("Player").GetComponent<PlayerModel>();
             // onmyoTurretModel = GameObject.Find("OnmyoTurret").GetComponent<OnmyoTurretModel>();
-            enemyModel = GameObject.Find("EnemyA").GetComponent<EnemyModel>();
+            // enemyModel = GameObject.Find("EnemyA").GetComponent<EnemyModel>();
             // sunMoonSystemModel = GameObject.Find("SunMoonSystem").GetComponent<SunMoonSystemModel>();
             // sunMoonStateIconView = GameObject.Find("SunMoonStateIcon").GetComponent<SunMoonStateIconView>();
             // sunMoonStateIconViewDemo = GameObject.Find("SunMoonStateIconViewDemo").GetComponent<SunMoonStateIconViewDemo>();

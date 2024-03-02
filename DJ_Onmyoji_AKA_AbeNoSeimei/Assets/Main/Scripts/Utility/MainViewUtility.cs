@@ -4,6 +4,7 @@ using Main.Common;
 using UnityEngine;
 using UnityEngine.UI;
 using DG.Tweening;
+using TMPro;
 
 namespace Main.Utility
 {
@@ -165,7 +166,8 @@ namespace Main.Utility
                 var baseIdx = GetRate(timeSec, limitTimeSecMax);
                 var length = sprites.Length;
                 var idx = Mathf.CeilToInt((1 - baseIdx) * (length - 1));
-                image.sprite = sprites[idx];
+                if (!SetSprite(image, sprites[idx]))
+                    throw new System.Exception("SetSprite");
 
                 return true;
             }
@@ -174,6 +176,94 @@ namespace Main.Utility
                 Debug.LogError(e);
                 return false;
             }
+        }
+
+        public bool SetSpriteOfImage(Image image, Sprite sprite)
+        {
+            return SetSprite(image, sprite);
+        }
+
+        /// <summary>
+        /// スプライトをセット
+        /// </summary>
+        /// <param name="image">イメージ</param>
+        /// <param name="sprite">スプライト</param>
+        /// <returns>成功／失敗</returns>
+        private bool SetSprite(Image image, Sprite sprite)
+        {
+            try
+            {
+                image.sprite = sprite;
+
+                return true;
+            }
+            catch (System.Exception e)
+            {
+                Debug.LogError(e);
+                return false;
+            }
+        }
+
+        public bool SetSoulMoneyOfText(Text text, int soulMoney, string defaultFormat)
+        {
+            return SetContentOfText(text, $"{soulMoney}", defaultFormat);
+        }
+
+        public bool SetNameOfText(Text text, string name, string defaultFormat)
+        {
+            return SetContentOfText(text, name, defaultFormat);
+        }
+
+        /// <summary>
+        /// 値をテキストへセット
+        /// </summary>
+        /// <param name="textComponent">テキスト系コンポーネント</param>
+        /// <param name="value">値</param>
+        /// <param name="defaultFormat">デフォルトフォーマット</param>
+        /// <returns>成功／失敗</returns>
+        private bool SetContentOfText<T>(T textComponent, string value, string defaultFormat)
+        {
+            try
+            {
+                if (textComponent is Text uiText)
+                {
+                    uiText.text = value;
+                }
+                else if (textComponent is TextMeshProUGUI tmpText)
+                {
+                    tmpText.text = value;
+                }
+                else
+                {
+                    throw new System.ArgumentException("Unsupported text component type.");
+                }
+
+                return true;
+            }
+            catch (System.Exception e)
+            {
+                Debug.LogError(e);
+                if (textComponent is Text uiText)
+                {
+                    uiText.text = defaultFormat;
+                }
+                else if (textComponent is TextMeshProUGUI tmpText)
+                {
+                    tmpText.text = defaultFormat;
+                }
+
+                return false;
+            }
+        }
+
+        public bool SetNameOfText(TextMeshProUGUI text, string name, string defaultFormat)
+        {
+            return SetContentOfText(text, name, defaultFormat);
+        }
+
+        public bool SetSoulMoneyOfText(TextMeshProUGUI textMeshProUGUI, int soulMoney, string defaultFormat)
+        {
+            return SetContentOfText(textMeshProUGUI, $"{soulMoney}", defaultFormat);
         }
     }
 
@@ -214,6 +304,13 @@ namespace Main.Utility
         /// <returns>成功／失敗</returns>
         public bool SetSpriteIndex(Image image, float timeSec, float limitTimeSecMax, Sprite[] sprites);
         /// <summary>
+        /// スプライトをセット
+        /// </summary>
+        /// <param name="image">イメージ</param>
+        /// <param name="sprite">スプライト</param>
+        /// <returns>成功／失敗</returns>
+        public bool SetSpriteOfImage(Image image, Sprite sprite);
+        /// <summary>
         /// ImageのColor32をセットする
         /// </summary>
         /// <param name="onmyoStateValue">陰陽（昼夜）の状態</param>
@@ -238,5 +335,37 @@ namespace Main.Utility
         /// <param name="transform">トランスフォーム</param>
         /// <returns>成功／失敗</returns>
         public bool PlayScalingLoopAnimation(float[] durations, float[] scales, Transform transform);
+        /// <summary>
+        /// 魂のお金をセット
+        /// </summary>
+        /// <param name="text">テキスト</param>
+        /// <param name="soulMoney">魂のお金</param>
+        /// <param name="defaultFormat">テキストのデフォルトフォーマット</param>
+        /// <returns>成功／失敗</returns>
+        public bool SetSoulMoneyOfText(Text text, int soulMoney, string defaultFormat);
+        /// <summary>
+        /// 魂のお金をセット
+        /// </summary>
+        /// <param name="textMeshProUGUI">テキスト</param>
+        /// <param name="soulMoney">魂のお金</param>
+        /// <param name="defaultFormat">テキストのデフォルトフォーマット</param>
+        /// <returns>成功／失敗</returns>
+        public bool SetSoulMoneyOfText(TextMeshProUGUI textMeshProUGUI, int soulMoney, string defaultFormat);
+        /// <summary>
+        /// 名前をセット
+        /// </summary>
+        /// <param name="text">テキスト</param>
+        /// <param name="name">名前</param>
+        /// <param name="defaultFormat">テキストのデフォルトフォーマット</param>
+        /// <returns>成功／失敗</returns>
+        public bool SetNameOfText(Text text, string name, string defaultFormat);
+        /// <summary>
+        /// 名前をセット
+        /// </summary>
+        /// <param name="text">テキスト</param>
+        /// <param name="name">名前</param>
+        /// <param name="defaultFormat">テキストのデフォルトフォーマット</param>
+        /// <returns>成功／失敗</returns>
+        public bool SetNameOfText(TextMeshProUGUI text, string name, string defaultFormat);
     }
 }
