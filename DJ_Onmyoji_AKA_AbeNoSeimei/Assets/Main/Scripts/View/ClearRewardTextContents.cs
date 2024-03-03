@@ -141,17 +141,6 @@ namespace Main.View
     }
 
     /// <summary>
-    /// クリア報酬のコンテンツ
-    /// プロパティ
-    /// </summary>
-    public struct ClearRewardContentsState
-    {
-        /// <summary>魂のお金</summary>
-        public int soulMoney;
-    }
-
-
-    /// <summary>
     /// クリア報酬プロパティ
     /// </summary>
     [System.Serializable]

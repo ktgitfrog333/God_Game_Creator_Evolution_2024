@@ -63,32 +63,6 @@ namespace Main.Presenter
                     if (!soulWalletModel.SetIsUnLockUpdateOfSoulMoney(x))
                         Debug.LogError("SetIsUnLockUpdateOfSoulMoney");
                 });
-            gameProceedButtonModel.EventState.ObserveEveryValueChanged(x => x.Value)
-                .Subscribe(x =>
-                {
-                    switch ((EnumEventCommand)x)
-                    {
-                        case EnumEventCommand.Default:
-                            break;
-                        case EnumEventCommand.Selected:
-                            // 選択された時の処理
-                            if (!cursorIconView.SetSelectAndScale(gameProceedButtonModel.transform.position, (gameProceedButtonModel.transform as RectTransform).sizeDelta))
-                                Debug.LogError("SetSelectAndScale");
-
-                            break;
-                        case EnumEventCommand.DeSelected:
-                            // 選択解除された時の処理
-                            break;
-                        case EnumEventCommand.Submited:
-                            // 実行された時の処理
-                            break;
-                        case EnumEventCommand.Canceled:
-                            // キャンセルされた時の処理
-                            break;
-                        default:
-                            break;
-                    }
-                });
             gameRetryButtonModel.EventState.ObserveEveryValueChanged(x => x.Value)
                 .Subscribe(x =>
                 {
@@ -149,6 +123,16 @@ namespace Main.Presenter
                         soulMoney = x,
                     }))
                         Debug.LogError("SetContents");
+                    if (!rewardSelectModel.DiffCostVsResorceAndDisabled(new ClearRewardContentsState()
+                    {
+                        soulMoney = x,
+                    }))
+                        Debug.LogError("DiffCostVsResorceAndDisabled");
+                    // if (!rewardSelectView.UpdateCheckState(new ClearRewardContentsState()
+                    // {
+                    //     soulMoney = x,
+                    // }, rewardSelectModel.RewardContentModels.Select(q => q.RewardContentProp).ToArray()))
+                    //     Debug.LogError("UpdateCheckState");
                 });
             rewardSelectModelTest.TargetIndex.ObserveEveryValueChanged(x => x.Value)
                 .Subscribe(x =>
@@ -157,11 +141,43 @@ namespace Main.Presenter
                 });
             foreach (var item in rewardSelectModel.RewardContentModels.Select((p, i) => new { Content = p, Index = i}))
             {
-                item.Content.IsChecked.ObserveEveryValueChanged(x => x.Value)
-                    .Subscribe(x =>
+                item.Content.CheckState.ObserveEveryValueChanged(x => x.Value)
+                    .Pairwise()
+                    .Subscribe(pair =>
                     {
-                        if (soulWalletModel.AddSoulMoney((x ? -1 : 1) * item.Content.RewardContentProp.soulMoney) < 0)
-                            Debug.LogError("AddSoulMoney");
+                        switch ((CheckState)pair.Current)
+                        {
+                            case CheckState.UnCheck:
+                                // Check⇒UnCheckの場合は金額計算を行う
+                                if (pair.Previous == (int)CheckState.Check)
+                                {
+                                    if (soulWalletModel.AddSoulMoney(1 * item.Content.RewardContentProp.soulMoney) < 0)
+                                        Debug.LogError("AddSoulMoney");
+                                }
+                                // Disabled⇒UnCheckの場合は金額計算を行わない
+                                else if (pair.Previous == (int)CheckState.Disabled)
+                                {
+
+                                }
+                                if (!rewardSelectView.UnCheck(item.Index))
+                                    Debug.LogError("UnCheck");
+
+                                break;
+                            case CheckState.Check:
+                                if (soulWalletModel.AddSoulMoney(-1 * item.Content.RewardContentProp.soulMoney) < 0)
+                                    Debug.LogError("AddSoulMoney");
+                                if (!rewardSelectView.Check(item.Index))
+                                    Debug.LogError("Check");
+
+                                break;
+                            case CheckState.Disabled:
+                                if (!rewardSelectView.Disabled(item.Index))
+                                    Debug.LogError("Disabled");
+
+                                break;
+                            default:
+                                break;
+                        }
                     });
                 item.Content.EventState.ObserveEveryValueChanged(x => x.Value)
                     .Subscribe(x =>
@@ -186,12 +202,12 @@ namespace Main.Presenter
 
                                 break;
                             case EnumEventCommand.Submited:
-                                if (!rewardSelectView.Check(item.Index))
+                                if (!rewardSelectModel.Check(item.Index))
                                     Debug.LogError("Check");
 
                                 break;
                             case EnumEventCommand.Canceled:
-                                if (!rewardSelectView.UnCheck(item.Index))
+                                if (!rewardSelectModel.UnCheck(item.Index))
                                     Debug.LogError("UnCheck");
 
                                 break;

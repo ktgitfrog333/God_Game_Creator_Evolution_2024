@@ -24,6 +24,11 @@ namespace Main.View
             return rewardContents[index].Check(true);
         }
 
+        public bool Disabled(int index)
+        {
+            return rewardContents[index].Disabled();
+        }
+
         public bool ScaleDown(int index)
         {
             return rewardContents[index].PlayScalingAnimation(false);
@@ -77,9 +82,14 @@ namespace Main.View
             return rewardContents[index].Check(false);
         }
 
+        public bool UpdateCheckState(ClearRewardContentsState clearRewardContentsState, RewardContentProp[] rewardContentProps)
+        {
+            throw new System.NotImplementedException();
+        }
+
         private void Reset()
         {
-            resourcesContents = transform.GetChild(0).GetComponentInChildren<ClearRewardTextContents>();
+            resourcesContents = GameObject.Find("Resources").GetComponentInChildren<ClearRewardTextContents>();
             rewardContents = GetComponentsInChildren<RewardContent>();
             description = GetComponentInChildren<Description>();
         }
@@ -134,5 +144,18 @@ namespace Main.View
         /// <param name="index">対象のインデックス</>
         /// <returns>成功／失敗</returns>
         public bool UnCheck(int index);
+        /// <summary>
+        /// チェック無効
+        /// </summary>
+        /// <param name="index">対象のインデックス</>
+        /// <returns>成功／失敗</returns>
+        public bool Disabled(int index);
+        /// <summary>
+        /// 魂のお金のリソースを元にチェック状態を更新
+        /// </summary>
+        /// <param name="clearRewardContentsState">クリア報酬のコンテンツのステート</param>
+        /// <param name="rewardContentProps">リワード情報</param>
+        /// <returns>成功／失敗</returns>
+        public bool UpdateCheckState(ClearRewardContentsState clearRewardContentsState, RewardContentProp[] rewardContentProps);
     }
 }

@@ -48,14 +48,26 @@ namespace Main.Common
         EnhancePlayer,
     }
 
-    // /// <summary>
-    // /// リワードタイプ
-    // /// </summary>
-    // public enum RewardType
-    // {
-    //     /// <summary>召喚</summary>
-    //     Add,
-    //     /// <summary>強化</summary>
-    //     Enhance,
-    // }
+    /// <summary>
+    /// チェック状態
+    /// </summary>
+    public enum CheckState
+    {
+        /// <summary>チェックなし</summary>
+        UnCheck,
+        /// <summary>チェックあり</summary>
+        Check,
+        /// <summary>不可</summary>
+        Disabled,
+    }
+
+    /// <summary>
+    /// クリア報酬のコンテンツ
+    /// プロパティ
+    /// </summary>
+    public struct ClearRewardContentsState
+    {
+        /// <summary>魂のお金</summary>
+        public int soulMoney;
+    }
 }

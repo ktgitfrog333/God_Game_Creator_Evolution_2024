@@ -26,12 +26,14 @@ namespace Main.Model
         private RewardContentProp _rewardContentProp;
         /// <summary>クリア報酬のコンテンツのプロパティ</summary>
         public RewardContentProp RewardContentProp => _rewardContentProp;
+        /// <summary>トランスフォーム</summary>
         private Transform _transform;
+        /// <summary>トランスフォーム</summary>
         public Transform Transform => _transform != null ? _transform : _transform = transform;
         /// <summary>現在のサイズ</summary>
         public Vector2 CurrentSizeDelta => (Transform as RectTransform).sizeDelta * new Vector2(Transform.localScale.x, Transform.localScale.y);
         /// <summary>チェック状態か</summary>
-        public IReactiveProperty<bool> IsChecked => GetComponent<View.RewardContent>().IsChecked;
+        public IReactiveProperty<int> CheckState { get; private set; } = new IntReactiveProperty();
 
         public bool SetButtonEnabled(bool enabled)
         {
@@ -78,6 +80,44 @@ namespace Main.Model
             }
         }
 
+        public bool Check(CheckState checkState, bool absolute=false)
+        {
+            try
+            {
+                if (absolute)
+                {
+                    CheckState.Value = (int)checkState;
+                    return true;
+                }
+
+                if (CheckState.Value != (int)checkState &&
+                    CheckState.Value != (int)Common.CheckState.Disabled)
+                    CheckState.Value = (int)checkState;
+
+                return true;
+            }
+            catch (System.Exception e)
+            {
+                Debug.LogError(e);
+                return false;
+            }
+        }
+
+        public bool Disable()
+        {
+            try
+            {
+                CheckState.Value = (int)Common.CheckState.Disabled;
+
+                return true;
+            }
+            catch (System.Exception e)
+            {
+                Debug.LogError(e);
+                return false;
+            }
+        }
+
         private void Reset()
         {
             button = GetComponent<Button>();
@@ -105,6 +145,18 @@ namespace Main.Model
         /// <param name="rewardContentProp">クリア報酬のコンテンツのプロパティ</param>
         /// <returns>成功／失敗</returns>
         public bool SetRewardContentProp(RewardContentProp rewardContentProp);
+        /// <summary>
+        /// チェック状態の可否
+        /// </summary>
+        /// <param name="checkState">チェック状態</param>
+        /// <param name="absolute">強制更新モード</param>
+        /// <returns>成功／失敗</returns>
+        public bool Check(CheckState checkState, bool absolute=false);
+        /// <summary>
+        /// チェック状態の無効
+        /// </summary>
+        /// <returns>成功／失敗</returns>
+        public bool Disable();
     }
 
     /// <summary>

@@ -20,8 +20,8 @@ namespace Main.View
         [SerializeField] private ClearRewardTMPContents clearRewardTMPContents;
         /// <summary>イメージ制御</summary>
         [SerializeField] private ImagesGroup imagesGroup;
-        /// <summary>チェック状態か</summary>
-        public IReactiveProperty<bool> IsChecked => imagesGroup.IsChecked;
+        /// <summary>フェードイメージ</summary>
+        [SerializeField] private FadeImageView fadeImageView;
         /// <summary>トランスフォーム</summary>
         private Transform _transform;
         /// <summary>トランスフォーム</summary>
@@ -32,14 +32,32 @@ namespace Main.View
         [SerializeField] private Sprite[] typeIcons;
         /// <summary>名前末尾の文言</summary>
         [SerializeField] private string[] nameSuffix = { "-召喚", "-強化" };
-        private Vector2? _sizeDelta;
-        public Vector2? SizeDelta => _sizeDelta != null ? _sizeDelta : _sizeDelta = (Transform as RectTransform).sizeDelta;
+        /// <summary>スケール</summary>
         private Vector3? _scale;
+        /// <summary>スケール</summary>
         public Vector3? Scale => _scale != null ? _scale : _scale = (Transform as RectTransform).localScale;
 
         public bool Check(bool isCheck)
         {
-            return isCheck ? imagesGroup.SetEnabledByAlpha() : imagesGroup.SetDisabledByAlpha();
+            try
+            {
+                if (isCheck)
+                    return imagesGroup.SetEnabledByAlpha();
+                else
+                {
+                    if (!imagesGroup.SetDisabledByAlpha())
+                        throw new System.Exception("SetDisabledByAlpha");
+                    if (!fadeImageView.SetFade(EnumFadeState.Close))
+                        throw new System.Exception("SetFade");
+                }
+
+                return true;
+            }
+            catch (System.Exception e)
+            {
+                Debug.LogError(e);
+                return false;
+            }
         }
 
         public bool PlayScalingAnimation(bool isScaleUp)
@@ -48,7 +66,6 @@ namespace Main.View
             {
                 var size = scaleSizes[isScaleUp ? 1 : 0];
                 var rect = Transform as RectTransform;
-                // rect.sizeDelta = SizeDelta.Value * size;
                 rect.localScale = Scale.Value * size;
 
                 return true;
@@ -84,12 +101,31 @@ namespace Main.View
             }
         }
 
+        public bool Disabled()
+        {
+            try
+            {
+                if (!imagesGroup.SetEnabledByAlpha())
+                    throw new System.Exception("SetEnabledByAlpha");
+                if (!fadeImageView.SetFade(EnumFadeState.Open))
+                    throw new System.Exception("SetFade");
+                
+                return true;
+            }
+            catch (System.Exception e)
+            {
+                Debug.LogError(e);
+                return false;
+            }
+        }
+
         private void Reset()
         {
             clearRewardTextContents = GetComponentInChildren<ClearRewardTextContents>();
             clearRewardImageContents = GetComponentsInChildren<ClearRewardImageContents>();
             clearRewardTMPContents = GetComponentInChildren<ClearRewardTMPContents>();
             imagesGroup = GetComponentInChildren<ImagesGroup>();
+            fadeImageView = GetComponentInChildren<FadeImageView>();
         }
 
         private void Start()
@@ -123,5 +159,10 @@ namespace Main.View
         /// <param name="isCheck">チェック有効</param>
         /// <returns>成功／失敗</returns>
         public bool Check(bool isCheck);
+        /// <summary>
+        /// チェック無効
+        /// </summary>
+        /// <returns>成功／失敗</returns>
+        public bool Disabled();
     }
 }

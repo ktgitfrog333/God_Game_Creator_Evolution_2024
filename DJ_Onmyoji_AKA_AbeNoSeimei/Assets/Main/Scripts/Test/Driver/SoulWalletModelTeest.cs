@@ -13,7 +13,7 @@ namespace Main.Test.Driver
         public IReactiveProperty<bool> IsUnLockUpdateOfSoulMoney { get; private set; } = new BoolReactiveProperty();
         private void Start()
         {
-            Debug.Log("start");
+            // Debug.Log("start");
             DOVirtual.DelayedCall(1f, () => IsUnLockUpdateOfSoulMoney.Value = true)
                 .SetUpdate(true);
             // StartCoroutine(ActionsAfterDelay(1f));

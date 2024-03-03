@@ -51,6 +51,35 @@ namespace Main.Utility
             yield return null;
         }
 
+        public bool SetFade<T>(EnumFadeState state, T component) where T : Component
+        {
+            try
+            {
+                // componentがImageかSpriteRendererかをチェック
+                if (component is Image image)
+                {
+                    // Imageの場合の処理
+                    image.color = new Color(image.color.r, image.color.g, image.color.b, state.Equals(EnumFadeState.Open) ? 0f : 1f);
+                }
+                else if (component is SpriteRenderer spriteRenderer)
+                {
+                    // TODO:SpriteRendererの場合の処理を実装
+                    throw new System.NotImplementedException();
+                }
+                else
+                {
+                    throw new System.ArgumentException("Unsupported component type. Only Image and SpriteRenderer are supported.", nameof(component));
+                }
+
+                return true;
+            }
+            catch (System.Exception e)
+            {
+                Debug.LogError(e);
+                return false;
+            }
+        }
+
         public bool PlayScalingLoopAnimation(float[] durations, float[] scales, Transform transform)
         {
             try
@@ -327,6 +356,13 @@ namespace Main.Utility
         /// <param name="component">コンポーネント</param>
         /// <returns>コルーチン</returns>
         public IEnumerator PlayFadeAnimation<T>(System.IObserver<bool> observer, EnumFadeState state, float duration, T component) where T : Component;
+        /// <summary>
+        /// フェードステータスをセット
+        /// </summary>
+        /// <param name="state">ステータス</param>
+        /// <param name="component">コンポーネント</param>
+        /// <returns>成功／失敗</returns>
+        public bool SetFade<T>(EnumFadeState state, T component) where T : Component;
         /// <summary>
         /// スケーリングするDOTweenアニメーション再生
         /// </summary>

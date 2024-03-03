@@ -35,6 +35,11 @@ namespace Main.View
 
             yield return null;
         }
+
+        public bool SetFade(EnumFadeState state)
+        {
+            return _utility.SetFade(state, image);
+        }
     }
 
     /// <summary>
@@ -51,5 +56,11 @@ namespace Main.View
         /// <param name="state">ステータス</param>
         /// <returns>コルーチン</returns>
         public IEnumerator PlayFadeAnimation(System.IObserver<bool> observer, EnumFadeState state);
+        /// <summary>
+        /// フェードステータスをセット
+        /// </summary>
+        /// <param name="state">ステータス</param>
+        /// <returns>成功／失敗</returns>
+        public bool SetFade(EnumFadeState state);
     }
 }

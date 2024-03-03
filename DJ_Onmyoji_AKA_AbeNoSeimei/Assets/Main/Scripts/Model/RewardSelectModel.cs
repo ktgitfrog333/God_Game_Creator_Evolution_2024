@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using Main.Common;
 
 namespace Main.Model
 {
@@ -9,7 +10,7 @@ namespace Main.Model
     /// クリア報酬選択
     /// モデル
     /// </summary>
-    public class RewardSelectModel : MonoBehaviour
+    public class RewardSelectModel : MonoBehaviour, IRewardSelectModel
     {
         /// <summary>クリア報酬のコンテンツのモデル</summary>
         [SerializeField] private RewardContentModel[] rewardContentModels;
@@ -39,5 +40,70 @@ namespace Main.Model
                     Debug.LogError("SetRewardContentProp");
             }
         }
+
+        public bool Check(int index)
+        {
+            return rewardContentModels[index].Check(CheckState.Check);
+        }
+
+        public bool UnCheck(int index)
+        {
+            return rewardContentModels[index].Check(CheckState.UnCheck);
+        }
+
+        public bool DiffCostVsResorceAndDisabled(ClearRewardContentsState clearRewardContentsState)
+        {
+            try
+            {
+                // 無効からチェックなしへ変更する
+                foreach (var item in rewardContentModels.Select((p, i) => new { Content = p, Index = i })
+                    .Where(q => q.Content.CheckState.Value == (int)CheckState.Disabled &&
+                    q.Content.RewardContentProp.soulMoney <= clearRewardContentsState.soulMoney))
+                    if (!rewardContentModels[item.Index].Check(CheckState.UnCheck, true))
+                        throw new System.Exception("Check");
+
+                // チェックなしから無効へ変更する
+                foreach (var item in rewardContentModels.Select((p, i) => new { Content = p, Index = i })
+                    .Where(q => q.Content.CheckState.Value == (int)CheckState.UnCheck &&
+                    clearRewardContentsState.soulMoney < q.Content.RewardContentProp.soulMoney))
+                    if (!rewardContentModels[item.Index].Disable())
+                        throw new System.Exception("Disable");
+
+                return true;
+            }
+            catch (System.Exception e)
+            {
+                Debug.LogError(e);
+                return false;
+            }
+        }
+    }
+
+    /// <summary>
+    /// クリア報酬選択
+    /// モデル
+    /// インターフェース
+    /// </summary>
+    public interface IRewardSelectModel
+    {
+        /// <summary>
+        /// チェックする
+        /// </summary>
+        /// <param name="index">対象のインデックス</>
+        /// <returns>成功／失敗</returns>
+        public bool Check(int index);
+        /// <summary>
+        /// チェックを外す
+        /// </summary>
+        /// <param name="index">対象のインデックス</>
+        /// <returns>成功／失敗</returns>
+        public bool UnCheck(int index);
+        /// <summary>
+        /// 現在のリソース情報とコストを比較
+        /// 下回る場合は無効状態とする
+        /// </summary>
+        /// <param name="clearRewardContentsState">クリア報酬のコンテンツのプロパティ</>
+        /// <returns>成功／失敗</returns>
+        public bool DiffCostVsResorceAndDisabled(ClearRewardContentsState clearRewardContentsState);
     }
 }
