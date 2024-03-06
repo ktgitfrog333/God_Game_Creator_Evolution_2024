@@ -94,6 +94,7 @@ namespace Universal.Bean
             {
                 limitCandleResorceMax = 10f,
                 rapidRecoveryTimeSec = 40f,
+                rapidRecoveryRate = 1.5f,
             },
         };
 
@@ -285,5 +286,6 @@ namespace Universal.Bean
     {
         public float limitCandleResorceMax;
         public float rapidRecoveryTimeSec;
+        public float rapidRecoveryRate;
     }
 }

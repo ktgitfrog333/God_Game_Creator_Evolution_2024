@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Universal.Template;
 using Universal.Common;
-using Main.Common;
+using DG.Tweening;
 
 namespace Main.Audio
 {
@@ -17,6 +17,10 @@ namespace Main.Audio
         [SerializeField] private AudioSource audioSource;
         /// <summary>効果音のクリップ</summary>
         [SerializeField] private AudioClip[] clip;
+        /// <summary>再生時間を戻す時間（秒）</summary>
+        [SerializeField] private float reverseTLTimeSec = 21f;
+        /// <summary>再生時間を戻す時間（秒）のランダム加算値</summary>
+        [SerializeField] private float reverseTLTimeSecAddRandomRangeMax = 2f;
 
         private void Reset()
         {
@@ -63,6 +67,24 @@ namespace Main.Audio
             {
                 Debug.LogWarning(e);
             }
+        }
+
+        public IEnumerator PlayFadeOut(System.IObserver<bool> observer, float duration)
+        {
+            // DOTweenを使用してボリュームを0にする
+            audioSource.DOFade(0f, duration)
+                .SetEase(Ease.OutCirc)
+                .OnComplete(() => observer.OnNext(true));
+            yield return null;
+        }
+
+        public void PlayBack()
+        {
+            float totalReverseTime = reverseTLTimeSec + Random.Range(0, reverseTLTimeSecAddRandomRangeMax);
+            float newTime = audioSource.time - totalReverseTime;
+            if (newTime < 0) newTime = 0; // オーディオの開始時間より前には戻らないようにする
+            audioSource.time = newTime;
+            audioSource.volume = 1f;
         }
     }
 }

@@ -99,6 +99,9 @@ MonoBehaviour:
   - {fileID: 21300000, guid: e48c7f21ba7383049b171947d28fc2be, type: 3}
   - {fileID: 21300000, guid: d18b9958235b44f40a30b9205cd7960b, type: 3}
   - {fileID: 21300000, guid: ced91dea13cb0bf468203a195203df12, type: 3}
+  backSpinCount: 5
+  durations:
+  - 1.5
 --- !u!114 &8641881819551968395
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -30,9 +30,11 @@ namespace Main.Model
         /// <summary>式神の情報</summary>
         public ShikigamiInfo[] ShikigamiInfos => _shikigamiInfos;
         /// <summary>更新の補正値</summary>
-        [SerializeField] private float[] updateCorrected = { 1f, 1f};
+        [SerializeField] private float[] updateCorrected = { 1f, 1f };
         /// <summary>InputSystemのユーティリティ</summary>
         private InputSystemUtility _inputSysUtility = new InputSystemUtility();
+        /// <summary>演出の再生時間</summary>
+        [SerializeField] private float[] durations = { 1.5f, 3.0f };
 
         private void Start()
         {
@@ -40,12 +42,17 @@ namespace Main.Model
             var adminDataSingleton = utilityCommon.AdminDataSingleton;
             candleInfo.limitCandleResorceMax = adminDataSingleton.AdminBean.shikigamiSkillSystemModel.candleInfo.limitCandleResorceMax;
             candleInfo.rapidRecoveryTimeSec = adminDataSingleton.AdminBean.shikigamiSkillSystemModel.candleInfo.rapidRecoveryTimeSec;
+            candleInfo.rapidRecoveryRate = adminDataSingleton.AdminBean.shikigamiSkillSystemModel.candleInfo.rapidRecoveryRate;
             candleInfo.CandleResource = new FloatReactiveProperty(candleInfo.LimitCandleResorceMax);
             candleInfo.IsOutCost = new BoolReactiveProperty();
+            candleInfo.rapidRecoveryState = new IntReactiveProperty((int)RapidRecoveryType.None);
             var utility = new ShikigamiParameterUtility();
             var shikigamis = utility.GetPentagramTurnTableInfo().slots.Select(q => q.prop.shikigamiInfo).ToArray();
             for (var i = 0; i < shikigamis.Length; i++)
+            {
                 shikigamis[i].state.tempoLevel = new FloatReactiveProperty();
+                shikigamis[i].state.tempoLevelRevertState = new IntReactiveProperty((int)RapidRecoveryType.None);
+            }
             _shikigamiInfos = shikigamis;
             if (!_inputSysUtility.SetCandleResourceAndTempoLevelsInModel(candleInfo, _shikigamiInfos, updateCorrected[0], this))
                 Debug.LogError("SetCandleResourceAndTempoLevels");
@@ -63,7 +70,7 @@ namespace Main.Model
                 switch (jockeyCommandType)
                 {
                     case JockeyCommandType.BackSpin:
-                        if (!_inputSysUtility.ResetCandleResourceAndBuffAllTempoLevelsByPentagram(candleInfo, _shikigamiInfos, this))
+                        if (!_inputSysUtility.ResetCandleResourceAndBuffAllTempoLevelsByPentagram(candleInfo, _shikigamiInfos, durations, this))
                             throw new System.Exception("ResetCandleResourceAndBuffAllTempoLevelsByPentagram");
 
                         break;
@@ -98,6 +105,25 @@ namespace Main.Model
         public float LimitCandleResorceMax => limitCandleResorceMax;
         /// <summary>急速回復を行う時間（秒）</summary>
         public float rapidRecoveryTimeSec;
+        /// <summary>急速回復効果</summary>
+        public float rapidRecoveryRate;
+        /// <summary>急速回復ステート</summary>
+        public IReactiveProperty<int> rapidRecoveryState { get; set; }
+    }
+
+    /// <summary>
+    /// 急速回復実行タイプ
+    /// </summary>
+    public enum RapidRecoveryType
+    {
+        /// <summary>なし</summary>
+        None,
+        /// <summary>準備中</summary>
+        Reserve,
+        /// <summary>効果発動中</summary>
+        Doing,
+        /// <summary>完了</summary>
+        Done,
     }
 
     /// <summary>

@@ -45,3 +45,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   inputHistoriesLimit: 100
+  inputBackSpinState:
+    recordInputTimeSecLimit: 0.5
+    targetAngle: 720

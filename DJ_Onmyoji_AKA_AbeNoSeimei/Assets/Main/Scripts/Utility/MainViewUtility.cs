@@ -294,6 +294,15 @@ namespace Main.Utility
         {
             return SetContentOfText(textMeshProUGUI, $"{soulMoney}", defaultFormat);
         }
+
+        public IEnumerator PlayBackSpinAnimation(System.IObserver<bool> observer, float duration, int backSpinCount, Transform transform)
+        {
+            transform.DORotate(new Vector3(0, 0, 360 * backSpinCount), duration, RotateMode.LocalAxisAdd)
+                .SetEase(Ease.OutCirc)
+                .OnComplete(() => observer.OnNext(true));
+
+            yield return null;
+        }
     }
 
     /// <summary>
@@ -356,6 +365,15 @@ namespace Main.Utility
         /// <param name="component">コンポーネント</param>
         /// <returns>コルーチン</returns>
         public IEnumerator PlayFadeAnimation<T>(System.IObserver<bool> observer, EnumFadeState state, float duration, T component) where T : Component;
+        /// <summary>
+        /// 逆回転させるDOTweenアニメーション再生
+        /// </summary>
+        /// <param name="observer">バインド</param>
+        /// <param name="duration">終了時間</param>
+        /// <param name="backSpinCount">逆回転の回転数</param>
+        /// <param name="transform">トランスフォーム</param>
+        /// <returns>コルーチン</returns>
+        public IEnumerator PlayBackSpinAnimation(System.IObserver<bool> observer, float duration, int backSpinCount, Transform transform);
         /// <summary>
         /// フェードステータスをセット
         /// </summary>

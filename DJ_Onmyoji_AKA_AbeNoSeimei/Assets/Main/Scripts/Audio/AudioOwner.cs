@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Main.Common;
+using UniRx;
 
 namespace Main.Audio
 {
@@ -64,6 +65,19 @@ namespace Main.Audio
         {
             return sfxPlayer.ChangeSpeed(clipToPlay, bgmConfDetails);
         }
+
+        public IEnumerator PlayFadeOut(System.IObserver<bool> observer, float duration)
+        {
+            Observable.FromCoroutine<bool>(observer => bgmPlayer.PlayFadeOut(observer, duration))
+                .Subscribe(_ => observer.OnNext(true))
+                .AddTo(gameObject);
+            yield return null;
+        }
+
+        public void PlayBack()
+        {
+            bgmPlayer.PlayBack();
+        }
     }
 
     /// <summary>
@@ -121,6 +135,8 @@ namespace Main.Audio
         se_select,
         /// <summary>スクラッチ音_1</summary>
         se_scratch_1,
+        /// <summary>DJのスクラッチ2</summary>
+        se_backspin,
     }
 
     /// <summary>
@@ -138,6 +154,17 @@ namespace Main.Audio
         /// ※ステージ開始時に呼ばれる
         /// </summary>
         public void OnStartAndPlayBGM();
+        /// <summary>
+        /// BGMをフェードアウト
+        /// </summary>
+        /// <param name="observer">バインド</param>
+        /// <param name="duration">再生時間</param>
+        /// <returns>コルーチン</returns>
+        public IEnumerator PlayFadeOut(System.IObserver<bool> observer, float duration);
+        /// <summary>
+        /// BGMを再生する
+        /// </summary>
+        public void PlayBack();
     }
 
     /// <summary>

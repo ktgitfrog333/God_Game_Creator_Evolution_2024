@@ -4,6 +4,7 @@ using UnityEngine;
 using Main.Audio;
 using UniRx;
 using UniRx.Triggers;
+using Main.Common;
 
 namespace Main.View
 {
@@ -15,6 +16,11 @@ namespace Main.View
     /// </summary>
     public class PentagramTurnTableView : PentagramTurnTableCommonView, IPentagramTurnTableView
     {
+        /// <summary>バックスピン回転数</summary>
+        [SerializeField] private int backSpinCount = 5;
+        /// <summary>演出の再生時間</summary>
+        [SerializeField] private float[] durations = { 1.5f };
+
         public bool MoveSpin(BgmConfDetails bgmConfDetails)
         {
             try
@@ -91,6 +97,49 @@ namespace Main.View
         {
             return _utility.SetSpriteIndex(image, timeSec, limitTimeSecMax, sprites);
         }
+
+        public IEnumerator PlayDirectionBackSpin(System.IObserver<bool> observer, JockeyCommandType jockeyCommandType)
+        {
+            switch (jockeyCommandType)
+            {
+                case JockeyCommandType.BackSpin:
+                    IntReactiveProperty onNextCnt = new IntReactiveProperty();
+                    onNextCnt.ObserveEveryValueChanged(x => x.Value)
+                        .Subscribe(x =>
+                        {
+                            if (1 < x)
+                                observer.OnNext(true);
+                        });
+                    Observable.FromCoroutine<bool>(observer => _utility.PlayBackSpinAnimation(observer, durations[0], backSpinCount, Transform))
+                        .Subscribe(x =>
+                        {
+                            if (x)
+                                onNextCnt.Value++;
+                        })
+                        .AddTo(gameObject);
+                    // BGMをフェードアウト
+                    Observable.FromCoroutine<bool>(observer => AudioOwner.PlayFadeOut(observer, durations[0]))
+                        .Subscribe(x =>
+                        {
+                            if (x)
+                            {
+                                // 任意の時間帯まで再生時間を戻す
+                                AudioOwner.PlayBack();
+                                onNextCnt.Value++;
+                            }
+                        })
+                        .AddTo(gameObject);
+                    // バックスピンSEを再生
+                    AudioOwner.PlaySFX(ClipToPlay.se_backspin);
+
+                    break;
+                default:
+                    // それ以外のジョッキーコマンドは対象外
+                    break;
+            }
+
+            yield return null;
+        }
     }
 
     /// <summary>
@@ -119,5 +168,12 @@ namespace Main.View
         /// <param name="limitTimeSecMax">制限時間（秒）</param>
         /// <returns>成功／失敗</returns>
         public bool SetSpriteIndex(float timeSec, float limitTimeSecMax);
+        /// <summary>
+        /// バックスピン演出
+        /// </summary>
+        /// <param name="observer">バインド</param>
+        /// <param name="jockeyCommandType">ジョッキーコマンドタイプ</param>
+        /// <returns>コルーチン</returns>
+        public IEnumerator PlayDirectionBackSpin(System.IObserver<bool> observer, JockeyCommandType jockeyCommandType);
     }
 }

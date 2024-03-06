@@ -21,6 +21,8 @@ namespace Main.Utility
         public const float MAX = 1f;
         /// <summary>リソース更新のUpdateオブサーバー</summary>
         private System.IDisposable _modelUpdObservable;
+        /// <summary>蝋燭リソースと式神情報</summary>
+        private CandleInfoAndShikigamiInfoUtility _candleInfoAndShikigamiInfoUtility = new CandleInfoAndShikigamiInfoUtility();
 
         public bool SetInputValueInModel(IReactiveProperty<float> inputValue, float multiDistanceCorrected, Vector2ReactiveProperty previousInput, float autoSpinSpeed, PentagramSystemModel model)
         {
@@ -64,47 +66,23 @@ namespace Main.Utility
                 0f < currentMagnitude;
         }
 
-        public bool UpdateJockeyCommandType(IReactiveProperty<float> inputValue, IReactiveProperty<int> jockeyCommandType, float autoSpinSpeed, int inputHistoriesLimit)
+        public bool SetInputValueInModel(InputBackSpinState inputBackSpinState, PentagramSystemModel model)
         {
             try
             {
-                // 入力履歴を保持するリスト
-                List<float> inputHistory = new List<float>();
-
-                // inputValueの変更を購読
-                inputValue.ObserveEveryValueChanged(x => x.Value)
-                    .Subscribe(value => 
+                Observable.FromCoroutine<InputSystemsOwner>(observer => UpdateAsObservableOfInputSystemsOwner(observer, model))
+                    .Where(x => x != null)
+                    .Subscribe(x =>
                     {
-                        // 入力履歴が10を超えた場合、最初の要素を削除
-                        if (inputHistory.Count >= inputHistoriesLimit)
-                            inputHistory.RemoveAt(0);
-
-                        // 最後の入力と異なる場合のみ履歴に追加
-                        if (inputHistory.Count == 0 ||
-                            inputHistory[inputHistory.Count - 1] != value)
-                            inputHistory.Add(value);
-
-                        // 最後の入力が0の場合、jockeyCommandTypeをHoldに設定
-                        if (value == 0 ||
-                            isScratch(inputHistory, autoSpinSpeed))
-                        {
-                            if (value == 0)
-                                jockeyCommandType.Value = (int)JockeyCommandType.Hold;
-                            if (isScratch(inputHistory, autoSpinSpeed))
-                            {
-                                jockeyCommandType.Value = (int)JockeyCommandType.Scratch;
-                                if (0 < inputHistory.Count)
-                                    inputHistory.Clear();
-                            }
-                        }
-                        else if (value == autoSpinSpeed)
-                        {
-                            jockeyCommandType.Value = (int)JockeyCommandType.None;
-                            if (0 < inputHistory.Count)
-                                inputHistory.Clear();
-                        }
-                    });
-
+                        if (inputBackSpinState.recordInputTimeSecLimit <= inputBackSpinState.recordInputTimeSec.Value ||
+                            x.InputUI.Scratch.sqrMagnitude == 0f)
+                            inputBackSpinState.recordInputTimeSec.Value = 0f;
+                        else
+                            inputBackSpinState.recordInputTimeSec.Value += Time.deltaTime;
+                        inputBackSpinState.inputVelocityValue.Value = x.InputUI.Scratch;
+                    })
+                    .AddTo(model);
+                
                 return true;
             }
             catch (System.Exception e)
@@ -112,28 +90,6 @@ namespace Main.Utility
                 Debug.LogError(e);
                 return false;
             }
-        }
-
-        private bool isScratch(List<float> inputHistory, float autoSpinSpeed)
-        {
-            if (inputHistory.Count < 3)
-                return false;
-
-            var ignoreZeroGroup = inputHistory.Where(q => (0f < q || q < 0f) &&
-                q != autoSpinSpeed)
-                .Select((p, i) => new { Content = 0f < p ? 1f : (p < 0f ? -1f : 0f), Index = i })
-                .OrderBy(q => q.Content).ThenByDescending(q => q.Index)
-                .GroupBy(x => x.Content);
-            var ignoreZero = ignoreZeroGroup.Select(g => g.First())
-                .Union(ignoreZeroGroup.Select(g => g.Last()))
-                .Select(q => q.Content)
-                .ToArray();
-
-            if (2 < ignoreZero.Length)
-                return (ignoreZero[ignoreZero.Length - 3] > 0 && ignoreZero[ignoreZero.Length - 2] < 0 && ignoreZero[ignoreZero.Length - 1] > 0) ||
-                    (ignoreZero[ignoreZero.Length - 3] < 0 && ignoreZero[ignoreZero.Length - 2] > 0 && ignoreZero[ignoreZero.Length - 1] < 0);
-            else
-                return false;
         }
 
         public bool SetOnmyoStateInModel(IReactiveProperty<float> onmyoState, float[] durations, SunMoonSystemModel model)
@@ -264,6 +220,8 @@ namespace Main.Utility
                 // 3.蝋燭の残リソースを更新
                 var utility = new ShikigamiParameterUtility();
                 model.UpdateAsObservable()
+                    .Where(_ => candleInfo.rapidRecoveryState.Value == (int)RapidRecoveryType.None ||
+                    candleInfo.rapidRecoveryState.Value == (int)RapidRecoveryType.Done)
                     .Subscribe(_ =>
                     {
                         float costSum = 0f;
@@ -272,7 +230,14 @@ namespace Main.Utility
                             var tempoLv = item.state.tempoLevel.Value;
                             var shikigamiLv = item.prop.level;
                             float actionRate = utility.GetMainSkillValue(item, MainSkillType.ActionRate);
-                            costSum += tempoLv * shikigamiLv * actionRate;
+                            float rapidRate = (RapidRecoveryType)candleInfo.rapidRecoveryState.Value switch
+                            {
+                                RapidRecoveryType.Done => candleInfo.rapidRecoveryRate,
+                                _ => 1f,
+                            };
+                            var cost = tempoLv * shikigamiLv * actionRate;
+                            // 回復の時だけ速度が上がる
+                            costSum += cost * rapidRate;
                         }
                         if (!UpdateCandleResource(candleInfo, costSum * Time.deltaTime))
                             Debug.LogError("UpdateCandleResource");
@@ -414,7 +379,6 @@ namespace Main.Utility
                 isOutCost.ObserveEveryValueChanged(x => x.Value)
                     .Subscribe(x =>
                     {
-                        const float REDEFAULT = -1f;
                         if (!x)
                         {
                             // 残リソースが有り
@@ -438,11 +402,19 @@ namespace Main.Utility
                                                 {
                                                     case TempLevelPriority.L.ChargeLFader:
                                                         modelUpdObservable[item.Index] = model.UpdateAsObservable()
+                                                            // レベルリバートは別ロジックで行い、ここでは可変をロックする
+                                                            .Where(_ => shikigamiInfos.Where(q => q.prop.type.Equals(ShikigamiType.Wrap))
+                                                                .Select(q => q)
+                                                                .ToArray()[0].state.tempoLevelRevertState.Value == (int)RapidRecoveryType.None)
                                                             .Subscribe(_ => ProcessShikigamiInfos(shikigamiInfos, updateCorrected, ShikigamiType.Wrap, UpdateLevelUp));
 
                                                         break;
                                                     case TempLevelPriority.L.ReleaseLFader:
                                                         modelUpdObservable[item.Index] = model.UpdateAsObservable()
+                                                            // レベルリバートは別ロジックで行い、ここでは可変をロックする
+                                                            .Where(_ => shikigamiInfos.Where(q => q.prop.type.Equals(ShikigamiType.Wrap))
+                                                                .Select(q => q)
+                                                                .ToArray()[0].state.tempoLevelRevertState.Value == (int)RapidRecoveryType.None)
                                                             .Subscribe(_ => ProcessShikigamiInfos(shikigamiInfos, updateCorrected, ShikigamiType.Wrap, UpdateLevelDown));
 
                                                         break;
@@ -459,11 +431,19 @@ namespace Main.Utility
                                                 {
                                                     case TempLevelPriority.R.ChargeRFader:
                                                         modelUpdObservable[item.Index] = model.UpdateAsObservable()
+                                                            // レベルリバートは別ロジックで行い、ここでは可変をロックする
+                                                            .Where(_ => shikigamiInfos.Where(q => q.prop.type.Equals(ShikigamiType.Graffiti))
+                                                                .Select(q => q)
+                                                                .ToArray()[0].state.tempoLevelRevertState.Value == (int)RapidRecoveryType.None)
                                                             .Subscribe(_ => ProcessShikigamiInfos(shikigamiInfos, updateCorrected, ShikigamiType.Graffiti, UpdateLevelUp));
 
                                                         break;
                                                     case TempLevelPriority.R.ReleaseRFader:
                                                         modelUpdObservable[item.Index] = model.UpdateAsObservable()
+                                                            // レベルリバートは別ロジックで行い、ここでは可変をロックする
+                                                            .Where(_ => shikigamiInfos.Where(q => q.prop.type.Equals(ShikigamiType.Graffiti))
+                                                                .Select(q => q)
+                                                                .ToArray()[0].state.tempoLevelRevertState.Value == (int)RapidRecoveryType.None)
                                                             .Subscribe(_ => ProcessShikigamiInfos(shikigamiInfos, updateCorrected, ShikigamiType.Graffiti, UpdateLevelDown));
 
                                                         break;
@@ -507,10 +487,14 @@ namespace Main.Utility
                                 modelUpdObservable[i].Dispose();
                             // 残リソースが無し
                             foreach (var item in shikigamiInfos)
-                                item.state.tempoLevel.Value = REDEFAULT;
+                                item.state.tempoLevel.Value = MIN;
                         }
                     });
                 model.UpdateAsObservable()
+                    // レベルリバートは別ロジックで行い、ここでは可変をロックする
+                    .Where(_ => shikigamiInfos.Where(q => q.prop.type.Equals(ShikigamiType.Dance))
+                        .Select(q => q)
+                        .ToArray()[0].state.tempoLevelRevertState.Value == (int)RapidRecoveryType.None)
                     .Subscribe(_ =>
                     {
                         // ダンスはラップとグラフィティの中間
@@ -631,9 +615,69 @@ namespace Main.Utility
             }
         }
 
-        public bool ResetCandleResourceAndBuffAllTempoLevelsByPentagram(CandleInfo candleInfo, ShikigamiInfo[] shikigamiInfos, ShikigamiSkillSystemModel model)
+        public bool ResetCandleResourceAndBuffAllTempoLevelsByPentagram(CandleInfo candleInfo, ShikigamiInfo[] shikigamiInfos, float[] durations, ShikigamiSkillSystemModel model)
         {
-            throw new System.NotImplementedException();
+            try
+            {
+                Observable.FromCoroutine<bool>(observer => ResetCandleResourceAndRapidRecovery(observer, candleInfo, durations, model, shikigamiInfos))
+                    .Subscribe(x => {})
+                    .AddTo(model);
+                Observable.FromCoroutine<bool>(observer => ResetAllTempoLevelsAndTempoLevelRevert(observer, shikigamiInfos, durations, model))
+                    .Subscribe(x => {})
+                    .AddTo(model);
+
+                return true;
+            }
+            catch (System.Exception e)
+            {
+                Debug.LogError(e);
+                return false;
+            }
+        }
+
+        /// <summary>
+        /// リソースを0にした後急速回復を行う
+        /// </summary>
+        /// <param name="observer">バインド</param>
+        /// <param name="candleInfo">蠟燭の情報</param>
+        /// <param name="durations">終了時間</param>
+        /// <param name="model">式神スキル管理システムモデル</param>
+        /// <param name="shikigamiInfos">式神の情報</param>
+        /// <returns>コルーチン</returns>
+        private IEnumerator ResetCandleResourceAndRapidRecovery(System.IObserver<bool> observer, CandleInfo candleInfo, float[] durations, ShikigamiSkillSystemModel model, ShikigamiInfo[] shikigamiInfos)
+        {
+            Observable.FromCoroutine<bool>(observer => _candleInfoAndShikigamiInfoUtility.ResetContentsAndRevert(observer, new CandleInfo[]{ candleInfo }, durations, 0, model, shikigamiInfos))
+                .Subscribe(x => observer.OnNext(true))
+                .AddTo(model);
+
+            yield return null;
+        }
+
+        /// <summary>
+        /// レベルを-1にした後レベルリバートを行う
+        /// </summary>
+        /// <param name="observer">バインド</param>
+        /// <param name="shikigamiInfos">式神の情報</param>
+        /// <param name="durations">終了時間</param>
+        /// <param name="model">式神スキル管理システムモデル</param>
+        /// <returns>コルーチン</returns>
+        private IEnumerator ResetAllTempoLevelsAndTempoLevelRevert(System.IObserver<bool> observer, ShikigamiInfo[] shikigamiInfos, float[] durations, ShikigamiSkillSystemModel model)
+        {
+            // 陰陽玉は対象外とする
+            var shikigamiInfosWhereOnmyoIgnore = shikigamiInfos.Where(q => !q.prop.type.Equals(ShikigamiType.OnmyoTurret))
+                .Select(q => q)
+                .ToArray();
+            ShikigamiInfo[] prevShikigamiInfos = new ShikigamiInfo[shikigamiInfosWhereOnmyoIgnore.Length];
+            for (var i = 0; i < prevShikigamiInfos.Length; i++)
+            {
+                prevShikigamiInfos[i].prop.type = shikigamiInfosWhereOnmyoIgnore[i].prop.type;
+                prevShikigamiInfos[i].state.tempoLevel = new FloatReactiveProperty(shikigamiInfosWhereOnmyoIgnore[i].state.tempoLevel.Value);
+            }
+            Observable.FromCoroutine<bool>(observer => _candleInfoAndShikigamiInfoUtility.ResetContentsAndRevert(observer, shikigamiInfosWhereOnmyoIgnore, durations, MIN, model, prevShikigamiInfos))
+                .Subscribe(x => observer.OnNext(true))
+                .AddTo(model);
+
+            yield return null;
         }
 
         /// <summary>
@@ -704,14 +748,13 @@ namespace Main.Utility
         /// <returns>成功／失敗</returns>
         public bool SetInputValueInModel(IReactiveProperty<float> inputValue, float multiDistanceCorrected, Vector2ReactiveProperty previousInput, float autoSpinSpeed, PentagramSystemModel model);
         /// <summary>
-        /// ジョッキーコマンドタイプを更新
+        /// モデルコンポーネントを監視して第1引数へセットされた値を更新
+        /// スティック座標をセット
         /// </summary>
-        /// <param name="inputValue">入力角度</param>
-        /// <param name="jockeyCommandType">ジョッキーコマンドタイプ</param>
-        /// <param name="autoSpinSpeed">自動回転の速度</param>
-        /// <param name="inputHistoriesLimit">コマンドの入力数</param>
+        /// <param name="inputBackSpinState">バックスピンの入力情報</param>
+        /// <param name="model">ペンダグラムシステムモデル</param>
         /// <returns>成功／失敗</returns>
-        public bool UpdateJockeyCommandType(IReactiveProperty<float> inputValue, IReactiveProperty<int> jockeyCommandType, float autoSpinSpeed, int inputHistoriesLimit);
+        public bool SetInputValueInModel(InputBackSpinState inputBackSpinState, PentagramSystemModel model);
         /// <summary>
         /// モデルコンポーネントを監視して第1引数へセットされた値を更新
         /// 入力された内容に基づいて昼／夜の状態を変更
@@ -748,8 +791,9 @@ namespace Main.Utility
         /// </summary>
         /// <param name="candleInfo">蠟燭の情報</param>
         /// <param name="shikigamiInfos">式神の情報</param>
+        /// <param name="durations">終了時間</param>
         /// <param name="model">式神スキル管理システムモデル</param>
         /// <returns>成功／失敗</returns>
-        public bool ResetCandleResourceAndBuffAllTempoLevelsByPentagram(CandleInfo candleInfo, ShikigamiInfo[] shikigamiInfos, ShikigamiSkillSystemModel model);
+        public bool ResetCandleResourceAndBuffAllTempoLevelsByPentagram(CandleInfo candleInfo, ShikigamiInfo[] shikigamiInfos, float[] durations, ShikigamiSkillSystemModel model);
     }
 }

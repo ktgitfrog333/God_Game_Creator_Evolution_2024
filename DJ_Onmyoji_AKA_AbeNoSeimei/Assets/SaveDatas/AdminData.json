@@ -225,7 +225,8 @@
 	"shikigamiSkillSystemModel": {
 		"candleInfo": {
 			"limitCandleResorceMax": 10,
-			"rapidRecoveryTimeSec": 40
+			"rapidRecoveryTimeSec": 40,
+			"rapidRecoveryRate": 1.5
 		}
 	}
 }
