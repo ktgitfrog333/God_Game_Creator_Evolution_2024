@@ -25,7 +25,22 @@ namespace Main.View
             throw new System.NotImplementedException();
         }
 
+        public bool MoveSpin(InputSlipLoopState inputSlipLoopState)
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public IEnumerator MoveSpin(System.IObserver<bool> observer, InputSlipLoopState inputSlipLoopState)
+        {
+            throw new System.NotImplementedException();
+        }
+
         public IEnumerator PlayDirectionBackSpin(System.IObserver<bool> observer, JockeyCommandType jockeyCommandType)
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public bool ResetFromAngle()
         {
             throw new System.NotImplementedException();
         }

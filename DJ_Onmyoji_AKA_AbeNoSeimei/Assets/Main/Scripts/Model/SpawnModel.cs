@@ -18,17 +18,20 @@ namespace Main.Model
         /// <summary>クローンオブジェクトを生成する時間間隔（秒）</summary>
         [Tooltip("クローンオブジェクトを生成する時間間隔（秒）")]
         [SerializeField] protected float instanceRateTimeSec = .5f;
+        /// <summary>スポーンのユーティリティ</summary>
+        protected SpawnUtility _spawnUtility = new SpawnUtility();
+        /// <summary>オブジェクトプール</summary>
+        protected ObjectsPoolModel _poolModel;
 
         protected virtual void Start()
         {
-            var utility = new SpawnUtility();
-            ObjectsPoolModel poolModel = utility.FindOrInstantiateForGetObjectsPoolModel(objectsPoolPrefab);
-            poolModel.IsCompleted.ObserveEveryValueChanged(x => x.Value)
+            _poolModel = _spawnUtility.FindOrInstantiateForGetObjectsPoolModel(objectsPoolPrefab);
+            _poolModel.IsCompleted.ObserveEveryValueChanged(x => x.Value)
                 .Subscribe(x =>
                 {
                     if (x)
                     {
-                        if (!InstanceCloneObjects(instanceRateTimeSec, poolModel))
+                        if (!InstanceCloneObjects(instanceRateTimeSec, _poolModel))
                             Debug.LogError("InstanceCloneObjects");
                     }
                 });

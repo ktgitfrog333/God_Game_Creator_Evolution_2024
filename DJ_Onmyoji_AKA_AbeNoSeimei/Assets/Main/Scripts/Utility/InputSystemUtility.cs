@@ -23,6 +23,8 @@ namespace Main.Utility
         private System.IDisposable _modelUpdObservable;
         /// <summary>蝋燭リソースと式神情報</summary>
         private CandleInfoAndShikigamiInfoUtility _candleInfoAndShikigamiInfoUtility = new CandleInfoAndShikigamiInfoUtility();
+        /// <summary>式神タイプ別パラメータ管理</summary>
+        private ShikigamiParameterUtility _shikigamiParameterUtility = new ShikigamiParameterUtility();
 
         public bool SetInputValueInModel(IReactiveProperty<float> inputValue, float multiDistanceCorrected, Vector2ReactiveProperty previousInput, float autoSpinSpeed, PentagramSystemModel model)
         {
@@ -218,27 +220,13 @@ namespace Main.Utility
                 //  ●0以下の場合は下記の処理を実行
                 //      ○後続の処理内でテンポスライダーのレベルを0にする
                 // 3.蝋燭の残リソースを更新
-                var utility = new ShikigamiParameterUtility();
                 model.UpdateAsObservable()
                     .Where(_ => candleInfo.rapidRecoveryState.Value == (int)RapidRecoveryType.None ||
                     candleInfo.rapidRecoveryState.Value == (int)RapidRecoveryType.Done)
                     .Subscribe(_ =>
                     {
                         float costSum = 0f;
-                        foreach (var item in shikigamiInfos)
-                        {
-                            var tempoLv = item.state.tempoLevel.Value;
-                            var shikigamiLv = item.prop.level;
-                            float actionRate = utility.GetMainSkillValue(item, MainSkillType.ActionRate);
-                            float rapidRate = (RapidRecoveryType)candleInfo.rapidRecoveryState.Value switch
-                            {
-                                RapidRecoveryType.Done => candleInfo.rapidRecoveryRate,
-                                _ => 1f,
-                            };
-                            var cost = tempoLv * shikigamiLv * actionRate;
-                            // 回復の時だけ速度が上がる
-                            costSum += cost * rapidRate;
-                        }
+                        costSum = GetCalcCostSum(costSum, shikigamiInfos, candleInfo);
                         if (!UpdateCandleResource(candleInfo, costSum * Time.deltaTime))
                             Debug.LogError("UpdateCandleResource");
                     });
@@ -250,6 +238,43 @@ namespace Main.Utility
                 Debug.LogError(e);
                 return false;
             }
+        }
+
+        /// <summary>
+        /// コストの合計を計算して取得
+        /// </summary>
+        /// <param name="costSum">計算前の合計コスト</param>
+        /// <param name="shikigamiInfos">式神の情報</param>
+        /// <param name="candleInfo">蠟燭の情報</param>
+        /// <param name="onmyoSlipLoopRate">スリップループ時、陰陽砲台のみ特殊レート値</param>
+        /// <returns>合計コスト</returns>
+        private float GetCalcCostSum(float costSum, ShikigamiInfo[] shikigamiInfos, CandleInfo candleInfo, float? onmyoSlipLoopRate=null)
+        {
+            foreach (var item in onmyoSlipLoopRate == null ? shikigamiInfos : shikigamiInfos.Where(q => q.prop.type.Equals(ShikigamiType.OnmyoTurret)))
+            {
+                var tempoLv = onmyoSlipLoopRate == null ? item.state.tempoLevel.Value : onmyoSlipLoopRate.Value;
+                var shikigamiLv = item.prop.level;
+                float actionRate = _shikigamiParameterUtility.GetMainSkillValue(item, MainSkillType.ActionRate);
+                float rapidRate = (RapidRecoveryType)candleInfo.rapidRecoveryState.Value switch
+                {
+                    RapidRecoveryType.Done => candleInfo.rapidRecoveryRate,
+                    _ => 1f,
+                };
+                // テンポレベルが0より下になった場合に回復を行うが、スリップループの最中は回復を行わない
+                // 何故なら、コスト合計が回復速度を下回った場合にスリップループが最強になってしまうため
+                if (tempoLv < 0f &&
+                    candleInfo.isStopRecovery.Value)
+                {
+                    
+                }
+                else
+                {
+                    var cost = tempoLv * shikigamiLv * actionRate;
+                    costSum += cost * rapidRate;
+                }
+            }
+
+            return costSum;
         }
 
         public bool UpdateCandleResourceByPentagram(JockeyCommandType jkeyCmdTypeCurrent, JockeyCommandType jkeyCmdTypePrevious, CandleInfo candleInfo, float downValue, ShikigamiSkillSystemModel model)
@@ -297,6 +322,24 @@ namespace Main.Utility
                     default:
                         throw new System.Exception("未定義のジョッキーコマンドタイプ");
                 }
+
+                return true;
+            }
+            catch (System.Exception e)
+            {
+                Debug.LogError(e);
+                return false;
+            }
+        }
+
+        public bool UpdateCandleResourceByPentagram(CandleInfo candleInfo, ShikigamiInfo[] shikigamiInfos, float onmyoSlipLoopRate)
+        {
+            try
+            {
+                float costSum = 0f;
+                costSum = GetCalcCostSum(costSum, shikigamiInfos, candleInfo, onmyoSlipLoopRate);
+                if (!UpdateCandleResource(candleInfo, costSum * Time.deltaTime))
+                    throw new System.Exception("UpdateCandleResource");
 
                 return true;
             }
@@ -680,6 +723,40 @@ namespace Main.Utility
             yield return null;
         }
 
+        public bool SetInputValueInModel(InputSlipLoopState inputSlipLoopState, PentagramSystemModel model)
+        {
+            try
+            {
+                Vector2ReactiveProperty navigatedReact = new Vector2ReactiveProperty();
+                navigatedReact.ObserveEveryValueChanged(x => x.Value)
+                    .Pairwise()
+                    .Subscribe(pair =>
+                    {
+                        // ボタン入力が離された場合に入力値を更新
+                        if (0f == pair.Current.sqrMagnitude)
+                        {
+                            // 直前フレームの入力から入力角度を取得、斜めは許容しない
+                            var navigated = pair.Previous;
+                            if (Mathf.Abs(navigated.x) > Mathf.Abs(navigated.y))
+                                inputSlipLoopState.crossVectorHistory.Add(new Vector2(Mathf.Sign(navigated.x), 0));
+                            else
+                                inputSlipLoopState.crossVectorHistory.Add(new Vector2(0, Mathf.Sign(navigated.y)));
+                        }
+                    });
+                Observable.FromCoroutine<InputSystemsOwner>(observer => UpdateAsObservableOfInputSystemsOwner(observer, model))
+                    .Where(x => x != null)
+                    .Subscribe(x => navigatedReact.Value = x.InputUI.Navigated)
+                    .AddTo(model);
+
+                return true;
+            }
+            catch (System.Exception e)
+            {
+                Debug.LogError(e);
+                return false;
+            }
+        }
+
         /// <summary>
         /// 昼／夜の状態変更の優先度
         /// </summary>
@@ -757,6 +834,14 @@ namespace Main.Utility
         public bool SetInputValueInModel(InputBackSpinState inputBackSpinState, PentagramSystemModel model);
         /// <summary>
         /// モデルコンポーネントを監視して第1引数へセットされた値を更新
+        /// 十字キー入力を検知
+        /// </summary>
+        /// <param name="inputSlipLoopState">スリップループの入力情報</param>
+        /// <param name="model">ペンダグラムシステムモデル</param>
+        /// <returns>成功／失敗</returns>
+        public bool SetInputValueInModel(InputSlipLoopState inputSlipLoopState, PentagramSystemModel model);
+        /// <summary>
+        /// モデルコンポーネントを監視して第1引数へセットされた値を更新
         /// 入力された内容に基づいて昼／夜の状態を変更
         /// </summary>
         /// <param name="onmyoState">陰陽（昼夜）の状態</param>
@@ -785,6 +870,16 @@ namespace Main.Utility
         /// <param name="model">式神スキル管理システムモデル</param>
         /// <returns>成功／失敗</returns>
         public bool UpdateCandleResourceByPentagram(JockeyCommandType jkeyCmdTypeCurrent, JockeyCommandType jkeyCmdTypePrevious, CandleInfo candleInfo, float downValue, ShikigamiSkillSystemModel model);
+        /// <summary>
+        /// リソースを更新
+        /// スリップループのみ使用
+        /// 陰陽砲台の消費はここのみで行う
+        /// </summary>
+        /// <param name="candleInfo">蠟燭の情報</param>
+        /// <param name="shikigamiInfos">式神の情報</param>
+        /// <param name="onmyoSlipLoopRate">スリップループ時、陰陽砲台のみ特殊レート値</param>
+        /// <returns>成功／失敗</returns>
+        public bool UpdateCandleResourceByPentagram(CandleInfo candleInfo, ShikigamiInfo[] shikigamiInfos, float onmyoSlipLoopRate);
         /// <summary>
         /// リソースをリセットさせる
         /// また、一時的にテンポスライダーへ自動回復効果を付与

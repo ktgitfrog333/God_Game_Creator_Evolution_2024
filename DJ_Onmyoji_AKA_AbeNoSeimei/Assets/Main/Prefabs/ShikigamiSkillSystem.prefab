@@ -47,9 +47,11 @@ MonoBehaviour:
   candleInfo:
     limitCandleResorceMax: 10
     rapidRecoveryTimeSec: 0
+    rapidRecoveryRate: 0
   updateCorrected:
   - 1
   - 1
   durations:
   - 1.5
   - 3
+  onmyoSlipLoopRate: 15

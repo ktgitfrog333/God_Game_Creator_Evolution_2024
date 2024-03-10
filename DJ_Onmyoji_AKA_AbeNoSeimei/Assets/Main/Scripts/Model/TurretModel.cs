@@ -33,6 +33,12 @@ namespace Main.Model
         private JockeyCommandType _jockeyCommandType = JockeyCommandType.None;
         /// <summary>クローンオブジェクトを生成する時間間隔（秒）のバフ補正値</summary>
         [SerializeField] private float instanceRateTimeSecCorrection = 2f;
+        /// <summary>通常攻撃のループが有効か</summary>
+        protected bool _isUnLoopNormalActionRate;
+        /// <summary>弾の角度を動的に管理</summary>
+        protected BulletCompass _bulletCompass;
+        /// <summary>共通のユーティリティ</summary>
+        protected MainCommonUtility _mainCommonUtility = new MainCommonUtility();
 
         protected virtual void Awake()
         {
@@ -44,6 +50,7 @@ namespace Main.Model
             var model = GameObject.Find(ConstGameObjectNames.GAMEOBJECT_NAME_PENTAGRAMTURNTABLE).GetComponent<PentagramTurnTableModel>();
             _shikigamiInfo = _shikigamiUtility.GetShikigamiInfo(model.PentagramTurnTableInfo, InstanceID);
             _shikigamiInfo.state.tempoLevel = new FloatReactiveProperty();
+            _bulletCompass.bulletCompassType = BulletCompassType.Default;
             base.Start();
         }
 
@@ -71,13 +78,13 @@ namespace Main.Model
             {
                 var config = InitializeOnmyoBulletConfig();
                 float elapsedTime = 0f;
-                var spawnUtility = new SpawnUtility();
                 // 一定間隔で弾を生成するための実装
                 this.UpdateAsObservable()
+                    .Where(_ => !_isUnLoopNormalActionRate)
                     .Subscribe(_ =>
                     {
                         config = ReLoadOnmyoBulletConfig(config);
-                        if (!spawnUtility.ManageBulletSpawn(_jockeyCommandType,
+                        if (!_spawnUtility.ManageBulletSpawn(_jockeyCommandType,
                             instanceRateTimeSecCorrection,
                             objectsPoolModel,
                             config,
@@ -132,5 +139,33 @@ namespace Main.Model
         /// <param name="jockeyCommandType">ジョッキーコマンドタイプ</param>
         /// <returns>成功／失敗</returns>
         public bool SetJockeyCommandType(JockeyCommandType jockeyCommandType);
+    }
+
+    /// <summary>
+    /// 弾の角度を動的に管理
+    /// </summary>
+    public struct BulletCompass
+    {
+        /// <summary>移動方向（デフォルト）</summary>
+        public Vector2 moveDirectionDefault;
+        /// <summary>移動方向（中心から外側）</summary>
+        public Vector2 moveDirectionCenterBetweenOutSide;
+        /// <summary>移動方向（ダンスの前方）</summary>
+        public Vector2 moveDirectionDanceForward;
+        /// <summary>弾の角度タイプ</summary>
+        public BulletCompassType bulletCompassType;
+    }
+
+    /// <summary>
+    /// 弾の角度タイプ
+    /// </summary>
+    public enum BulletCompassType
+    {
+        /// <summary>デフォルト</summary>
+        Default,
+        /// <summary>中心から外側</summary>
+        CenterBetweenOutSide,
+        /// <summary>ダンスの前方</summary>
+        DanceForward,
     }
 }

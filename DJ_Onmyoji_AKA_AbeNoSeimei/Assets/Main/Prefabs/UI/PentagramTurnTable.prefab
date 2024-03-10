@@ -102,6 +102,7 @@ MonoBehaviour:
   backSpinCount: 5
   durations:
   - 1.5
+  slipLoopAngle: 30
 --- !u!114 &8641881819551968395
 MonoBehaviour:
   m_ObjectHideFlags: 0

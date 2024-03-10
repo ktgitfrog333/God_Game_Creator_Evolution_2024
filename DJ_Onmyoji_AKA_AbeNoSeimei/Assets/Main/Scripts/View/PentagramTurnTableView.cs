@@ -5,6 +5,7 @@ using Main.Audio;
 using UniRx;
 using UniRx.Triggers;
 using Main.Common;
+using DG.Tweening;
 
 namespace Main.View
 {
@@ -20,6 +21,10 @@ namespace Main.View
         [SerializeField] private int backSpinCount = 5;
         /// <summary>演出の再生時間</summary>
         [SerializeField] private float[] durations = { 1.5f };
+        /// <summary>スリップループ回転角度</summary>
+        [SerializeField] private float slipLoopAngle = 30f;
+        /// <summary>スリップループ用の変更前角度</summary>
+        private Vector3? _fromAngle;
 
         public bool MoveSpin(BgmConfDetails bgmConfDetails)
         {
@@ -140,6 +145,40 @@ namespace Main.View
 
             yield return null;
         }
+
+        public IEnumerator MoveSpin(System.IObserver<bool> observer, InputSlipLoopState inputSlipLoopState)
+        {
+            var angle = BeatLengthApp.GetTotalReverse(inputSlipLoopState, slipLoopAngle);
+            var beat = AudioOwner.GetBeatBGM();
+            if (_fromAngle == null)
+                _fromAngle = Transform.localEulerAngles;
+            Sequence sequence = DOTween.Sequence();
+            sequence
+                .Append(Transform.DOLocalRotate(_fromAngle.Value + new Vector3(0f, 0f, angle), beat * .3f)
+                    .SetEase(Ease.OutBack)
+                    .From(_fromAngle.Value))
+                .AppendCallback(() => observer.OnNext(true))
+                .Append(Transform.DOLocalRotate(_fromAngle.Value, beat * .7f)
+                    .SetEase(Ease.Linear));
+            AudioOwner.PlayBack(inputSlipLoopState);
+
+            yield return null;
+        }
+
+        public bool ResetFromAngle()
+        {
+            try
+            {
+                _fromAngle = null;
+
+                return true;
+            }
+            catch (System.Exception e)
+            {
+                Debug.LogError(e);
+                return false;
+            }
+        }
     }
 
     /// <summary>
@@ -156,6 +195,14 @@ namespace Main.View
         /// <returns>成功／失敗</returns>
         public bool MoveSpin(BgmConfDetails bgmConfDetails);
         /// <summary>
+        /// UIオブジェクトを回転させる
+        /// 引数を元に角度を変更する
+        /// BGMの拍を戻す処理を呼び出す
+        /// </summary>
+        /// <param name="inputSlipLoopState">スリップループの入力情報</param>
+        /// <returns>成功／失敗</returns>
+        public IEnumerator MoveSpin(System.IObserver<bool> observer, InputSlipLoopState inputSlipLoopState);
+        /// <summary>
         /// ターゲット位置を元に調整
         /// </summary>
         /// <param name="transform">ターゲット情報</param>
@@ -168,6 +215,11 @@ namespace Main.View
         /// <param name="limitTimeSecMax">制限時間（秒）</param>
         /// <returns>成功／失敗</returns>
         public bool SetSpriteIndex(float timeSec, float limitTimeSecMax);
+        /// <summary>
+        /// スリップループ用の変更前角度をリセット
+        /// </summary>
+        /// <returns>成功／失敗</returns>
+        public bool ResetFromAngle();
         /// <summary>
         /// バックスピン演出
         /// </summary>

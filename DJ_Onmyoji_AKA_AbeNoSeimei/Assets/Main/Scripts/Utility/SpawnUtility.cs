@@ -54,6 +54,22 @@ namespace Main.Utility
             }
         }
 
+        public bool ManageBulletSpawn(ObjectsPoolModel objectsPoolModel, OnmyoBulletConfig config, System.Func<ObjectsPoolModel, OnmyoBulletConfig, bool> actionOfBullet)
+        {
+            try
+            {
+                if (!actionOfBullet(objectsPoolModel, config))
+                    throw new System.Exception("ActionOfBullet");
+                
+                return true;
+            }
+            catch (System.Exception e)
+            {
+                Debug.LogError(e);
+                return false;
+            }
+        }
+
         public bool ManageEnemiesSpawn(EnemiesSpawnTable[] enemiesSpawnTables, ref float elapsedTime, Transform target, ObjectsPoolModel objectsPoolModel, float radiusMin, float radiusMax, float onmyoState)
         {
             try
@@ -191,6 +207,14 @@ namespace Main.Utility
         /// <param name="actionOfBullet">魔力弾／円舞範囲／デバフ魔力弾の制御</param>
         /// <returns>成功／失敗</returns>
         public bool ManageBulletSpawn(JockeyCommandType jockeyCommandType, float instanceRateTimeSecCorrection, ObjectsPoolModel objectsPoolModel, OnmyoBulletConfig config, ref float elapsedTime, System.Func<ObjectsPoolModel, OnmyoBulletConfig, bool> actionOfBullet);
+        /// <summary>
+        /// 魔力弾系のスポーン制御
+        /// </summary>
+        /// <param name="objectsPoolModel">オブジェクトプール</param>
+        /// <param name="config">魔力弾の設定</param>
+        /// <param name="actionOfBullet">魔力弾／円舞範囲／デバフ魔力弾の制御</param>
+        /// <returns>成功／失敗</returns>
+        public bool ManageBulletSpawn(ObjectsPoolModel objectsPoolModel, OnmyoBulletConfig config, System.Func<ObjectsPoolModel, OnmyoBulletConfig, bool> actionOfBullet);
         /// <summary>
         /// 敵系のスポーン制御
         /// </summary>

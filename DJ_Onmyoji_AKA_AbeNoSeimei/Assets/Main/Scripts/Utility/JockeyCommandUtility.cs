@@ -4,6 +4,7 @@ using System.Linq;
 using Main.Common;
 using Main.Model;
 using UniRx;
+using UniRx.Triggers;
 using UnityEngine;
 
 namespace Main.Utility
@@ -13,7 +14,7 @@ namespace Main.Utility
     /// </summary>
     public class JockeyCommandUtility : IJockeyCommandUtility
     {
-        public bool UpdateJockeyCommandType(IReactiveProperty<float> inputValue, InputBackSpinState inputBackSpinState, IReactiveProperty<int> jockeyCommandType, float autoSpinSpeed, int inputHistoriesLimit)
+        public bool UpdateJockeyCommandType(IReactiveProperty<float> inputValue, InputBackSpinState inputBackSpinState, InputSlipLoopState inputSlipLoopState, IReactiveProperty<int> jockeyCommandType, float autoSpinSpeed, int inputHistoriesLimit)
         {
             try
             {
@@ -21,6 +22,8 @@ namespace Main.Utility
                     throw new System.Exception("SetScratch");
                 if (!SetBackSpin(inputBackSpinState, jockeyCommandType))
                     throw new System.Exception("SetBackSpin");
+                if (!SetSlipLoop(inputSlipLoopState, jockeyCommandType))
+                    throw new System.Exception("SetSlipLoop");
 
                 return true;
             }
@@ -159,6 +162,88 @@ namespace Main.Utility
             }
         }
 
+        /// <summary>
+        /// スリップループをセット
+        /// </summary>
+        /// <param name="inputSlipLoopState">スリップループの入力情報</param>
+        /// <param name="jockeyCommandType">ジョッキーコマンドタイプ</param>
+        /// <returns>成功／失敗</returns>
+        private bool SetSlipLoop(InputSlipLoopState inputSlipLoopState, IReactiveProperty<int> jockeyCommandType)
+        {
+            try
+            {
+                inputSlipLoopState.crossVectorHistory.ObserveAdd()
+                    .Select(x => x.Value)
+                    .Subscribe(x =>
+                    {
+                        // スリップループ初回
+                        if (jockeyCommandType.Value != (int)JockeyCommandType.SlipLoop &&
+                            0f < Mathf.Abs(x.sqrMagnitude))
+                        {
+                            jockeyCommandType.Value = (int)JockeyCommandType.SlipLoop;
+                            inputSlipLoopState.beatLength.Value = (int)GetBeatLength(x);
+                        }
+                        // スリップループ切り替え
+                        else if (jockeyCommandType.Value == (int)JockeyCommandType.SlipLoop)
+                        {
+                            // 最後に入力された方向を軸にして要素を1つずつ戻して比較、異なった時点までの件数を算出
+                            var lastInput = inputSlipLoopState.crossVectorHistory.Last();
+                            int differentCount = 0;
+                            for (int i = inputSlipLoopState.crossVectorHistory.Count - 2; i >= 0; i--)
+                                if (inputSlipLoopState.crossVectorHistory[i] != lastInput)
+                                {
+                                    differentCount = inputSlipLoopState.crossVectorHistory.Count - 1 - i;
+                                    break;
+                                }
+                            // 偶数なら再入力、奇数なら切り替えとする
+                            if (differentCount % 2 == 0)
+                            {
+                                inputSlipLoopState.beatLength.Value = (int)BeatLength.None;
+                                jockeyCommandType.Value = (int)JockeyCommandType.None;
+                                inputSlipLoopState.crossVectorHistory.Clear();
+                            }
+                            else
+                            {
+                                inputSlipLoopState.beatLength.Value = (int)GetBeatLength(x);
+                                // 最後の要素以外は削除
+                                for (int i = 0; i < inputSlipLoopState.crossVectorHistory.Count - 1; i++)
+                                    inputSlipLoopState.crossVectorHistory.RemoveAt(0);
+                            }
+                        }
+                    });
+
+                return true;
+            }
+            catch (System.Exception e)
+            {
+                Debug.LogError(e);
+                return false;
+            }
+        }
+
+        /// <summary>
+        /// 十字キー入力から拍の長さを取得
+        /// </summary>
+        /// <param name="crossVector">十字キー入力</param>
+        /// <returns>拍の長さ</returns>
+        private BeatLength GetBeatLength(Vector2 crossVector)
+        {
+            if (crossVector.Equals(Vector2.up) &&
+                !crossVector.Equals(Vector2.right) &&
+                !crossVector.Equals(Vector2.down) &&
+                !crossVector.Equals(Vector2.left))
+                return BeatLength.TwoBeats;
+            else if (crossVector.Equals(Vector2.right) &&
+                !crossVector.Equals(Vector2.down) &&
+                !crossVector.Equals(Vector2.left))
+                return BeatLength.OneBeat;
+            else if (crossVector.Equals(Vector2.down) &&
+                !crossVector.Equals(Vector2.left))
+                return BeatLength.HalfBeat;
+            else
+                return BeatLength.QuarterBeat;
+        }
+
         public bool SetNone(IReactiveProperty<int> jockeyCommandType)
         {
             try
@@ -186,11 +271,12 @@ namespace Main.Utility
         /// </summary>
         /// <param name="inputValue">入力角度</param>
         /// <param name="inputBackSpinState">バックスピンの入力情報</param>
+        /// <param name="inputSlipLoopState">スリップループの入力情報</param>
         /// <param name="jockeyCommandType">ジョッキーコマンドタイプ</param>
         /// <param name="autoSpinSpeed">自動回転の速度</param>
         /// <param name="inputHistoriesLimit">コマンドの入力数</param>
         /// <returns>成功／失敗</returns>
-        public bool UpdateJockeyCommandType(IReactiveProperty<float> inputValue, InputBackSpinState inputBackSpinState, IReactiveProperty<int> jockeyCommandType, float autoSpinSpeed, int inputHistoriesLimit);
+        public bool UpdateJockeyCommandType(IReactiveProperty<float> inputValue, InputBackSpinState inputBackSpinState, InputSlipLoopState inputSlipLoopState, IReactiveProperty<int> jockeyCommandType, float autoSpinSpeed, int inputHistoriesLimit);
         /// <summary>
         /// ジョッキーコマンドへNoneをセット
         /// </summary>

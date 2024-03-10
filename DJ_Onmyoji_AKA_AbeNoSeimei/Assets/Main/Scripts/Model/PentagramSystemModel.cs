@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using UniRx;
 using Main.Utility;
+using Main.Common;
+using UniRx.Triggers;
 
 namespace Main.Model
 {
@@ -21,7 +23,6 @@ namespace Main.Model
         /// <summary>距離の補正乗算値</summary>
         private float _multiDistanceCorrected = 7.5f;
         /// <summary>ジョッキーコマンドタイプ</summary>
-        /// TODO:コマンドを可変させるロジックを実装
         public IReactiveProperty<int> JockeyCommandType { get; private set; } = new IntReactiveProperty((int)Common.JockeyCommandType.None);
         /// <summary>コマンドの最大入力数</summary>
         [SerializeField] private int inputHistoriesLimit = 100;
@@ -35,6 +36,10 @@ namespace Main.Model
             recordInputTimeSecLimit = .5f,
             targetAngle = 720f,
         };
+        /// <summary>スリップループの入力情報</summary>
+        [SerializeField] private InputSlipLoopState inputSlipLoopState;
+        /// <summary>スリップループの入力情報</summary>
+        public InputSlipLoopState InputSlipLoopState => inputSlipLoopState;
 
         private void Start()
         {
@@ -49,13 +54,69 @@ namespace Main.Model
             inputBackSpinState.recordInputTimeSec = new FloatReactiveProperty();
             if (!_inputSystemUtility.SetInputValueInModel(inputBackSpinState, this))
                 Debug.LogError("SetInputValueInModel");
-            if (!_jockeyCommandUtility.UpdateJockeyCommandType(InputValue, inputBackSpinState, JockeyCommandType, autoSpinSpeed, inputHistoriesLimit))
+            inputSlipLoopState.beatLength = new IntReactiveProperty();
+            inputSlipLoopState.crossVectorHistory = new ReactiveCollection<Vector2>();
+            inputSlipLoopState.IsLooping = new BoolReactiveProperty();
+            inputSlipLoopState.ActionTrigger = new BoolReactiveProperty();
+            if (!_inputSystemUtility.SetInputValueInModel(inputSlipLoopState, this))
+                Debug.LogError("SetInputValueInModel");
+            FloatReactiveProperty elapsedTime = new FloatReactiveProperty();
+            var audioOwner = MainGameManager.Instance.AudioOwner;
+            this.UpdateAsObservable()
+                .Subscribe(_ =>
+                {
+                    if (inputSlipLoopState.IsLooping.Value)
+                    {
+                        var limit = BeatLengthApp.GetTotalReverse(inputSlipLoopState, audioOwner.GetBeatBGM());
+                        if (limit <= elapsedTime.Value)
+                        {
+                            inputSlipLoopState.ActionTrigger.Value = true;
+                            elapsedTime.Value = 0f;
+                        }
+                        else
+                        {
+                            inputSlipLoopState.ActionTrigger.Value = false;
+                            elapsedTime.Value += Time.deltaTime;
+                        }
+                    }
+                    else
+                    {
+                        inputSlipLoopState.ActionTrigger.Value = false;
+                        elapsedTime.Value = 0f;
+                    }
+                });
+            if (!_jockeyCommandUtility.UpdateJockeyCommandType(InputValue, inputBackSpinState, inputSlipLoopState, JockeyCommandType, autoSpinSpeed, inputHistoriesLimit))
                 Debug.LogError("UpdateJockeyCommandType");
         }
 
         public bool ResetJockeyCommandType()
         {
             return _jockeyCommandUtility.SetNone(JockeyCommandType);
+        }
+
+        public bool SetIsLooping(JockeyCommandType jockeyCommandType)
+        {
+            try
+            {
+                switch (jockeyCommandType)
+                {
+                    case Common.JockeyCommandType.SlipLoop:
+                        inputSlipLoopState.IsLooping.Value = true;
+
+                        break;
+                    default:
+                        inputSlipLoopState.IsLooping.Value = false;
+
+                        break;
+                }
+
+                return true;
+            }
+            catch (System.Exception e)
+            {
+                Debug.LogError(e);
+                return false;
+            }
         }
     }
 
@@ -72,6 +133,12 @@ namespace Main.Model
         /// </summary>
         /// <returns>成功／失敗</returns>
         public bool ResetJockeyCommandType();
+        /// <summary>
+        /// ループ中をセット
+        /// </summary>
+        /// <param name="jockeyCommandType">ジョッキーコマンドタイプ</param>
+        /// <returns>成功／失敗</returns>
+        public bool SetIsLooping(JockeyCommandType jockeyCommandType);
     }
 
     /// <summary>

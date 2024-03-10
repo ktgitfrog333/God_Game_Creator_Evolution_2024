@@ -108,6 +108,57 @@ namespace Main.Utility
                 return false;
             }
         }
+
+        public bool InitializeBulletCompass(ref BulletCompass bulletCompass, Vector2 outSideVector, Vector2 danceVector)
+        {
+            try
+            {
+                bulletCompass.moveDirectionCenterBetweenOutSide = outSideVector;
+                bulletCompass.moveDirectionDanceForward = danceVector;
+
+                return true;
+            }
+            catch (System.Exception e)
+            {
+                Debug.LogError(e);
+                return false;
+            }
+        }
+
+        public bool SetBulletCompassType(ref BulletCompass bulletCompass, BulletCompassType bulletCompassType)
+        {
+            try
+            {
+                bulletCompass.bulletCompassType = bulletCompassType;
+
+                return true;
+            }
+            catch (System.Exception e)
+            {
+                Debug.LogError(e);
+                return false;
+            }
+        }
+
+        public OnmyoBulletConfig UpdateMoveDirection(BulletCompass bulletCompass, OnmyoBulletConfig config)
+        {
+            switch (bulletCompass.bulletCompassType)
+            {
+                case BulletCompassType.Default:
+                    break;
+                case BulletCompassType.CenterBetweenOutSide:
+                    // TODO:スクラッチの際の角度補正を実装
+                    break;
+                case BulletCompassType.DanceForward:
+                    config.moveDirection = bulletCompass.moveDirectionDanceForward;
+
+                    break;
+                default:
+                    break;
+            }
+
+            return config;
+        }
     }
 
     /// <summary>
@@ -124,6 +175,21 @@ namespace Main.Utility
         /// <param name="component">コンポーネント</param>
         /// <returns>成功／失敗</returns>
         public bool CallInitialize<T>(T component, RectTransform rectTransform, OnmyoBulletConfig onmyoBulletConfig) where T : MonoBehaviour;
+        /// <summary>
+        /// 弾の角度を動的にセット初期化
+        /// </summary>
+        /// <param name="bulletCompass">弾の角度を動的に管理</param>
+        /// <param name="outSideVector">中央から外側の向き</param>
+        /// <param name="danceVector">ダンスの向き</param>
+        /// <returns>成功／失敗</returns>
+        public bool InitializeBulletCompass(ref BulletCompass bulletCompass, Vector2 outSideVector, Vector2 danceVector);
+        /// <summary>
+        /// 弾の角度タイプをセット
+        /// </summary>
+        /// <param name="bulletCompass">弾の角度を動的に管理</param>
+        /// <param name="bulletCompassType">弾の角度タイプ</param>
+        /// <returns>成功／失敗</returns>
+        public bool SetBulletCompassType(ref BulletCompass bulletCompass, BulletCompassType bulletCompassType);
 
         /// <summary>
         /// 弾を移動させる
@@ -152,5 +218,12 @@ namespace Main.Utility
         /// <param name="attackColliderOfOnmyoBullet">攻撃を与える判定のトリガー</param>
         /// <returns>成功／失敗</returns>
         public bool UpdateScale(IReactiveProperty<float> elapsedTime, float disableTimeSec, float rangeMin, float rangeMax, AttackColliderOfOnmyoBullet attackColliderOfOnmyoBullet);
+        /// <summary>
+        /// 魔力弾の設定を更新
+        /// </summary>
+        /// <param name="bulletCompass">弾の角度を動的に管理</param>
+        /// <param name="config">魔力弾の設定</param>
+        /// <returns>更新後の魔力弾の設定</returns>
+        public OnmyoBulletConfig UpdateMoveDirection(BulletCompass bulletCompass, OnmyoBulletConfig config);
     }
 }
