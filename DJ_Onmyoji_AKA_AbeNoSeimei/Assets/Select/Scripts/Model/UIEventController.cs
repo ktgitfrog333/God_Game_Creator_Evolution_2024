@@ -5,6 +5,7 @@ using UniRx;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
+using Select.Utility;
 
 namespace Select.Model
 {
@@ -43,6 +44,8 @@ namespace Select.Model
         public Button Button => _button == null ? GetComponent<Button>() : _button;
         /// <summary>イベントトリガー</summary>
         protected EventTrigger _eventTrigger;
+        /// <summary>uGUIオブジェクト制御ユーティリティ</summary>
+        protected SelectUGUIsModelUtility _selectUGUIsModelUtility = new SelectUGUIsModelUtility();
 
         private void Awake()
         {
