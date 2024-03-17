@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using Main.Common;
 using UniRx;
 using UnityEngine;
 using Universal.Common;
@@ -12,12 +13,12 @@ namespace Main.Model
     /// クリア条件を満たす要素を管理するシステム
     /// モデル
     /// </summary>
-    public class ClearCountdownTimerSystemModel : MonoBehaviour
+    public class ClearCountdownTimerSystemModel : MonoBehaviour, IClearCountdownTimerSystemModel
     {
         /// <summary>タイマー</summary>
         public IReactiveProperty<float> TimeSec { get; private set; } = new FloatReactiveProperty();
         /// <summary>時間切れか</summary>
-        public IReactiveProperty<bool> IsTimeOut { get; private set; } = new BoolReactiveProperty();
+        public IReactiveProperty<int> IsTimeOut { get; private set; } = new IntReactiveProperty();
         /// <summary>制限時間（秒）</summary>
         private float _limitTimeSecMax;
         /// <summary>制限時間（秒）</summary>
@@ -48,8 +49,47 @@ namespace Main.Model
             if (TimeSec.Value <= 0)
             {
                 TimeSec.Value = 0;
-                IsTimeOut.Value = true;
+                IsTimeOut.Value = (int)IsTimeOutState.TimeOut;
             }
         }
+
+        public bool SetIsActiveAndEnabled(int isTimeOutState)
+        {
+            try
+            {
+                switch ((IsTimeOutState)isTimeOutState)
+                {
+                    case IsTimeOutState.TimeOut:
+                        enabled = true;
+
+                        break;
+                    default:
+                        // それ以外
+                        break;
+                }
+
+                return true;
+            }
+            catch (System.Exception e)
+            {
+                Debug.LogError(e);
+                return false;
+            }
+        }
+    }
+
+    /// <summary>
+    /// クリア条件を満たす要素を管理するシステム
+    /// モデル
+    /// インターフェース
+    /// </summary>
+    public interface IClearCountdownTimerSystemModel
+    {
+        /// <summary>
+        /// アクティブ状態をセット
+        /// </summary>
+        /// <param name="isTimeOutState">タイムアウト状態</param>
+        /// <returns>成功／失敗</returns>
+        public bool SetIsActiveAndEnabled(int isTimeOutState);
     }
 }

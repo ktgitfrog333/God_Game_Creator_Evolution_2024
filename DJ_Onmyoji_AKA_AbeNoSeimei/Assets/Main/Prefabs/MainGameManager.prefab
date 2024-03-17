@@ -643,6 +643,7 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 6b43e7b55348a744c92c58da7a997f91, type: 3}
   - {fileID: 8300000, guid: 3af2a2d216c57924e91e98b724d35892, type: 3}
   - {fileID: 8300000, guid: 44350549104bbae4aa58ac819454bb7f, type: 3}
+  - {fileID: 8300000, guid: 3ecb043c36f0eb9469f07a07238dab5a, type: 3}
   reverseTLTimeSec: 21
   reverseTLTimeSecAddRandomRangeMax: 2
   bGMInfos:
@@ -674,6 +675,8 @@ MonoBehaviour:
     bpm: 145
   - clipToPlayBGM: 13
     bpm: 143
+  - clipToPlayBGM: 14
+    bpm: 144
 --- !u!1 &1369696455348085395
 GameObject:
   m_ObjectHideFlags: 0

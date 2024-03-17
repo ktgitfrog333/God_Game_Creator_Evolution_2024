@@ -702,14 +702,15 @@ namespace Main.Presenter
                         clearCountdownTimerSystemModel.IsTimeOut.ObserveEveryValueChanged(x => x.Value)
                             .Subscribe(x =>
                             {
-                                if (x)
-                                {
-                                    if (!clearCountdownTimerSystemModel.isActiveAndEnabled)
-                                        clearCountdownTimerSystemModel.enabled = false;
-                                    if (!circleView.Set(0f, clearCountdownTimerSystemModel.LimitTimeSecMax))
-                                        Debug.LogError("SetAngle");
-                                    isGoalReached.Value = true;
-                                }
+                                // TODO:α版2.0の統合と共有で実装
+                                // if (x)
+                                // {
+                                //     if (!clearCountdownTimerSystemModel.isActiveAndEnabled)
+                                //         clearCountdownTimerSystemModel.enabled = false;
+                                //     if (!circleView.Set(0f, clearCountdownTimerSystemModel.LimitTimeSecMax))
+                                //         Debug.LogError("SetAngle");
+                                //     isGoalReached.Value = true;
+                                // }
                             });
                         this.UpdateAsObservable()
                             .Select(_ => levelOwner.InstancedLevel.GetComponentInChildren<EnemiesSpawnModel>())

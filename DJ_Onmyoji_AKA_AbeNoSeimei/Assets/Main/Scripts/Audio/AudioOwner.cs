@@ -221,5 +221,7 @@ namespace Main.Audio
         bgm_stage_vol13,
         /// <summary>ステージ7（夜）のBGM</summary>
         bgm_stage_vol14,
+        /// <summary>ボスのBGM</summary>
+        bgm_stage_vol15,
     }
 }
