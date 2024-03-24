@@ -25,8 +25,9 @@ namespace Main.View
 
         private void OnEnable()
         {
-            if (!bodySpriteView.PlayScalingLoopAnimation(durations, scales))
-                Debug.LogError("PlayScalingLoopAnimation");
+            if (bodySpriteView != null)
+                if (!bodySpriteView.PlayScalingLoopAnimation(durations, scales))
+                    Debug.LogError("PlayScalingLoopAnimation");
         }
     }
 }

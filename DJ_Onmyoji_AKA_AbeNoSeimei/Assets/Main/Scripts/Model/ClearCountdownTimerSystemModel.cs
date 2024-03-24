@@ -6,6 +6,7 @@ using UniRx;
 using UnityEngine;
 using Universal.Common;
 using Universal.Template;
+using Universal.Utility;
 
 namespace Main.Model
 {
@@ -23,6 +24,8 @@ namespace Main.Model
         private float _limitTimeSecMax;
         /// <summary>制限時間（秒）</summary>
         public float LimitTimeSecMax => _limitTimeSecMax;
+        /// <summary>報酬画面を表示するまでの時間（秒）</summary>
+        [SerializeField] private float visibledRewardTimeSec = 30f;
 
         private void Awake()
         {
@@ -76,6 +79,25 @@ namespace Main.Model
                 return false;
             }
         }
+
+        public IEnumerator SetIsTimeOut(System.IObserver<bool> observer, int bossDirectionPhase)
+        {
+            switch ((BossDirectionPhase)bossDirectionPhase)
+            {
+                case BossDirectionPhase.Exit:
+                    Observable.FromCoroutine<bool>(observer => GeneralUtility.ActionsAfterDelay(visibledRewardTimeSec, () => IsTimeOut.Value = (int)IsTimeOutState.TimeOut))
+                        .Subscribe(_ => observer.OnNext(true))
+                        .AddTo(gameObject);
+
+                    break;
+                default:
+                    observer.OnNext(false);
+
+                    break;
+            }
+
+            yield return null;
+        }
     }
 
     /// <summary>
@@ -91,5 +113,12 @@ namespace Main.Model
         /// <param name="isTimeOutState">タイムアウト状態</param>
         /// <returns>成功／失敗</returns>
         public bool SetIsActiveAndEnabled(int isTimeOutState);
+        /// <summary>
+        /// タイムアウト状態をセット
+        /// </summary>
+        /// <param name="observer">バインド</param>
+        /// <param name="bossDirectionPhase">ボス演出フェーズ</param>
+        /// <returns>コルーチン</returns>
+        public IEnumerator SetIsTimeOut(System.IObserver<bool> observer, int bossDirectionPhase);
     }
 }

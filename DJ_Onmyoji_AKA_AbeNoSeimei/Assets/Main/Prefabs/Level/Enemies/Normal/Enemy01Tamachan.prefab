@@ -83,6 +83,7 @@ MonoBehaviour:
   tags:
   - Bullet
   invincibleTimeSec: 0
+  cirCollider2D: {fileID: 767403995214080615}
 --- !u!1 &3244115084979143052
 GameObject:
   m_ObjectHideFlags: 0
@@ -155,7 +156,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -1649474143
-  m_SortingLayer: 2
+  m_SortingLayer: 4
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: a375dd71ac28dde41a28481db64d698f, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -261,9 +262,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6ecbd0506ca00e14292e3e1b6966e500, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  tags:
-  - Enemy
+  tags: []
   invincibleTimeSec: 1
+  cirCollider2D: {fileID: 6320770800134237935}
+  cirCollider2DAttack: {fileID: 6320770800134237935}
 --- !u!1 &7776762512387094233
 GameObject:
   m_ObjectHideFlags: 0
@@ -278,7 +280,7 @@ GameObject:
   - component: {fileID: 3678280287336115840}
   - component: {fileID: 2198367664600045414}
   m_Layer: 0
-  m_Name: EnemyA
+  m_Name: Enemy01Tamachan
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

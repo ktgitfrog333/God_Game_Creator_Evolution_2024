@@ -19,6 +19,8 @@ namespace Main.Presenter
         [SerializeField] private SunMoonSystemModel sunMoonSystemModel;
         /// <summary>陰陽（昼夜）のアイコンビュー</summary>
         [SerializeField] private SunMoonStateIconView sunMoonStateIconView;
+        [SerializeField] private BossEnemyModel bossEnemyModel;
+        [SerializeField] private BossEnemyView bossEnemyView;
 
         private void Reset()
         {
@@ -26,12 +28,35 @@ namespace Main.Presenter
             clearCountdownTimerCircleView = GameObject.Find("SunMoonStateCircleGauge").GetComponent<ClearCountdownTimerCircleView>();
             sunMoonSystemModel = GameObject.Find("SunMoonSystem").GetComponent<SunMoonSystemModel>();
             sunMoonStateIconView = GameObject.Find("SunMoonStateIcon").GetComponent<SunMoonStateIconView>();
+            bossEnemyModel = GameObject.FindWithTag(ConstTagNames.TAG_NAME_BOSS_ENEMY).GetComponent<BossEnemyModel>();
+            bossEnemyView = GameObject.FindWithTag(ConstTagNames.TAG_NAME_BOSS_ENEMY).GetComponent<BossEnemyView>();
         }
 
         // Start is called before the first frame update
         void Start()
         {
             var isGoalReached = new BoolReactiveProperty();
+            bossEnemyModel.KingAoandonProp.bossDirectionPhase.ObserveEveryValueChanged(x => x.Value)
+                .Subscribe(x =>
+                {
+                    Observable.FromCoroutine<bool>(observer => clearCountdownTimerSystemModel.SetIsTimeOut(observer, x))
+                        .Subscribe(_ => {})
+                        .AddTo(gameObject);
+                    Observable.FromCoroutine<bool>(observer => bossEnemyView.MovePointEntrance(observer, x))
+                        .Where(x => x)
+                        .Subscribe(_ =>
+                        {
+                            if (!bossEnemyModel.SetClearCount(0))
+                                Debug.LogError("SetClearCount");
+                        })
+                        .AddTo(gameObject);
+                });
+            bossEnemyModel.KingAoandonProp.bossActionPhase.ObserveEveryValueChanged(x => x.Value)
+                .Subscribe(x =>
+                {
+                    if (!bossEnemyView.Movement(x))
+                        Debug.LogError("Movement");
+                });
             isGoalReached.ObserveEveryValueChanged(x => x.Value)
                 .Subscribe(x => Debug.Log($"isGoalReached:[{x}]"));
             clearCountdownTimerSystemModel.enabled = true;

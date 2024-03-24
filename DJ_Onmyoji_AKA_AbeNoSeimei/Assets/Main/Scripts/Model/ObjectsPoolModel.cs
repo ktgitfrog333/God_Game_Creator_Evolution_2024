@@ -139,6 +139,25 @@ namespace Main.Model
                 return inactiveComponents[0];
             }
         }
+
+        public bool KillEnemyModels(EnemiesID enemiesID)
+        {
+            try
+            {
+                foreach (var enemyModel in _enemyModels.Where(q => q.EnemiesID.Equals(enemiesID) &&
+                    q.isActiveAndEnabled)
+                    .Select(q => q))
+                    if (!enemyModel.Kill())
+                        throw new System.Exception("Kill");
+
+                return true;
+            }
+            catch (System.Exception e)
+            {
+                Debug.LogError(e);
+                return false;
+            }
+        }
     }
 
     public interface IObjectsPoolModel
@@ -174,5 +193,11 @@ namespace Main.Model
         /// </summary>
         /// <returns>魂の経験値</returns>
         public SoulMoneyView GetSoulMoneyView();
+        /// <summary>
+        /// アクティブな敵をキルする
+        /// </summary>
+        /// <param name="enemiesID">敵ID</param>
+        /// <returns>成功／失敗</returns>
+        public bool KillEnemyModels(EnemiesID enemiesID);
     }
 }

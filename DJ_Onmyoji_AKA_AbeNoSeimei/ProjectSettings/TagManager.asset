@@ -9,6 +9,7 @@ TagManager:
   - Bullet
   - ObjectsPool
   - Turret
+  - BossEnemy
   layers:
   - Default
   - TransparentFX

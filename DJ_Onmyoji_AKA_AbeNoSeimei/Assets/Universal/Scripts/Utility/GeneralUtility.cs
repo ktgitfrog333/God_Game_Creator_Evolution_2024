@@ -18,6 +18,8 @@ namespace Universal.Utility
         /// <returns>コルーチン</returns>
         public static IEnumerator ActionsAfterDelay(float delay, System.Action action)
         {
+            if (Time.timeScale == 0f)
+                Debug.LogError("timeScaleが0の場合はコルーチンが実行されません");
             yield return new WaitForSeconds(delay);
             action();
         }
