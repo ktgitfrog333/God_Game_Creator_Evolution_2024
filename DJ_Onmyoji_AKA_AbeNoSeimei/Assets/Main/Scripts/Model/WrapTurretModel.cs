@@ -19,8 +19,6 @@ namespace Main.Model
                 actionRate = _shikigamiUtility.GetMainSkillValue(_shikigamiInfo, MainSkillType.ActionRate),
                 attackPoint = (int)_shikigamiUtility.GetMainSkillValue(_shikigamiInfo, MainSkillType.AttackPoint),
                 bulletLifeTime = _shikigamiUtility.GetMainSkillValue(_shikigamiInfo, MainSkillType.BulletLifeTime),
-                // 陰陽玉と発射角度が異なるため再設定
-                moveDirection = _mainCommonUtility.AdminDataSingleton.AdminBean.wrapTurretModel.moveDirection,
             };
         }
 
@@ -28,7 +26,6 @@ namespace Main.Model
         {
             config.actionRate = _shikigamiUtility.GetMainSkillValueAddValueBuffMax(_shikigamiInfo, MainSkillType.ActionRate);
             config.attackPoint = (int)_shikigamiUtility.GetMainSkillValueAddValueBuffMax(_shikigamiInfo, MainSkillType.AttackPoint);
-            config.moveDirection = _mainCommonUtility.AdminDataSingleton.AdminBean.wrapTurretModel.moveDirection;
 
             return _turretUtility.UpdateMoveDirection(_bulletCompass, config);
         }
@@ -65,7 +62,7 @@ namespace Main.Model
         public bool InitializeBulletCompass(Vector2 fromPosition, Vector2 danceVector)
         {
             return _turretUtility.InitializeBulletCompass(ref _bulletCompass,
-                (fromPosition - new Vector2(RectTransform.position.x, RectTransform.position.y)).normalized,
+                (new Vector2(RectTransform.position.x, RectTransform.position.y) - fromPosition).normalized,
                 danceVector);
         }
 

@@ -20,7 +20,6 @@ namespace Main.Model
                 bulletLifeTime = _shikigamiUtility.GetMainSkillValue(_shikigamiInfo, MainSkillType.BulletLifeTime),
                 // 陰陽玉と発射角度が異なるため再設定
                 range = _shikigamiUtility.GetMainSkillValue(_shikigamiInfo, MainSkillType.Range),
-                moveDirection = _mainCommonUtility.AdminDataSingleton.AdminBean.graffitiTurretModel.moveDirection,
                 debuffEffectLifeTime = _shikigamiUtility.GetMainSkillValue(_shikigamiInfo, MainSkillType.DebuffEffectLifeTime),
             };
         }
@@ -28,7 +27,6 @@ namespace Main.Model
         protected override OnmyoBulletConfig ReLoadOnmyoBulletConfig(OnmyoBulletConfig config)
         {
             config.actionRate = _shikigamiUtility.GetMainSkillValueAddValueBuffMax(_shikigamiInfo, MainSkillType.ActionRate);
-            config.moveDirection = _mainCommonUtility.AdminDataSingleton.AdminBean.graffitiTurretModel.moveDirection;
 
             return _turretUtility.UpdateMoveDirection(_bulletCompass, config);
         }
@@ -65,7 +63,7 @@ namespace Main.Model
         public bool InitializeBulletCompass(Vector2 fromPosition, Vector2 danceVector)
         {
             return _turretUtility.InitializeBulletCompass(ref _bulletCompass,
-                (fromPosition - new Vector2(RectTransform.position.x, RectTransform.position.y)).normalized,
+                (new Vector2(RectTransform.position.x, RectTransform.position.y) - fromPosition).normalized,
                 danceVector);
         }
 
