@@ -43,6 +43,7 @@ namespace Main.Model
                             onSoulMoneyGeted.OnNext(soulMoney);
                         }
                     });
+                soulMoney.gameObject.SetActive(true);
 
                 return true;
             }

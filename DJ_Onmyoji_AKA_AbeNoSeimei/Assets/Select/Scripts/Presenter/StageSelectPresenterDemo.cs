@@ -34,8 +34,8 @@ namespace Select.Presenter
                 eventState.Content.ObserveEveryValueChanged(x => x.Value)
                     .Subscribe(x =>
                     {
-                        if (!stageSelectView.RenderLineStageContetsBetweenTargetPoints(eventState.Index, (EnumEventCommand)x))
-                            Debug.LogError("RenderLineStageContetsBetweenTargetPoints");
+                        //if (!stageSelectView.RenderLineStageContetsBetweenTargetPoints(eventState.Index, (EnumEventCommand)x))
+                        //    Debug.LogError("RenderLineStageContetsBetweenTargetPoints");
                     });
             }
 

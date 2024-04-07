@@ -14,7 +14,7 @@ namespace Select.Test.Driver
         private void OnEnable()
         {
             StageSelectView stageSelectView = GameObject.Find("StageSelect").GetComponent<StageSelectView>();
-            stageSelectView.RenderLineStageContetsBetweenTargetPoints(index, enumEventCommand);
+            //stageSelectView.RenderLineStageContetsBetweenTargetPoints(index, enumEventCommand);
         }
 
         private void Start()

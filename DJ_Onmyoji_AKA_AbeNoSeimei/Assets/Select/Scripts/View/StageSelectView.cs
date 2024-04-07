@@ -1,7 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
+using Select.Audio;
 using Select.Common;
 using UnityEngine;
+using UniRx;
 
 namespace Select.View
 {
@@ -25,7 +27,7 @@ namespace Select.View
             circleCursorViews = GetComponentsInChildren<CircleCursorView>();
         }
 
-        public bool RenderLineStageContetsBetweenTargetPoints(int index, EnumEventCommand enumEventCommand)
+        public bool RenderLineStageContetsBetweenTargetPoints(int index, EnumEventCommand enumEventCommand, FadeImageView fadeImageView)
         {
             try
             {
@@ -40,9 +42,33 @@ namespace Select.View
                             Debug.LogError("SetAnchorPosition");
                         if (!circleCursorViews[1].SetAnchorPosition(stageContetsViews[1].AnchoredPositionsInChild[index].position))
                             Debug.LogError("SetAnchorPosition");
+                        SelectGameManager.Instance.AudioOwner.PlaySFX(ClipToPlay.se_select);
 
                         break;
-                    case EnumEventCommand.DeSelected:
+                    case EnumEventCommand.Canceled:
+                        // キャンセルSEを再生
+                        SelectGameManager.Instance.AudioOwner.PlaySFX(ClipToPlay.se_cancel);
+                        // シーン読み込み時のアニメーション
+                        Observable.FromCoroutine<bool>(observer => fadeImageView.PlayFadeAnimation(observer, EnumFadeState.Close))
+                            .Subscribe(_ =>
+                            {
+                                SelectGameManager.Instance.SceneOwner.LoadTitleScene();
+                            })
+                            .AddTo(gameObject);
+
+                        break;
+                    case EnumEventCommand.Submited:
+                        // 決定SEを再生
+                        SelectGameManager.Instance.AudioOwner.PlaySFX(ClipToPlay.se_decided);
+                        // シーン読み込み時のアニメーション
+                        Observable.FromCoroutine<bool>(observer => fadeImageView.PlayFadeAnimation(observer, EnumFadeState.Close))
+                            .Subscribe(_ =>
+                            {
+                                // メインシーンを実装
+                                SelectGameManager.Instance.SceneOwner.LoadMainScene();
+                            })
+                            .AddTo(gameObject);
+
                         break;
                     default:
                         // 処理無し
@@ -71,7 +97,8 @@ namespace Select.View
         /// </summary>
         /// <param name="index">インデックス</param>
         /// <param name="enumEventCommand">イベントコマンド入力</param>
+        /// <param name="fadeImageView">フェードイメージのビュー</param>
         /// <returns>成功／失敗</returns>
-        public bool RenderLineStageContetsBetweenTargetPoints(int index, EnumEventCommand enumEventCommand);
+        public bool RenderLineStageContetsBetweenTargetPoints(int index, EnumEventCommand enumEventCommand, FadeImageView fadeImageView);
     }
 }

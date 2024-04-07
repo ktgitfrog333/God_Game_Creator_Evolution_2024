@@ -48,6 +48,21 @@ namespace Main.View
                 return false;
             }
         }
+
+        public bool SetFloat(ParametersOfAnim parametersOfAnim, float anySpeed)
+        {
+            try
+            {
+                animator.SetFloat($"{parametersOfAnim}", anySpeed);
+
+                return true;
+            }
+            catch (System.Exception e)
+            {
+                Debug.LogError(e);
+                return false;
+            }
+        }
     }
 
     /// <summary>
@@ -72,6 +87,14 @@ namespace Main.View
         /// <param name="enabled">有効／無効</param>
         /// <returns>成功／失敗</returns>
         public bool SetBool(ParametersOfAnim parametersOfAnim, bool enabled);
+        /// <summary>
+        /// セットフロート
+        /// 歩くなど
+        /// </summary>
+        /// <param name="parametersOfAnim">アニメータのパラメータ</param>
+        /// <param name="anySpeed">速度等のパラメータ</param>
+        /// <returns>成功／失敗</returns>
+        public bool SetFloat(ParametersOfAnim parametersOfAnim, float anySpeed);
     }
 
     /// <summary>
@@ -87,5 +110,7 @@ namespace Main.View
         DamageLoopRight,
         /// <summary>左手ダウンからのループ</summary>
         DamageLoopLeft,
+        /// <summary>移動</summary>
+        MoveSpeed,
     }
 }

@@ -41,6 +41,21 @@ namespace Main.Model
             var admin = temp.LoadSaveDatasJsonOfAdminBean(ConstResorcesNames.ADMIN_DATA);
             _limitTimeSecMax = admin.clearCountdownTimer[user.sceneId - 1];
             TimeSec.Value = _limitTimeSecMax;
+            IsTimeOut.ObserveEveryValueChanged(x => x.Value)
+                .Subscribe(x =>
+                {
+                    switch ((IsTimeOutState)x)
+                    {
+                        case IsTimeOutState.TimeOut:
+                            if (!isActiveAndEnabled)
+                                gameObject.SetActive(false);
+
+                            break;
+                        default:
+                            // 処理無し
+                            break;
+                    }
+                });
         }
 
         private void Update()
@@ -98,6 +113,30 @@ namespace Main.Model
 
             yield return null;
         }
+
+        public bool SetIsGoalReached(BoolReactiveProperty isGoalReached, int isTimeOut)
+        {
+            try
+            {
+                switch ((IsTimeOutState)isTimeOut)
+                {
+                    case IsTimeOutState.TimeOut:
+                        isGoalReached.Value = true;
+
+                        break;
+                    default:
+                        // それ以外
+                        break;
+                }
+
+                return true;
+            }
+            catch (System.Exception e)
+            {
+                Debug.LogError(e);
+                return false;
+            }
+        }
     }
 
     /// <summary>
@@ -120,5 +159,12 @@ namespace Main.Model
         /// <param name="bossDirectionPhase">ボス演出フェーズ</param>
         /// <returns>コルーチン</returns>
         public IEnumerator SetIsTimeOut(System.IObserver<bool> observer, int bossDirectionPhase);
+        /// <summary>
+        /// ゴールクリア状態を更新する
+        /// </summary>
+        /// <param name="isGoalReached">ゴールクリア状態</param>
+        /// <param name="isTimeOut">時間切れか</param>
+        /// <returns>成功／失敗</returns>
+        public bool SetIsGoalReached(BoolReactiveProperty isGoalReached, int isTimeOut);
     }
 }

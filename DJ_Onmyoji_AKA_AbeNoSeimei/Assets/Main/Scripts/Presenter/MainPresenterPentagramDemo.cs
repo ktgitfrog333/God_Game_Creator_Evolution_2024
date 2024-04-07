@@ -171,7 +171,6 @@ namespace Main.Presenter
                     x.ObserveEveryValueChanged(x => x.Value)
                         .Subscribe(x =>
                         {
-                            // TODO:SPゲージの急速回復が始まるの他にもし演出が必要ならここで処理を実行する
                             if (!pentagramSystemModel.SetIsLooping(JockeyCommandType.None))
                                 Debug.LogError("SetIsLooping");
                             if (!shikigamiSkillSystemModel.SetIsStopRecovery(JockeyCommandType.None))

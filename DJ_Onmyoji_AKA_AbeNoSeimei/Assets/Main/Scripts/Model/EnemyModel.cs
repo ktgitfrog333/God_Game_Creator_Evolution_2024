@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Data;
 using DG.Tweening;
 using Main.Utility;
+using Main.View;
 using UniRx;
 using UniRx.Triggers;
 using UnityEngine;
@@ -142,6 +143,17 @@ namespace Main.Model
                     if (x)
                         gameObject.SetActive(false);
                 });
+            var enemyView = GetComponent<EnemyView>();
+            if (enemyView.IsFoundAnimator)
+                this.ObserveEveryValueChanged(_ => Transform.position)
+                    .Pairwise()
+                    .Subscribe(pair =>
+                    {
+                        var moveSpeed = Mathf.Abs(pair.Current.sqrMagnitude - pair.Previous.sqrMagnitude);
+                        if (0f < moveSpeed)
+                            if (!enemyView.PlayWalkingAnimation(moveSpeed))
+                                Debug.LogError("PlayWalkingAnimation");
+                    });
         }
 
         private void FixedUpdate()

@@ -47,6 +47,11 @@ namespace Main.View
                     .AddTo(gameObject)));
         }
 
+        private void Start()
+        {
+            gameObject.SetActive(false);
+        }
+
         public bool SetEnemiesProp(EnemiesProp enemiesProp)
         {
             try

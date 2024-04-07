@@ -27,14 +27,6 @@ namespace Main.Presenter
         [SerializeField] private GamePauseModel gamePauseModel;
         /// <summary>クリア画面のビュー</summary>
         [SerializeField] private ClearView clearView;
-        /// <summary>ステージクリアロゴのビュー</summary>
-        [SerializeField] private StageClearView stageClearView;
-        /// <summary>クリア画面のメニュー描画までの時間</summary>
-        [SerializeField] private int clearContentsRenderingDelayTime = 3000;
-        /// <summary>次のステージへ進むのビュー</summary>
-        [SerializeField] private GameProceedButtonView gameProceedButtonView;
-        /// <summary>次のステージへ進むのモデル</summary>
-        [SerializeField] private GameProceedButtonModel gameProceedButtonModel;
         /// <summary>もう一度遊ぶボタンのビュー</summary>
         [SerializeField] private GameRetryButtonView gameRetryButtonView;
         /// <summary>もう一度遊ぶボタンのモデル</summary>
@@ -47,8 +39,6 @@ namespace Main.Presenter
         [SerializeField] private CursorIconView cursorIconView;
         /// <summary>カーソルのモデル</summary>
         [SerializeField] private CursorIconModel cursorIconModel;
-        /// <summary>ショートカットキー押下ゲージのビュー</summary>
-        [SerializeField] private PushTimeGageView[] pushTimeGageViews;
         /// <summary>ショートカットキー押下ゲージのビュー</summary>
         [SerializeField] private GameManualScrollView gameManualScrollView;
         /// <summary>遊び方確認ページのビュー</summary>
@@ -89,6 +79,16 @@ namespace Main.Presenter
         [SerializeField] private FadersGroupView fadersGroupView;
         /// <summary>式神レベル管理のビュー（蝋燭リソースの情報に合わせてUIを変化させるビューコンポーネントを再利用）</summary>
         [SerializeField] private CandleUniversalGaugeView[] candleUniversalGaugeViews;
+        /// <summary>敵イベントを管理するのモデル</summary>
+        [SerializeField] private EnemyEventSystemModel enemyEventSystemModel;
+        /// <summary>魂の経験値スポーンのモデル</summary>
+        [SerializeField] private SpawnSoulMoneyModel spawnSoulMoneyModel;
+        /// <summary>クリア報酬選択のビュー</summary>
+        [SerializeField] private RewardSelectView rewardSelectView;
+        /// <summary>クリア報酬選択のモデル</summary>
+        [SerializeField] private RewardSelectModel rewardSelectModel;
+        /// <summary>クリア報酬のコンテンツ</summary>
+        [SerializeField] private ClearRewardTextContents clearRewardTextContents;
 
         private void Reset()
         {
@@ -96,20 +96,12 @@ namespace Main.Presenter
             gamePauseView = GameObject.Find("GamePause").GetComponent<GamePauseView>();
             gamePauseModel = GameObject.Find("GamePause").GetComponent<GamePauseModel>();
             clearView = GameObject.Find("Clear").GetComponent<ClearView>();
-            stageClearView = GameObject.Find("StageClear").GetComponent<StageClearView>();
-            gameProceedButtonView = GameObject.Find("GameProceedButton").GetComponent<GameProceedButtonView>();
-            gameProceedButtonModel = GameObject.Find("GameProceedButton").GetComponent<GameProceedButtonModel>();
             gameRetryButtonView = GameObject.Find("GameRetryButton").GetComponent<GameRetryButtonView>();
             gameRetryButtonModel = GameObject.Find("GameRetryButton").GetComponent<GameRetryButtonModel>();
             gameSelectButtonView = GameObject.Find("GameSelectButton").GetComponent<GameSelectButtonView>();
             gameSelectButtonModel = GameObject.Find("GameSelectButton").GetComponent<GameSelectButtonModel>();
             cursorIconView = GameObject.Find("CursorIcon").GetComponent<CursorIconView>();
             cursorIconModel = GameObject.Find("CursorIcon").GetComponent<CursorIconModel>();
-            var ptGameIdx = 0;
-            pushTimeGageViews = new PushTimeGageView[3];
-            pushTimeGageViews[ptGameIdx++] = GameObject.Find("GULPushTimeGage").GetComponent<PushTimeGageView>();
-            pushTimeGageViews[ptGameIdx++] = GameObject.Find("GSLPushTimeGage").GetComponent<PushTimeGageView>();
-            pushTimeGageViews[ptGameIdx++] = GameObject.Find("GCLPushTimeGage").GetComponent<PushTimeGageView>();
             gameManualScrollView = GameObject.Find("GameManualScroll").GetComponent<GameManualScrollView>();
             var gmvPageVIdx = 0;
             var gmvPageMIdx = 0;
@@ -141,7 +133,7 @@ namespace Main.Presenter
                 GameObject.Find($"Fader{ShikigamiType.Dance}").GetComponent<FaderUniversalView>(),
                 GameObject.Find($"Fader{ShikigamiType.Graffiti}").GetComponent<FaderUniversalView>(),
             };
-            spGaugeView = GameObject.Find("SpGauge").GetComponent<SpGaugeView>();
+            spGaugeView = GameObject.Find("SpGauges").GetComponent<SpGaugeView>();
             sunMoonStateIconView = GameObject.Find("SunMoonStateIcon").GetComponent<SunMoonStateIconView>();
             fadersGroupView = GameObject.Find("FadersGroup").GetComponent<FadersGroupView>();
             candleUniversalGaugeViews = new CandleUniversalGaugeView[]
@@ -150,6 +142,11 @@ namespace Main.Presenter
                 GameObject.Find($"Candle{ShikigamiType.Dance}Gauge").GetComponent<CandleUniversalGaugeView>(),
                 GameObject.Find($"Candle{ShikigamiType.Graffiti}Gauge").GetComponent<CandleUniversalGaugeView>(),
             };
+            enemyEventSystemModel = GameObject.Find("EnemyEventSystem").GetComponent<EnemyEventSystemModel>();
+            spawnSoulMoneyModel = GameObject.Find("SpawnSoulMoney").GetComponent<SpawnSoulMoneyModel>();
+            rewardSelectView = GameObject.Find("RewardSelect").GetComponent<RewardSelectView>();
+            rewardSelectModel = GameObject.Find("RewardSelect").GetComponent<RewardSelectModel>();
+            clearRewardTextContents = GameObject.Find("Resources").GetComponentInChildren<ClearRewardTextContents>();
         }
 
         public void OnStart()
@@ -165,11 +162,9 @@ namespace Main.Presenter
 
             // 初期設定
             pauseView.gameObject.SetActive(false);
-            gameProceedButtonView.gameObject.SetActive(false);
             gameRetryButtonView.gameObject.SetActive(false);
             gameSelectButtonView.gameObject.SetActive(false);
             cursorIconView.gameObject.SetActive(false);
-            clearView.gameObject.SetActive(false);
             gameManualScrollView.gameObject.SetActive(false);
             moveGuideView.SetAlpha(EnumFadeState.Close);
             moveGuideView.gameObject.SetActive(false);
@@ -204,8 +199,6 @@ namespace Main.Presenter
                     isInputUIActionsEnabled.Value = true;
                     isInputUIPausedEnabled.Value = true;
                 });
-            // 実行中のショートカットキーのアクション
-            var inProcess = EnumShortcuActionMode.None;
             // ポーズ押下
             var inputUIPausedState = new BoolReactiveProperty();
             inputUIPausedState.ObserveEveryValueChanged(x => x.Value)
@@ -230,7 +223,6 @@ namespace Main.Presenter
                                 .Subscribe(_ =>
                                 {
                                     gameManualScrollView.gameObject.SetActive(false);
-                                    inProcess = EnumShortcuActionMode.None;
                                 })
                                 .AddTo(gameObject);
                         }
@@ -283,7 +275,7 @@ namespace Main.Presenter
             var datas = MainGameManager.Instance.SceneOwner.GetSaveDatas();
             var isGoalReached = new BoolReactiveProperty();
             isGoalReached.ObserveEveryValueChanged(x => x.Value)
-                .Subscribe(async x =>
+                .Subscribe(x =>
                 {
                     if (x)
                     {
@@ -296,29 +288,22 @@ namespace Main.Presenter
                         if (!MainGameManager.Instance.SceneOwner.SetSaveDatas(datas))
                             Debug.LogError("クリア済みデータ保存呼び出しの失敗");
                         // 初期処理
-                        clearView.gameObject.SetActive(true);
-                        if (common.IsFinalLevel())
-                            if (!stageClearView.SetMessageCongratulations())
-                                Debug.LogError("最終ステージ用のメッセージをセット呼び出しの失敗");
-                        stageClearView.gameObject.SetActive(true);
-                        gameProceedButtonView.gameObject.SetActive(false);
+                        if (!clearView.SetActiveGameObject(true))
+                            Debug.LogError("SetActiveGameObject");
                         gameRetryButtonView.gameObject.SetActive(false);
                         gameSelectButtonView.gameObject.SetActive(false);
-                        // 一定時間後に表示するUI
-                        await Task.Delay(clearContentsRenderingDelayTime);
+                        if (!soulWalletModel.SetIsUnLockUpdateOfSoulMoney(false))
+                            Debug.LogError("SetIsUnLockUpdateOfSoulMoney");
                         // 初回のみ最初から拡大表示
                         if (!common.IsFinalLevel())
                         {
-                            gameProceedButtonView.gameObject.SetActive(true);
-                            gameProceedButtonView.SetScale();
-                            gameProceedButtonModel.SetSelectedGameObject();
+                            var rewardContentModel = rewardSelectModel.RewardContentModels[0];
+                            if (!cursorIconView.SetSelectAndScale(rewardContentModel.transform.position, (rewardContentModel.transform as RectTransform).sizeDelta))
+                                Debug.LogError("SetSelectAndScale");
+                            rewardContentModel.SetSelectedGameObject();
                         }
                         else
                         {
-                            if (!cursorIconView.SetSelect(gameRetryButtonView.transform.position))
-                                Debug.LogError("カーソル配置位置の変更呼び出しの失敗");
-                            gameRetryButtonView.SetScale();
-                            gameRetryButtonModel.SetSelectedGameObject();
                         }
                         gameRetryButtonView.gameObject.SetActive(true);
                         gameSelectButtonView.gameObject.SetActive(true);
@@ -326,51 +311,6 @@ namespace Main.Presenter
                     }
                 });
 
-            // クリア画面 -> 次のステージへ進む
-            gameProceedButtonModel.EventState.ObserveEveryValueChanged(x => x.Value)
-                .Subscribe(x =>
-                {
-                    switch ((EnumEventCommand)x)
-                    {
-                        case EnumEventCommand.Default:
-                            // 処理無し
-                            break;
-                        case EnumEventCommand.Selected:
-                            MainGameManager.Instance.AudioOwner.PlaySFX(ClipToPlay.se_select);
-                            if (!gameProceedButtonView.PlayScaleUpAnimation())
-                                Debug.LogError("拡大アニメーション呼び出しの失敗");
-                            if (!cursorIconView.PlaySelectAnimation(gameProceedButtonView.transform.position))
-                                Debug.LogError("カーソル移動アニメーション呼び出しの失敗");
-                            break;
-                        case EnumEventCommand.DeSelected:
-                            if (!gameProceedButtonView.SetDefaultScale())
-                                Debug.LogError("デフォルトサイズへ変更呼び出しの失敗");
-                            break;
-                        case EnumEventCommand.Submited:
-                            MainGameManager.Instance.AudioOwner.PlaySFX(ClipToPlay.se_decided);
-                            if (!gameProceedButtonModel.SetButtonEnabled(false))
-                                Debug.LogError("ボタン有効／無効切り替え呼び出しの失敗");
-                            if (!gameProceedButtonModel.SetEventTriggerEnabled(false))
-                                Debug.LogError("イベント有効／無効切り替え呼び出しの失敗");
-                            // プレイヤーの挙動によって発生するイベント無効　など
-                            if (!MainGameManager.Instance.InputSystemsOwner.Exit())
-                                Debug.LogError("InputSystem終了呼び出しの失敗");
-                            var owner = MainGameManager.Instance.SceneOwner;
-                            if (!owner.SetSaveDatas(owner.CountUpSceneId(datas)))
-                                Debug.LogError("シーンID更新呼び出しの失敗");
-                            // シーン読み込み時のアニメーション
-                            Observable.FromCoroutine<bool>(observer => fadeImageView.PlayFadeAnimation(observer, EnumFadeState.Close))
-                                .Subscribe(_ => owner.LoadMainScene())
-                                .AddTo(gameObject);
-                            break;
-                        case EnumEventCommand.Canceled:
-                            // 処理無し
-                            break;
-                        default:
-                            Debug.LogWarning("例外ケース");
-                            break;
-                    }
-                });
             // クリア画面 -> もう一度遊ぶ
             gameRetryButtonModel.EventState.ObserveEveryValueChanged(x => x.Value)
                 .Subscribe(x =>
@@ -382,10 +322,10 @@ namespace Main.Presenter
                             break;
                         case EnumEventCommand.Selected:
                             MainGameManager.Instance.AudioOwner.PlaySFX(ClipToPlay.se_select);
-                            if (!gameRetryButtonView.PlayScaleUpAnimation())
-                                Debug.LogError("拡大アニメーション呼び出しの失敗");
-                            if (!cursorIconView.PlaySelectAnimation(gameRetryButtonView.transform.position))
-                                Debug.LogError("カーソル移動アニメーション呼び出しの失敗");
+                            // 選択された時の処理
+                            if (!cursorIconView.SetSelectAndScale(gameRetryButtonModel.transform.position, (gameRetryButtonModel.transform as RectTransform).sizeDelta))
+                                Debug.LogError("SetSelectAndScale");
+
                             break;
                         case EnumEventCommand.DeSelected:
                             if (!gameRetryButtonView.SetDefaultScale())
@@ -424,10 +364,10 @@ namespace Main.Presenter
                             break;
                         case EnumEventCommand.Selected:
                             MainGameManager.Instance.AudioOwner.PlaySFX(ClipToPlay.se_select);
-                            if (!gameSelectButtonView.PlayScaleUpAnimation())
-                                Debug.LogError("拡大アニメーション呼び出しの失敗");
-                            if (!cursorIconView.PlaySelectAnimation(gameSelectButtonView.transform.position))
-                                Debug.LogError("カーソル移動アニメーション呼び出しの失敗");
+                            // 選択された時の処理
+                            if (!cursorIconView.SetSelectAndScale(gameSelectButtonModel.transform.position, (gameSelectButtonModel.transform as RectTransform).sizeDelta))
+                                Debug.LogError("SetSelectAndScale");
+
                             break;
                         case EnumEventCommand.DeSelected:
                             if (!gameSelectButtonView.SetDefaultScale())
@@ -467,98 +407,7 @@ namespace Main.Presenter
             inputUIPushedTime.ObserveEveryValueChanged(x => x.Value)
                 .Subscribe(x =>
                 {
-                    if (0f < x)
-                    {
-                        // いずれかのボタンが押されている
-                        if (!((EnumShortcuActionMode)inputUIActionsState.Value).Equals(EnumShortcuActionMode.None))
-                            for (var j = 0; j < pushTimeGageViews.Length; j++)
-                                if (!pushTimeGageViews[j].EnabledPushGageAndGetFillAmount(j == inputUIActionsState.Value ? x : 0f))
-                                    Debug.LogError("ゲージ更新呼び出しの失敗");
-                    }
-                    else
-                        // 全てのボタンから指を離している
-                        for (var j = 0; j < pushTimeGageViews.Length; j++)
-                            if (!pushTimeGageViews[j].EnabledPushGageAndGetFillAmount(0f))
-                                Debug.LogError("ゲージ更新呼び出しの失敗");
                 });
-            // ショートカットキー -> 実行中のアクションを管理
-            for (var i = 0; i < pushTimeGageViews.Length; i++)
-            {
-                var tmpIdx = i;
-                pushTimeGageViews[tmpIdx].FloatReactiveProperty.ObserveEveryValueChanged(x => x.Value)
-                    .Subscribe(x =>
-                    {
-                        // ゲージ満タンで各モードを実行
-                        if (inProcess.Equals(EnumShortcuActionMode.None) && 1f <= x)
-                        {
-                            inProcess = (EnumShortcuActionMode)tmpIdx;
-                            switch (inProcess)
-                            {
-                                case EnumShortcuActionMode.UndoAction:
-                                    MainGameManager.Instance.AudioOwner.PlaySFX(ClipToPlay.se_decided);
-                                    // チュートリアルUIを開いていたら閉じる
-                                    if (moveGuideView.isActiveAndEnabled)
-                                        // 移動操作クローズのアニメーション
-                                        Observable.FromCoroutine<bool>(observer => moveGuideView.PlayFadeAnimation(observer, EnumFadeState.Close))
-                                            .Subscribe(_ => moveGuideView.gameObject.SetActive(false))
-                                            .AddTo(gameObject);
-                                    if (jumpGuideView.isActiveAndEnabled)
-                                        // ジャンプ操作クローズのアニメーション
-                                        Observable.FromCoroutine<bool>(observer => jumpGuideView.PlayFadeAnimation(observer, EnumFadeState.Close))
-                                            .Subscribe(_ => jumpGuideView.gameObject.SetActive(false))
-                                            .AddTo(gameObject);
-                                    if (playerModel != null)
-                                        if (!playerModel.SetInputBan(true))
-                                            Debug.LogError("操作禁止フラグ更新呼び出しの失敗");
-                                    // プレイヤーの挙動によって発生するイベント無効　など
-                                    if (!MainGameManager.Instance.InputSystemsOwner.Exit())
-                                        Debug.LogError("InputSystem終了呼び出しの失敗");
-                                    // シーン読み込み時のアニメーション
-                                    Observable.FromCoroutine<bool>(observer => fadeImageView.PlayFadeAnimation(observer, EnumFadeState.Close))
-                                        .Subscribe(_ => MainGameManager.Instance.SceneOwner.LoadMainScene())
-                                        .AddTo(gameObject);
-                                    break;
-                                case EnumShortcuActionMode.SelectAction:
-                                    MainGameManager.Instance.AudioOwner.PlaySFX(ClipToPlay.se_decided);
-                                    // チュートリアルUIを開いていたら閉じる
-                                    if (moveGuideView.isActiveAndEnabled)
-                                        // 移動操作クローズのアニメーション
-                                        Observable.FromCoroutine<bool>(observer => moveGuideView.PlayFadeAnimation(observer, EnumFadeState.Close))
-                                            .Subscribe(_ => moveGuideView.gameObject.SetActive(false))
-                                            .AddTo(gameObject);
-                                    if (jumpGuideView.isActiveAndEnabled)
-                                        // ジャンプ操作クローズのアニメーション
-                                        Observable.FromCoroutine<bool>(observer => jumpGuideView.PlayFadeAnimation(observer, EnumFadeState.Close))
-                                            .Subscribe(_ => jumpGuideView.gameObject.SetActive(false))
-                                            .AddTo(gameObject);
-                                    if (playerModel != null)
-                                        if (!playerModel.SetInputBan(true))
-                                            Debug.LogError("操作禁止フラグ更新呼び出しの失敗");
-                                    // プレイヤーの挙動によって発生するイベント無効　など
-                                    if (!MainGameManager.Instance.InputSystemsOwner.Exit())
-                                        Debug.LogError("InputSystem終了呼び出しの失敗");
-                                    // シーン読み込み時のアニメーション
-                                    Observable.FromCoroutine<bool>(observer => fadeImageView.PlayFadeAnimation(observer, EnumFadeState.Close))
-                                        .Subscribe(_ => MainGameManager.Instance.SceneOwner.LoadSelectScene())
-                                        .AddTo(gameObject);
-                                    break;
-                                case EnumShortcuActionMode.CheckAction:
-                                    // 遊び方の確認を開く
-                                    MainGameManager.Instance.AudioOwner.PlaySFX(ClipToPlay.se_decided);
-                                    gameManualScrollView.gameObject.SetActive(true);
-                                    if (!gameManualScrollView.SetPage(EnumGameManualPagesIndex.Page_1))
-                                        Debug.LogError("ページ変更呼び出しの失敗");
-                                    gameManualViewPageModels[(int)EnumGameManualPagesIndex.Page_1].SetSelectedGameObject();
-                                    if (!playerModel.SetInputBan(true))
-                                        Debug.LogError("操作禁止フラグをセット呼び出しの失敗");
-                                    break;
-                                default:
-                                    Debug.LogWarning("例外ケース");
-                                    break;
-                            }
-                        }
-                    });
-            }
             // 遊び方を確認
             for (var i = 0; i < gameManualViewPageModels.Length; i++)
             {
@@ -593,7 +442,6 @@ namespace Main.Presenter
                                     .Subscribe(_ =>
                                     {
                                         gameManualScrollView.gameObject.SetActive(false);
-                                        inProcess = EnumShortcuActionMode.None;
                                         if (!playerModel.SetInputBan(false))
                                             Debug.LogError("操作禁止フラグをセット呼び出しの失敗");
                                     })
@@ -702,33 +550,46 @@ namespace Main.Presenter
                         clearCountdownTimerSystemModel.IsTimeOut.ObserveEveryValueChanged(x => x.Value)
                             .Subscribe(x =>
                             {
-                                // TODO:α版2.0の統合と共有で実装
-                                // if (x)
-                                // {
-                                //     if (!clearCountdownTimerSystemModel.isActiveAndEnabled)
-                                //         clearCountdownTimerSystemModel.enabled = false;
-                                //     if (!circleView.Set(0f, clearCountdownTimerSystemModel.LimitTimeSecMax))
-                                //         Debug.LogError("SetAngle");
-                                //     isGoalReached.Value = true;
-                                // }
+                                if (!circleView.Set(0f, clearCountdownTimerSystemModel.LimitTimeSecMax, x))
+                                    Debug.LogError("SetAngle");
+                                if (!clearCountdownTimerSystemModel.SetIsGoalReached(isGoalReached, x))
+                                    Debug.LogError("SetIsGoalReached");
                             });
                         this.UpdateAsObservable()
                             .Select(_ => levelOwner.InstancedLevel.GetComponentInChildren<EnemiesSpawnModel>())
-                            .Where(model => model != null)
+                            .Where(enemiesSpawnModel => enemiesSpawnModel != null)
                             .Take(1)
-                            .Subscribe(model =>
+                            .Subscribe(enemiesSpawnModel =>
                             {
                                 // enemiesSpawnModelがnullでないときの処理を設定
                                 sunMoonSystemModel.OnmyoState.ObserveEveryValueChanged(x => x.Value)
                                     .Subscribe(x =>
                                     {
                                         sunMoonStateIconView.SetRotate(x);
-                                        if (!model.SetOnmyoState(x))
+                                        if (!enemiesSpawnModel.SetOnmyoState(x))
                                             Debug.LogError("SetOnmyoState");
                                         if (!clearCountdownTimerCircleView.SetColor(x))
                                             Debug.LogError("SetColor");
                                     });
                             });
+                        enemyEventSystemModel.OnEnemyDead.Subscribe(enemyModel =>
+                        {
+                            if (!spawnSoulMoneyModel.InstanceCloneObjects(enemyModel.transform.position, enemyModel.EnemiesProp))
+                                Debug.LogError("InstanceCloneObjects");
+                        });
+                        spawnSoulMoneyModel.OnSoulMoneyGeted
+                           .Subscribe(soulMoney =>
+                           {
+                               if (soulMoney.IsGeted.Value)
+                               {
+                                   var soulMoneyPoint = soulWalletModel.AddSoulMoney(soulMoney.EnemiesProp.soulMoneyPoint);
+                                   if (soulMoneyPoint < 0)
+                                       Debug.LogError("AddSoulMoney");
+                               }
+                           })
+                           .AddTo(gameObject); // UniRxのAddToを使用して、このGameObjectが破棄されたときに購読を自動的に解除
+                        if (!soulWalletModel.SetIsUnLockUpdateOfSoulMoney(x))
+                            Debug.LogError("SetIsUnLockUpdateOfSoulMoney");
                     }
                 });
             BgmConfDetails bgmConfDetails = new BgmConfDetails();
@@ -750,6 +611,65 @@ namespace Main.Presenter
                         Debug.LogError("BuffAllTurrets");
                     if (!shikigamiSkillSystemModel.ForceZeroAndRapidRecoveryCandleResource((JockeyCommandType)pair.Current))
                         Debug.LogError("ForceZeroAndRapidRecoveryCandleResource");
+                    Observable.FromCoroutine<bool>(observer => pentagramTurnTableView.PlayDirectionBackSpin(observer, (JockeyCommandType)pair.Current))
+                        .Subscribe(x =>
+                        {
+                            if (!pentagramSystemModel.ResetJockeyCommandType())
+                                Debug.LogError("ResetJockeyCommandType");
+                        })
+                        .AddTo(gameObject);
+                    if (!pentagramSystemModel.SetIsLooping((JockeyCommandType)pair.Current))
+                        Debug.LogError("SetIsLooping");
+                    if (!shikigamiSkillSystemModel.SetIsStopRecovery((JockeyCommandType)pair.Current))
+                        Debug.LogError("SetIsStopRecovery");
+                });
+            this.UpdateAsObservable()
+                .Select(_ => pentagramSystemModel.InputSlipLoopState.IsLooping)
+                .Where(x => x != null)
+                .Take(1)
+                .Subscribe(x =>
+                {
+                    x.ObserveEveryValueChanged(x => x.Value)
+                        .Subscribe(x =>
+                        {
+                            if (!x)
+                            {
+                                if (!pentagramTurnTableView.ResetFromAngle())
+                                    Debug.LogError("ResetFromAngle");
+                            }
+                            if (!pentagramTurnTableModel.SetActionRateNormalOfOnmyoTurret(x))
+                                Debug.LogError("SetActionRateNormalOfOnmyoTurret");
+                        });
+                });
+            this.UpdateAsObservable()
+                .Select(_ => pentagramSystemModel.InputSlipLoopState.ActionTrigger)
+                .Where(x => x != null)
+                .Take(1)
+                .Subscribe(x =>
+                {
+                    x.ObserveEveryValueChanged(x => x.Value)
+                        .Subscribe(x =>
+                        {
+                            if (x)
+                            {
+                                if (!pentagramTurnTableModel.SetMoveDirectionsToDanceOfOnmyoWrapGraffitiTurret())
+                                    Debug.LogError("SetMoveDirectionsToDanceOfOnmyoWrapGraffitiTurret");
+                                Observable.FromCoroutine<bool>(observer => pentagramTurnTableView.MoveSpin(observer, pentagramSystemModel.InputSlipLoopState))
+                                    .Subscribe(x =>
+                                    {
+                                        if (x)
+                                        {
+                                            if (!pentagramTurnTableModel.AttackOfOnmyoTurret())
+                                                Debug.LogError("AttackOfOnmyoTurret");
+                                            if (!shikigamiSkillSystemModel.UpdateCandleResourceOfAttackOnmyoTurret())
+                                                Debug.LogError("UpdateCandleResourceOfAttackOnmyoTurret");
+                                            if (!pentagramTurnTableModel.SetMoveDirectionsDefaultOfOnmyoWrapGraffitiTurret())
+                                                Debug.LogError("SetMoveDirectionsDefaultOfOnmyoWrapGraffitiTurret");
+                                        }
+                                    })
+                                    .AddTo(gameObject);
+                            }
+                        });
                 });
             this.UpdateAsObservable()
                 .Select(_ => shikigamiSkillSystemModel.ShikigamiInfos)
@@ -800,8 +720,10 @@ namespace Main.Presenter
                     x.ObserveEveryValueChanged(x => x.Value)
                         .Subscribe(x =>
                         {
-                            // TODO:SPゲージの急速回復が始まるの他にもし演出が必要ならここで処理を実行する
-                            Debug.Log($"IsOutCost:[{x}]");
+                            if (!pentagramSystemModel.SetIsLooping(JockeyCommandType.None))
+                                Debug.LogError("SetIsLooping");
+                            if (!shikigamiSkillSystemModel.SetIsStopRecovery(JockeyCommandType.None))
+                                Debug.LogError("SetIsStopRecovery");
                         });
                 });
 
@@ -836,6 +758,107 @@ namespace Main.Presenter
                             // 既に0fなら何度も更新は行わない
                             inputUIPushedTime.Value = 0f;
                     }
+                });
+            soulWalletModel.SoulMoney.ObserveEveryValueChanged(x => x.Value)
+                .Subscribe(x =>
+                {
+                    if (!rewardSelectView.SetContents(new ClearRewardContentsState()
+                    {
+                        soulMoney = x,
+                    }))
+                        Debug.LogError("SetContents");
+                    if (!rewardSelectModel.DiffCostVsResorceAndDisabled(new ClearRewardContentsState()
+                    {
+                        soulMoney = x,
+                    }))
+                        Debug.LogError("DiffCostVsResorceAndDisabled");
+                    if (!clearRewardTextContents.SetSoulMoney(x))
+                        Debug.LogError("SetSoulMoney");
+                });
+            foreach (var item in rewardSelectModel.RewardContentModels.Select((p, i) => new { Content = p, Index = i}))
+            {
+                item.Content.CheckState.ObserveEveryValueChanged(x => x.Value)
+                    .Pairwise()
+                    .Subscribe(pair =>
+                    {
+                        switch ((CheckState)pair.Current)
+                        {
+                            case CheckState.UnCheck:
+                                // Check⇒UnCheckの場合は金額計算を行う
+                                if (pair.Previous == (int)CheckState.Check)
+                                {
+                                    if (soulWalletModel.AddSoulMoney(1 * item.Content.RewardContentProp.soulMoney) < 0)
+                                        Debug.LogError("AddSoulMoney");
+                                }
+                                // Disabled⇒UnCheckの場合は金額計算を行わない
+                                else if (pair.Previous == (int)CheckState.Disabled)
+                                {
+
+                                }
+                                if (!rewardSelectView.UnCheck(item.Index))
+                                    Debug.LogError("UnCheck");
+
+                                break;
+                            case CheckState.Check:
+                                if (soulWalletModel.AddSoulMoney(-1 * item.Content.RewardContentProp.soulMoney) < 0)
+                                    Debug.LogError("AddSoulMoney");
+                                if (!rewardSelectView.Check(item.Index))
+                                    Debug.LogError("Check");
+
+                                break;
+                            case CheckState.Disabled:
+                                if (!rewardSelectView.Disabled(item.Index))
+                                    Debug.LogError("Disabled");
+
+                                break;
+                            default:
+                                break;
+                        }
+                    });
+                item.Content.EventState.ObserveEveryValueChanged(x => x.Value)
+                    .Subscribe(x =>
+                    {
+                        switch ((EnumEventCommand)x)
+                        {
+                            case EnumEventCommand.Default:
+                                // 処理無し
+                                break;
+                            case EnumEventCommand.Selected:
+                                if (!rewardSelectView.SetContents(item.Content.RewardContentProp.rewardType))
+                                    Debug.LogError("SetContents");
+                                if (!rewardSelectView.ScaleUp(item.Index))
+                                    Debug.LogError("ScaleUp");
+                                if (!cursorIconView.SetSelectAndScale(item.Content.transform.position, item.Content.CurrentSizeDelta))
+                                    Debug.LogError("SetSelectAndScale");
+
+                                break;
+                            case EnumEventCommand.DeSelected:
+                                if (!rewardSelectView.ScaleDown(item.Index))
+                                    Debug.LogError("ScaleDown");
+
+                                break;
+                            case EnumEventCommand.Submited:
+                                if (!rewardSelectModel.Check(item.Index))
+                                    Debug.LogError("Check");
+
+                                break;
+                            case EnumEventCommand.Canceled:
+                                if (!rewardSelectModel.UnCheck(item.Index))
+                                    Debug.LogError("UnCheck");
+
+                                break;
+                            default:
+                                // 処理無し
+                                break;
+                        }
+                    });
+            }
+            rewardSelectModel.IsCompleted.ObserveEveryValueChanged(x => x.Value)
+                .Where(x => x)
+                .Subscribe(_ =>
+                {
+                    if (!clearView.SetActiveGameObject(false))
+                        Debug.LogError("SetActiveGameObject");
                 });
         }
     }

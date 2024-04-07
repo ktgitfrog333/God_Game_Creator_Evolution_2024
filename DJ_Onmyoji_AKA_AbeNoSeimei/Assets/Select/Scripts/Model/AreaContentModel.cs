@@ -5,7 +5,7 @@ using System.Text.RegularExpressions;
 using Select.Utility;
 using UniRx;
 using UniRx.Triggers;
-using Select.Presenter;
+using Select.Common;
 
 namespace Select.Model
 {
@@ -39,11 +39,10 @@ namespace Select.Model
 
         private void Start()
         {
-            // TODO:α版2.0の統合と共有の際に名前を本来のプレゼンタへ変更する
             this.UpdateAsObservable()
-                .Select(_ => GameObject.Find("StageSelectPresenterDemo"))
+                .Select(_ => SelectGameManager.Instance)
                 .Where(x => x != null)
-                .Select(x => x.GetComponent<StageSelectPresenterDemo>())
+                .Select(x => x.Presenter)
                 .Where(x => x != null)
                 .Take(1)
                 .Subscribe(x =>
@@ -55,6 +54,11 @@ namespace Select.Model
                             var utilityCommon = new SelectCommonUtility();
                             if (utilityCommon.UserDataSingleton.UserBean.sceneId == Index)
                                 SetSelectedGameObject();
+                            // 初期処理
+                            if (!SetButtonEnabled(false))
+                                Debug.LogError("SetButtonEnabled");
+                            if (!SetEventTriggerEnabled(false))
+                                Debug.LogError("SetEventTriggerEnabled");
                         });
                 });
         }

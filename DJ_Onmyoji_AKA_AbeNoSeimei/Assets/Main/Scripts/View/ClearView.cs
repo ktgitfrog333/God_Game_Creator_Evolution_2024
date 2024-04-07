@@ -71,6 +71,21 @@ namespace Main.View
                 return false;
             }
         }
+
+        public bool SetActiveGameObject(bool active)
+        {
+            try
+            {
+                gameObject.SetActive(active);
+
+                return true;
+            }
+            catch (System.Exception e)
+            {
+                Debug.LogError(e);
+                return false;
+            }
+        }
     }
 
     /// <summary>
@@ -86,5 +101,11 @@ namespace Main.View
         /// <param name="clearResultContentsState">クリア結果のコンテンツのステート</param>
         /// <returns>成功／失敗</returns>
         public bool SetContents(ClearResultContentsState clearResultContentsState);
+        /// <summary>
+        /// ゲームオブジェクトの有効／無効をセット
+        /// </summary>
+        /// <param name="active">有効／無効状態</param>
+        /// <returns>成功／失敗</returns>
+        public bool SetActiveGameObject(bool active);
     }
 }

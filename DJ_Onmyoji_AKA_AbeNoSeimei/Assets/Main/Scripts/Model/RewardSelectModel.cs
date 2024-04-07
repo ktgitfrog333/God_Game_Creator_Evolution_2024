@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using Main.Common;
+using UniRx;
 
 namespace Main.Model
 {
@@ -18,6 +19,10 @@ namespace Main.Model
         public RewardContentModel[] RewardContentModels => rewardContentModels;
         /// <summary>リワード情報を管理モデル</summary>
         [SerializeField] private RewardsModel rewardsModel;
+        /// <summary>実行済み</summary>
+        private readonly BoolReactiveProperty _isCompleted = new BoolReactiveProperty();
+        /// <summary>実行済み</summary>
+        public IReactiveProperty<bool> IsCompleted => _isCompleted;
 
         private void Reset()
         {
@@ -39,6 +44,7 @@ namespace Main.Model
                 if (!item.Content.SetRewardContentProp(rewardsModel.GetRewardContentProp(item.Index)))
                     Debug.LogError("SetRewardContentProp");
             }
+            _isCompleted.Value = true;
         }
 
         public bool Check(int index)
@@ -58,6 +64,7 @@ namespace Main.Model
                 // 無効からチェックなしへ変更する
                 foreach (var item in rewardContentModels.Select((p, i) => new { Content = p, Index = i })
                     .Where(q => q.Content.CheckState.Value == (int)CheckState.Disabled &&
+                    q.Content.RewardContentProp != null &&
                     q.Content.RewardContentProp.soulMoney <= clearRewardContentsState.soulMoney))
                     if (!rewardContentModels[item.Index].Check(CheckState.UnCheck, true))
                         throw new System.Exception("Check");
@@ -65,6 +72,7 @@ namespace Main.Model
                 // チェックなしから無効へ変更する
                 foreach (var item in rewardContentModels.Select((p, i) => new { Content = p, Index = i })
                     .Where(q => q.Content.CheckState.Value == (int)CheckState.UnCheck &&
+                    q.Content.RewardContentProp != null &&
                     clearRewardContentsState.soulMoney < q.Content.RewardContentProp.soulMoney))
                     if (!rewardContentModels[item.Index].Disable())
                         throw new System.Exception("Disable");

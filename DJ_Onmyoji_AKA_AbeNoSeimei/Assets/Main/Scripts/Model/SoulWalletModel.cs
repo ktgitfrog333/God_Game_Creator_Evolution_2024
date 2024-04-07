@@ -6,6 +6,7 @@ using UnityEngine;
 using Main.Utility;
 using Universal.Template;
 using Universal.Common;
+using Main.Common;
 
 namespace Main.Model
 {
@@ -28,8 +29,8 @@ namespace Main.Model
             var userDataSingleton = utility.UserDataSingleton;
             SoulMoney.Value = userDataSingleton.UserBean.soulMoney;
             this.UpdateAsObservable()
-                .Where(_ => GameObject.Find("Player") != null)
-                .Select(_ => GameObject.Find("Player").GetComponent<PlayerModel>())
+                .Where(_ => GameObject.FindGameObjectWithTag(ConstTagNames.TAG_NAME_PLAYER) != null)
+                .Select(_ => GameObject.FindGameObjectWithTag(ConstTagNames.TAG_NAME_PLAYER).GetComponent<PlayerModel>())
                 .Where(model => model != null)
                 .Take(1)
                 .Subscribe(model => _isDeadOfPlayer = (BoolReactiveProperty)model.State.IsDead);

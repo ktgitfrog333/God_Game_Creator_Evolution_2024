@@ -46,6 +46,10 @@ namespace Main.Model
         [SerializeField] private Transform soulMoneyPrefab;
         /// <summary>魂の経験値配列</summary>
         private List<SoulMoneyView> _soulMoneyViews = new List<SoulMoneyView>();
+        /// <summary>敵の生成イベントを通知するためのSubject</summary>
+        private Subject<EnemyModel> _onEnemyInstanced = new Subject<EnemyModel>();
+        /// <summary>敵の生成イベントを外部に公開するためのReadOnlyReactiveProperty</summary>
+        public System.IObservable<EnemyModel> OnEnemyInstanced => _onEnemyInstanced;
 
         public OnmyoBulletModel GetOnmyoBulletModel()
         {
@@ -81,6 +85,11 @@ namespace Main.Model
             return GetInactiveComponent(_enemyModels.Where(q => q.EnemiesID.Equals(enemiesID))
                 .Select(q => q)
                 .ToList(), enemies[0], _transform);
+        }
+
+        public EnemyModel[] GetEnemiesModel()
+        {
+            return _enemyModels.ToArray();
         }
 
         public SoulMoneyView GetSoulMoneyView()
@@ -132,6 +141,8 @@ namespace Main.Model
                 Debug.LogWarning("プレハブ新規生成");
                 var newComponent = GetClone(prefab, parent).GetComponent<T>();
                 components.Add(newComponent);
+                if (typeof(T) == typeof(EnemyModel))
+                    _onEnemyInstanced.OnNext(newComponent as EnemyModel);
                 return newComponent;
             }
             else
@@ -188,6 +199,11 @@ namespace Main.Model
         /// <param name="enemiesID">敵ID</param>
         /// <returns>敵</returns>
         public EnemyModel GetEnemyModel(EnemiesID enemiesID);
+        /// <summary>
+        /// 敵を取り出す
+        /// </summary>
+        /// <returns>敵</returns>
+        public EnemyModel[] GetEnemiesModel();
         /// <summary>
         /// 魂の経験値を取り出す
         /// </summary>

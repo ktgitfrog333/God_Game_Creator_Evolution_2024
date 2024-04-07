@@ -60,3 +60,6 @@ TagManager:
   - name: Enemies
     uniqueID: 2645493153
     locked: 0
+  - name: DropItems
+    uniqueID: 137845589
+    locked: 0
