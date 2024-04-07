@@ -34,7 +34,7 @@ namespace Main.Model
         [SerializeField] private InputBackSpinState inputBackSpinState = new InputBackSpinState()
         {
             recordInputTimeSecLimit = .5f,
-            targetAngle = 720f,
+            targetAngle = 540f,
         };
         /// <summary>スリップループの入力情報</summary>
         [SerializeField] private InputSlipLoopState inputSlipLoopState;
