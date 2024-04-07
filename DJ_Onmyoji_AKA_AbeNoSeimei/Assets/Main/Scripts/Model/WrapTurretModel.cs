@@ -10,7 +10,7 @@ namespace Main.Model
     /// ラップ
     /// モデル
     /// </summary>
-    public class WrapTurretModel : TurretModel
+    public class WrapTurretModel : TurretModel, IWrapTurretModel
     {
         protected override OnmyoBulletConfig InitializeOnmyoBulletConfig()
         {
@@ -19,8 +19,6 @@ namespace Main.Model
                 actionRate = _shikigamiUtility.GetMainSkillValue(_shikigamiInfo, MainSkillType.ActionRate),
                 attackPoint = (int)_shikigamiUtility.GetMainSkillValue(_shikigamiInfo, MainSkillType.AttackPoint),
                 bulletLifeTime = _shikigamiUtility.GetMainSkillValue(_shikigamiInfo, MainSkillType.BulletLifeTime),
-                // 陰陽玉と発射角度が異なるため再設定
-                moveDirection = new MainCommonUtility().AdminDataSingleton.AdminBean.wrapTurretModel.moveDirection,
             };
         }
 
@@ -29,7 +27,7 @@ namespace Main.Model
             config.actionRate = _shikigamiUtility.GetMainSkillValueAddValueBuffMax(_shikigamiInfo, MainSkillType.ActionRate);
             config.attackPoint = (int)_shikigamiUtility.GetMainSkillValueAddValueBuffMax(_shikigamiInfo, MainSkillType.AttackPoint);
 
-            return config;
+            return _turretUtility.UpdateMoveDirection(_bulletCompass, config);
         }
 
         protected override bool ActionOfBullet(ObjectsPoolModel objectsPoolModel, OnmyoBulletConfig onmyoBulletConfig)
@@ -60,5 +58,39 @@ namespace Main.Model
                 return false;
             }
         }
+
+        public bool InitializeBulletCompass(Vector2 fromPosition, Vector2 danceVector)
+        {
+            return _turretUtility.InitializeBulletCompass(ref _bulletCompass,
+                (new Vector2(RectTransform.position.x, RectTransform.position.y) - fromPosition).normalized,
+                danceVector);
+        }
+
+        public bool SetBulletCompassType(BulletCompassType bulletCompassType)
+        {
+            return _turretUtility.SetBulletCompassType(ref _bulletCompass, bulletCompassType);
+        }
+    }
+
+    /// <summary>
+    /// ラップ
+    /// モデル
+    /// インターフェース
+    /// </summary>
+    public interface IWrapTurretModel
+    {
+        /// <summary>
+        /// 弾の角度を動的にセット初期化
+        /// </summary>
+        /// <param name="fromPosition">中央位置</param>
+        /// <param name="danceVector">ダンスの向き</param>
+        /// <returns>成功／失敗</returns>
+        public bool InitializeBulletCompass(Vector2 fromPosition, Vector2 danceVector);
+        /// <summary>
+        /// 弾の角度タイプをセット
+        /// </summary>
+        /// <param name="bulletCompassType">弾の角度タイプ</param>
+        /// <returns>成功／失敗</returns>
+        public bool SetBulletCompassType(BulletCompassType bulletCompassType);
     }
 }

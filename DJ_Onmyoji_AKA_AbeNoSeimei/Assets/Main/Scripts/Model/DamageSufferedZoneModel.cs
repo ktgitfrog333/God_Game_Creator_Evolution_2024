@@ -108,6 +108,21 @@ namespace Main.Model
                 return false;
             }
         }
+
+        public bool SetEnabledOfCollider(bool enabled)
+        {
+            try
+            {
+                Collider2D.enabled = enabled;
+
+                return true;
+            }
+            catch (System.Exception e)
+            {
+                Debug.LogError(e);
+                return false;
+            }
+        }
     }
 
     /// <summary>
@@ -122,5 +137,11 @@ namespace Main.Model
         /// <param name="attackPoint">攻撃力</param>
         /// <returns>成功／失敗</returns>
         public bool SetAttackPoint(int attackPoint);
+        /// <summary>
+        /// コライダーの有効／無効をセット
+        /// </summary>
+        /// <param name="enabled">有効／無効</param>
+        /// <returns>成功／失敗</returns>
+        public bool SetEnabledOfCollider(bool enabled);
     }
 }

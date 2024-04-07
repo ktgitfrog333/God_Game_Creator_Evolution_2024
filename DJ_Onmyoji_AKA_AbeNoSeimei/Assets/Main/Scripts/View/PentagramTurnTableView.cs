@@ -1,13 +1,11 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
-using DG.Tweening;
 using Main.Audio;
-using Main.Common;
 using UniRx;
 using UniRx.Triggers;
-using Universal.Common;
+using Main.Common;
+using DG.Tweening;
 
 namespace Main.View
 {
@@ -17,40 +15,16 @@ namespace Main.View
     /// Imageコンポーネントへ入力操作を行う
     /// ビュー
     /// </summary>
-    [RequireComponent(typeof(Image))]
-    public class PentagramTurnTableView : MonoBehaviour, IPentagramTurnTableView
+    public class PentagramTurnTableView : PentagramTurnTableCommonView, IPentagramTurnTableView
     {
-        /// <summary>ターンテーブル</summary>
-        [SerializeField] private Image image;
-        /// <summary>オーディオオーナー</summary>
-        private AudioOwner _audioOwner;
-        /// <summary>オーディオオーナー</summary>
-        private AudioOwner AudioOwner
-        {
-            get
-            {
-                if (_audioOwner != null)
-                    return _audioOwner;
-                else
-                {
-                    _audioOwner = MainGameManager.Instance.AudioOwner;
-                    return _audioOwner;
-                }
-            }
-        }
-
-        /// <summary>回転制御においてスティック入力感度の補正値小さいほど鈍く回転して、大きいほど素早く回転する。</summary>
-        [SerializeField, Range(.5f, 10f)] private float angleCorrectionValue;
-        /// <summary>回転制御においてスティック入力感度の補正値小さいほど鈍く回転して、大きいほど素早く回転する。</summary>
-        public float AngleCorrectionValue
-        {
-            get { return angleCorrectionValue; }
-            set { angleCorrectionValue = value; }
-        }
-        /// <summary>トランスフォーム</summary>
-        private Transform _transform;
-        /// <summary>トランスフォーム</summary>
-        private Transform Transform => _transform != null ? _transform : _transform = transform;
+        /// <summary>バックスピン回転数</summary>
+        [SerializeField] private int backSpinCount = 5;
+        /// <summary>演出の再生時間</summary>
+        [SerializeField] private float[] durations = { 1.5f };
+        /// <summary>スリップループ回転角度</summary>
+        [SerializeField] private float slipLoopAngle = 30f;
+        /// <summary>スリップループ用の変更前角度</summary>
+        private Vector3? _fromAngle;
 
         public bool MoveSpin(BgmConfDetails bgmConfDetails)
         {
@@ -124,18 +98,86 @@ namespace Main.View
             }
         }
 
-        private void Reset()
+        public bool SetSpriteIndex(float timeSec, float limitTimeSecMax)
         {
-            image = GetComponent<Image>();
+            return _utility.SetSpriteIndex(image, timeSec, limitTimeSecMax, sprites);
         }
 
-        private void Start()
+        public IEnumerator PlayDirectionBackSpin(System.IObserver<bool> observer, JockeyCommandType jockeyCommandType)
         {
-            var adminDataSingleton = AdminDataSingleton.Instance != null ?
-                AdminDataSingleton.Instance :
-                new GameObject(Universal.Common.ConstGameObjectNames.GAMEOBJECT_NAME_ADMINDATA_SINGLETON).AddComponent<AdminDataSingleton>()
-                    .GetComponent<AdminDataSingleton>();
-            angleCorrectionValue = adminDataSingleton.AdminBean.pentagramTurnTableView.angleCorrectionValue;
+            switch (jockeyCommandType)
+            {
+                case JockeyCommandType.BackSpin:
+                    IntReactiveProperty onNextCnt = new IntReactiveProperty();
+                    onNextCnt.ObserveEveryValueChanged(x => x.Value)
+                        .Subscribe(x =>
+                        {
+                            if (1 < x)
+                                observer.OnNext(true);
+                        });
+                    Observable.FromCoroutine<bool>(observer => _utility.PlayBackSpinAnimation(observer, durations[0], backSpinCount, Transform))
+                        .Subscribe(x =>
+                        {
+                            if (x)
+                                onNextCnt.Value++;
+                        })
+                        .AddTo(gameObject);
+                    // BGMをフェードアウト
+                    Observable.FromCoroutine<bool>(observer => AudioOwner.PlayFadeOut(observer, durations[0]))
+                        .Subscribe(x =>
+                        {
+                            if (x)
+                            {
+                                // 任意の時間帯まで再生時間を戻す
+                                AudioOwner.PlayBack();
+                                onNextCnt.Value++;
+                            }
+                        })
+                        .AddTo(gameObject);
+                    // バックスピンSEを再生
+                    AudioOwner.PlaySFX(ClipToPlay.se_backspin);
+
+                    break;
+                default:
+                    // それ以外のジョッキーコマンドは対象外
+                    break;
+            }
+
+            yield return null;
+        }
+
+        public IEnumerator MoveSpin(System.IObserver<bool> observer, InputSlipLoopState inputSlipLoopState)
+        {
+            var angle = BeatLengthApp.GetTotalReverse(inputSlipLoopState, slipLoopAngle);
+            var beat = AudioOwner.GetBeatBGM();
+            if (_fromAngle == null)
+                _fromAngle = Transform.localEulerAngles;
+            Sequence sequence = DOTween.Sequence();
+            sequence
+                .Append(Transform.DOLocalRotate(_fromAngle.Value + new Vector3(0f, 0f, angle), beat * .3f)
+                    .SetEase(Ease.OutBack)
+                    .From(_fromAngle.Value))
+                .AppendCallback(() => observer.OnNext(true))
+                .Append(Transform.DOLocalRotate(_fromAngle.Value, beat * .7f)
+                    .SetEase(Ease.Linear));
+            AudioOwner.PlayBack(inputSlipLoopState);
+
+            yield return null;
+        }
+
+        public bool ResetFromAngle()
+        {
+            try
+            {
+                _fromAngle = null;
+
+                return true;
+            }
+            catch (System.Exception e)
+            {
+                Debug.LogError(e);
+                return false;
+            }
         }
     }
 
@@ -153,10 +195,37 @@ namespace Main.View
         /// <returns>成功／失敗</returns>
         public bool MoveSpin(BgmConfDetails bgmConfDetails);
         /// <summary>
+        /// UIオブジェクトを回転させる
+        /// 引数を元に角度を変更する
+        /// BGMの拍を戻す処理を呼び出す
+        /// </summary>
+        /// <param name="inputSlipLoopState">スリップループの入力情報</param>
+        /// <returns>成功／失敗</returns>
+        public IEnumerator MoveSpin(System.IObserver<bool> observer, InputSlipLoopState inputSlipLoopState);
+        /// <summary>
         /// ターゲット位置を元に調整
         /// </summary>
         /// <param name="transform">ターゲット情報</param>
         /// <returns>成功／失敗</returns>
         public bool CalibrationToTarget(Transform transform);
+        /// <summary>
+        /// スプライトをセット
+        /// </summary>
+        /// <param name="timeSec">タイマー</param>
+        /// <param name="limitTimeSecMax">制限時間（秒）</param>
+        /// <returns>成功／失敗</returns>
+        public bool SetSpriteIndex(float timeSec, float limitTimeSecMax);
+        /// <summary>
+        /// スリップループ用の変更前角度をリセット
+        /// </summary>
+        /// <returns>成功／失敗</returns>
+        public bool ResetFromAngle();
+        /// <summary>
+        /// バックスピン演出
+        /// </summary>
+        /// <param name="observer">バインド</param>
+        /// <param name="jockeyCommandType">ジョッキーコマンドタイプ</param>
+        /// <returns>コルーチン</returns>
+        public IEnumerator PlayDirectionBackSpin(System.IObserver<bool> observer, JockeyCommandType jockeyCommandType);
     }
 }

@@ -19,6 +19,8 @@ namespace Main.Audio
         [SerializeField] private GameObject sFXChannelPrefab;
         /// <summary>プール用</summary>
         private Transform _transform;
+        /// <summary>プール用</summary>
+        public Transform Transform => _transform != null ? _transform : _transform = transform;
         /// <summary>プール済みのオーディオ情報マップ</summary>
         private Dictionary<ClipToPlay, int> _sfxIdxDictionary = new Dictionary<ClipToPlay, int>();
         /// <summary>ピッチ調整の一時ロック</summary>
@@ -32,8 +34,6 @@ namespace Main.Audio
 
         public void OnStart()
         {
-            if (_transform == null)
-                _transform = transform;
         }
 
         public void PlaySFX(ClipToPlay clipToPlay)
@@ -185,12 +185,11 @@ namespace Main.Audio
             if (!_sfxIdxDictionary.ContainsKey(key))
             {
                 var sfx = Instantiate(sFXChannelPrefab);
-                sfx.transform.parent = _transform;
-                _sfxIdxDictionary.Add(key, _transform.childCount - 1);
+                sfx.transform.parent = Transform;
+                _sfxIdxDictionary.Add(key, Transform.childCount - 1);
                 return sfx.GetComponent<AudioSource>();
             }
-            return _transform.GetChild(_sfxIdxDictionary[key]).GetComponent<AudioSource>();
+            return Transform.GetChild(_sfxIdxDictionary[key]).GetComponent<AudioSource>();
         }
     }
-
 }

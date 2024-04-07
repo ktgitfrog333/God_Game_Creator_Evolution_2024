@@ -9,6 +9,8 @@ TagManager:
   - Bullet
   - ObjectsPool
   - Turret
+  - BossEnemy
+  - EffectsPool
   layers:
   - Default
   - TransparentFX
@@ -46,6 +48,18 @@ TagManager:
   - name: Default
     uniqueID: 0
     locked: 0
+  - name: Background
+    uniqueID: 3300738851
+    locked: 0
   - name: uGUIOnPlayer
     uniqueID: 3056992699
+    locked: 0
+  - name: Player
+    uniqueID: 2216914061
+    locked: 0
+  - name: Enemies
+    uniqueID: 2645493153
+    locked: 0
+  - name: DropItems
+    uniqueID: 137845589
     locked: 0

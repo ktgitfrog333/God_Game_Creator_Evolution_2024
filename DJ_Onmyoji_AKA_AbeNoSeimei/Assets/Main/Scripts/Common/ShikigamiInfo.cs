@@ -30,6 +30,8 @@ namespace Main.Common
             public MainSkill[] mainSkills;
             /// <summary>サブスキル</summary>
             public SubSkill[] subSkills;
+            /// <summary>テンポレベルを元へ戻すまでの時間（秒）</summary>
+            public float tempoLevelRevertTimeSec;
 
             /// <summary>
             /// メインスキル
@@ -63,6 +65,8 @@ namespace Main.Common
         {
             /// <summary>テンポレベル</summary>
             public IReactiveProperty<float> tempoLevel;
+            /// <summary>テンポレベルを元へ戻す状態</summary>
+            public IReactiveProperty<int> tempoLevelRevertState;
         }
     }
 }

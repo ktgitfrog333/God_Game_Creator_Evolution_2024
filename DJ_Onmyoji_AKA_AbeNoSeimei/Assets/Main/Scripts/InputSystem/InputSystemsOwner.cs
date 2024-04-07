@@ -101,6 +101,9 @@ namespace Main.InputSystem
             _inputActions.UI.ReleaseLFader.started += inputUI.OnReleaseLFader;
             _inputActions.UI.ReleaseLFader.performed += inputUI.OnReleaseLFader;
             _inputActions.UI.ReleaseLFader.canceled += inputUI.OnReleaseLFader;
+            _inputActions.UI.Navigate.started += inputUI.OnNavigated;
+            _inputActions.UI.Navigate.performed += inputUI.OnNavigated;
+            _inputActions.UI.Navigate.canceled += inputUI.OnNavigated;
 
             _inputActions.Enable();
 

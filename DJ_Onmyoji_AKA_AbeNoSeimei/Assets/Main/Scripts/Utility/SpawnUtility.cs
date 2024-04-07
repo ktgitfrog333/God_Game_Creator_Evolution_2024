@@ -54,6 +54,22 @@ namespace Main.Utility
             }
         }
 
+        public bool ManageBulletSpawn(ObjectsPoolModel objectsPoolModel, OnmyoBulletConfig config, System.Func<ObjectsPoolModel, OnmyoBulletConfig, bool> actionOfBullet)
+        {
+            try
+            {
+                if (!actionOfBullet(objectsPoolModel, config))
+                    throw new System.Exception("ActionOfBullet");
+                
+                return true;
+            }
+            catch (System.Exception e)
+            {
+                Debug.LogError(e);
+                return false;
+            }
+        }
+
         public bool ManageEnemiesSpawn(EnemiesSpawnTable[] enemiesSpawnTables, ref float elapsedTime, Transform target, ObjectsPoolModel objectsPoolModel, float radiusMin, float radiusMax, float onmyoState)
         {
             try
@@ -160,6 +176,18 @@ namespace Main.Utility
             Vector2 position = new Vector2(target.position.x + distance * Mathf.Cos(angle), target.position.y + distance * Mathf.Sin(angle));
             return position;
         }
+
+        public ObjectsPoolModel FindOrInstantiateForGetObjectsPoolModel(Transform objectsPoolPrefab)
+        {
+            var pool = GameObject.FindGameObjectWithTag(ConstTagNames.TAG_NAME_OBJECTS_POOL);
+            ObjectsPoolModel poolModel;
+            if (pool == null)
+                poolModel = Object.Instantiate(objectsPoolPrefab).GetComponent<ObjectsPoolModel>();
+            else
+                poolModel = pool.GetComponent<ObjectsPoolModel>();
+
+            return poolModel;
+        }
     }
 
     /// <summary>
@@ -180,6 +208,14 @@ namespace Main.Utility
         /// <returns>成功／失敗</returns>
         public bool ManageBulletSpawn(JockeyCommandType jockeyCommandType, float instanceRateTimeSecCorrection, ObjectsPoolModel objectsPoolModel, OnmyoBulletConfig config, ref float elapsedTime, System.Func<ObjectsPoolModel, OnmyoBulletConfig, bool> actionOfBullet);
         /// <summary>
+        /// 魔力弾系のスポーン制御
+        /// </summary>
+        /// <param name="objectsPoolModel">オブジェクトプール</param>
+        /// <param name="config">魔力弾の設定</param>
+        /// <param name="actionOfBullet">魔力弾／円舞範囲／デバフ魔力弾の制御</param>
+        /// <returns>成功／失敗</returns>
+        public bool ManageBulletSpawn(ObjectsPoolModel objectsPoolModel, OnmyoBulletConfig config, System.Func<ObjectsPoolModel, OnmyoBulletConfig, bool> actionOfBullet);
+        /// <summary>
         /// 敵系のスポーン制御
         /// </summary>
         /// <param name="enemiesSpawnTables">敵のスポーンテーブル配列</param>
@@ -191,5 +227,12 @@ namespace Main.Utility
         /// <param name="onmyoState">陰陽（昼夜）の状態</param>
         /// <returns>成功／失敗</returns>
         public bool ManageEnemiesSpawn(EnemiesSpawnTable[] enemiesSpawnTables, ref float elapsedTime, Transform target, ObjectsPoolModel objectsPoolModel, float radiusMin, float radiusMax, float onmyoState);
+        /// <summary>
+        /// オブジェクトプールモデルを取得するために
+        /// 対象オブジェクトを検索または生成
+        /// </summary>
+        /// <param name="objectsPoolPrefab">オブジェクトプール</param>
+        /// <returns>オブジェクトプールモデル</returns>
+        public ObjectsPoolModel FindOrInstantiateForGetObjectsPoolModel(Transform objectsPoolPrefab);
     }
 }

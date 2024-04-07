@@ -18,6 +18,8 @@ namespace Main.View
         public IReactiveProperty<bool> IsAnimationPlaying => _isAnimationPlaying;
         /// <summary>トランスフォーム</summary>
         private Transform _transform;
+        /// <summary>トランスフォーム</summary>
+        public Transform Transform => _transform != null ? _transform : _transform = transform;
         /// <summary>アニメーション再生時間</summary>
         [SerializeField] private float duration = .1f;
         /// <summary>カーソル位置の補正値</summary>
@@ -28,23 +30,48 @@ namespace Main.View
         [SerializeField] private float[] durations = { .75f };
         /// <summary>アニメーション再生中状態</summary>
         private Tweener _isPlayingRoundMoveAnimationState;
+        /// <summary>サイズのオフセット</summary>
+        [SerializeField] private float sizeDeltaOffset = 1f;
 
         public bool SetSelect(Vector3 position)
+        {
+            return Select(position);
+        }
+
+        /// <summary>
+        /// カーソル配置位置の変更
+        /// </summary>
+        /// <param name="position">移動先のポジション</param>
+        /// <returns>成功／失敗</returns>
+        private bool Select(Vector3 position)
         {
             try
             {
                 if (isActiveAndEnabled)
-                {
-                    if (_transform == null)
-                        _transform = transform;
-                    _transform.position = position + positionOffSet;
-                }
+                    Transform.position = position;
 
                 return true;
             }
             catch (System.Exception e)
             {
                 Debug.LogError(e);
+                return false;
+            }
+        }
+
+        public bool SetSelectAndScale(Vector3 position, Vector2 sizeDelta)
+        {
+            try
+            {
+                if (!Select(position))
+                    throw new System.Exception("Select");
+                (Transform as RectTransform).sizeDelta = sizeDelta * sizeDeltaOffset;
+
+                return true;
+            }
+            catch (System.Exception e)
+            {
+                Debug.Log(e);
                 return false;
             }
         }
@@ -172,6 +199,13 @@ namespace Main.View
         /// <param name="position">移動先のポジション</param>
         /// <returns>成功／失敗</returns>
         public bool SetSelect(Vector3 position);
+        /// <summary>
+        /// カーソル配置位置の変更して大きさを拡大
+        /// </summary>
+        /// <param name="position">移動先のポジション</param>
+        /// <param name="sizeDelta">サイズ</param>
+        /// <returns>成功／失敗</returns>
+        public bool SetSelectAndScale(Vector3 position, Vector2 sizeDelta);
         /// <summary>
         /// カーソル移動アニメーション
         /// </summary>

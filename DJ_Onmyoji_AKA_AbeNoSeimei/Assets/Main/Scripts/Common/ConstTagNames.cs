@@ -21,5 +21,7 @@ namespace Main.Common
         public static readonly string TAG_NAME_OBJECTS_POOL = "ObjectsPool";
         /// <summary>タレット</summary>
         public static readonly string TAG_NAME_TURRET = "Turret";
+        /// <summary>ボス敵</summary>
+        public static readonly string TAG_NAME_BOSS_ENEMY = "BossEnemy";
     }
 }

@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Main.Common;
+using UniRx;
 
 namespace Main.Audio
 {
@@ -64,6 +65,29 @@ namespace Main.Audio
         {
             return sfxPlayer.ChangeSpeed(clipToPlay, bgmConfDetails);
         }
+
+        public IEnumerator PlayFadeOut(System.IObserver<bool> observer, float duration)
+        {
+            Observable.FromCoroutine<bool>(observer => bgmPlayer.PlayFadeOut(observer, duration))
+                .Subscribe(_ => observer.OnNext(true))
+                .AddTo(gameObject);
+            yield return null;
+        }
+
+        public void PlayBack()
+        {
+            bgmPlayer.PlayBack();
+        }
+
+        public void PlayBack(InputSlipLoopState inputSlipLoopState)
+        {
+            bgmPlayer.PlayBack(inputSlipLoopState);
+        }
+
+        public float GetBeatBGM()
+        {
+            return bgmPlayer.GetBeatBGM();
+        }
     }
 
     /// <summary>
@@ -121,6 +145,8 @@ namespace Main.Audio
         se_select,
         /// <summary>スクラッチ音_1</summary>
         se_scratch_1,
+        /// <summary>DJのスクラッチ2</summary>
+        se_backspin,
     }
 
     /// <summary>
@@ -138,6 +164,28 @@ namespace Main.Audio
         /// ※ステージ開始時に呼ばれる
         /// </summary>
         public void OnStartAndPlayBGM();
+        /// <summary>
+        /// BGMをフェードアウト
+        /// </summary>
+        /// <param name="observer">バインド</param>
+        /// <param name="duration">再生時間</param>
+        /// <returns>コルーチン</returns>
+        public IEnumerator PlayFadeOut(System.IObserver<bool> observer, float duration);
+        /// <summary>
+        /// BGMを再生する
+        /// </summary>
+        public void PlayBack();
+        /// <summary>
+        /// BGMを再生する
+        /// 引数を元にあるポイントへ位置を移動させる
+        /// </summary>
+        /// <param name="inputSlipLoopState">スリップループの入力情報</param>
+        public void PlayBack(InputSlipLoopState inputSlipLoopState);
+        /// <summary>
+        /// 拍を取得
+        /// </summary>
+        /// <returns>拍</returns>
+        public float GetBeatBGM();
     }
 
     /// <summary>
@@ -145,15 +193,35 @@ namespace Main.Audio
     /// </summary>
     public enum ClipToPlayBGM
     {
-        /// <summary>ステージ1～10のBGM</summary>
+        /// <summary>ステージ1（昼）のBGM</summary>
         bgm_stage_vol1,
-        /// <summary>ステージ11～20のBGM</summary>
+        /// <summary>ステージ2（昼）のBGM</summary>
         bgm_stage_vol2,
-        /// <summary>ステージ21～30のBGM</summary>
+        /// <summary>ステージ3（昼）のBGM</summary>
         bgm_stage_vol3,
-        /// <summary>ステージ31～40のBGM</summary>
+        /// <summary>ステージ4（昼）のBGM</summary>
         bgm_stage_vol4,
-        /// <summary>ステージ41～50のBGM</summary>
+        /// <summary>ステージ5（昼）のBGM</summary>
         bgm_stage_vol5,
+        /// <summary>ステージ6（昼）のBGM</summary>
+        bgm_stage_vol6,
+        /// <summary>ステージ7（昼）のBGM</summary>
+        bgm_stage_vol7,
+        /// <summary>ステージ1（夜）のBGM</summary>
+        bgm_stage_vol8,
+        /// <summary>ステージ2（夜）のBGM</summary>
+        bgm_stage_vol9,
+        /// <summary>ステージ3（夜）のBGM</summary>
+        bgm_stage_vol10,
+        /// <summary>ステージ4（夜）のBGM</summary>
+        bgm_stage_vol11,
+        /// <summary>ステージ5（夜）のBGM</summary>
+        bgm_stage_vol12,
+        /// <summary>ステージ6（夜）のBGM</summary>
+        bgm_stage_vol13,
+        /// <summary>ステージ7（夜）のBGM</summary>
+        bgm_stage_vol14,
+        /// <summary>ボスのBGM</summary>
+        bgm_stage_vol15,
     }
 }

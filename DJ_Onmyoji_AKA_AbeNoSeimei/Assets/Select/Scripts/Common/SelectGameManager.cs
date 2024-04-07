@@ -54,10 +54,14 @@ namespace Select.Common
 
         private void Start()
         {
-            audioOwner.OnStart();
-            presenter.OnStart();
-            cursorVisible.OnStart();
-            sceneOwner.OnStart();
+            if (audioOwner.isActiveAndEnabled)
+                audioOwner.OnStart();
+            if (presenter.isActiveAndEnabled)
+                presenter.OnStart();
+            if (cursorVisible.isActiveAndEnabled)
+                cursorVisible.OnStart();
+            if (sceneOwner.isActiveAndEnabled)
+                sceneOwner.OnStart();
         }
     }
 

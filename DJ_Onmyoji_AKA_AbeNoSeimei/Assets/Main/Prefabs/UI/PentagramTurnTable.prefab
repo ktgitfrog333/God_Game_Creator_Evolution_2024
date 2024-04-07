@@ -63,7 +63,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 0.19607843}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -94,6 +94,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   image: {fileID: 2489806190623033527}
   angleCorrectionValue: 5
+  sprites:
+  - {fileID: 21300000, guid: 8be1b76402ef6da4bb4f46d64944d704, type: 3}
+  - {fileID: 21300000, guid: e48c7f21ba7383049b171947d28fc2be, type: 3}
+  - {fileID: 21300000, guid: d18b9958235b44f40a30b9205cd7960b, type: 3}
+  - {fileID: 21300000, guid: ced91dea13cb0bf468203a195203df12, type: 3}
+  backSpinCount: 5
+  durations:
+  - 1.5
+  slipLoopAngle: 30
 --- !u!114 &8641881819551968395
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -149,11 +158,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8580255158742102449, guid: 597092d8a070ced479c452ef7a7d79ea, type: 3}
       propertyPath: m_SizeDelta.x
-      value: 0.15
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8580255158742102449, guid: 597092d8a070ced479c452ef7a7d79ea, type: 3}
       propertyPath: m_SizeDelta.y
-      value: 1.3499999
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8580255158742102449, guid: 597092d8a070ced479c452ef7a7d79ea, type: 3}
       propertyPath: m_LocalPosition.x
@@ -251,11 +260,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4170371719057285268, guid: b205577798b172c41a83c2781b33da44, type: 3}
       propertyPath: m_SizeDelta.x
-      value: 0.14999998
+      value: 0.3
       objectReference: {fileID: 0}
     - target: {fileID: 4170371719057285268, guid: b205577798b172c41a83c2781b33da44, type: 3}
       propertyPath: m_SizeDelta.y
-      value: 1.3499999
+      value: 1.5
       objectReference: {fileID: 0}
     - target: {fileID: 4170371719057285268, guid: b205577798b172c41a83c2781b33da44, type: 3}
       propertyPath: m_LocalPosition.x
@@ -353,11 +362,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1341848284483502549, guid: c3f0ff38717a15f4488b2834f64bfc63, type: 3}
       propertyPath: m_SizeDelta.x
-      value: 0.14999998
+      value: 0.3
       objectReference: {fileID: 0}
     - target: {fileID: 1341848284483502549, guid: c3f0ff38717a15f4488b2834f64bfc63, type: 3}
       propertyPath: m_SizeDelta.y
-      value: 1.3499999
+      value: 1.5
       objectReference: {fileID: 0}
     - target: {fileID: 1341848284483502549, guid: c3f0ff38717a15f4488b2834f64bfc63, type: 3}
       propertyPath: m_LocalPosition.x

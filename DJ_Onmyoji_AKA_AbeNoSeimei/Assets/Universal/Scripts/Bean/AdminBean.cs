@@ -94,6 +94,7 @@ namespace Universal.Bean
             {
                 limitCandleResorceMax = 10f,
                 rapidRecoveryTimeSec = 40f,
+                rapidRecoveryRate = 1.5f,
             },
         };
 
@@ -130,7 +131,15 @@ namespace Universal.Bean
     public class EnemyModel
     {
         public prop prop = new prop(1f, 3);
-        public DamageSufferedZoneOfEnemyModel damageSufferedZoneOfEnemyModel = new DamageSufferedZoneOfEnemyModel(0f);
+        public DamageSufferedZoneOfEnemyModel damageSufferedZoneOfEnemyModel = new DamageSufferedZoneOfEnemyModel()
+        {
+            invincibleTimeSec = 0f,
+        };
+        public EnemiesProp enemiesProp = new EnemiesProp
+        {
+            soulMoneyPoint = 1,
+            attackPoint = 1,
+        };
     }
 
     [System.Serializable]
@@ -142,6 +151,15 @@ namespace Universal.Bean
         {
             this.invincibleTimeSec = invincibleTimeSec;
         }
+    }
+
+    [System.Serializable]
+    public class EnemiesProp
+    {
+        /// <summary>魂の経験値ポイント</summary>
+        public int soulMoneyPoint;
+        /// <summary>攻撃力</summary>
+        public int attackPoint;
     }
 
     [System.Serializable]
@@ -268,5 +286,6 @@ namespace Universal.Bean
     {
         public float limitCandleResorceMax;
         public float rapidRecoveryTimeSec;
+        public float rapidRecoveryRate;
     }
 }

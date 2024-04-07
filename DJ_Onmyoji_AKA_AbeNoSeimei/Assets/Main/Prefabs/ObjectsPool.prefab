@@ -49,7 +49,6 @@ MonoBehaviour:
   wrapBulletPrefab: {fileID: 7602168238787987095, guid: 6e9f744002eafcd489af94e03e94d125, type: 3}
   danceHallPrefab: {fileID: 6876326360387571097, guid: 761ac3def7997c04f858fb6a5239913a, type: 3}
   graffitiBulletPrefab: {fileID: 2065689569945876403, guid: 71eb2df8991330748bfd00641d1eb038, type: 3}
-  enemyPrefab: {fileID: 3023802622660258064, guid: 5d7044c8d42de1540a3954615dee3f19, type: 3}
   enemiesSpawnAssigns:
   - enemiesID: 0
     enemyPrefab: {fileID: 3023802622660258064, guid: 5d7044c8d42de1540a3954615dee3f19, type: 3}
@@ -59,3 +58,8 @@ MonoBehaviour:
     enemyPrefab: {fileID: 5160813954540995226, guid: 581cdc8c0e70ca14ebe9e7e1ec7af716, type: 3}
   - enemiesID: 3
     enemyPrefab: {fileID: 3424201069143673290, guid: f64cbde276284d842ad304448648bdea, type: 3}
+  - enemiesID: 4
+    enemyPrefab: {fileID: 3424201069143673290, guid: 4a36eb0782e19f9439aef9206790383d, type: 3}
+  - enemiesID: 5
+    enemyPrefab: {fileID: 3424201069143673290, guid: 96384a9b59ef3024c965979fdc5a74f0, type: 3}
+  soulMoneyPrefab: {fileID: 6691567708278716744, guid: e808d3b5e73966b41873d941c71a595a, type: 3}

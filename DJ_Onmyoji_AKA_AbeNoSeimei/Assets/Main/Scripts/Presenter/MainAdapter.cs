@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Main.Common;
 using Main.View;
 using UnityEngine;
 
@@ -14,6 +15,10 @@ namespace Main.Presenter
         /// セットメソッド
         /// </summary>
         bool Set(float timeSec, float limitTimeSecMax);
+        /// <summary>
+        /// セットメソッド
+        /// </summary>
+        bool Set(float timeSec, float limitTimeSecMax, int isTimeOutState);
     }
 
     /// <summary>
@@ -37,6 +42,31 @@ namespace Main.Presenter
         public bool Set(float timeSec, float limitTimeSecMax)
         {
             return view.SetAngle(timeSec, limitTimeSecMax);
+        }
+
+        public bool Set(float timeSec, float limitTimeSecMax, int isTimeOutState)
+        {
+            try
+            {
+                switch ((IsTimeOutState)isTimeOutState)
+                {
+                    case IsTimeOutState.TimeOut:
+                        if (!view.SetAngle(timeSec, limitTimeSecMax))
+                            throw new System.Exception("SetAngle");
+
+                        break;
+                    default:
+                        // それ以外
+                        break;
+                }
+
+                return true;
+            }
+            catch (System.Exception e)
+            {
+                Debug.LogError(e);
+                return false;
+            }
         }
     }
 
@@ -62,6 +92,11 @@ namespace Main.Presenter
         {
             return view.SetHorizontal(timeSec, limitTimeSecMax);
         }
+
+        public bool Set(float timeSec, float limitTimeSecMax, int isTimeOutState)
+        {
+            throw new System.NotImplementedException();
+        }
     }
 
     /// <summary>
@@ -85,6 +120,11 @@ namespace Main.Presenter
         public bool Set(float timeSec, float limitTimeSecMax)
         {
             return view.SetTextImport(timeSec, limitTimeSecMax);
+        }
+
+        public bool Set(float timeSec, float limitTimeSecMax, int isTimeOutState)
+        {
+            throw new System.NotImplementedException();
         }
     }
 }

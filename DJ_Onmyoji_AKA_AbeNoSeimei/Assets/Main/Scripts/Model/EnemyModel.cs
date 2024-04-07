@@ -1,11 +1,12 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Data;
+using DG.Tweening;
 using Main.Utility;
+using Main.View;
 using UniRx;
-using Unity.Collections;
-using UnityEditor;
+using UniRx.Triggers;
 using UnityEngine;
-using Universal.Common;
 
 namespace Main.Model
 {
@@ -23,11 +24,11 @@ namespace Main.Model
         /// <summary>トランスフォーム</summary>
         private Transform _transform;
         /// <summary>トランスフォーム</summary>
-        private Transform Transform => _transform != null ? _transform : _transform = transform;
+        public Transform Transform => _transform != null ? _transform : _transform = transform;
         /// <summary>ターゲット</summary>
         private Transform _target;
         /// <summary>ユーティリティ</summary>
-        private EnemyPlayerModelUtility _utility = new EnemyPlayerModelUtility();
+        protected EnemyPlayerModelUtility _utility = new EnemyPlayerModelUtility();
         /// <summary>プロパティ</summary>
         [SerializeField] private CharacterProp prop;
         /// <summary>ステータス</summary>
@@ -38,6 +39,16 @@ namespace Main.Model
         [SerializeField] private EnemiesID enemiesID;
         /// <summary>敵ID</summary>
         public EnemiesID EnemiesID => enemiesID;
+        /// <summary>敵のプロパティ</summary>
+        [SerializeField] private EnemiesProp enemiesProp;
+        /// <summary>敵のプロパティ</summary>
+        public EnemiesProp EnemiesProp => enemiesProp;
+        /// <summary>共通のユーティリティ</summary>
+        private MainCommonUtility _commonUtility = new MainCommonUtility();
+        /// <summary>追尾用の監視</summary>
+        private System.IDisposable _moveTowardsUpdObservable;
+        /// <summary>死亡用の監視</summary>
+        private System.IDisposable _isDeadSubscription;
 
         public bool Initialize(Vector2 position, Transform target)
         {
@@ -47,9 +58,39 @@ namespace Main.Model
                 Transform.position = position;
                 if (_target == null)
                     _target = target;
-                // TODO:攻撃力のパラメータ追加
-                if (!attackColliderOfEnemy.SetAttackPoint(1))
-                    Debug.LogError("SetAttackPoint");
+
+                return true;
+            }
+            catch (System.Exception e)
+            {
+                Debug.LogError(e);
+                return false;
+            }
+        }
+
+        public bool MoveTowards(Vector3 targetPosition, KingAoandonProp kingAoandonProp)
+        {
+            try
+            {
+                if (_moveTowardsUpdObservable != null)
+                    _moveTowardsUpdObservable.Dispose();
+                var firstActivePosition = Transform.position;
+                float leapLevel = 0f;
+                DOTween.Sequence()
+                    .AppendInterval(kingAoandonProp.instanceDurations[2])
+                    .AppendCallback(() =>
+                    {
+                        if (!SetEnabledOfColliders(true))
+                            throw new System.Exception("SetEnabledOfColliders");
+                    })
+                    .AppendInterval(kingAoandonProp.instanceDurations[3])
+                    .Append(DOTween.To(() => leapLevel, x => leapLevel = x, 1f, kingAoandonProp.instanceDurations[4]));
+                _moveTowardsUpdObservable = this.UpdateAsObservable()
+                    .Subscribe(_ =>
+                    {
+                        if (!_utility.MoveTowardsOfEnemyModel(Transform, ref targetPosition, kingAoandonProp.moveSpeed * Time.deltaTime, firstActivePosition, kingAoandonProp.spinSpeed * Time.deltaTime, ref leapLevel, kingAoandonProp))
+                            throw new System.Exception("MoveTowardsOfEnemyModel");
+                    });
 
                 return true;
             }
@@ -63,18 +104,22 @@ namespace Main.Model
         protected override void Reset()
         {
             damageSufferedZoneModel = GetComponentInChildren<DamageSufferedZoneOfEnemyModel>();
-            prop.moveSpeed = 1f;
-            prop.hpMax = 3;
+            attackColliderOfEnemy = GetComponentInChildren<AttackColliderOfEnemy>();
+            prop.moveSpeed = .25f;
+            prop.hpMax = 2;
+            enemiesProp.soulMoneyPoint = 1;
+            enemiesProp.attackPoint = 1;
         }
 
         protected override void Awake()
         {
-            var adminDataSingleton = AdminDataSingleton.Instance != null ?
-                AdminDataSingleton.Instance :
-                new GameObject(ConstGameObjectNames.GAMEOBJECT_NAME_ADMINDATA_SINGLETON).AddComponent<AdminDataSingleton>()
-                    .GetComponent<AdminDataSingleton>();
-            prop.moveSpeed = adminDataSingleton.AdminBean.enemyModel.prop.moveSpeed;
-            prop.hpMax = adminDataSingleton.AdminBean.enemyModel.prop.hpMax;
+            // TODO:余力あれば管理画面でパラメータ管理
+            // prop.moveSpeed = _commonUtility.AdminDataSingleton.AdminBean.enemyModel.prop.moveSpeed;
+            // prop.hpMax = _commonUtility.AdminDataSingleton.AdminBean.enemyModel.prop.hpMax;
+            // enemiesProp.soulMoneyPoint = _commonUtility.AdminDataSingleton.AdminBean.enemyModel.enemiesProp.soulMoneyPoint;
+            // enemiesProp.attackPoint = _commonUtility.AdminDataSingleton.AdminBean.enemyModel.enemiesProp.attackPoint;
+            if (!attackColliderOfEnemy.SetAttackPoint(enemiesProp.attackPoint))
+                Debug.LogError("SetAttackPoint");
             State = new CharacterState(damageSufferedZoneModel.IsHit, prop.hpMax, damageSufferedZoneModel.Damage);
             base.Awake();
         }
@@ -98,6 +143,17 @@ namespace Main.Model
                     if (x)
                         gameObject.SetActive(false);
                 });
+            var enemyView = GetComponent<EnemyView>();
+            if (enemyView.IsFoundAnimator)
+                this.ObserveEveryValueChanged(_ => Transform.position)
+                    .Pairwise()
+                    .Subscribe(pair =>
+                    {
+                        var moveSpeed = Mathf.Abs(pair.Current.sqrMagnitude - pair.Previous.sqrMagnitude);
+                        if (0f < moveSpeed)
+                            if (!enemyView.PlayWalkingAnimation(moveSpeed))
+                                Debug.LogError("PlayWalkingAnimation");
+                    });
         }
 
         private void FixedUpdate()
@@ -108,6 +164,74 @@ namespace Main.Model
                 var moveDirection = targetDirection.normalized;
                 // 指定された方向と速度に弾を移動させる
                 Transform.position += moveDirection * _moveSpeed * Time.fixedDeltaTime;
+            }
+        }
+
+        public bool SetEnabledOfColliders(bool enabled)
+        {
+            try
+            {
+                if (!damageSufferedZoneModel.SetEnabledOfCollider(enabled))
+                    throw new System.Exception("SetEnabledOfCollider");
+                if (!attackColliderOfEnemy.SetEnabledOfCollider(enabled))
+                    throw new System.Exception("SetEnabledOfCollider");
+
+                return true;
+            }
+            catch (System.Exception e)
+            {
+                Debug.LogError(e);
+                return false;
+            }
+        }
+
+        public bool SubscribeToIsDead(System.IObservable<bool> isDeadObservable, System.Action onDead)
+        {
+            try
+            {
+                // 以前の購読を解除
+                _isDeadSubscription?.Dispose();
+                // 新たな購読を開始
+                _isDeadSubscription = isDeadObservable
+                    .Where(x => x)
+                    .Subscribe(_ => onDead());
+
+                return true;
+            }
+            catch (System.Exception e)
+            {
+                Debug.LogError(e);
+                return false;
+            }
+        }
+
+        public bool DisposeIsDeadSubscription()
+        {
+            try
+            {
+                _isDeadSubscription?.Dispose();
+
+                return true;
+            }
+            catch (System.Exception e)
+            {
+                Debug.LogError(e);
+                return false;
+            }
+        }
+
+        public bool Kill()
+        {
+            try
+            {
+                State.IsDead.Value = true;
+
+                return true;
+            }
+            catch (System.Exception e)
+            {
+                Debug.LogError(e);
+                return false;
             }
         }
     }
@@ -124,6 +248,18 @@ namespace Main.Model
         /// <summary>最大HP</summary>
         [Tooltip("最大HP")]
         public int hpMax;
+    }
+
+    /// <summary>
+    /// 敵のプロパティ
+    /// </summary>
+    [System.Serializable]
+    public struct EnemiesProp
+    {
+        /// <summary>魂の経験値ポイント</summary>
+        public int soulMoneyPoint;
+        /// <summary>攻撃力</summary>
+        public int attackPoint;
     }
 
     /// <summary>
@@ -167,5 +303,35 @@ namespace Main.Model
         /// <param name="target">ターゲット</param>
         /// <returns>成功／失敗</returns>
         public bool Initialize(Vector2 position, Transform target);
+        /// <summary>
+        /// 移動
+        /// </summary>
+        /// <param name="targetPosition">目標位置</param>
+        /// <param name="kingAoandonProp">キング青行灯のプロパティ</param>
+        /// <returns>成功／失敗</returns>
+        public bool MoveTowards(Vector3 targetPosition, KingAoandonProp kingAoandonProp);
+        /// <summary>
+        /// コライダーの有効／無効のセット
+        /// </summary>
+        /// <param name="enabled">有効／無効</param>
+        /// <returns>成功／失敗</returns>
+        public bool SetEnabledOfColliders(bool enabled);
+        /// <summary>
+        /// 死亡したかで購読を発行する
+        /// </summary>
+        /// <param name="isDeadObservable">被監視</param>
+        /// <param name="onDead">死亡時のアクション</param>
+        /// <returns>成功／失敗</returns>
+        public bool SubscribeToIsDead(System.IObservable<bool> isDeadObservable, System.Action onDead);
+        /// <summary>
+        /// 死亡の購読を中断
+        /// </summary>
+        /// <returns>成功／失敗</returns>
+        public bool DisposeIsDeadSubscription();
+        /// <summary>
+        /// キルする
+        /// </summary>
+        /// <returns>成功／失敗</returns>
+        public bool Kill();
     }
 }

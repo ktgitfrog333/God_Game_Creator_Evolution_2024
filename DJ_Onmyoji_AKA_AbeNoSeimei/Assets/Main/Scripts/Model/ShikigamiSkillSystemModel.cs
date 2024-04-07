@@ -30,9 +30,13 @@ namespace Main.Model
         /// <summary>式神の情報</summary>
         public ShikigamiInfo[] ShikigamiInfos => _shikigamiInfos;
         /// <summary>更新の補正値</summary>
-        [SerializeField] private float[] updateCorrected = { 1f, 1f};
+        [SerializeField] private float[] updateCorrected = { 1f, 1f };
         /// <summary>InputSystemのユーティリティ</summary>
         private InputSystemUtility _inputSysUtility = new InputSystemUtility();
+        /// <summary>演出の再生時間</summary>
+        [SerializeField] private float[] durations = { 1.5f, 3.0f };
+        /// <summary>スリップループ時、陰陽砲台のみ特殊レート値</summary>
+        [SerializeField] private float onmyoSlipLoopRate = 15f;
 
         private void Start()
         {
@@ -40,12 +44,18 @@ namespace Main.Model
             var adminDataSingleton = utilityCommon.AdminDataSingleton;
             candleInfo.limitCandleResorceMax = adminDataSingleton.AdminBean.shikigamiSkillSystemModel.candleInfo.limitCandleResorceMax;
             candleInfo.rapidRecoveryTimeSec = adminDataSingleton.AdminBean.shikigamiSkillSystemModel.candleInfo.rapidRecoveryTimeSec;
+            candleInfo.rapidRecoveryRate = adminDataSingleton.AdminBean.shikigamiSkillSystemModel.candleInfo.rapidRecoveryRate;
             candleInfo.CandleResource = new FloatReactiveProperty(candleInfo.LimitCandleResorceMax);
             candleInfo.IsOutCost = new BoolReactiveProperty();
+            candleInfo.rapidRecoveryState = new IntReactiveProperty((int)RapidRecoveryType.None);
+            candleInfo.isStopRecovery = new BoolReactiveProperty();
             var utility = new ShikigamiParameterUtility();
             var shikigamis = utility.GetPentagramTurnTableInfo().slots.Select(q => q.prop.shikigamiInfo).ToArray();
             for (var i = 0; i < shikigamis.Length; i++)
+            {
                 shikigamis[i].state.tempoLevel = new FloatReactiveProperty();
+                shikigamis[i].state.tempoLevelRevertState = new IntReactiveProperty((int)RapidRecoveryType.None);
+            }
             _shikigamiInfos = shikigamis;
             if (!_inputSysUtility.SetCandleResourceAndTempoLevelsInModel(candleInfo, _shikigamiInfos, updateCorrected[0], this))
                 Debug.LogError("SetCandleResourceAndTempoLevels");
@@ -63,12 +73,42 @@ namespace Main.Model
                 switch (jockeyCommandType)
                 {
                     case JockeyCommandType.BackSpin:
-                        if (!_inputSysUtility.ResetCandleResourceAndBuffAllTempoLevelsByPentagram(candleInfo, _shikigamiInfos, this))
+                        if (!_inputSysUtility.ResetCandleResourceAndBuffAllTempoLevelsByPentagram(candleInfo, _shikigamiInfos, durations, this))
                             throw new System.Exception("ResetCandleResourceAndBuffAllTempoLevelsByPentagram");
 
                         break;
                     default:
                         // 他のコマンドはここでは扱わない
+                        break;
+                }
+
+                return true;
+            }
+            catch (System.Exception e)
+            {
+                Debug.LogError(e);
+                return false;
+            }
+        }
+
+        public bool UpdateCandleResourceOfAttackOnmyoTurret()
+        {
+            return _inputSysUtility.UpdateCandleResourceByPentagram(candleInfo, _shikigamiInfos, onmyoSlipLoopRate);
+        }
+
+        public bool SetIsStopRecovery(JockeyCommandType jockeyCommandType)
+        {
+            try
+            {
+                switch (jockeyCommandType)
+                {
+                    case JockeyCommandType.SlipLoop:
+                        candleInfo.isStopRecovery.Value = true;
+
+                        break;
+                    default:
+                        candleInfo.isStopRecovery.Value = false;
+
                         break;
                 }
 
@@ -98,6 +138,27 @@ namespace Main.Model
         public float LimitCandleResorceMax => limitCandleResorceMax;
         /// <summary>急速回復を行う時間（秒）</summary>
         public float rapidRecoveryTimeSec;
+        /// <summary>急速回復効果</summary>
+        public float rapidRecoveryRate;
+        /// <summary>急速回復ステート</summary>
+        public IReactiveProperty<int> rapidRecoveryState { get; set; }
+        /// <summary>回復停止状態か（スリップループのみ使用）</summary>
+        public IReactiveProperty<bool> isStopRecovery;
+    }
+
+    /// <summary>
+    /// 急速回復実行タイプ
+    /// </summary>
+    public enum RapidRecoveryType
+    {
+        /// <summary>なし</summary>
+        None,
+        /// <summary>準備中</summary>
+        Reserve,
+        /// <summary>効果発動中</summary>
+        Doing,
+        /// <summary>完了</summary>
+        Done,
     }
 
     /// <summary>
@@ -122,5 +183,16 @@ namespace Main.Model
         /// <param name="jockeyCommandType">ジョッキーコマンドタイプ</param>
         /// <returns>成功／失敗</returns>
         public bool ForceZeroAndRapidRecoveryCandleResource(JockeyCommandType jockeyCommandType);
+        /// <summary>
+        /// 陰陽砲台の攻撃によるリソース消費更新
+        /// </summary>
+        /// <returns>成功／失敗</returns>
+        public bool UpdateCandleResourceOfAttackOnmyoTurret();
+        /// <summary>
+        /// 回復停止状態か（スリップループのみ使用）をセット
+        /// </summary>
+        /// <param name="jockeyCommandType">ジョッキーコマンドタイプ</param>
+        /// <returns>成功／失敗</returns>
+        public bool SetIsStopRecovery(JockeyCommandType jockeyCommandType);
     }
 }
