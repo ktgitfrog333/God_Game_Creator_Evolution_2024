@@ -13,6 +13,24 @@ namespace Main.Model
     {
         /// <summary>ターゲット</summary>
         private RectTransform _target;
+        /// <summary>ダンス衝撃派エフェクトのプレハブ</summary>
+        [SerializeField] private Transform danceShockwavePrefab;
+        // TODO:エフェクトプールから呼び出すようにする
+
+        //protected override void OnEnable()
+        //{
+        //    base.OnEnable();
+        //    var effectComponent = GetComponentInChildren<ParticleSystem>();
+        //    if (effectComponent == null)
+        //    {
+        //        var effectInstance = Instantiate(danceShockwavePrefab, transform);
+        //        effectInstance.GetComponent<ParticleSystem>().Play();
+        //    }
+        //    else
+        //    {
+        //        effectComponent.Play();
+        //    }
+        //}
 
         public bool Initialize(Vector2 position, Vector3 eulerAngles, OnmyoBulletConfig updateConf)
         {
