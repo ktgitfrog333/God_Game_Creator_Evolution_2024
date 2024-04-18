@@ -37,39 +37,17 @@ namespace Main.View
                 {
                     _danceShockwave = _effectsPoolModel.GetDanceShockwave();
                     updateAsObservable.Dispose();
+                    Transform transform = this.transform;
                     updateAsObservable = this.UpdateAsObservable()
                         .Subscribe(_ => _danceShockwave.position = transform.position);
                     _danceShockwave.gameObject.SetActive(true);
                     var particleSystems = _danceShockwave.GetComponentsInChildren<ParticleSystem>();
                     foreach (var particleSystem in particleSystems)
                         particleSystem.Play();
-                    Observable.FromCoroutine(() => WaitForAllParticlesToStop(particleSystems))
+                    Observable.FromCoroutine(() => _effectsPoolModel.WaitForAllParticlesToStop(particleSystems))
                         .Subscribe(_ => _danceShockwave.gameObject.SetActive(false))
                         .AddTo(gameObject);
                 });
-        }
-
-        /// <summary>
-        /// パーティクルの停止を待機する
-        /// </summary>
-        /// <param name="particleSystems">パーティクルシステム</param>
-        /// <returns>コルーチン</returns>
-        private IEnumerator WaitForAllParticlesToStop(ParticleSystem[] particleSystems)
-        {
-            bool allStopped;
-            do
-            {
-                yield return null; // 1フレーム待つ
-                allStopped = true;
-                foreach (var ps in particleSystems)
-                {
-                    if (ps.isPlaying)
-                    {
-                        allStopped = false;
-                        break;
-                    }
-                }
-            } while (!allStopped);
         }
 
         private void OnDisable()

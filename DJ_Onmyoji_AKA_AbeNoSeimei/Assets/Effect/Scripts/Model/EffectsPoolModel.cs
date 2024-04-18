@@ -29,6 +29,10 @@ namespace Effect.Model
         [SerializeField] private Transform shikigamiWrapExplosionPrefab;
         /// <summary>ラップの爆発</summary>
         private List<ParticleSystem> _shikigamiWrapExplosion = new List<ParticleSystem>();
+        /// <summary>敵のヒットエフェクト</summary>
+        [SerializeField] private Transform hitEffectPrefab;
+        /// <summary>敵のヒットエフェクト</summary>
+        private List<Transform> _hitEffect = new List<Transform>();
 
         private void Start()
         {
@@ -37,6 +41,7 @@ namespace Effect.Model
             {
                 _shikigamiWrapExplosion.Add(InstancePrefabDisabledAndGetClone(shikigamiWrapExplosionPrefab, Transform).GetComponent<ParticleSystem>());
                 _danceShockwave.Add(InstancePrefabDisabledAndGetClone(danceShockwavePrefab, Transform).GetComponent<Transform>());
+                _hitEffect.Add(InstancePrefabDisabledAndGetClone(hitEffectPrefab, Transform).GetComponent<Transform>());
             }
             Debug.Log("プール完了");
             IsCompleted.Value = true;
@@ -84,6 +89,38 @@ namespace Effect.Model
             else
                 return inactiveComponents[0];
         }
+
+        public Transform GetHitEffect()
+        {
+            var inactiveComponents = _hitEffect.Where(q => !q.transform.gameObject.activeSelf).ToArray();
+            if (inactiveComponents.Length < 1)
+            {
+                Debug.LogWarning("プレハブ新規生成");
+                var obj = Instantiate(hitEffectPrefab, Transform);
+                _hitEffect.Add(obj.GetComponent<Transform>());
+                return obj.GetComponent<Transform>();
+            }
+            else
+                return inactiveComponents[0];
+        }
+
+        public IEnumerator WaitForAllParticlesToStop(ParticleSystem[] particleSystems)
+        {
+            bool allStopped;
+            do
+            {
+                yield return null; // 1フレーム待つ
+                allStopped = true;
+                foreach (var ps in particleSystems)
+                {
+                    if (ps.isPlaying)
+                    {
+                        allStopped = false;
+                        break;
+                    }
+                }
+            } while (!allStopped);
+        }
     }
 
     /// <summary>
@@ -103,5 +140,16 @@ namespace Effect.Model
         /// </summary>
         /// <returns>トランスフォーム</returns>
         public Transform GetDanceShockwave();
+        /// <summary>
+        /// 敵のヒットエフェクトを取得
+        /// </summary>
+        /// <returns>トランスフォーム</returns>
+        public Transform GetHitEffect();
+        /// <summary>
+        /// パーティクルの停止を待機する
+        /// </summary>
+        /// <param name="particleSystems">パーティクルシステム</param>
+        /// <returns>コルーチン</returns>
+        public IEnumerator WaitForAllParticlesToStop(ParticleSystem[] particleSystems);
     }
 }
