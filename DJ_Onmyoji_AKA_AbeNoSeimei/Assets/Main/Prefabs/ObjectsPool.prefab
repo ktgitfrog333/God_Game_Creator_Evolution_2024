@@ -62,4 +62,20 @@ MonoBehaviour:
     enemyPrefab: {fileID: 3424201069143673290, guid: 4a36eb0782e19f9439aef9206790383d, type: 3}
   - enemiesID: 5
     enemyPrefab: {fileID: 3424201069143673290, guid: 96384a9b59ef3024c965979fdc5a74f0, type: 3}
+  - enemiesID: 6
+    enemyPrefab: {fileID: 3424201069143673290, guid: 96384a9b59ef3024c965979fdc5a74f0, type: 3}
+  - enemiesID: 7
+    enemyPrefab: {fileID: 3424201069143673290, guid: 56cdcee45edb071449e2489f5111a0f7, type: 3}
+  - enemiesID: 8
+    enemyPrefab: {fileID: 3424201069143673290, guid: c78f914086ce79a429354f3e975c8bd9, type: 3}
+  - enemiesID: 9
+    enemyPrefab: {fileID: 3424201069143673290, guid: b4819b7fb7b5d5c4d9b606d1a8643d21, type: 3}
+  - enemiesID: 10
+    enemyPrefab: {fileID: 3424201069143673290, guid: 5a79f4b9282f88a44bd0ab500d2040ff, type: 3}
+  - enemiesID: 11
+    enemyPrefab: {fileID: 3424201069143673290, guid: 1ab8a0f558f013f46a50b7ac57a21aa8, type: 3}
+  - enemiesID: 12
+    enemyPrefab: {fileID: 3424201069143673290, guid: f1f33327641ff704eafbbb861193918c, type: 3}
+  - enemiesID: 13
+    enemyPrefab: {fileID: 3424201069143673290, guid: 6caa415b86a9e2f4d86851345b2f4383, type: 3}
   soulMoneyPrefab: {fileID: 6691567708278716744, guid: e808d3b5e73966b41873d941c71a595a, type: 3}
