@@ -21,36 +21,114 @@ namespace Effect.Model
         [SerializeField] private int countLimit = 30;
         /// <summary>プール完了</summary>
         public IReactiveProperty<bool> IsCompleted { get; private set; } = new BoolReactiveProperty();
+        /// <summary>ダンスの衝撃波</summary>
+        [SerializeField] private Transform danceShockwavePrefab;
+        /// <summary>ダンスの衝撃波</summary>
+        private List<Transform> _danceShockwave = new List<Transform>();
         /// <summary>ラップの爆発</summary>
         [SerializeField] private Transform shikigamiWrapExplosionPrefab;
         /// <summary>ラップの爆発</summary>
         private List<ParticleSystem> _shikigamiWrapExplosion = new List<ParticleSystem>();
+        /// <summary>敵のヒットエフェクト</summary>
+        [SerializeField] private Transform hitEffectPrefab;
+        /// <summary>敵のヒットエフェクト</summary>
+        private List<Transform> _hitEffect = new List<Transform>();
+        /// <summary>敵がやられた時のエフェクト</summary>
+        [SerializeField] private Transform enemyDownEffectPrefab;
+        /// <summary>敵がやられた時のエフェクト</summary>
+        private List<Transform> _enemyDownEffect = new List<Transform>();
 
         private void Start()
         {
             Debug.Log("プール開始");
             for (int i = 0; i < countLimit; i++)
             {
-                var obj = Instantiate(shikigamiWrapExplosionPrefab, Transform);
-                obj.gameObject.SetActive(false);
-                _shikigamiWrapExplosion.Add(obj.GetComponent<ParticleSystem>());
+                _shikigamiWrapExplosion.Add(InstancePrefabDisabledAndGetClone(shikigamiWrapExplosionPrefab, Transform).GetComponent<ParticleSystem>());
+                _danceShockwave.Add(InstancePrefabDisabledAndGetClone(danceShockwavePrefab, Transform).GetComponent<Transform>());
+                _hitEffect.Add(InstancePrefabDisabledAndGetClone(hitEffectPrefab, Transform).GetComponent<Transform>());
+                _enemyDownEffect.Add(InstancePrefabDisabledAndGetClone(enemyDownEffectPrefab, Transform).GetComponent<Transform>());
             }
             Debug.Log("プール完了");
             IsCompleted.Value = true;
         }
 
+        /// <summary>
+        /// プレハブを元に無効状態で生成
+        /// ゲームオブジェクトを取得
+        /// </summary>
+        /// <param name="prefab">プレハブ</param>
+        /// <param name="parent">親オブジェクト</param>
+        /// <returns>生成後のオブジェクト</returns>
+        private GameObject InstancePrefabDisabledAndGetClone(Transform prefab, Transform parent)
+        {
+            var obj = Instantiate(prefab, parent);
+            obj.gameObject.SetActive(false);
+
+            return obj.gameObject;
+        }
+
         public ParticleSystem GetShikigamiWrapExplosion()
         {
-            var inactiveComponents = _shikigamiWrapExplosion.Where(q => !q.transform.gameObject.activeSelf).ToArray();
-            if (inactiveComponents.Length < 1)
+            return GetEffectComponent(_shikigamiWrapExplosion, shikigamiWrapExplosionPrefab);
+        }
+
+        public Transform GetDanceShockwave()
+        {
+            return GetEffectComponent(_danceShockwave, danceShockwavePrefab);
+        }
+
+        public Transform GetHitEffect()
+        {
+            return GetEffectComponent(_hitEffect, hitEffectPrefab);
+        }
+
+        public Transform GetEnemyDownEffect()
+        {
+            return GetEffectComponent(_enemyDownEffect, enemyDownEffectPrefab);
+        }
+
+        /// <summary>
+        /// エフェクトコンポーネントを取得
+        /// 引数のエフェクトリストからアクティブでないオブジェクトを取得
+        /// 全てアクティブなら新たにインスタンスしてリスト追加して、結果を取得
+        /// </summary>
+        /// <typeparam name="T">エフェクトのトランスフォーム</typeparam>
+        /// <param name="effectList">エフェクトのリスト</param>
+        /// <param name="prefab">エフェクトのプレハブ</param>
+        /// <returns>エフェクトのオブジェクト</returns>
+        private T GetEffectComponent<T>(List<T> effectList, Transform prefab) where T : Component
+        {
+            var inactiveComponent = effectList.FirstOrDefault(comp => !comp.gameObject.activeSelf);
+            if (inactiveComponent == null)
             {
                 Debug.LogWarning("プレハブ新規生成");
-                var obj = Instantiate(shikigamiWrapExplosionPrefab, Transform);
-                _shikigamiWrapExplosion.Add(obj.GetComponent<ParticleSystem>());
-                return obj.GetComponent<ParticleSystem>();
+                var obj = Instantiate(prefab, Transform);
+                var newComponent = obj.GetComponent<T>();
+                effectList.Add(newComponent);
+                return newComponent;
             }
             else
-                return inactiveComponents[0];
+            {
+                return inactiveComponent;
+            }
+        }
+
+        public IEnumerator WaitForAllParticlesToStop(ParticleSystem[] particleSystems)
+        {
+            bool allStopped;
+            do
+            {
+                yield return null; // 1フレーム待つ
+                allStopped = true;
+                foreach (var ps in particleSystems)
+                {
+                    if (ps.isPlaying)
+                    {
+                        allStopped = false;
+                        break;
+                    }
+                }
+            } while (!allStopped);
         }
     }
 
@@ -66,5 +144,26 @@ namespace Effect.Model
         /// </summary>
         /// <returns>パーティクルシステム</returns>
         public ParticleSystem GetShikigamiWrapExplosion();
+        /// <summary>
+        /// ダンスの衝撃波のエフェクトを取得
+        /// </summary>
+        /// <returns>トランスフォーム</returns>
+        public Transform GetDanceShockwave();
+        /// <summary>
+        /// 敵のヒットエフェクトを取得
+        /// </summary>
+        /// <returns>トランスフォーム</returns>
+        public Transform GetHitEffect();
+        /// <summary>
+        /// 敵がやられた時のエフェクトを取得
+        /// </summary>
+        /// <returns>トランスフォーム</returns>
+        public Transform GetEnemyDownEffect();
+        /// <summary>
+        /// パーティクルの停止を待機する
+        /// </summary>
+        /// <param name="particleSystems">パーティクルシステム</param>
+        /// <returns>コルーチン</returns>
+        public IEnumerator WaitForAllParticlesToStop(ParticleSystem[] particleSystems);
     }
 }

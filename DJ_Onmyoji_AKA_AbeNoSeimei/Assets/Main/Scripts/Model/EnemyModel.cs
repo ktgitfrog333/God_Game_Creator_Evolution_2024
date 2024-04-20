@@ -136,14 +136,18 @@ namespace Main.Model
             // プレイヤーから攻撃を受ける
             if (!_utility.UpdateStateHPAndIsDead(State))
                 Debug.LogError("UpdateStateHPAndIsDead");
+            var enemyView = GetComponent<EnemyView>();
             // 死亡判定
             State.IsDead.ObserveEveryValueChanged(x => x.Value)
                 .Subscribe(x =>
                 {
                     if (x)
+                    {
+                        if (!enemyView.PlayEnemyDownEffect())
+                            Debug.LogError("PlayEnemyDownEffect");
                         gameObject.SetActive(false);
+                    }
                 });
-            var enemyView = GetComponent<EnemyView>();
             if (enemyView.IsFoundAnimator)
                 this.ObserveEveryValueChanged(_ => Transform.position)
                     .Pairwise()
@@ -154,6 +158,13 @@ namespace Main.Model
                             if (!enemyView.PlayWalkingAnimation(moveSpeed))
                                 Debug.LogError("PlayWalkingAnimation");
                     });
+            damageSufferedZoneModel.IsHit.ObserveEveryValueChanged(x => x.Value)
+                .Where(x => x)
+                .Subscribe(_ =>
+                {
+                    if (!enemyView.PlayHitEffect())
+                        Debug.LogError("PlayHitEffect");
+                });
         }
 
         private void FixedUpdate()

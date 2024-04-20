@@ -67,6 +67,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 1042771152154514872, guid: 5611dace4c6b51746907311e71c4a6ef, type: 3}
       insertIndex: -1
       addedObject: {fileID: 628235010555504086}
+    - targetCorrespondingSourceObject: {fileID: 1042771152154514872, guid: 5611dace4c6b51746907311e71c4a6ef, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 2928825404735719891}
   m_SourcePrefab: {fileID: 100100000, guid: 5611dace4c6b51746907311e71c4a6ef, type: 3}
 --- !u!114 &5278299387312857452 stripped
 MonoBehaviour:
@@ -107,6 +110,19 @@ MonoBehaviour:
     debuffEffectLifeTime: 0
   searchRangeOfEnemyCollider: {fileID: 8610297079943022321}
   attackColliderOfOnmyoBullet: {fileID: 5278299387312857452}
+--- !u!114 &2928825404735719891
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7099220283841720072}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a660d150c3c311a41bec42b9b10f1bc2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  effectsPoolPrefab: {fileID: 7297453423588510426, guid: 77eaa4844a3c462489170cb107a629a6, type: 3}
 --- !u!114 &8610297079943022321 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 1981652527703505985, guid: 5611dace4c6b51746907311e71c4a6ef, type: 3}
