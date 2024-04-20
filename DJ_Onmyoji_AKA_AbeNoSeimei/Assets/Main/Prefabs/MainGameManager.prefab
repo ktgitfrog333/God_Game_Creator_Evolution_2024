@@ -97,6 +97,7 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 360757283206218720, guid: d8007b7d976ee9f48b210463e0af80f2, type: 3}
   - {fileID: 360757283206218720, guid: ec87aefe31b033b47a13302e0613860c, type: 3}
+  - {fileID: 360757283206218720, guid: 656230e281bf8404faaa3ceac383f444, type: 3}
 --- !u!1 &1827416082
 GameObject:
   m_ObjectHideFlags: 0
@@ -241,20 +242,12 @@ MonoBehaviour:
   gamePauseView: {fileID: 0}
   gamePauseModel: {fileID: 0}
   clearView: {fileID: 0}
-  stageClearView: {fileID: 0}
-  clearContentsRenderingDelayTime: 3000
-  gameProceedButtonView: {fileID: 0}
-  gameProceedButtonModel: {fileID: 0}
   gameRetryButtonView: {fileID: 0}
   gameRetryButtonModel: {fileID: 0}
   gameSelectButtonView: {fileID: 0}
   gameSelectButtonModel: {fileID: 0}
   cursorIconView: {fileID: 0}
   cursorIconModel: {fileID: 0}
-  pushTimeGageViews:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
   gameManualScrollView: {fileID: 0}
   gameManualViewPageViews:
   - {fileID: 0}
@@ -285,7 +278,15 @@ MonoBehaviour:
   sunMoonStateIconView: {fileID: 0}
   pentagramTurnTableModel: {fileID: 0}
   fadersGroupView: {fileID: 0}
-  candleUniversalGaugeViews: []
+  candleUniversalGaugeViews:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  enemyEventSystemModel: {fileID: 0}
+  spawnSoulMoneyModel: {fileID: 0}
+  rewardSelectView: {fileID: 0}
+  rewardSelectModel: {fileID: 0}
+  clearRewardTextContents: {fileID: 0}
 --- !u!1 &1369696454729978949
 GameObject:
   m_ObjectHideFlags: 0

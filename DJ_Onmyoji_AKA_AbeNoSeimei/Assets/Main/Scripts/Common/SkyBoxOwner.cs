@@ -16,14 +16,14 @@ namespace Main.Common
 
         public void OnStart()
         {
-            var temp = new TemplateResourcesAccessory();
-            // ステージIDの取得
-            // ステージ共通設定の取得
-            var userDatas = temp.LoadSaveDatasJsonOfUserBean(ConstResorcesNames.USER_DATA);
-            var adminDatas = temp.LoadSaveDatasJsonOfAdminBean(ConstResorcesNames.ADMIN_DATA);
+            //var temp = new TemplateResourcesAccessory();
+            //// ステージIDの取得
+            //// ステージ共通設定の取得
+            //var userDatas = temp.LoadSaveDatasJsonOfUserBean(ConstResorcesNames.USER_DATA);
+            //var adminDatas = temp.LoadSaveDatasJsonOfAdminBean(ConstResorcesNames.ADMIN_DATA);
 
-            // Skyboxの設定
-            RenderSettings.skybox = skyboxs[adminDatas.skyBoxs[userDatas.sceneId - 1] - 1];
+            //// Skyboxの設定
+            //RenderSettings.skybox = skyboxs[adminDatas.skyBoxs[userDatas.sceneId - 1] - 1];
         }
     }
 }
