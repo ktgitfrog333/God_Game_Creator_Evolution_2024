@@ -136,14 +136,18 @@ namespace Main.Model
             // プレイヤーから攻撃を受ける
             if (!_utility.UpdateStateHPAndIsDead(State))
                 Debug.LogError("UpdateStateHPAndIsDead");
+            var enemyView = GetComponent<EnemyView>();
             // 死亡判定
             State.IsDead.ObserveEveryValueChanged(x => x.Value)
                 .Subscribe(x =>
                 {
                     if (x)
+                    {
+                        if (!enemyView.PlayEnemyDownEffect())
+                            Debug.LogError("PlayEnemyDownEffect");
                         gameObject.SetActive(false);
+                    }
                 });
-            var enemyView = GetComponent<EnemyView>();
             if (enemyView.IsFoundAnimator)
                 this.ObserveEveryValueChanged(_ => Transform.position)
                     .Pairwise()

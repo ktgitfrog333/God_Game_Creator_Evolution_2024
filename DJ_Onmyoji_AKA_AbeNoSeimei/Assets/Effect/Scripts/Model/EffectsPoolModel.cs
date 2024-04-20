@@ -33,6 +33,10 @@ namespace Effect.Model
         [SerializeField] private Transform hitEffectPrefab;
         /// <summary>敵のヒットエフェクト</summary>
         private List<Transform> _hitEffect = new List<Transform>();
+        /// <summary>敵がやられた時のエフェクト</summary>
+        [SerializeField] private Transform enemyDownEffectPrefab;
+        /// <summary>敵がやられた時のエフェクト</summary>
+        private List<Transform> _enemyDownEffect = new List<Transform>();
 
         private void Start()
         {
@@ -42,6 +46,7 @@ namespace Effect.Model
                 _shikigamiWrapExplosion.Add(InstancePrefabDisabledAndGetClone(shikigamiWrapExplosionPrefab, Transform).GetComponent<ParticleSystem>());
                 _danceShockwave.Add(InstancePrefabDisabledAndGetClone(danceShockwavePrefab, Transform).GetComponent<Transform>());
                 _hitEffect.Add(InstancePrefabDisabledAndGetClone(hitEffectPrefab, Transform).GetComponent<Transform>());
+                _enemyDownEffect.Add(InstancePrefabDisabledAndGetClone(enemyDownEffectPrefab, Transform).GetComponent<Transform>());
             }
             Debug.Log("プール完了");
             IsCompleted.Value = true;
@@ -64,44 +69,48 @@ namespace Effect.Model
 
         public ParticleSystem GetShikigamiWrapExplosion()
         {
-            var inactiveComponents = _shikigamiWrapExplosion.Where(q => !q.transform.gameObject.activeSelf).ToArray();
-            if (inactiveComponents.Length < 1)
-            {
-                Debug.LogWarning("プレハブ新規生成");
-                var obj = Instantiate(shikigamiWrapExplosionPrefab, Transform);
-                _shikigamiWrapExplosion.Add(obj.GetComponent<ParticleSystem>());
-                return obj.GetComponent<ParticleSystem>();
-            }
-            else
-                return inactiveComponents[0];
+            return GetEffectComponent(_shikigamiWrapExplosion, shikigamiWrapExplosionPrefab);
         }
 
         public Transform GetDanceShockwave()
         {
-            var inactiveComponents = _danceShockwave.Where(q => !q.transform.gameObject.activeSelf).ToArray();
-            if (inactiveComponents.Length < 1)
-            {
-                Debug.LogWarning("プレハブ新規生成");
-                var obj = Instantiate(danceShockwavePrefab, Transform);
-                _danceShockwave.Add(obj.GetComponent<Transform>());
-                return obj.GetComponent<Transform>();
-            }
-            else
-                return inactiveComponents[0];
+            return GetEffectComponent(_danceShockwave, danceShockwavePrefab);
         }
 
         public Transform GetHitEffect()
         {
-            var inactiveComponents = _hitEffect.Where(q => !q.transform.gameObject.activeSelf).ToArray();
-            if (inactiveComponents.Length < 1)
+            return GetEffectComponent(_hitEffect, hitEffectPrefab);
+        }
+
+        public Transform GetEnemyDownEffect()
+        {
+            return GetEffectComponent(_enemyDownEffect, enemyDownEffectPrefab);
+        }
+
+        /// <summary>
+        /// エフェクトコンポーネントを取得
+        /// 引数のエフェクトリストからアクティブでないオブジェクトを取得
+        /// 全てアクティブなら新たにインスタンスしてリスト追加して、結果を取得
+        /// </summary>
+        /// <typeparam name="T">エフェクトのトランスフォーム</typeparam>
+        /// <param name="effectList">エフェクトのリスト</param>
+        /// <param name="prefab">エフェクトのプレハブ</param>
+        /// <returns>エフェクトのオブジェクト</returns>
+        private T GetEffectComponent<T>(List<T> effectList, Transform prefab) where T : Component
+        {
+            var inactiveComponent = effectList.FirstOrDefault(comp => !comp.gameObject.activeSelf);
+            if (inactiveComponent == null)
             {
                 Debug.LogWarning("プレハブ新規生成");
-                var obj = Instantiate(hitEffectPrefab, Transform);
-                _hitEffect.Add(obj.GetComponent<Transform>());
-                return obj.GetComponent<Transform>();
+                var obj = Instantiate(prefab, Transform);
+                var newComponent = obj.GetComponent<T>();
+                effectList.Add(newComponent);
+                return newComponent;
             }
             else
-                return inactiveComponents[0];
+            {
+                return inactiveComponent;
+            }
         }
 
         public IEnumerator WaitForAllParticlesToStop(ParticleSystem[] particleSystems)
@@ -145,6 +154,11 @@ namespace Effect.Model
         /// </summary>
         /// <returns>トランスフォーム</returns>
         public Transform GetHitEffect();
+        /// <summary>
+        /// 敵がやられた時のエフェクトを取得
+        /// </summary>
+        /// <returns>トランスフォーム</returns>
+        public Transform GetEnemyDownEffect();
         /// <summary>
         /// パーティクルの停止を待機する
         /// </summary>

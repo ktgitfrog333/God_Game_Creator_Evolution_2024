@@ -30,8 +30,10 @@ namespace Main.View
         private EffectUtility _effectUtility = new EffectUtility();
         /// <summary>エフェクトプールモデル</summary>
         private EffectsPoolModel _effectsPoolModel = new EffectsPoolModel();
-        /// <summary>ダンスの衝撃波</summary>
+        /// <summary>敵のヒットエフェクト</summary>
         private Transform _hitEffect;
+        /// <summary>敵がやられた時のエフェクト</summary>
+        private Transform _enemyDownEffect;
 
         private void Reset()
         {
@@ -56,6 +58,7 @@ namespace Main.View
                 .Subscribe(_ =>
                 {
                     _hitEffect = _effectsPoolModel.GetHitEffect();
+                    _enemyDownEffect = _effectsPoolModel.GetEnemyDownEffect();
                 });
         }
 
@@ -68,16 +71,42 @@ namespace Main.View
         {
             try
             {
-                if (_hitEffect == null)
+                // TODO:作成中のため、ペンディング
+                //if (_hitEffect == null)
+                //    return true;
+
+                //var particleSystems = _hitEffect.GetComponentsInChildren<ParticleSystem>();
+                //_hitEffect.position = transform.position;
+                //_hitEffect.gameObject.SetActive(true);
+                //foreach (var particleSystem in particleSystems)
+                //    particleSystem.Play();
+                //Observable.FromCoroutine(() => _effectsPoolModel.WaitForAllParticlesToStop(particleSystems))
+                //    .Subscribe(_ => _hitEffect.gameObject.SetActive(false))
+                //    .AddTo(gameObject);
+
+                return true;
+            }
+            catch (System.Exception e)
+            {
+                Debug.LogError(e);
+                return false;
+            }
+        }
+
+        public bool PlayEnemyDownEffect()
+        {
+            try
+            {
+                if (_enemyDownEffect == null)
                     return true;
 
-                var particleSystems = _hitEffect.GetComponentsInChildren<ParticleSystem>();
-                _hitEffect.position = transform.position;
-                _hitEffect.gameObject.SetActive(true);
+                var particleSystems = _enemyDownEffect.GetComponentsInChildren<ParticleSystem>();
+                _enemyDownEffect.position = transform.position;
+                _enemyDownEffect.gameObject.SetActive(true);
                 foreach (var particleSystem in particleSystems)
                     particleSystem.Play();
                 Observable.FromCoroutine(() => _effectsPoolModel.WaitForAllParticlesToStop(particleSystems))
-                    .Subscribe(_ => _hitEffect.gameObject.SetActive(false))
+                    .Subscribe(_ => _enemyDownEffect.gameObject.SetActive(false))
                     .AddTo(gameObject);
 
                 return true;
@@ -108,5 +137,10 @@ namespace Main.View
         /// </summary>
         /// <returns>成功／失敗</returns>
         public bool PlayHitEffect();
+        /// <summary>
+        /// 敵がやられた時のエフェクトを再生
+        /// </summary>
+        /// <returns>成功／失敗</returns>
+        public bool PlayEnemyDownEffect();
     }
 }
