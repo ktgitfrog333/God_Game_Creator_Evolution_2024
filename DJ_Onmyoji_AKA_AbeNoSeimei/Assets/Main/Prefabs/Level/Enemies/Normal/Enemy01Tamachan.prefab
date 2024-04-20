@@ -83,7 +83,6 @@ MonoBehaviour:
   tags:
   - Bullet
   invincibleTimeSec: 0
-  cirCollider2D: {fileID: 767403995214080615}
 --- !u!1 &3244115084979143052
 GameObject:
   m_ObjectHideFlags: 0
@@ -264,8 +263,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   tags: []
   invincibleTimeSec: 1
-  cirCollider2D: {fileID: 6320770800134237935}
-  cirCollider2DAttack: {fileID: 6320770800134237935}
 --- !u!1 &7776762512387094233
 GameObject:
   m_ObjectHideFlags: 0
@@ -407,3 +404,5 @@ MonoBehaviour:
   scales:
   - 1.1
   - 0.9
+  animatorView: {fileID: 0}
+  effectsPoolPrefab: {fileID: 7297453423588510426, guid: 77eaa4844a3c462489170cb107a629a6, type: 3}

@@ -154,6 +154,13 @@ namespace Main.Model
                             if (!enemyView.PlayWalkingAnimation(moveSpeed))
                                 Debug.LogError("PlayWalkingAnimation");
                     });
+            damageSufferedZoneModel.IsHit.ObserveEveryValueChanged(x => x.Value)
+                .Where(x => x)
+                .Subscribe(_ =>
+                {
+                    if (!enemyView.PlayHitEffect())
+                        Debug.LogError("PlayHitEffect");
+                });
         }
 
         private void FixedUpdate()

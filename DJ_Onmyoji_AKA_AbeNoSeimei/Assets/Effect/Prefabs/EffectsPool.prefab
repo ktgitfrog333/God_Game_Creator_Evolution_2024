@@ -45,4 +45,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   countLimit: 30
+  danceShockwavePrefab: {fileID: 6595143038667555428, guid: 245a623576d8fec47a385936d1b1cfb4, type: 3}
   shikigamiWrapExplosionPrefab: {fileID: 3435150693679526477, guid: 0e31d55bb6219324ab397eb9bea85ca1, type: 3}
+  hitEffectPrefab: {fileID: 4323785488884643653, guid: ab7c6e7a610d171498968d46fa2cd2e4, type: 3}
