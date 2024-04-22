@@ -166,7 +166,7 @@ namespace Main.Utility
             try
             {
                 var basePos = GetRate(timeSec, limitTimeSecMax);
-                var movePos = new Vector2(rectTransform.anchoredPosition.x, (1f - basePos) * (anchorPosMax.y + anchorPosMin.y));
+                var movePos = new Vector2(rectTransform.anchoredPosition.x, Mathf.Lerp(anchorPosMin.y, anchorPosMax.y, basePos));
                 rectTransform.anchoredPosition = movePos;
 
                 return true;

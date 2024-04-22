@@ -14,20 +14,24 @@ namespace Main.View
     {
         /// <summary>ゲージ画像</summary>
         [SerializeField] protected GaugeImage gaugeImage;
+        /// <summary>ゲージ画像（火）</summary>
+        [SerializeField] private GaugeImage gaugeImageFire;
 
         protected virtual void Reset()
         {
-            gaugeImage = GetComponentInChildren<GaugeImage>();
+            gaugeImage = transform.GetChild(0).GetComponent<GaugeImage>();
+            gaugeImageFire = transform.GetChild(1).GetComponent<GaugeImage>();
         }
 
         public bool SetAnchor(float timeSec, float limitTimeSecMax)
         {
-            return gaugeImage.SetAnchor(timeSec, limitTimeSecMax);
+            return gaugeImageFire.SetAnchor(timeSec, limitTimeSecMax);
         }
 
         public bool SetVertical(float timeSec, float limitTimeSecMax)
         {
-            return gaugeImage.SetVertical(timeSec, limitTimeSecMax);
+            return gaugeImage.SetVertical(timeSec, limitTimeSecMax) &&
+                gaugeImageFire.SetAnchor(timeSec, limitTimeSecMax);
         }
     }
 
