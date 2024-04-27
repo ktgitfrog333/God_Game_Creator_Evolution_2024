@@ -77,8 +77,6 @@ namespace Main.Presenter
         [SerializeField] private PentagramTurnTableModel pentagramTurnTableModel;
         /// <summary>フェーダーグループのビュー</summary>
         [SerializeField] private FadersGroupView fadersGroupView;
-        /// <summary>式神レベル管理のビュー（蝋燭リソースの情報に合わせてUIを変化させるビューコンポーネントを再利用）</summary>
-        [SerializeField] private CandleUniversalGaugeView[] candleUniversalGaugeViews;
         /// <summary>敵イベントを管理するのモデル</summary>
         [SerializeField] private EnemyEventSystemModel enemyEventSystemModel;
         /// <summary>魂の経験値スポーンのモデル</summary>
@@ -89,6 +87,8 @@ namespace Main.Presenter
         [SerializeField] private RewardSelectModel rewardSelectModel;
         /// <summary>クリア報酬のコンテンツ</summary>
         [SerializeField] private ClearRewardTextContents clearRewardTextContents;
+        /// <summary>レベル背景のビュー</summary>
+        [SerializeField] private LevelBackgroundView levelBackgroundView;
 
         private void Reset()
         {
@@ -136,17 +136,12 @@ namespace Main.Presenter
             spGaugeView = GameObject.Find("SpGauges").GetComponent<SpGaugeView>();
             sunMoonStateIconView = GameObject.Find("SunMoonStateIcon").GetComponent<SunMoonStateIconView>();
             fadersGroupView = GameObject.Find("FadersGroup").GetComponent<FadersGroupView>();
-            candleUniversalGaugeViews = new CandleUniversalGaugeView[]
-            {
-                GameObject.Find($"Candle{ShikigamiType.Wrap}Gauge").GetComponent<CandleUniversalGaugeView>(),
-                GameObject.Find($"Candle{ShikigamiType.Dance}Gauge").GetComponent<CandleUniversalGaugeView>(),
-                GameObject.Find($"Candle{ShikigamiType.Graffiti}Gauge").GetComponent<CandleUniversalGaugeView>(),
-            };
             enemyEventSystemModel = GameObject.Find("EnemyEventSystem").GetComponent<EnemyEventSystemModel>();
             spawnSoulMoneyModel = GameObject.Find("SpawnSoulMoney").GetComponent<SpawnSoulMoneyModel>();
             rewardSelectView = GameObject.Find("RewardSelect").GetComponent<RewardSelectView>();
             rewardSelectModel = GameObject.Find("RewardSelect").GetComponent<RewardSelectModel>();
             clearRewardTextContents = GameObject.Find("Resources").GetComponentInChildren<ClearRewardTextContents>();
+            levelBackgroundView = GameObject.Find("LevelBackground").GetComponent<LevelBackgroundView>();
         }
 
         public void OnStart()
@@ -570,6 +565,9 @@ namespace Main.Presenter
                                             Debug.LogError("SetOnmyoState");
                                         if (!clearCountdownTimerCircleView.SetColor(x))
                                             Debug.LogError("SetColor");
+                                        Observable.FromCoroutine<bool>(observer => levelBackgroundView.SwitchLayerAndPlayFadeAnimation(observer, x))
+                                            .Subscribe(_ => { })
+                                            .AddTo(gameObject);
                                     });
                             });
                         enemyEventSystemModel.OnEnemyDead.Subscribe(enemyModel =>
@@ -684,11 +682,6 @@ namespace Main.Presenter
                                 foreach (var faderUniversalView in faderUniversalViews)
                                 {
                                     if (!faderUniversalView.SetSliderValue(x, item.Content.prop.type))
-                                        Debug.LogError("SetSliderValue");
-                                }
-                                foreach (var candleUniversalGaugeView in candleUniversalGaugeViews)
-                                {
-                                    if (!candleUniversalGaugeView.SetSliderValue(x, item.Content.prop.type))
                                         Debug.LogError("SetSliderValue");
                                 }
                                 if (!pentagramTurnTableModel.UpdateTempoLvValues(x, item.Content.prop.type))
