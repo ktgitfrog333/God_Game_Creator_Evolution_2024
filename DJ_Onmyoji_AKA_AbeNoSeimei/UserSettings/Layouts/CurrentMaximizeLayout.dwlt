@@ -196,7 +196,7 @@ MonoBehaviour:
   m_MinSize: {x: 200, y: 50}
   m_MaxSize: {x: 16192, y: 8096}
   vertical: 0
-  controlID: 6298
+  controlID: 3025
 --- !u!114 &6
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -853,9 +853,9 @@ MonoBehaviour:
   m_SceneHierarchy:
     m_TreeViewState:
       scrollPos: {x: 0, y: 0}
-      m_SelectedIDs: f2faffffeafaffff
-      m_LastClickedID: -1302
-      m_ExpandedIDs: f6faffff04fbffff
+      m_SelectedIDs: 36f9ffff2ef9ffff
+      m_LastClickedID: -1746
+      m_ExpandedIDs: 3af9ffff16fbffff
       m_RenameOverlay:
         m_UserAcceptedRename: 0
         m_Name: 
@@ -1062,7 +1062,7 @@ MonoBehaviour:
     m_SkipHidden: 0
     m_SearchArea: 1
     m_Folders:
-    - Assets/Effect/Material
+    - Assets/Effect/Prefabs/Level
     m_Globs: []
     m_OriginalText: 
     m_ImportLogFlags: 0
@@ -1070,15 +1070,15 @@ MonoBehaviour:
   m_ViewMode: 1
   m_StartGridSize: 16
   m_LastFolders:
-  - Assets/Effect/Material
+  - Assets/Effect/Prefabs/Level
   m_LastFoldersGridSize: 16
   m_LastProjectPath: C:\Users\hirok\Documents\Unity\God_Game_Creator_Evolution_2024\DJ_Onmyoji_AKA_AbeNoSeimei
   m_LockTracker:
     m_IsLocked: 0
   m_FolderTreeState:
     scrollPos: {x: 0, y: 79}
-    m_SelectedIDs: a2740000
-    m_LastClickedID: 29858
+    m_SelectedIDs: a4740000
+    m_LastClickedID: 29860
     m_ExpandedIDs: 00000000ec730000ee730000f0730000f2730000f473000000ca9a3bffffff7f
     m_RenameOverlay:
       m_UserAcceptedRename: 0
@@ -1132,8 +1132,8 @@ MonoBehaviour:
       m_Icon: {fileID: 0}
       m_ResourceFile: 
   m_ListAreaState:
-    m_SelectedInstanceIDs: f2faffffeafaffff
-    m_LastClickedInstanceID: -1294
+    m_SelectedInstanceIDs: 36f9ffff2ef9ffff
+    m_LastClickedInstanceID: -1738
     m_HadKeyboardFocusLastEvent: 0
     m_ExpandedInstanceIDs: c6230000ea760000ec760000388a00005c8a000058780000f2820000fa8200002080000090870000867400009e810000ee1e0200
     m_RenameOverlay:
