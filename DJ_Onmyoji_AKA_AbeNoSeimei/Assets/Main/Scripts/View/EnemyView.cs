@@ -71,18 +71,17 @@ namespace Main.View
         {
             try
             {
-                // TODO:作成中のため、ペンディング
-                //if (_hitEffect == null)
-                //    return true;
+                if (_hitEffect == null)
+                    return true;
 
-                //var particleSystems = _hitEffect.GetComponentsInChildren<ParticleSystem>();
-                //_hitEffect.position = transform.position;
-                //_hitEffect.gameObject.SetActive(true);
-                //foreach (var particleSystem in particleSystems)
-                //    particleSystem.Play();
-                //Observable.FromCoroutine(() => _effectsPoolModel.WaitForAllParticlesToStop(particleSystems))
-                //    .Subscribe(_ => _hitEffect.gameObject.SetActive(false))
-                //    .AddTo(gameObject);
+                var particleSystems = _hitEffect.GetComponentsInChildren<ParticleSystem>();
+                _hitEffect.position = transform.position;
+                _hitEffect.gameObject.SetActive(true);
+                foreach (var particleSystem in particleSystems)
+                    particleSystem.Play();
+                Observable.FromCoroutine(() => _effectsPoolModel.WaitForAllParticlesToStop(particleSystems))
+                    .Subscribe(_ => _hitEffect.gameObject.SetActive(false))
+                    .AddTo(gameObject);
 
                 return true;
             }
