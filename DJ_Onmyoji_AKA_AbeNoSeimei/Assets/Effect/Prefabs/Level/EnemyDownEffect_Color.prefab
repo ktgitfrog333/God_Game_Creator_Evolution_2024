@@ -4898,7 +4898,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8263214036597188430}
   m_Layer: 0
-  m_Name: HitEffect_Color
+  m_Name: EnemyDownEffect_Color
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
