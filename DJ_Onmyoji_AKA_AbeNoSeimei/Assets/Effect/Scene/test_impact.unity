@@ -416,7 +416,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5702281841483444715, guid: ab7c6e7a610d171498968d46fa2cd2e4, type: 3}
       propertyPath: m_Name
-      value: HitEffect
+      value: EnemyDownEffect
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -494,7 +494,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 5436319630806538023, guid: 075b37e69f578a64abaafd3abde3417f, type: 3}
       propertyPath: m_Name
-      value: HitEffect_Color
+      value: EnemyDownEffect_Color
       objectReference: {fileID: 0}
     - target: {fileID: 8263214036597188430, guid: 075b37e69f578a64abaafd3abde3417f, type: 3}
       propertyPath: m_LocalPosition.x
@@ -551,15 +551,15 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1581955440468241620, guid: f5ec047c93f1e684ca94ea77e2869bdc, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 1373.2887
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1581955440468241620, guid: f5ec047c93f1e684ca94ea77e2869bdc, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 587.464
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1581955440468241620, guid: f5ec047c93f1e684ca94ea77e2869bdc, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 5.548082
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1581955440468241620, guid: f5ec047c93f1e684ca94ea77e2869bdc, type: 3}
       propertyPath: m_LocalRotation.w
@@ -591,11 +591,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6073914944358543869, guid: f5ec047c93f1e684ca94ea77e2869bdc, type: 3}
       propertyPath: m_Name
-      value: EnemyDownEffect
-      objectReference: {fileID: 0}
-    - target: {fileID: 6073914944358543869, guid: f5ec047c93f1e684ca94ea77e2869bdc, type: 3}
-      propertyPath: m_IsActive
-      value: 1
+      value: HitEffect
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
