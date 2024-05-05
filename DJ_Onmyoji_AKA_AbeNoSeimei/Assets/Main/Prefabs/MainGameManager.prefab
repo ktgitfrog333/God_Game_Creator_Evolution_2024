@@ -278,15 +278,13 @@ MonoBehaviour:
   sunMoonStateIconView: {fileID: 0}
   pentagramTurnTableModel: {fileID: 0}
   fadersGroupView: {fileID: 0}
-  candleUniversalGaugeViews:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
   enemyEventSystemModel: {fileID: 0}
   spawnSoulMoneyModel: {fileID: 0}
   rewardSelectView: {fileID: 0}
   rewardSelectModel: {fileID: 0}
   clearRewardTextContents: {fileID: 0}
+  levelBackgroundView: {fileID: 0}
+  clearCountdownTimerGaugeView: {fileID: 0}
 --- !u!1 &1369696454729978949
 GameObject:
   m_ObjectHideFlags: 0

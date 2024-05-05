@@ -89,6 +89,8 @@ namespace Main.Presenter
         [SerializeField] private ClearRewardTextContents clearRewardTextContents;
         /// <summary>レベル背景のビュー</summary>
         [SerializeField] private LevelBackgroundView levelBackgroundView;
+        /// <summary>プレイヤーHPのビュー</summary>
+        [SerializeField] private ClearCountdownTimerGaugeView clearCountdownTimerGaugeView;
 
         private void Reset()
         {
@@ -142,6 +144,7 @@ namespace Main.Presenter
             rewardSelectModel = GameObject.Find("RewardSelect").GetComponent<RewardSelectModel>();
             clearRewardTextContents = GameObject.Find("Resources").GetComponentInChildren<ClearRewardTextContents>();
             levelBackgroundView = GameObject.Find("LevelBackground").GetComponent<LevelBackgroundView>();
+            clearCountdownTimerGaugeView = GameObject.Find("PlayerHP").GetComponent<ClearCountdownTimerGaugeView>();
         }
 
         public void OnStart()
@@ -516,11 +519,14 @@ namespace Main.Presenter
                                                 if (!pentagramTurnTableView.CalibrationToTarget(playerModel.transform))
                                                     Debug.LogError("CalibrationToTarget");
                                         });
+                                    IClearCountdownTimerViewAdapter circleView = new ClearCountdownTimerGaugeViewAdapter(clearCountdownTimerGaugeView);
                                     playerModel.State.HP.ObserveEveryValueChanged(x => x.Value)
                                         .Subscribe(x =>
                                         {
-                                            if (!pentagramTurnTableView.SetSpriteIndex(x, playerModel.State.HPMax))
-                                                Debug.LogError("SetSpriteIndex");
+                                            if (!circleView.Set(x, playerModel.State.HPMax))
+                                                Debug.LogError("Set");
+                                            if (!playerView.PlayHitEffect())
+                                                Debug.LogError("PlayHitEffect");
                                         });
                                     playerModel.State.IsDead.ObserveEveryValueChanged(x => x.Value)
                                         .Subscribe(x =>
