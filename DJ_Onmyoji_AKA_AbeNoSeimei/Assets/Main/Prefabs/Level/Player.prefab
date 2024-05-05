@@ -285,7 +285,6 @@ MonoBehaviour:
   direction: {x: 0, y: 0}
   distance: 0
   previewColor: {r: 0, g: 1, b: 0, a: 1}
-  jumpSpeed: 6
   damageSufferedZoneModel: {fileID: 1227684485841128934}
   prop:
     moveSpeed: 4
@@ -302,3 +301,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7589cc8099e70c64488308f37855bf0e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  effectsPoolPrefab: {fileID: 7297453423588510426, guid: 77eaa4844a3c462489170cb107a629a6, type: 3}

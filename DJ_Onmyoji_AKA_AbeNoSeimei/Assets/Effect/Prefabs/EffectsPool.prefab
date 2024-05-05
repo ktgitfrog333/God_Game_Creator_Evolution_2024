@@ -47,5 +47,5 @@ MonoBehaviour:
   countLimit: 30
   danceShockwavePrefab: {fileID: 6595143038667555428, guid: 245a623576d8fec47a385936d1b1cfb4, type: 3}
   shikigamiWrapExplosionPrefab: {fileID: 3435150693679526477, guid: 0e31d55bb6219324ab397eb9bea85ca1, type: 3}
-  hitEffectPrefab: {fileID: 8263214036597188430, guid: 075b37e69f578a64abaafd3abde3417f, type: 3}
-  enemyDownEffectPrefab: {fileID: 1581955440468241620, guid: f5ec047c93f1e684ca94ea77e2869bdc, type: 3}
+  hitEffectPrefab: {fileID: 1581955440468241620, guid: f5ec047c93f1e684ca94ea77e2869bdc, type: 3}
+  enemyDownEffectPrefab: {fileID: 8263214036597188430, guid: 075b37e69f578a64abaafd3abde3417f, type: 3}
