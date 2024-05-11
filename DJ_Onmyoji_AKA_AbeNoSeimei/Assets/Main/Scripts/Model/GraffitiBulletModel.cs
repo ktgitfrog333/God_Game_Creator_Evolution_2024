@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Main.Common;
 using UniRx;
+using Main.View;
 
 namespace Main.Model
 {
@@ -40,6 +41,23 @@ namespace Main.Model
                 Debug.LogError(e);
                 return false;
             }
+        }
+
+        protected override void Start()
+        {
+            base.Start();
+            var graffitiBulletView = GetComponent<GraffitiBulletView>();
+            if (graffitiBulletView.IsFoundAnimator)
+                this.ObserveEveryValueChanged(_ => Transform.position)
+                    .Pairwise()
+                    .Subscribe(pair =>
+                    {
+                        var moveSpeed = Mathf.Abs(pair.Current.sqrMagnitude - pair.Previous.sqrMagnitude);
+                        if (0f < moveSpeed)
+                            if (!graffitiBulletView.PlayWalkingAnimation(moveSpeed))
+                                Debug.LogError("PlayWalkingAnimation");
+                    });
+
         }
 
         protected override void OnEnable()

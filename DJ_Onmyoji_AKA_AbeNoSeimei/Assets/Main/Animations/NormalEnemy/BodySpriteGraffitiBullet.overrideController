@@ -1,0 +1,15 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!221 &22100000
+AnimatorOverrideController:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: BodySpriteGraffitiBullet
+  m_Controller: {fileID: 9100000, guid: 03517c2af98607040834e75714b14225, type: 2}
+  m_Clips:
+  - m_OriginalClip: {fileID: 7400000, guid: d72f2496c2b3ebe48af4bcbcf80eab75, type: 2}
+    m_OverrideClip: {fileID: 7400000, guid: 5c7abfef5f0a1194c819862db881a34d, type: 2}
+  - m_OriginalClip: {fileID: 7400000, guid: 4581ec8ac23102a4c9b08bafbbdb835b, type: 2}
+    m_OverrideClip: {fileID: 7400000, guid: 47090f551b9f38b4585e3f1ff104a77b, type: 2}
