@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using Main.Common;
+using Main.View;
+using UniRx;
 using UnityEngine;
 
 namespace Main.Model
@@ -11,6 +13,23 @@ namespace Main.Model
     /// </summary>
     public class OnmyoBulletModel : BulletModel, IBulletModel
     {
+        protected override void Start()
+        {
+            base.Start();
+            var onmyoBulletView = GetComponent<OnmyoBulletView>();
+            if (onmyoBulletView.IsFoundAnimator)
+                this.ObserveEveryValueChanged(_ => Transform.position)
+                    .Pairwise()
+                    .Subscribe(pair =>
+                    {
+                        var moveSpeed = Mathf.Abs(pair.Current.sqrMagnitude - pair.Previous.sqrMagnitude);
+                        if (0f < moveSpeed)
+                            if (!onmyoBulletView.PlayWalkingAnimation(moveSpeed))
+                                Debug.LogError("PlayWalkingAnimation");
+                    });
+
+        }
+
         public bool Initialize(Vector2 position, Vector3 eulerAngles, OnmyoBulletConfig updateConf)
         {
             try

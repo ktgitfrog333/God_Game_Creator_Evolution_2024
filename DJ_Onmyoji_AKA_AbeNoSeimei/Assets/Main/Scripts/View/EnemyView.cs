@@ -123,14 +123,8 @@ namespace Main.View
     /// ビュー
     /// インターフェース
     /// </summary>
-    public interface IEnemyView
+    public interface IEnemyView : IMobView
     {
-        /// <summary>
-        /// 歩くアニメーションを再生
-        /// </summary>
-        /// <param name="moveSpeed">移動速度</param>
-        /// <returns>成功／失敗</returns>
-        public bool PlayWalkingAnimation(float moveSpeed);
         /// <summary>
         /// ヒットエフェクトを再生
         /// </summary>
@@ -141,5 +135,20 @@ namespace Main.View
         /// </summary>
         /// <returns>成功／失敗</returns>
         public bool PlayEnemyDownEffect();
+    }
+
+    /// <summary>
+    /// モブ
+    /// ビュー
+    /// インターフェース
+    /// </summary>
+    public interface IMobView
+    {
+        /// <summary>
+        /// 歩くアニメーションを再生
+        /// </summary>
+        /// <param name="moveSpeed">移動速度</param>
+        /// <returns>成功／失敗</returns>
+        public bool PlayWalkingAnimation(float moveSpeed);
     }
 }
