@@ -37,6 +37,10 @@ namespace Effect.Model
         [SerializeField] private Transform enemyDownEffectPrefab;
         /// <summary>敵がやられた時のエフェクト</summary>
         private List<Transform> _enemyDownEffect = new List<Transform>();
+        /// <summary>プレイヤーがやられた時のエフェクト</summary>
+        [SerializeField] private Transform playerDownEffectPrefab;
+        /// <summary>プレイヤーがやられた時のエフェクト</summary>
+        private List<Transform> _playerDownEffect = new List<Transform>();
 
         private void Start()
         {
@@ -47,6 +51,7 @@ namespace Effect.Model
                 _danceShockwave.Add(InstancePrefabDisabledAndGetClone(danceShockwavePrefab, Transform).GetComponent<Transform>());
                 _hitEffect.Add(InstancePrefabDisabledAndGetClone(hitEffectPrefab, Transform).GetComponent<Transform>());
                 _enemyDownEffect.Add(InstancePrefabDisabledAndGetClone(enemyDownEffectPrefab, Transform).GetComponent<Transform>());
+                _playerDownEffect.Add(InstancePrefabDisabledAndGetClone(playerDownEffectPrefab, Transform).GetComponent<Transform>());
             }
             Debug.Log("プール完了");
             IsCompleted.Value = true;
@@ -85,6 +90,11 @@ namespace Effect.Model
         public Transform GetEnemyDownEffect()
         {
             return GetEffectComponent(_enemyDownEffect, enemyDownEffectPrefab);
+        }
+
+        public Transform GetPlayerDownEffect()
+        {
+            return GetEffectComponent(_playerDownEffect, playerDownEffectPrefab);
         }
 
         /// <summary>
@@ -159,6 +169,11 @@ namespace Effect.Model
         /// </summary>
         /// <returns>トランスフォーム</returns>
         public Transform GetEnemyDownEffect();
+        /// <summary>
+        /// プレイヤーがやられた時のエフェクトを取得
+        /// </summary>
+        /// <returns>トランスフォーム</returns>
+        public Transform GetPlayerDownEffect();
         /// <summary>
         /// パーティクルの停止を待機する
         /// </summary>
