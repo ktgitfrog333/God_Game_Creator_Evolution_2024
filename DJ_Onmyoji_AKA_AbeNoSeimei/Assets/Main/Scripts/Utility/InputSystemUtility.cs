@@ -31,7 +31,7 @@ namespace Main.Utility
             try
             {
                 Observable.FromCoroutine<InputSystemsOwner>(observer => UpdateAsObservableOfInputSystemsOwner(observer, model))
-                    .Where(x => x != null)
+                    .Where(x => x != null && Time.timeScale != 0)
                     .Subscribe(x =>
                     {
                         Vector2 currentInput = x.InputUI.Scratch; // 現在の入力を取得
