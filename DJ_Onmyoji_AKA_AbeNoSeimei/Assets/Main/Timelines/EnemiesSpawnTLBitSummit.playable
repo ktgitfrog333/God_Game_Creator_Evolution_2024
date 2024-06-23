@@ -1096,7 +1096,7 @@ MonoBehaviour:
   enemiesSpawnTable:
     instanceRateTimeSec: 1
     instanceCount: 5
-    enemiesIDs: 00000000
+    enemiesIDs: 0f000000
     sunMoonState: 1
 --- !u!114 &8142938349068789555
 MonoBehaviour:
