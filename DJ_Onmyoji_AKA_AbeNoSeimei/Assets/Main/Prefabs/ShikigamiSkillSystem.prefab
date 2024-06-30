@@ -51,6 +51,9 @@ MonoBehaviour:
   updateCorrected:
   - 1
   - 1
+  updateCorrectedMidiJack:
+  - 5
+  - 5
   durations:
   - 1.5
   - 3

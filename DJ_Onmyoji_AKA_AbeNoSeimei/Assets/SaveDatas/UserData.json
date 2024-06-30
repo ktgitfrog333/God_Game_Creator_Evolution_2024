@@ -143,5 +143,6 @@
 			}
 		]
 	},
-	"soulMoney": 0
+	"soulMoney": 0,
+	"inputMode": 2
 }

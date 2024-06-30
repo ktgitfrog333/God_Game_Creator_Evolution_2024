@@ -8,6 +8,7 @@ using UniRx.Triggers;
 using DG.Tweening;
 using Universal.Template;
 using Universal.Common;
+using Main.Utility;
 
 namespace Main.InputSystem
 {
@@ -48,12 +49,17 @@ namespace Main.InputSystem
         [SerializeField] private InputHistroy inputHistroy;
         /// <summary>入力情報の履歴</summary>
         public InputHistroy InputHistroy => inputHistroy;
+        /// <summary>MIDIJack（DDJ-200）の入力を取得</summary>
+        [SerializeField] private InputMidiJackDDJ200 inputMidiJackDDJ200;
+        /// <summary>MIDIJack（DDJ-200）の入力を取得</summary>
+        public InputMidiJackDDJ200 InputMidiJackDDJ200 => inputMidiJackDDJ200;
 
         private void Reset()
         {
             inputPlayer = GetComponent<InputPlayer>();
             inputUI = GetComponent<InputUI>();
             inputHistroy = GetComponent<InputHistroy>();
+            inputMidiJackDDJ200 = GetComponent<InputMidiJackDDJ200>();
         }
 
         public void OnStart()
@@ -108,7 +114,9 @@ namespace Main.InputSystem
             _inputActions.Enable();
 
             _compositeDisposable = new CompositeDisposable();
-            _currentInputMode = new IntReactiveProperty((int)InputMode.Gamepad);
+            var utility = new MainCommonUtility();
+            var userDataSingleton = utility.UserDataSingleton;
+            _currentInputMode = new IntReactiveProperty(userDataSingleton.UserBean.inputMode);
             // 入力モード 0:キーボード 1:コントローラー
             this.UpdateAsObservable()
                 .Subscribe(_ =>
@@ -194,7 +202,13 @@ namespace Main.InputSystem
         {
             try
             {
-                _gamepad.ResetHaptics();
+                if (_currentInputMode != null)
+                {
+                    if (_currentInputMode.Value == (int)InputMode.Gamepad)
+                        _gamepad.ResetHaptics();
+                    else
+                        Debug.LogWarning($"振動機能なしデバイスを使用: [{(InputMode)_currentInputMode.Value}]");
+                }
 
                 return true;
             }
@@ -226,5 +240,7 @@ namespace Main.InputSystem
         Gamepad,
         /// <summary>キーボード</summary>
         Keyboard,
+        /// <summary>DDJ-200</summary>
+        MidiJackDDJ200,
     }
 }
