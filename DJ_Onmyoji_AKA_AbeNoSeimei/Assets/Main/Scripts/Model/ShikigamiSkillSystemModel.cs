@@ -31,6 +31,8 @@ namespace Main.Model
         public ShikigamiInfo[] ShikigamiInfos => _shikigamiInfos;
         /// <summary>更新の補正値</summary>
         [SerializeField] private float[] updateCorrected = { 1f, 1f };
+        /// <summary>更新の補正値（MidiJack）</summary>
+        [SerializeField] private float[] updateCorrectedMidiJack = { 1f, 1f };
         /// <summary>InputSystemのユーティリティ</summary>
         private InputSystemUtility _inputSysUtility = new InputSystemUtility();
         /// <summary>演出の再生時間</summary>
@@ -57,13 +59,13 @@ namespace Main.Model
                 shikigamis[i].state.tempoLevelRevertState = new IntReactiveProperty((int)RapidRecoveryType.None);
             }
             _shikigamiInfos = shikigamis;
-            if (!_inputSysUtility.SetCandleResourceAndTempoLevelsInModel(candleInfo, _shikigamiInfos, updateCorrected[0], this))
+            if (!_inputSysUtility.SetCandleResourceAndTempoLevelsInModel(candleInfo, _shikigamiInfos, updateCorrected[0], updateCorrectedMidiJack[0], this))
                 Debug.LogError("SetCandleResourceAndTempoLevels");
         }
 
         public bool UpdateCandleResource(JockeyCommandType jkeyCmdTypeCurrent, JockeyCommandType jkeyCmdTypePrevious)
         {
-            return _inputSysUtility.UpdateCandleResourceByPentagram(jkeyCmdTypeCurrent, jkeyCmdTypePrevious, candleInfo, updateCorrected[1], this);
+            return _inputSysUtility.UpdateCandleResourceByPentagram(jkeyCmdTypeCurrent, jkeyCmdTypePrevious, candleInfo, updateCorrected[1], updateCorrectedMidiJack[1], this);
         }
 
         public bool ForceZeroAndRapidRecoveryCandleResource(JockeyCommandType jockeyCommandType)
