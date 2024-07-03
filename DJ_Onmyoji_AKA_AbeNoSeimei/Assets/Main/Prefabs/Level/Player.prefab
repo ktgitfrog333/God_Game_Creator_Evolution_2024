@@ -167,6 +167,7 @@ MonoBehaviour:
   tags:
   - Enemy
   invincibleTimeSec: 1
+  shikigamiType: 00000000010000000200000003000000
 --- !u!1 &7897886183892488654
 GameObject:
   m_ObjectHideFlags: 0
