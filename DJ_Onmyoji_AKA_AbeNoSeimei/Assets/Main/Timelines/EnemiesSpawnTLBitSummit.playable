@@ -25,7 +25,7 @@ MonoBehaviour:
     m_Start: 0
     m_ClipIn: 0
     m_Asset: {fileID: 7778680643491133530}
-    m_Duration: 30
+    m_Duration: 20
     m_TimeScale: 1
     m_ParentTrack: {fileID: -8597429784874975564}
     m_EaseInDuration: 0
@@ -91,10 +91,10 @@ MonoBehaviour:
     m_PreExtrapolationTime: 0
     m_DisplayName: EnemiesSpawnClip
   - m_Version: 1
-    m_Start: 30
+    m_Start: 40
     m_ClipIn: 0
     m_Asset: {fileID: -8197720671272480828}
-    m_Duration: 30
+    m_Duration: 20
     m_TimeScale: 1
     m_ParentTrack: {fileID: -8597429784874975564}
     m_EaseInDuration: 0
@@ -417,6 +417,75 @@ MonoBehaviour:
     m_PostExtrapolationTime: 0
     m_PreExtrapolationTime: 0
     m_DisplayName: EnemiesSpawnClip
+  - m_Version: 1
+    m_Start: 20
+    m_ClipIn: 0
+    m_Asset: {fileID: -6037436354814541864}
+    m_Duration: 20
+    m_TimeScale: 1
+    m_ParentTrack: {fileID: -8597429784874975564}
+    m_EaseInDuration: 0
+    m_EaseOutDuration: 0
+    m_BlendInDuration: -1
+    m_BlendOutDuration: -1
+    m_MixInCurve:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 3
+        time: 0
+        value: 0
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
+      - serializedVersion: 3
+        time: 1
+        value: 1
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    m_MixOutCurve:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 3
+        time: 0
+        value: 1
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
+      - serializedVersion: 3
+        time: 1
+        value: 0
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    m_BlendInCurveMode: 0
+    m_BlendOutCurveMode: 0
+    m_ExposedParameterNames: []
+    m_AnimationCurves: {fileID: 0}
+    m_Recordable: 0
+    m_PostExtrapolationMode: 0
+    m_PreExtrapolationMode: 0
+    m_PostExtrapolationTime: 0
+    m_PreExtrapolationTime: 0
+    m_DisplayName: EnemiesSpawnClip
   m_Markers:
     m_Objects: []
 --- !u!114 &-8197720671272480828
@@ -436,8 +505,8 @@ MonoBehaviour:
     defaultValue: {fileID: 0}
   enemiesSpawnTable:
     instanceRateTimeSec: 1
-    instanceCount: 5
-    enemiesIDs: 04000000050000000f000000
+    instanceCount: 2
+    enemiesIDs: 0f000000
     sunMoonState: 1
 --- !u!114 &-6723421374608981707
 MonoBehaviour:
@@ -458,6 +527,26 @@ MonoBehaviour:
     instanceRateTimeSec: 1
     instanceCount: 10
     enemiesIDs: 0400000005000000090000000a000000
+    sunMoonState: 1
+--- !u!114 &-6037436354814541864
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 14ad79d30937a7b4c9b9944943ec07b1, type: 3}
+  m_Name: EnemiesSpawnClip(Clone)(Clone)(Clone)(Clone)
+  m_EditorClassIdentifier: 
+  enemiesSpawnInLevel:
+    exposedName: a0a2a0d6cdff5ac4c9e9f29f09045349
+    defaultValue: {fileID: 0}
+  enemiesSpawnTable:
+    instanceRateTimeSec: 1
+    instanceCount: 3
+    enemiesIDs: 10000000
     sunMoonState: 1
 --- !u!114 &-4870724125835490305
 MonoBehaviour:
@@ -954,7 +1043,7 @@ MonoBehaviour:
   enemiesSpawnTable:
     instanceRateTimeSec: 1
     instanceCount: 7
-    enemiesIDs: 0400000005000000090000000a00000011000000
+    enemiesIDs: 0400000005000000090000000a000000
     sunMoonState: 1
 --- !u!114 &-200842548487817517
 MonoBehaviour:
@@ -1095,8 +1184,8 @@ MonoBehaviour:
     defaultValue: {fileID: 0}
   enemiesSpawnTable:
     instanceRateTimeSec: 1
-    instanceCount: 5
-    enemiesIDs: 10000000
+    instanceCount: 2
+    enemiesIDs: 0f000000
     sunMoonState: 1
 --- !u!114 &8142938349068789555
 MonoBehaviour:
