@@ -139,11 +139,12 @@ namespace Main.Model
             if (inactiveComponents.Length < 1)
             {
                 Debug.LogWarning("プレハブ新規生成");
-                var newComponent = GetClone(prefab, parent).GetComponent<T>();
-                components.Add(newComponent);
-                if (typeof(T) == typeof(EnemyModel))
-                    _onEnemyInstanced.OnNext(newComponent as EnemyModel);
-                return newComponent;
+                // var newComponent = GetClone(prefab, parent).GetComponent<T>();
+                // components.Add(newComponent);
+                // if (typeof(T) == typeof(EnemyModel))
+                //     _onEnemyInstanced.OnNext(newComponent as EnemyModel);
+                // return newComponent;
+                return null;
             }
             else
             {
