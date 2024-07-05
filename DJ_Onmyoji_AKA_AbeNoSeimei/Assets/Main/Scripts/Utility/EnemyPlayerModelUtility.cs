@@ -46,12 +46,21 @@ namespace Main.Utility
 
         public bool IsCompareTagAndUpdateReactiveFlag(Collider2D other, string[] tags, IReactiveProperty<bool> isHit)
         {
-            return 0 < tags.Where(q => other.CompareTag(q))
-            .Select(q => q)
-            .ToArray()
-            .Length &&
-            !isHit.Value;
+            foreach (var tag in tags)
+            {
+                if (other.CompareTag(tag))
+                {
+                    if (!isHit.Value)
+                    {
+                        isHit.Value = true;
+                        return true;
+                    }
+                    return false;
+                }
+            }
+            return false;
         }
+
 
         public bool MoveTowardsOfEnemyModel(Transform enemyTransform, ref Vector3 targetPosition, float moveSpeedBlendDeltaTime, Vector3 firstActivePosition, float spinSpeedBlendDeltaTime, ref float leapLevel, KingAoandonProp kingAoandonProp)
         {
