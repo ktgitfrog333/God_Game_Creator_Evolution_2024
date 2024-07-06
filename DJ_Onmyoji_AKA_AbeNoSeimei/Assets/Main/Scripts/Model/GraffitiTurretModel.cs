@@ -46,8 +46,11 @@ namespace Main.Model
                 {
                     case ShikigamiType.Graffiti:
                         if (_shikigamiInfo.state.tempoLevel != null)
+                        {
                             _shikigamiInfo.state.tempoLevel.Value = tempoLevel;
 
+                            MainGameManager.Instance.AudioOwner.SetEQ(MapValue(tempoLevel), "EQ_LOW");
+                        }
                         break;
                     default:
                         break;
