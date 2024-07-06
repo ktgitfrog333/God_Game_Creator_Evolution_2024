@@ -331,6 +331,14 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8030262654354652867, guid: fa3dd35a5b9f8764db1da1ca923e54f9, type: 3}
+      propertyPath: updateCorrectedMidiJack.Array.data[0]
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 8030262654354652867, guid: fa3dd35a5b9f8764db1da1ca923e54f9, type: 3}
+      propertyPath: updateCorrectedMidiJack.Array.data[1]
+      value: 2
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -1498,6 +1506,10 @@ PrefabInstance:
       propertyPath: gameManualViewPageModels.Array.data[3]
       value: 
       objectReference: {fileID: 1634535772}
+    - target: {fileID: 1369696455142536826, guid: 898ade031a3ce554b8df63abbf1da280, type: 3}
+      propertyPath: Loop
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 1369696456132551609, guid: 898ade031a3ce554b8df63abbf1da280, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
