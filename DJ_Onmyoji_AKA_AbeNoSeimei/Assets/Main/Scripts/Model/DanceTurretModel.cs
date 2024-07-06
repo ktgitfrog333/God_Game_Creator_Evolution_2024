@@ -46,11 +46,11 @@ namespace Main.Model
                 {
                     case ShikigamiType.Dance:
                         if (_shikigamiInfo.state.tempoLevel != null)
+                        {
                             _shikigamiInfo.state.tempoLevel.Value = tempoLevel;
 
-                        //オーラのサイズを変更
-                        if (auraRectTransform != null)
-                            auraRectTransform.sizeDelta = new Vector2(tempoLevel + 1.0f, tempoLevel + 1.0f);
+                            MainGameManager.Instance.AudioOwner.SetEQ(MapValue(tempoLevel), "EQ_MID");
+                        }
                         break;
                     default:
                         break;
