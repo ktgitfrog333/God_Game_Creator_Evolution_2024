@@ -96,6 +96,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: GraffitiTurret
       objectReference: {fileID: 0}
+    - target: {fileID: 7559912414069828042, guid: 7691e9e14c105c24280bd76b731b5100, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: 658fc0d3eb97a3940b079978e4a65b74, type: 3}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -124,3 +128,9 @@ MonoBehaviour:
   objectsPoolPrefab: {fileID: 7497276588651718180, guid: 4434f5da33952be4c941a59c25b13d50, type: 3}
   instanceRateTimeSec: 0.5
   instanceRateTimeSecCorrection: 2
+  auraRectTransform: {fileID: 1297836902204795200}
+--- !u!224 &1297836902204795200 stripped
+RectTransform:
+  m_CorrespondingSourceObject: {fileID: 4243926687547305323, guid: 7691e9e14c105c24280bd76b731b5100, type: 3}
+  m_PrefabInstance: {fileID: 2947503834748011563}
+  m_PrefabAsset: {fileID: 0}

@@ -39,6 +39,8 @@ namespace Main.Model
         protected BulletCompass _bulletCompass;
         /// <summary>共通のユーティリティ</summary>
         protected MainCommonUtility _mainCommonUtility = new MainCommonUtility();
+        /// <summary>オーラサイズ変更用のRectトランスフォーム</summary>
+        [SerializeField] protected RectTransform auraRectTransform;
 
         protected virtual void Awake()
         {
