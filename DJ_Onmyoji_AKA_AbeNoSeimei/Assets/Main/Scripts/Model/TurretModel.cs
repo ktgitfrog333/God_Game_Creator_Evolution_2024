@@ -118,6 +118,18 @@ namespace Main.Model
         }
 
         /// <summary>
+        /// </summary>
+        /// <param name="tempoLevel">入力値</param>
+        /// <returns>補完後の値</returns>
+        protected float MapValue(float tempoLevel)
+        {
+            if (tempoLevel >= 0f)
+                return Mathf.Lerp(1.0f, 2.5f, tempoLevel);
+            else
+                return Mathf.Lerp(1.0f, 0.5f, Mathf.Abs(tempoLevel));
+        }
+
+        /// <summary>
         /// テンポレベルを更新
         /// </summary>
         /// <param name="tempoLevel">テンポレベル</param>

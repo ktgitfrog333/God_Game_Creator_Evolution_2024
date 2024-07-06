@@ -88,6 +88,11 @@ namespace Main.Audio
         {
             return bgmPlayer.GetBeatBGM();
         }
+
+        public void SetEQ(float value, string groupsName)
+        {
+            audioMixer.SetEQ(value, groupsName);
+        }
     }
 
     /// <summary>

@@ -43,8 +43,11 @@ namespace Main.Model
                 {
                     case ShikigamiType.Wrap:
                         if (_shikigamiInfo.state.tempoLevel != null)
+                        {
                             _shikigamiInfo.state.tempoLevel.Value = tempoLevel;
 
+                            MainGameManager.Instance.AudioOwner.SetEQ(MapValue(tempoLevel), "EQ_HI");
+                        }
                         break;
                     default:
                         break;
