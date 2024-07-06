@@ -28,6 +28,10 @@ namespace Main.View
         private EnemiesProp _enemiesProp;
         /// <summary>敵のプロパティ</summary>
         public EnemiesProp EnemiesProp => _enemiesProp;
+        /// <summary>プレイヤーのTransform</summary>
+        private Transform _player;
+        /// <summary>移動速度</summary>
+        public float speed = 5f;
 
         private void Reset()
         {
@@ -37,19 +41,32 @@ namespace Main.View
         private void OnEnable()
         {
             IsGeted.Value = false;
-            StartCoroutine(GeneralUtility.ActionsAfterDelay(durations[0],
-                () => Observable.FromCoroutine<bool>(observer => bodySpriteView.PlayFadeAnimation(observer, Common.EnumFadeState.Close, durations[1]))
-                    .Subscribe(_ =>
-                    {
-                        IsGeted.Value = true;
-                        gameObject.SetActive(false);
-                    })
-                    .AddTo(gameObject)));
+            StartCoroutine(MoveToPlayer());
+        }
+
+        private IEnumerator MoveToPlayer()
+        {
+            if (_player != null) { 
+            while (Vector3.Distance(transform.position, _player.position) > 0.1f)
+            {
+                Vector3 direction = (_player.position - transform.position).normalized;
+                transform.position += direction * speed * Time.deltaTime;
+
+                yield return null; // 次のフレームまで待機
+            }
+
+            // 到着後の処理
+            IsGeted.Value = true;
+            gameObject.SetActive(false);
+        }
         }
 
         private void Start()
         {
             gameObject.SetActive(false);
+            Observable.FromCoroutine<Transform>(observer => WaitForTarget(observer))
+                .Subscribe(x => _player = x)
+                .AddTo(gameObject);
         }
 
         public bool SetEnemiesProp(EnemiesProp enemiesProp)
@@ -65,6 +82,24 @@ namespace Main.View
                 Debug.LogError(e);
                 return false;
             }
+        }
+
+        /// <summary>
+        /// ターゲットが生成されるまで待機
+        /// </summary>
+        /// <param name="observer">トランスフォーム</param>
+        /// <returns>コルーチン</returns>
+        private IEnumerator WaitForTarget(System.IObserver<Transform> observer)
+        {
+            Transform target = null;
+            while (target == null)
+            {
+                var obj = GameObject.FindGameObjectWithTag("Player");
+                if (obj != null)
+                    target = obj.transform;
+                yield return null;
+            }
+            observer.OnNext(target);
         }
     }
 
