@@ -97,8 +97,16 @@ PrefabInstance:
       value: WrapTurret
       objectReference: {fileID: 0}
     - target: {fileID: 7559912414069828042, guid: 7691e9e14c105c24280bd76b731b5100, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: c0f76c48aca4b2a4bb1e443e311f56a8, type: 3}
+    - target: {fileID: 7559912414069828042, guid: 7691e9e14c105c24280bd76b731b5100, type: 3}
       propertyPath: m_Color.a
       value: 0.19607843
+      objectReference: {fileID: 0}
+    - target: {fileID: 7559912414069828042, guid: 7691e9e14c105c24280bd76b731b5100, type: 3}
+      propertyPath: m_Enabled
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -108,17 +116,6 @@ PrefabInstance:
       insertIndex: -1
       addedObject: {fileID: -3108818783214323045}
   m_SourcePrefab: {fileID: 100100000, guid: 7691e9e14c105c24280bd76b731b5100, type: 3}
---- !u!114 &707315053101058515 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 7559912414069828042, guid: 7691e9e14c105c24280bd76b731b5100, type: 3}
-  m_PrefabInstance: {fileID: 7006148575022456857}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &4958497037329723058 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 2732217995522723499, guid: 7691e9e14c105c24280bd76b731b5100, type: 3}
@@ -139,7 +136,6 @@ MonoBehaviour:
   objectsPoolPrefab: {fileID: 7497276588651718180, guid: 4434f5da33952be4c941a59c25b13d50, type: 3}
   instanceRateTimeSec: 0.5
   instanceRateTimeSecCorrection: 2
-  image: {fileID: 707315053101058515}
   auraRectTransform: {fileID: 6620190108351729010}
 --- !u!224 &6620190108351729010 stripped
 RectTransform:
