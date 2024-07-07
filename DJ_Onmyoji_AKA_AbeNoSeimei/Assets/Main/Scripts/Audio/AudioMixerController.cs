@@ -54,5 +54,27 @@ namespace Main.Audio
                 return false;
             }
         }
+
+        /// <summary>
+        /// イコライザの設定
+        /// </summary>
+        /// <param name="value">イコライザに設定する値</param>
+        /// <param name="groupsName">オーディオグループ名</param>
+        /// <returns>成功／失敗</returns>
+        public bool SetEQ(float value, string groupsName)
+        {
+            try
+            {
+                //audioMixerに代入
+                audioMixer.SetFloat(groupsName, value);
+
+                return true;
+            }
+            catch (System.Exception e)
+            {
+                Debug.LogError(e);
+                return false;
+            }
+        }
     }
 }

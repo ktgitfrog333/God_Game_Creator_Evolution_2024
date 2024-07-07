@@ -183,7 +183,7 @@ public class InputMidiJackDDJ200 : MonoBehaviour
     }
 
     /// <summary>クロスフェーダー</summary>
-    private float _mixer8;
+    private float _mixer8 = 1f;
     /// <summary>クロスフェーダー</summary>
     public float Mixer8 => _mixer8;
 

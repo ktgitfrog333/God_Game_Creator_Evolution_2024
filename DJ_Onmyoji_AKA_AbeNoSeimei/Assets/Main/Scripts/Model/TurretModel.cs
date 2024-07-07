@@ -39,6 +39,8 @@ namespace Main.Model
         protected BulletCompass _bulletCompass;
         /// <summary>共通のユーティリティ</summary>
         protected MainCommonUtility _mainCommonUtility = new MainCommonUtility();
+        /// <summary>オーラサイズ変更用のRectトランスフォーム</summary>
+        [SerializeField] protected RectTransform auraRectTransform;
 
         protected virtual void Awake()
         {
@@ -115,6 +117,18 @@ namespace Main.Model
                 Debug.LogError(e);
                 return false;
             }
+        }
+
+        /// <summary>
+        /// </summary>
+        /// <param name="tempoLevel">入力値</param>
+        /// <returns>補完後の値</returns>
+        protected float MapValue(float tempoLevel)
+        {
+            if (tempoLevel >= 0f)
+                return Mathf.Lerp(1.0f, 2.5f, tempoLevel);
+            else
+                return Mathf.Lerp(1.0f, 0.5f, Mathf.Abs(tempoLevel));
         }
 
         /// <summary>
