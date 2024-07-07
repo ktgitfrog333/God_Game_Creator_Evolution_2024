@@ -88,6 +88,16 @@ namespace Main.Audio
         {
             return bgmPlayer.GetBeatBGM();
         }
+
+        public bool SetVolumeOn()
+        {
+            return bgmPlayer.SetVolumeOn();
+        }
+
+        public bool AdjustBGM()
+        {
+            return bgmPlayer.AdjustBGM();
+        }
     }
 
     /// <summary>
@@ -186,6 +196,16 @@ namespace Main.Audio
         /// </summary>
         /// <returns>拍</returns>
         public float GetBeatBGM();
+        /// <summary>
+        /// ボリュームをセット
+        /// </summary>
+        /// <returns>成功／失敗</returns>
+        public bool SetVolumeOn();
+        /// <summary>
+        /// BGMをアジャストする
+        /// </summary>
+        /// <returns>成功／失敗</returns>
+        public bool AdjustBGM();
     }
 
     /// <summary>
