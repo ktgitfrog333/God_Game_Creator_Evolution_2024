@@ -84,6 +84,8 @@ MonoBehaviour:
   - Bullet
   invincibleTimeSec: 0
   shikigamiType: 01000000
+  deadTags:
+  - Player
 --- !u!1 &3244115084979143052
 GameObject:
   m_ObjectHideFlags: 0
