@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Main.Common;
 using UnityEngine;
 using Universal.Common;
+using UniRx;
 
 namespace Main.Model
 {
@@ -11,10 +12,17 @@ namespace Main.Model
     /// </summary>
     public class DamageSufferedZoneOfEnemyModel : DamageSufferedZoneModel
     {
+        /// <summary>即死タグ用</summary>
+        [SerializeField] private string[] deadTags = { ConstTagNames.TAG_NAME_PLAYER };
+        /// <summary>プレイヤーに触れた</summary>
+        public IReactiveProperty<bool> IsHitPlayer { get; private set; } = new BoolReactiveProperty();
+
         private void Reset()
         {
             tags = new string[1];
             tags[0] = ConstTagNames.TAG_NAME_BULLET;
+            deadTags = new string[1];
+            deadTags[0] = ConstTagNames.TAG_NAME_PLAYER;
         }
 
         protected override void Start()
@@ -30,6 +38,16 @@ namespace Main.Model
         protected override void OnTriggerEnter2D(Collider2D other)
         {
             base.OnTriggerEnter2D(other);
+            if (_utility.IsCompareTagAndUpdateReactiveFlag(other, deadTags, IsHit))
+            {
+                IsHitPlayer.Value = true;
+            }
+        }
+
+        protected override void OnDisable()
+        {
+            base.OnDisable();
+            IsHitPlayer.Value = false;
         }
     }
 }
