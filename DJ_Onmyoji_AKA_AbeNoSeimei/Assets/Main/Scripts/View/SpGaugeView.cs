@@ -33,6 +33,20 @@ namespace Main.View
             return gaugeImage.SetVertical(timeSec, limitTimeSecMax) &&
                 gaugeImageFire.SetAnchor(timeSec, limitTimeSecMax);
         }
+
+        public void SetFire(bool isRest)
+        {
+            if (isRest)
+            {
+                gaugeImage.ChangeColor(Color.gray);
+                gaugeImageFire.ChangeColor(Color.black);
+            }
+            else
+            {
+                gaugeImage.ChangeColor(Color.white);
+                gaugeImageFire.ChangeColor(Color.white);
+            }
+        }
     }
 
     /// <summary>

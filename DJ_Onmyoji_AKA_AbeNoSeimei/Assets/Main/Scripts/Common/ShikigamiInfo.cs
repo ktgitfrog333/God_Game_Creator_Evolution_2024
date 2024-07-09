@@ -67,6 +67,8 @@ namespace Main.Common
             public IReactiveProperty<float> tempoLevel;
             /// <summary>テンポレベルを元へ戻す状態</summary>
             public IReactiveProperty<int> tempoLevelRevertState;
+            /// <summary>SPゲージ回復中</summary>
+            public IReactiveProperty<bool> isRest;
         }
     }
 }

@@ -433,7 +433,7 @@ namespace Main.Utility
                 // TODO:updateCorrectedMidiJackの実装 式神強化はイコライザによるものとする
                 if (!subUtility.SetCandleResource(candleInfo, shikigamiInfos, model))
                     throw new System.Exception("SetCandleResource");
-                if (!subUtility.SetTempoLevels(shikigamiInfos, updateCorrected, candleInfo.IsOutCost, model))
+                if (!subUtility.SetTempoLevels(candleInfo, shikigamiInfos, updateCorrected, candleInfo.IsOutCost, model))
                     throw new System.Exception("SetTempoLevels");
 
                 return true;
