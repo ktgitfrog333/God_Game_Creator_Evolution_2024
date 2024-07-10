@@ -626,6 +626,8 @@ namespace Main.Presenter
                         Debug.LogError("SetIsLooping");
                     if (!shikigamiSkillSystemModel.SetIsStopRecovery((JockeyCommandType)pair.Current))
                         Debug.LogError("SetIsStopRecovery");
+                    if (!pentagramTurnTableView.AdjustBGM((JockeyCommandType)pair.Previous, (JockeyCommandType)pair.Current))
+                        Debug.LogError("AdjustBGM");
                 });
             this.UpdateAsObservable()
                 .Select(_ => pentagramSystemModel.InputSlipLoopState.IsLooping)
