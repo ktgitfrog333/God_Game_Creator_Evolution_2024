@@ -32,6 +32,8 @@ namespace Main.View
         private Transform _player;
         /// <summary>移動速度</summary>
         public float speed = 5f;
+        /// <summary>魂の財布、獲得したソウルの管理のモデル</summary>
+        private SoulWalletModel soulWalletModel;
 
         private void Reset()
         {
@@ -58,12 +60,15 @@ namespace Main.View
             // 到着後の処理
             IsGeted.Value = true;
             gameObject.SetActive(false);
-        }
+                
+            soulWalletModel.AddSoulMoney(_enemiesProp.soulMoneyPoint);
+            }
         }
 
         private void Start()
         {
             gameObject.SetActive(false);
+            soulWalletModel = GameObject.Find("SoulWallet").GetComponent<SoulWalletModel>();
             Observable.FromCoroutine<Transform>(observer => WaitForTarget(observer))
                 .Subscribe(x => _player = x)
                 .AddTo(gameObject);
