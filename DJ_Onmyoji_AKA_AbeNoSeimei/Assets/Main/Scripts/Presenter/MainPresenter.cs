@@ -640,6 +640,8 @@ namespace Main.Presenter
                         {
                             if (!x)
                             {
+                                if (!pentagramTurnTableModel.SetMoveDirectionsDefaultOfOnmyoWrapGraffitiTurret())
+                                    Debug.LogError("SetMoveDirectionsDefaultOfOnmyoWrapGraffitiTurret");
                                 if (!pentagramTurnTableView.ResetFromAngle())
                                     Debug.LogError("ResetFromAngle");
                             }
@@ -669,8 +671,6 @@ namespace Main.Presenter
                                                 Debug.LogError("AttackOfOnmyoTurret");
                                             if (!shikigamiSkillSystemModel.UpdateCandleResourceOfAttackOnmyoTurret())
                                                 Debug.LogError("UpdateCandleResourceOfAttackOnmyoTurret");
-                                            if (!pentagramTurnTableModel.SetMoveDirectionsDefaultOfOnmyoWrapGraffitiTurret())
-                                                Debug.LogError("SetMoveDirectionsDefaultOfOnmyoWrapGraffitiTurret");
                                         }
                                     })
                                     .AddTo(gameObject);

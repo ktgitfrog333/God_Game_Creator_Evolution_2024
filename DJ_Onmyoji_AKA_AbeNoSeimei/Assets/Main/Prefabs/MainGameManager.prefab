@@ -450,7 +450,7 @@ MonoBehaviour:
   - {fileID: 8300000, guid: d61a604cd573e354c99e5e73fc6682ec, type: 3}
   - {fileID: 8300000, guid: 99472434ca475e64db53f2a238cfc578, type: 3}
   - {fileID: 8300000, guid: 83b11e912e5ef9e4b8d5292505402f65, type: 3}
-  - {fileID: 8300000, guid: 7c15301f088fbb04d9eb408808892bbe, type: 3}
+  - {fileID: 8300000, guid: a37106fce8a04494789e19164c77cc17, type: 3}
   - {fileID: 8300000, guid: 95b60bf3b9758a74eb397c2cf5ffedf8, type: 3}
   sFXChannelPrefab: {fileID: 1821450510366777210, guid: 13aae3403db5d45428b59ad80eca3da0, type: 3}
   delaies:
