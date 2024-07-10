@@ -51,12 +51,14 @@ namespace Main.Model
             candleInfo.IsOutCost = new BoolReactiveProperty();
             candleInfo.rapidRecoveryState = new IntReactiveProperty((int)RapidRecoveryType.None);
             candleInfo.isStopRecovery = new BoolReactiveProperty();
+            candleInfo.isRest = new BoolReactiveProperty();
             var utility = new ShikigamiParameterUtility();
             var shikigamis = utility.GetPentagramTurnTableInfo().slots.Select(q => q.prop.shikigamiInfo).ToArray();
             for (var i = 0; i < shikigamis.Length; i++)
             {
                 shikigamis[i].state.tempoLevel = new FloatReactiveProperty();
                 shikigamis[i].state.tempoLevelRevertState = new IntReactiveProperty((int)RapidRecoveryType.None);
+                shikigamis[i].state.isRest = new BoolReactiveProperty(false);
             }
             _shikigamiInfos = shikigamis;
             if (!_inputSysUtility.SetCandleResourceAndTempoLevelsInModel(candleInfo, _shikigamiInfos, updateCorrected[0], updateCorrectedMidiJack[0], this))
@@ -146,6 +148,8 @@ namespace Main.Model
         public IReactiveProperty<int> rapidRecoveryState { get; set; }
         /// <summary>回復停止状態か（スリップループのみ使用）</summary>
         public IReactiveProperty<bool> isStopRecovery;
+        /// <summary>SPゲージ回復中</summary>
+        public IReactiveProperty<bool> isRest;
     }
 
     /// <summary>

@@ -26,7 +26,7 @@ namespace Main.Model
         [SerializeField] protected float invincibleTimeSec = 1f;
         [SerializeField] private ShikigamiType[] shikigamiType;
         /// <summary>ユーティリティ</summary>
-        private EnemyPlayerModelUtility _utility = new EnemyPlayerModelUtility();
+        protected EnemyPlayerModelUtility _utility = new EnemyPlayerModelUtility();
         /// <summary>2Dコライダー</summary>
         private CircleCollider2D _collider2D;
         /// <summary>2Dコライダー</summary>

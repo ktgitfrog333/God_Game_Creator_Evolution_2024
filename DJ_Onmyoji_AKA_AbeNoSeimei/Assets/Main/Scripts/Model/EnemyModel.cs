@@ -165,6 +165,13 @@ namespace Main.Model
                     if (!enemyView.PlayHitEffect())
                         Debug.LogError("PlayHitEffect");
                 });
+            damageSufferedZoneModel.IsHitPlayer.ObserveEveryValueChanged(x => x.Value)
+                .Where(x => x)
+                .Subscribe(_ =>
+                {
+                    enemiesProp.soulMoneyPoint = 0;
+                    State.IsDead.Value = true;
+                });
         }
 
         private void FixedUpdate()

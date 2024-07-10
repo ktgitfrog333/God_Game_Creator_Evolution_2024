@@ -54,7 +54,22 @@ namespace Main.Utility
                         .Subscribe(_ =>
                         {
                             float costSum = 0f;
-                            costSum = _inputSystemUtility.GetCalcCostSum(costSum, shikigamiInfos, candleInfo);
+                            if (candleInfo.isRest.Value)
+                            {
+                               if (candleInfo.CandleResource.Value >= 10.0f)
+                                {
+                                    foreach (var item in shikigamiInfos)
+                                    {
+                                        item.state.isRest.Value = false;
+                                    }
+                                    candleInfo.isRest.Value = false;
+                                }
+                                costSum = -2.5f;
+                            }
+                            else
+                            {
+                                costSum = _inputSystemUtility.GetCalcCostSum(costSum, shikigamiInfos, candleInfo);
+                            }
                             if (!_inputSystemUtility.UpdateCandleResource(candleInfo, costSum * Time.deltaTime))
                                 Debug.LogError("UpdateCandleResource");
                         });
@@ -68,7 +83,7 @@ namespace Main.Utility
                 }
             }
 
-            public bool SetTempoLevels(ShikigamiInfo[] shikigamiInfos, float updateCorrected, IReactiveProperty<bool> isOutCost, ShikigamiSkillSystemModel model)
+            public bool SetTempoLevels(CandleInfo candleInfo, ShikigamiInfo[] shikigamiInfos, float updateCorrected, IReactiveProperty<bool> isOutCost, ShikigamiSkillSystemModel model)
             {
                 try
                 {
@@ -130,7 +145,12 @@ namespace Main.Utility
                                     modelUpdObservable[i].Dispose();
                                 // 残リソースが無し
                                 foreach (var item in shikigamiInfos)
-                                    item.state.tempoLevel.Value = MIN;
+                                {
+                                    if(item.prop.type != ShikigamiType.OnmyoTurret)
+                                        item.state.tempoLevel.Value = MIN;
+                                    item.state.isRest.Value = true;
+                                }
+                                candleInfo.isRest.Value = true;
                             }
                         });
                     Observable.FromCoroutine<InputSystemsOwner>(observer => _inputSystemUtility.UpdateAsObservableOfInputSystemsOwner(observer, model))
@@ -333,12 +353,13 @@ namespace Main.Utility
             /// <summary>
             /// レベルを変更
             /// </summary>
+            /// <param name="candleInfo">蠟燭の情報</param>
             /// <param name="shikigamiInfos">式神の情報</param>
             /// <param name="updateCorrected">更新の補正値</param>
             /// <param name="isOutCost">リソース切れか</param>
             /// <param name="model">式神スキル管理システムモデル</param>
             /// <returns>成功／失敗</returns>
-            public bool SetTempoLevels(ShikigamiInfo[] shikigamiInfos, float updateCorrected, IReactiveProperty<bool> isOutCost, ShikigamiSkillSystemModel model);
+            public bool SetTempoLevels(CandleInfo candleInfo, ShikigamiInfo[] shikigamiInfos, float updateCorrected, IReactiveProperty<bool> isOutCost, ShikigamiSkillSystemModel model);
         }
     }
 }
