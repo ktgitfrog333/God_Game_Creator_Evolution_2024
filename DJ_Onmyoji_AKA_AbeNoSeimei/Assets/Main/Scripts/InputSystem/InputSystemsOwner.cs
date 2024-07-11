@@ -117,20 +117,6 @@ namespace Main.InputSystem
             var utility = new MainCommonUtility();
             var userDataSingleton = utility.UserDataSingleton;
             _currentInputMode = new IntReactiveProperty(userDataSingleton.UserBean.inputMode);
-            // 入力モード 0:キーボード 1:コントローラー
-            this.UpdateAsObservable()
-                .Subscribe(_ =>
-                {
-                    if (Keyboard.current != null && Keyboard.current.anyKey.wasPressedThisFrame)
-                    {
-                        _currentInputMode.Value = (int)InputMode.Keyboard;
-                    }
-                    else if (Gamepad.current != null && Gamepad.current.wasUpdatedThisFrame)
-                    {
-                        _currentInputMode.Value = (int)InputMode.Gamepad;
-                    }
-                })
-                .AddTo(_compositeDisposable);
             // ゲームパッドの情報をセット
             _gamepad = Gamepad.current;
 
