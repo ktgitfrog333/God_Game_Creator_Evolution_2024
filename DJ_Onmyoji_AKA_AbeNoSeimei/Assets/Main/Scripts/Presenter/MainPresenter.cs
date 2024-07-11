@@ -590,12 +590,13 @@ namespace Main.Presenter
                         spawnSoulMoneyModel.OnSoulMoneyGeted
                            .Subscribe(soulMoney =>
                            {
-                               if (soulMoney.IsGeted.Value)
-                               {
-                                   var soulMoneyPoint = soulWalletModel.AddSoulMoney(soulMoney.EnemiesProp.soulMoneyPoint);
-                                   if (soulMoneyPoint < 0)
-                                       Debug.LogError("AddSoulMoney");
-                               }
+                               //if (soulMoney.IsGeted.Value)
+                               //{
+                               //    var soulMoneyPoint = soulWalletModel.AddSoulMoney(soulMoney.EnemiesProp.soulMoneyPoint);
+                               //    //Debug.Log(soulMoney.EnemiesProp.soulMoneyPoint);
+                               //    if (soulMoneyPoint < 0)
+                               //        Debug.LogError("AddSoulMoney");
+                               //}
                            })
                            .AddTo(gameObject); // UniRxのAddToを使用して、このGameObjectが破棄されたときに購読を自動的に解除
                         if (!soulWalletModel.SetIsUnLockUpdateOfSoulMoney(x))
