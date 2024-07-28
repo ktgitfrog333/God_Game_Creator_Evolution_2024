@@ -32,7 +32,7 @@ namespace Main.View
             {
                 if (!ControllAudio(bgmConfDetails))
                     throw new System.Exception("ControllAudio");
-                float angle = bgmConfDetails.InputValue * -1f * angleCorrectionValue;
+                float angle = bgmConfDetails.InputValue * -0.3f * angleCorrectionValue;
                 image.transform.Rotate(new Vector3(0f, 0f, angle));
                 return true;
             }
@@ -128,8 +128,8 @@ namespace Main.View
                         {
                             if (x)
                             {
-                                // 任意の時間帯まで再生時間を戻す
-                                AudioOwner.PlayBack();
+                                if (!AudioOwner.SetVolumeOn())
+                                    Debug.LogError("SetVolumeOn");
                                 onNextCnt.Value++;
                             }
                         })
@@ -177,6 +177,23 @@ namespace Main.View
             {
                 Debug.LogError(e);
                 return false;
+            }
+        }
+
+        public bool AdjustBGM(JockeyCommandType jockeyCommandTypePrevious, JockeyCommandType jockeyCommandTypeCurrent)
+        {
+            switch (jockeyCommandTypePrevious)
+            {
+                case JockeyCommandType.SlipLoop:
+                    switch (jockeyCommandTypeCurrent)
+                    {
+                        case JockeyCommandType.SlipLoop:
+                            return true;
+                        default:
+                            return AudioOwner.AdjustBGM();
+                    }
+                default:
+                    return true;
             }
         }
     }
@@ -227,5 +244,13 @@ namespace Main.View
         /// <param name="jockeyCommandType">ジョッキーコマンドタイプ</param>
         /// <returns>コルーチン</returns>
         public IEnumerator PlayDirectionBackSpin(System.IObserver<bool> observer, JockeyCommandType jockeyCommandType);
+        /// <summary>
+        /// BGMをアジャストする
+        /// 直前がループだったが元へ戻った場合はBGMのタイムラインをアジャストする
+        /// </summary>
+        /// <param name="jockeyCommandTypePrevious">（直前の入力）ジョッキーコマンドタイプ</param>
+        /// <param name="jockeyCommandTypeCurrent">（現在の入力）ジョッキーコマンドタイプ</param>
+        /// <returns>成功／失敗</returns>
+        public bool AdjustBGM(JockeyCommandType jockeyCommandTypePrevious, JockeyCommandType jockeyCommandTypeCurrent);
     }
 }

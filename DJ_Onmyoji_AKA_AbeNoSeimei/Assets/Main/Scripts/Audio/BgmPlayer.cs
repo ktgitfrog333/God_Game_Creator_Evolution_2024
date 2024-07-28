@@ -29,7 +29,7 @@ namespace Main.Audio
         private void Reset()
         {
             audioSource = GetComponent<AudioSource>();
-            audioSource.loop = true;
+            audioSource.loop = false;
         }
 
         public void PlayBGM(ClipToPlayBGM clipToPlay)
@@ -133,6 +133,42 @@ namespace Main.Audio
         public float GetBeatBGM()
         {
             return GetBeat();
+        }
+
+        public bool SetVolumeOn()
+        {
+            try
+            {
+                audioSource.volume = 1f;
+
+                return true;
+            }
+            catch (System.Exception e)
+            {
+                Debug.LogError(e);
+                return false;
+            }
+        }
+
+        public bool AdjustBGM()
+        {
+            try
+            {
+                float time = Time.time;
+                if (time > audioSource.clip.length)
+                {
+                    Debug.LogWarning($"BGMの再生時間の限界を超過: [{time}]");
+                    time = audioSource.clip.length;
+                }
+                audioSource.time = time;
+
+                return true;
+            }
+            catch (System.Exception e)
+            {
+                Debug.LogError(e);
+                return false;
+            }
         }
     }
 

@@ -152,6 +152,9 @@ namespace Main.Utility
                         if (inputBackSpinState.targetAngle <= angleSum)
                             jockeyCommandType.Value = (int)JockeyCommandType.BackSpin;
                     });
+                inputBackSpinState.isPushdSubCtrl.ObserveEveryValueChanged(x => x.Value)
+                    .Where(x => x)
+                    .Subscribe(_ => jockeyCommandType.Value = (int)JockeyCommandType.BackSpin);
 
                 return true;
             }

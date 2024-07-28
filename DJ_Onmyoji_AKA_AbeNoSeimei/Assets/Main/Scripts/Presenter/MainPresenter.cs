@@ -91,6 +91,12 @@ namespace Main.Presenter
         [SerializeField] private LevelBackgroundView levelBackgroundView;
         /// <summary>プレイヤーHPのビュー</summary>
         [SerializeField] private ClearCountdownTimerGaugeView clearCountdownTimerGaugeView;
+        /// <summary>SP回復前のラップ保存値</summary>
+        private float wrapTempoLevelBeforeRest;
+        /// <summary>SP回復前のダンス保存値</summary>
+        private float danceTempoLevelBeforeRest;
+        /// <summary>SP回復前のグラフィティ保存値</summary>
+        private float graffitiTempoLevelBeforeRest;
 
         private void Reset()
         {
@@ -584,12 +590,13 @@ namespace Main.Presenter
                         spawnSoulMoneyModel.OnSoulMoneyGeted
                            .Subscribe(soulMoney =>
                            {
-                               if (soulMoney.IsGeted.Value)
-                               {
-                                   var soulMoneyPoint = soulWalletModel.AddSoulMoney(soulMoney.EnemiesProp.soulMoneyPoint);
-                                   if (soulMoneyPoint < 0)
-                                       Debug.LogError("AddSoulMoney");
-                               }
+                               //if (soulMoney.IsGeted.Value)
+                               //{
+                               //    var soulMoneyPoint = soulWalletModel.AddSoulMoney(soulMoney.EnemiesProp.soulMoneyPoint);
+                               //    //Debug.Log(soulMoney.EnemiesProp.soulMoneyPoint);
+                               //    if (soulMoneyPoint < 0)
+                               //        Debug.LogError("AddSoulMoney");
+                               //}
                            })
                            .AddTo(gameObject); // UniRxのAddToを使用して、このGameObjectが破棄されたときに購読を自動的に解除
                         if (!soulWalletModel.SetIsUnLockUpdateOfSoulMoney(x))
@@ -626,6 +633,8 @@ namespace Main.Presenter
                         Debug.LogError("SetIsLooping");
                     if (!shikigamiSkillSystemModel.SetIsStopRecovery((JockeyCommandType)pair.Current))
                         Debug.LogError("SetIsStopRecovery");
+                    if (!pentagramTurnTableView.AdjustBGM((JockeyCommandType)pair.Previous, (JockeyCommandType)pair.Current))
+                        Debug.LogError("AdjustBGM");
                 });
             this.UpdateAsObservable()
                 .Select(_ => pentagramSystemModel.InputSlipLoopState.IsLooping)
@@ -638,6 +647,8 @@ namespace Main.Presenter
                         {
                             if (!x)
                             {
+                                if (!pentagramTurnTableModel.SetMoveDirectionsDefaultOfOnmyoWrapGraffitiTurret())
+                                    Debug.LogError("SetMoveDirectionsDefaultOfOnmyoWrapGraffitiTurret");
                                 if (!pentagramTurnTableView.ResetFromAngle())
                                     Debug.LogError("ResetFromAngle");
                             }
@@ -667,8 +678,6 @@ namespace Main.Presenter
                                                 Debug.LogError("AttackOfOnmyoTurret");
                                             if (!shikigamiSkillSystemModel.UpdateCandleResourceOfAttackOnmyoTurret())
                                                 Debug.LogError("UpdateCandleResourceOfAttackOnmyoTurret");
-                                            if (!pentagramTurnTableModel.SetMoveDirectionsDefaultOfOnmyoWrapGraffitiTurret())
-                                                Debug.LogError("SetMoveDirectionsDefaultOfOnmyoWrapGraffitiTurret");
                                         }
                                     })
                                     .AddTo(gameObject);
@@ -685,6 +694,29 @@ namespace Main.Presenter
                         item.Content.state.tempoLevel.ObserveEveryValueChanged(x => x.Value)
                             .Subscribe(x =>
                             {
+                                switch (item.Content.prop.type)
+                                {
+                                    case ShikigamiType.Wrap:
+                                        wrapTempoLevelBeforeRest = x;
+                                        break;
+                                    case ShikigamiType.Dance:
+                                        danceTempoLevelBeforeRest = x;
+                                        break;
+                                    case ShikigamiType.Graffiti:
+                                        graffitiTempoLevelBeforeRest = x;
+                                        break;
+                                    case ShikigamiType.OnmyoTurret:
+                                        //処理なし
+                                        break;
+                                    default:
+                                        throw new System.Exception("例外エラー");
+                                        break;
+                                }
+
+                                //SP回復中は強制的にTempoLevelをMINに設定
+                                if (item.Content.state.isRest.Value)
+                                    x = -1.0f;
+                                    
                                 foreach (var faderUniversalView in faderUniversalViews)
                                 {
                                     if (!faderUniversalView.SetSliderValue(x, item.Content.prop.type))
@@ -695,6 +727,33 @@ namespace Main.Presenter
                                 Observable.FromCoroutine<bool>(observer => fadersGroupView.PlayMoveAnchorsBasedOnHeight(observer, EnumFadeState.Open))
                                     .Subscribe(_ => {})
                                     .AddTo(gameObject);
+                            });
+                    foreach (var item in x.Select((p, i) => new { Content = p, Index = i }))
+                        item.Content.state.isRest.ObserveEveryValueChanged(x => x.Value)
+                            .Subscribe(x =>
+                            {
+                                //SP回復完了時に、TempoLevelを設定
+                                if (!x)
+                                {
+                                    foreach (var faderUniversalView in faderUniversalViews)
+                                    {
+                                        if (!faderUniversalView.SetSliderValue(wrapTempoLevelBeforeRest, ShikigamiType.Wrap))
+                                            Debug.LogError("SetSliderValue");
+                                        if (!faderUniversalView.SetSliderValue(danceTempoLevelBeforeRest, ShikigamiType.Dance))
+                                            Debug.LogError("SetSliderValue");
+                                        if (!faderUniversalView.SetSliderValue(graffitiTempoLevelBeforeRest, ShikigamiType.Graffiti))
+                                            Debug.LogError("SetSliderValue");
+                                    }
+                                    if (!pentagramTurnTableModel.UpdateTempoLvValues(wrapTempoLevelBeforeRest, ShikigamiType.Wrap))
+                                        Debug.LogError("UpdateTempoLvValues");
+                                    if (!pentagramTurnTableModel.UpdateTempoLvValues(danceTempoLevelBeforeRest, ShikigamiType.Dance))
+                                        Debug.LogError("UpdateTempoLvValues");
+                                    if (!pentagramTurnTableModel.UpdateTempoLvValues(graffitiTempoLevelBeforeRest, ShikigamiType.Graffiti))
+                                        Debug.LogError("UpdateTempoLvValues");
+                                    Observable.FromCoroutine<bool>(observer => fadersGroupView.PlayMoveAnchorsBasedOnHeight(observer, EnumFadeState.Open))
+                                        .Subscribe(_ => { })
+                                        .AddTo(gameObject);
+                                }
                             });
                 });
             this.UpdateAsObservable()
@@ -723,6 +782,18 @@ namespace Main.Presenter
                                 Debug.LogError("SetIsLooping");
                             if (!shikigamiSkillSystemModel.SetIsStopRecovery(JockeyCommandType.None))
                                 Debug.LogError("SetIsStopRecovery");
+                        });
+                });
+            this.UpdateAsObservable()
+                .Select(_ => shikigamiSkillSystemModel.CandleInfo.isRest)
+                .Where(x => x != null)
+                .Take(1)
+                .Subscribe(x =>
+                {
+                    x.ObserveEveryValueChanged(x => x.Value)
+                        .Subscribe(x =>
+                        {
+                            spGaugeView.SetFire(x);
                         });
                 });
 

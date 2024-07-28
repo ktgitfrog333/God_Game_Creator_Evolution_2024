@@ -1,5 +1,5 @@
 ﻿{
-	"sceneId": 1,
+	"sceneId": 3,
 	"state": [
 		1,
 		0,
@@ -143,5 +143,6 @@
 			}
 		]
 	},
-	"soulMoney": 0
+	"soulMoney": 0,
+	"inputMode": 2
 }

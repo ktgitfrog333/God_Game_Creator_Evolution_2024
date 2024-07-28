@@ -13,7 +13,7 @@ namespace Main.Utility
     /// <summary>
     /// InputSystemのユーティリティ
     /// </summary>
-    public class InputSystemUtility : IInputSystemUtility
+    public partial class InputSystemUtility : IInputSystemUtility
     {
         /// <summary>最小値</summary>
         public const float MIN = -1f;
@@ -26,26 +26,67 @@ namespace Main.Utility
         /// <summary>式神タイプ別パラメータ管理</summary>
         private ShikigamiParameterUtility _shikigamiParameterUtility = new ShikigamiParameterUtility();
 
-        public bool SetInputValueInModel(IReactiveProperty<float> inputValue, float multiDistanceCorrected, Vector2ReactiveProperty previousInput, float autoSpinSpeed, PentagramSystemModel model)
+        public bool SetInputValueInModel(IReactiveProperty<float> inputValue, float multiDistanceCorrected, Vector2ReactiveProperty previousInput, float autoSpinSpeed, PentagramSystemModel model, FloatReactiveProperty previousInputMidiJack)
         {
             try
             {
                 Observable.FromCoroutine<InputSystemsOwner>(observer => UpdateAsObservableOfInputSystemsOwner(observer, model))
-                    .Where(x => x != null)
+                    .Where(x => x != null &&
+                        x.CurrentInputMode != null)
                     .Subscribe(x =>
                     {
-                        Vector2 currentInput = x.InputUI.Scratch; // 現在の入力を取得
-                        if (IsPerformed(previousInput.Value.sqrMagnitude, currentInput.sqrMagnitude)) // 前回と今回の入力が十分に大きい場合
+                        switch ((InputMode)x.CurrentInputMode.Value)
                         {
-                            float angle = Vector2.SignedAngle(previousInput.Value, currentInput) * -1f; // 前回の入力から今回の入力への角度を計算
-                            float distance = Mathf.PI * angle / 180; // 角度を円周の長さに変換
-                            inputValue.Value = Mathf.Clamp(distance * multiDistanceCorrected, -1f, 1f);
+                            case InputMode.Gamepad:
+                                Vector2 currentInput = x.InputUI.Scratch; // 現在の入力を取得
+                                if (IsPerformed(previousInput.Value.sqrMagnitude, currentInput.sqrMagnitude)) // 前回と今回の入力が十分に大きい場合
+                                {
+                                    float angle = Vector2.SignedAngle(previousInput.Value, currentInput) * -1f; // 前回の入力から今回の入力への角度を計算
+                                    float distance = Mathf.PI * angle / 180; // 角度を円周の長さに変換
+                                    inputValue.Value = Mathf.Clamp(distance * multiDistanceCorrected, -1f, 1f);
+                                }
+                                else
+                                    inputValue.Value = autoSpinSpeed;
+                                previousInput.Value = currentInput; // 現在の入力を保存
+
+                                break;
+                            case InputMode.MidiJackDDJ200:
+                                if (!UpdateInputMidiJack(previousInputMidiJack, inputValue, autoSpinSpeed, x.InputMidiJackDDJ200.Scratch))
+                                    throw new System.Exception("UpdateInputMidiJack");
+
+                                break;
+                            default:
+                                break;
                         }
-                        else
-                            inputValue.Value = autoSpinSpeed;
-                        previousInput.Value = currentInput; // 現在の入力を保存
                     })
                     .AddTo(model);
+
+                return true;
+            }
+            catch (System.Exception e)
+            {
+                Debug.LogError(e);
+                return false;
+            }
+        }
+
+        /// <summary>
+        /// InputMidiJackの更新
+        /// </summary>
+        /// <param name="previousInputMidiJack">過去の入力（MIDIJack）</param>
+        /// <param name="inputValue">入力角度</param>
+        /// <param name="autoSpinSpeed">自動回転の速度</param>
+        /// <param name="currentInputMidiJack">スクラッチ値</param>
+        /// <returns>成功／失敗</returns>
+        private bool UpdateInputMidiJack(FloatReactiveProperty previousInputMidiJack, IReactiveProperty<float> inputValue, float autoSpinSpeed, float currentInputMidiJack)
+        {
+            try
+            {
+                if (IsPerformed(previousInputMidiJack.Value, currentInputMidiJack, true))
+                    inputValue.Value = previousInputMidiJack.Value - currentInputMidiJack;
+                else
+                    inputValue.Value = autoSpinSpeed;
+                previousInputMidiJack.Value = currentInputMidiJack; // 現在の入力を保存
 
                 return true;
             }
@@ -61,11 +102,14 @@ namespace Main.Utility
         /// </summary>
         /// <param name="prevMagnitude">直前の入力値</param>
         /// <param name="currentMagnitude">現在の入力値</param>
+        /// <param name="isAbsMath">絶対値とするか</param>
         /// <returns>真／偽</returns>
-        private bool IsPerformed(float prevMagnitude, float currentMagnitude)
+        private bool IsPerformed(float prevMagnitude, float currentMagnitude, bool isAbsMath = false)
         {
-            return 0f < prevMagnitude &&
-                0f < currentMagnitude;
+            return !isAbsMath ? 0f < prevMagnitude &&
+                0f < currentMagnitude :
+                0f < Mathf.Abs(prevMagnitude) &&
+                0f < Mathf.Abs(currentMagnitude);
         }
 
         public bool SetInputValueInModel(InputBackSpinState inputBackSpinState, PentagramSystemModel model)
@@ -73,15 +117,28 @@ namespace Main.Utility
             try
             {
                 Observable.FromCoroutine<InputSystemsOwner>(observer => UpdateAsObservableOfInputSystemsOwner(observer, model))
-                    .Where(x => x != null)
+                    .Where(x => x != null &&
+                        x.CurrentInputMode != null)
                     .Subscribe(x =>
                     {
-                        if (inputBackSpinState.recordInputTimeSecLimit <= inputBackSpinState.recordInputTimeSec.Value ||
-                            x.InputUI.Scratch.sqrMagnitude == 0f)
-                            inputBackSpinState.recordInputTimeSec.Value = 0f;
-                        else
-                            inputBackSpinState.recordInputTimeSec.Value += Time.deltaTime;
-                        inputBackSpinState.inputVelocityValue.Value = x.InputUI.Scratch;
+                        switch ((InputMode)x.CurrentInputMode.Value)
+                        {
+                            case InputMode.Gamepad:
+                                if (inputBackSpinState.recordInputTimeSecLimit <= inputBackSpinState.recordInputTimeSec.Value ||
+                                    x.InputUI.Scratch.sqrMagnitude == 0f)
+                                    inputBackSpinState.recordInputTimeSec.Value = 0f;
+                                else
+                                    inputBackSpinState.recordInputTimeSec.Value += Time.deltaTime;
+                                inputBackSpinState.inputVelocityValue.Value = x.InputUI.Scratch;
+
+                                break;
+                            case InputMode.MidiJackDDJ200:
+                                inputBackSpinState.isPushdSubCtrl.Value = x.InputMidiJackDDJ200.Pad5;
+
+                                break;
+                            default:
+                                break;
+                        }
                     })
                     .AddTo(model);
                 
@@ -139,97 +196,50 @@ namespace Main.Utility
                         }
                     });
                 Observable.FromCoroutine<InputSystemsOwner>(observer => UpdateAsObservableOfInputSystemsOwner(observer, model))
-                    .Where(x => x != null)
+                    .Where(x => x != null &&
+                        x.CurrentInputMode != null && Time.timeScale != 0)
                     .Subscribe(x =>
                     {
-                        switch (x.InputHistroy.InputTypeID)
+                        switch ((InputMode)x.CurrentInputMode.Value)
                         {
-                            case InputTypeID.IT0001:
-                                priority.Value = (int)OnmyoStatePriority.CompleteSun;
-
-                                break;
-                            case InputTypeID.IT0002:
-                                priority.Value = (int)OnmyoStatePriority.CompleteMoon;
-
-                                break;
-                            default:
-                                var chargeSun = x.InputUI.ChargeSun;
-                                var chargeMoon = x.InputUI.ChargeMoon;
-                                if (chargeSun ||
-                                chargeMoon)
+                            case InputMode.Gamepad:
+                                switch (x.InputHistroy.InputTypeID)
                                 {
-                                    if (chargeSun &&
-                                    !priority.Value.Equals((int)OnmyoStatePriority.CompleteSun))
-                                        priority.Value = (int)OnmyoStatePriority.ChargeSun;
-                                    if (chargeMoon &&
-                                    !priority.Value.Equals((int)OnmyoStatePriority.CompleteMoon))
-                                        priority.Value = (int)OnmyoStatePriority.ChargeMoon;
+                                    case InputTypeID.IT0001:
+                                        priority.Value = (int)OnmyoStatePriority.CompleteSun;
+
+                                        break;
+                                    case InputTypeID.IT0002:
+                                        priority.Value = (int)OnmyoStatePriority.CompleteMoon;
+
+                                        break;
+                                    default:
+                                        var chargeSun = x.InputUI.ChargeSun;
+                                        var chargeMoon = x.InputUI.ChargeMoon;
+                                        if (chargeSun ||
+                                        chargeMoon)
+                                        {
+                                            if (chargeSun &&
+                                            !priority.Value.Equals((int)OnmyoStatePriority.CompleteSun))
+                                                priority.Value = (int)OnmyoStatePriority.ChargeSun;
+                                            if (chargeMoon &&
+                                            !priority.Value.Equals((int)OnmyoStatePriority.CompleteMoon))
+                                                priority.Value = (int)OnmyoStatePriority.ChargeMoon;
+                                        }
+                                        else
+                                            priority.Value = (int)OnmyoStatePriority.None;
+
+                                        break;
                                 }
-                                else
-                                    priority.Value = (int)OnmyoStatePriority.None;
+
+                                break;
+                            case InputMode.MidiJackDDJ200:
+                                onmyoState.Value = (x.InputMidiJackDDJ200.Mixer8 * 2f) - 1f;
 
                                 break;
                         }
                     })
                     .AddTo(model);
-
-                return true;
-            }
-            catch (System.Exception e)
-            {
-                Debug.LogError(e);
-                return false;
-            }
-        }
-
-        public bool SetCandleResourceAndTempoLevelsInModel(CandleInfo candleInfo, ShikigamiInfo[] shikigamiInfos, float updateCorrected, ShikigamiSkillSystemModel model)
-        {
-            try
-            {
-                if (!SetCandleResource(candleInfo, shikigamiInfos, model))
-                    throw new System.Exception("SetCandleResource");
-                if (!SetTempoLevels(shikigamiInfos, updateCorrected, candleInfo.IsOutCost, model))
-                    throw new System.Exception("SetTempoLevels");
-
-                return true;
-            }
-            catch (System.Exception e)
-            {
-                Debug.LogError(e);
-                return false;
-            }
-        }
-
-        /// <summary>
-        /// リソースを変更
-        /// </summary>
-        /// <param name="candleInfo">蠟燭の情報</param>
-        /// <param name="shikigamiInfos">式神の情報</param>
-        /// <param name="model">式神スキル管理システムモデル</param>
-        /// <returns>成功／失敗</returns>
-        private bool SetCandleResource(CandleInfo candleInfo, ShikigamiInfo[] shikigamiInfos, ShikigamiSkillSystemModel model)
-        {
-            try
-            {
-                // 1.コストの計算:
-                //  ●テンポスライダーレベル
-                //  ●式神レベル
-                //  ●攻撃間隔
-                //  ●計算式（テンポスライダーレベル*式神レベル*攻撃間隔）
-                // 2.計算結果:
-                //  ●0以下の場合は下記の処理を実行
-                //      ○後続の処理内でテンポスライダーのレベルを0にする
-                // 3.蝋燭の残リソースを更新
-                model.UpdateAsObservable()
-                    .Where(_ => candleInfo.rapidRecoveryState.Value == (int)RapidRecoveryType.None ||
-                    candleInfo.rapidRecoveryState.Value == (int)RapidRecoveryType.Done)
-                    .Subscribe(_ =>
-                    {
-                        float costSum = 0f;
-                        costSum = GetCalcCostSum(costSum, shikigamiInfos, candleInfo);
-                        if (!UpdateCandleResource(candleInfo, costSum * Time.deltaTime))
-                            Debug.LogError("UpdateCandleResource");
-                    });
 
                 return true;
             }
@@ -248,7 +258,7 @@ namespace Main.Utility
         /// <param name="candleInfo">蠟燭の情報</param>
         /// <param name="onmyoSlipLoopRate">スリップループ時、陰陽砲台のみ特殊レート値</param>
         /// <returns>合計コスト</returns>
-        private float GetCalcCostSum(float costSum, ShikigamiInfo[] shikigamiInfos, CandleInfo candleInfo, float? onmyoSlipLoopRate=null)
+        protected float GetCalcCostSum(float costSum, ShikigamiInfo[] shikigamiInfos, CandleInfo candleInfo, float? onmyoSlipLoopRate = null)
         {
             foreach (var item in onmyoSlipLoopRate == null ? shikigamiInfos : shikigamiInfos.Where(q => q.prop.type.Equals(ShikigamiType.OnmyoTurret)))
             {
@@ -265,7 +275,7 @@ namespace Main.Utility
                 if (tempoLv < 0f &&
                     candleInfo.isStopRecovery.Value)
                 {
-                    
+
                 }
                 else
                 {
@@ -277,10 +287,36 @@ namespace Main.Utility
             return costSum;
         }
 
-        public bool UpdateCandleResourceByPentagram(JockeyCommandType jkeyCmdTypeCurrent, JockeyCommandType jkeyCmdTypePrevious, CandleInfo candleInfo, float downValue, ShikigamiSkillSystemModel model)
+        /// <summary>
+        /// リソースを更新
+        /// </summary>
+        /// <param name="candleInfo">蠟燭の情報</param>
+        /// <param name="costSum">コスト</param>
+        /// <returns>成功／失敗</returns>
+        protected bool UpdateCandleResource(CandleInfo candleInfo, float costSum)
         {
             try
             {
+                var calcResult = candleInfo.CandleResource.Value - costSum;
+                candleInfo.CandleResource.Value = System.Math.Clamp(calcResult, 0f, candleInfo.LimitCandleResorceMax);
+                candleInfo.IsOutCost.Value = calcResult <= 0f;
+
+                return true;
+            }
+            catch (System.Exception e)
+            {
+                Debug.LogError(e);
+                return false;
+            }
+        }
+
+        public bool UpdateCandleResourceByPentagram(JockeyCommandType jkeyCmdTypeCurrent, JockeyCommandType jkeyCmdTypePrevious, CandleInfo candleInfo, float downValue, float downValueMidiJack, ShikigamiSkillSystemModel model)
+        {
+            try
+            {
+                if (MainGameManager.Instance == null)
+                    return true;
+
                 if (_modelUpdObservable == null)
                     _modelUpdObservable = model.UpdateAsObservable().Subscribe(_ => {});
                 switch (jkeyCmdTypeCurrent)
@@ -295,7 +331,12 @@ namespace Main.Utility
                             return true;
                         else
                         {
-                            if (!CallUpdateCandleResource(ref _modelUpdObservable, candleInfo, downValue, model))
+                            if (!CallUpdateCandleResource(ref _modelUpdObservable, candleInfo, (InputMode)MainGameManager.Instance.InputSystemsOwner.CurrentInputMode.Value switch
+                            {
+                                InputMode.Gamepad => downValue,
+                                InputMode.MidiJackDDJ200 => downValueMidiJack,
+                                _ => throw new System.ArgumentOutOfRangeException($"対象外の入力タイプ: {(InputMode)MainGameManager.Instance.InputSystemsOwner.CurrentInputMode.Value}"),
+                            }, model))
                                 throw new System.Exception("CallUpdateCandleResource");
                         }
 
@@ -306,7 +347,12 @@ namespace Main.Utility
                             return true;
                         else
                         {
-                            if (!CallUpdateCandleResource(ref _modelUpdObservable, candleInfo, downValue, model))
+                            if (!CallUpdateCandleResource(ref _modelUpdObservable, candleInfo, (InputMode)MainGameManager.Instance.InputSystemsOwner.CurrentInputMode.Value switch
+                            {
+                                InputMode.Gamepad => downValue,
+                                InputMode.MidiJackDDJ200 => downValueMidiJack,
+                                _ => throw new System.ArgumentOutOfRangeException($"対象外の入力タイプ: {(InputMode)MainGameManager.Instance.InputSystemsOwner.CurrentInputMode.Value}"),
+                            }, model))
                                 throw new System.Exception("CallUpdateCandleResource");
                         }
 
@@ -379,19 +425,16 @@ namespace Main.Utility
             }
         }
 
-        /// <summary>
-        /// リソースを更新
-        /// </summary>
-        /// <param name="candleInfo">蠟燭の情報</param>
-        /// <param name="costSum">コスト</param>
-        /// <returns>成功／失敗</returns>
-        private bool UpdateCandleResource(CandleInfo candleInfo, float costSum)
+        public bool SetCandleResourceAndTempoLevelsInModel(CandleInfo candleInfo, ShikigamiInfo[] shikigamiInfos, float updateCorrected, float updateCorrectedMidiJack, ShikigamiSkillSystemModel model)
         {
             try
             {
-                var calcResult = candleInfo.CandleResource.Value - costSum;
-                candleInfo.CandleResource.Value = System.Math.Clamp(calcResult, 0f, candleInfo.LimitCandleResorceMax);
-                candleInfo.IsOutCost.Value = calcResult <= 0f;
+                CandleResourceAndTempoLevelsSubUtility subUtility = new CandleResourceAndTempoLevelsSubUtility(this);
+                // TODO:updateCorrectedMidiJackの実装 式神強化はイコライザによるものとする
+                if (!subUtility.SetCandleResource(candleInfo, shikigamiInfos, model))
+                    throw new System.Exception("SetCandleResource");
+                if (!subUtility.SetTempoLevels(candleInfo, shikigamiInfos, updateCorrected, candleInfo.IsOutCost, model))
+                    throw new System.Exception("SetTempoLevels");
 
                 return true;
             }
@@ -400,175 +443,6 @@ namespace Main.Utility
                 Debug.LogError(e);
                 return false;
             }
-        }
-
-        /// <summary>
-        /// レベルを変更
-        /// </summary>
-        /// <param name="shikigamiInfos">式神の情報</param>
-        /// <param name="updateCorrected">更新の補正値</param>
-        /// <param name="isOutCost">リソース切れか</param>
-        /// <param name="model">式神スキル管理システムモデル</param>
-        /// <returns>成功／失敗</returns>
-        private bool SetTempoLevels(ShikigamiInfo[] shikigamiInfos, float updateCorrected, IReactiveProperty<bool> isOutCost, ShikigamiSkillSystemModel model)
-        {
-            try
-            {
-                System.IDisposable[] modelUpdObservable = new System.IDisposable[]
-                {
-                    model.UpdateAsObservable().Subscribe(_ => {}),
-                    model.UpdateAsObservable().Subscribe(_ => {}),
-                };
-                isOutCost.ObserveEveryValueChanged(x => x.Value)
-                    .Subscribe(x =>
-                    {
-                        if (!x)
-                        {
-                            // 残リソースが有り
-                            const int L = 0, R = 1;
-                            IntReactiveProperty[] priority = new IntReactiveProperty[]
-                            {
-                                new IntReactiveProperty((int)TempLevelPriority.L.None),
-                                new IntReactiveProperty((int)TempLevelPriority.R.None),
-                            };
-                            foreach (var item in priority.Select((p, i) => new { Content = p, Index = i }))
-                            {
-                                item.Content.ObserveEveryValueChanged(x => x.Value)
-                                    .Subscribe(x =>
-                                    {
-                                        modelUpdObservable[item.Index].Dispose();
-                                        switch (item.Index)
-                                        {
-                                            case L:
-                                                // 左
-                                                switch ((TempLevelPriority.L)x)
-                                                {
-                                                    case TempLevelPriority.L.ChargeLFader:
-                                                        modelUpdObservable[item.Index] = model.UpdateAsObservable()
-                                                            // レベルリバートは別ロジックで行い、ここでは可変をロックする
-                                                            .Where(_ => shikigamiInfos.Where(q => q.prop.type.Equals(ShikigamiType.Wrap))
-                                                                .Select(q => q)
-                                                                .ToArray()[0].state.tempoLevelRevertState.Value == (int)RapidRecoveryType.None)
-                                                            .Subscribe(_ => ProcessShikigamiInfos(shikigamiInfos, updateCorrected, ShikigamiType.Wrap, UpdateLevelUp));
-
-                                                        break;
-                                                    case TempLevelPriority.L.ReleaseLFader:
-                                                        modelUpdObservable[item.Index] = model.UpdateAsObservable()
-                                                            // レベルリバートは別ロジックで行い、ここでは可変をロックする
-                                                            .Where(_ => shikigamiInfos.Where(q => q.prop.type.Equals(ShikigamiType.Wrap))
-                                                                .Select(q => q)
-                                                                .ToArray()[0].state.tempoLevelRevertState.Value == (int)RapidRecoveryType.None)
-                                                            .Subscribe(_ => ProcessShikigamiInfos(shikigamiInfos, updateCorrected, ShikigamiType.Wrap, UpdateLevelDown));
-
-                                                        break;
-                                                    case TempLevelPriority.L.None:
-                                                        break;
-                                                    default:
-                                                        throw new System.Exception("例外エラー");
-                                                }
-
-                                                break;
-                                            case R:
-                                                // 右
-                                                switch ((TempLevelPriority.R)x)
-                                                {
-                                                    case TempLevelPriority.R.ChargeRFader:
-                                                        modelUpdObservable[item.Index] = model.UpdateAsObservable()
-                                                            // レベルリバートは別ロジックで行い、ここでは可変をロックする
-                                                            .Where(_ => shikigamiInfos.Where(q => q.prop.type.Equals(ShikigamiType.Graffiti))
-                                                                .Select(q => q)
-                                                                .ToArray()[0].state.tempoLevelRevertState.Value == (int)RapidRecoveryType.None)
-                                                            .Subscribe(_ => ProcessShikigamiInfos(shikigamiInfos, updateCorrected, ShikigamiType.Graffiti, UpdateLevelUp));
-
-                                                        break;
-                                                    case TempLevelPriority.R.ReleaseRFader:
-                                                        modelUpdObservable[item.Index] = model.UpdateAsObservable()
-                                                            // レベルリバートは別ロジックで行い、ここでは可変をロックする
-                                                            .Where(_ => shikigamiInfos.Where(q => q.prop.type.Equals(ShikigamiType.Graffiti))
-                                                                .Select(q => q)
-                                                                .ToArray()[0].state.tempoLevelRevertState.Value == (int)RapidRecoveryType.None)
-                                                            .Subscribe(_ => ProcessShikigamiInfos(shikigamiInfos, updateCorrected, ShikigamiType.Graffiti, UpdateLevelDown));
-
-                                                        break;
-                                                    case TempLevelPriority.R.None:
-                                                        break;
-                                                    default:
-                                                        throw new System.Exception("例外エラー");
-                                                }
-
-                                                break;
-                                            default:
-                                                throw new System.Exception("例外エラー");
-                                        }
-                                    });
-                            }
-                            Observable.FromCoroutine<InputSystemsOwner>(observer => UpdateAsObservableOfInputSystemsOwner(observer, model))
-                                .Where(x => x != null)
-                                .Subscribe(x =>
-                                {
-                                    if (x.InputUI.ChargeLFader &&
-                                    !x.InputUI.ReleaseLFader)
-                                        priority[L].Value = (int)TempLevelPriority.L.ChargeLFader;
-                                    else if (x.InputUI.ReleaseLFader)
-                                        priority[L].Value = (int)TempLevelPriority.L.ReleaseLFader;
-                                    else
-                                        priority[L].Value = (int)TempLevelPriority.L.None;
-                                    if (x.InputUI.ChargeRFader &&
-                                    !x.InputUI.ReleaseRFader)
-                                        priority[R].Value = (int)TempLevelPriority.R.ChargeRFader;
-                                    else if (x.InputUI.ReleaseRFader)
-                                        priority[R].Value = (int)TempLevelPriority.R.ReleaseRFader;
-                                    else
-                                        priority[R].Value = (int)TempLevelPriority.R.None;
-                                })
-                                .AddTo(model);
-                        }
-                        else
-                        {
-                            // SPゲージが尽きた場合にフェーダーのチャージをDisposeできないのでここで行う
-                            for (var i = 0; i < modelUpdObservable.Length; i++)
-                                modelUpdObservable[i].Dispose();
-                            // 残リソースが無し
-                            foreach (var item in shikigamiInfos)
-                                item.state.tempoLevel.Value = MIN;
-                        }
-                    });
-                model.UpdateAsObservable()
-                    // レベルリバートは別ロジックで行い、ここでは可変をロックする
-                    .Where(_ => shikigamiInfos.Where(q => q.prop.type.Equals(ShikigamiType.Dance))
-                        .Select(q => q)
-                        .ToArray()[0].state.tempoLevelRevertState.Value == (int)RapidRecoveryType.None)
-                    .Subscribe(_ =>
-                    {
-                        // ダンスはラップとグラフィティの中間
-                        foreach (var item in shikigamiInfos.Where(q => q.prop.type.Equals(ShikigamiType.Dance)))
-                            item.state.tempoLevel.Value = (CalcShikigamiType(shikigamiInfos, ShikigamiType.Wrap)
-                                + CalcShikigamiType(shikigamiInfos, ShikigamiType.Graffiti))
-                                * .5f;
-                    });
-
-                return true;
-            }
-            catch (System.Exception e)
-            {
-                Debug.LogError(e);
-                return false;
-            }
-        }
-
-        /// <summary>
-        /// 同一の式神タイプのレベル合計値を計算
-        /// </summary>
-        /// <param name="shikigamiInfos">式神の情報</param>
-        /// <param name="shikigamiType">式神タイプ</param>
-        /// <returns>計算後の合計値</returns>
-        private float CalcShikigamiType(ShikigamiInfo[] shikigamiInfos, ShikigamiType shikigamiType)
-        {
-            float wrapCalc = 0f;
-            foreach (var item in shikigamiInfos.Where(q => q.prop.type.Equals(shikigamiType))
-                    .Select(q => q.state.tempoLevel))
-                wrapCalc += item.Value;
-            return wrapCalc;
         }
 
         /// <summary>
@@ -579,7 +453,7 @@ namespace Main.Utility
         /// <param name="observer">バインド</param>
         /// <param name="model">モデル</param>
         /// <returns>コルーチン</returns>
-        private IEnumerator UpdateAsObservableOfInputSystemsOwner<T>(System.IObserver<InputSystemsOwner> observer, T model) where T : MonoBehaviour
+        protected IEnumerator UpdateAsObservableOfInputSystemsOwner<T>(System.IObserver<InputSystemsOwner> observer, T model) where T : MonoBehaviour
         {
             InputSystemsOwner inputSystemsOwner = null;
             model.UpdateAsObservable()
@@ -599,7 +473,7 @@ namespace Main.Utility
         /// <param name="level">レベル</param>
         /// <param name="updateValue">更新値</param>
         /// <returns>成功／失敗</returns>
-        private delegate bool UpdateLevelDelegate(IReactiveProperty<float> level, float updateValue);
+        protected delegate bool UpdateLevelDelegate(IReactiveProperty<float> level, float updateValue);
 
         /// <summary>
         /// デリゲートを介して各更新メソッドを呼び出す
@@ -609,7 +483,7 @@ namespace Main.Utility
         /// <param name="targetType">対象式神タイプ</param>
         /// <param name="updateLevelMethod">レベル更新メソッド</param>
         /// <exception cref="System.Exception">エラー発生メソッド名</exception>
-        private void ProcessShikigamiInfos(ShikigamiInfo[] shikigamiInfos, float updateCorrected, ShikigamiType targetType, UpdateLevelDelegate updateLevelMethod)
+        protected void ProcessShikigamiInfos(ShikigamiInfo[] shikigamiInfos, float updateCorrected, ShikigamiType targetType, UpdateLevelDelegate updateLevelMethod)
         {
             foreach (var item in shikigamiInfos.Where(q => q.prop.type.Equals(targetType)))
                 if (!updateLevelMethod(item.state.tempoLevel, updateCorrected))
@@ -744,8 +618,41 @@ namespace Main.Utility
                         }
                     });
                 Observable.FromCoroutine<InputSystemsOwner>(observer => UpdateAsObservableOfInputSystemsOwner(observer, model))
-                    .Where(x => x != null)
-                    .Subscribe(x => navigatedReact.Value = x.InputUI.Navigated)
+                    .Where(x => x != null &&
+                        x.CurrentInputMode != null)
+                    .Subscribe(x =>
+                    {
+                        switch ((InputMode)x.CurrentInputMode.Value)
+                        {
+                            case InputMode.Gamepad:
+                                navigatedReact.Value = x.InputUI.Navigated;
+
+                                break;
+                            case InputMode.MidiJackDDJ200:
+                                if (x.InputMidiJackDDJ200.Pad1 &&
+                                    !x.InputMidiJackDDJ200.Pad2 &&
+                                    !x.InputMidiJackDDJ200.Pad3 &&
+                                    !x.InputMidiJackDDJ200.Pad4)
+                                    // 十字キー入力（上）
+                                    navigatedReact.Value = Vector2.up;
+                                else if (x.InputMidiJackDDJ200.Pad2 &&
+                                    !x.InputMidiJackDDJ200.Pad3 &&
+                                    !x.InputMidiJackDDJ200.Pad4)
+                                    // 十字キー入力（右）
+                                    navigatedReact.Value = Vector2.right;
+                                else if (x.InputMidiJackDDJ200.Pad3 &&
+                                    !x.InputMidiJackDDJ200.Pad4)
+                                    // 十字キー入力（下）
+                                    navigatedReact.Value = Vector2.down;
+                                else if (x.InputMidiJackDDJ200.Pad4)
+                                    // 十字キー入力（左）
+                                    navigatedReact.Value = Vector2.left;
+                                else
+                                    navigatedReact.Value = Vector2.zero;
+
+                                break;
+                        }
+                    })
                     .AddTo(model);
 
                 return true;
@@ -777,7 +684,7 @@ namespace Main.Utility
         /// <summary>
         /// テンポレベルの優先度
         /// </summary>
-        private class TempLevelPriority
+        protected class TempLevelPriority
         {
             /// <summary>
             /// 左側フェーダー
@@ -822,8 +729,9 @@ namespace Main.Utility
         /// <param name="previousInput">過去の入力</param>
         /// <param name="autoSpinSpeed">自動回転の速度</param>
         /// <param name="model">ペンダグラムシステムモデル</param>
+        /// <param name="previousInputMidiJack">過去の入力（MIDIJack）</param>
         /// <returns>成功／失敗</returns>
-        public bool SetInputValueInModel(IReactiveProperty<float> inputValue, float multiDistanceCorrected, Vector2ReactiveProperty previousInput, float autoSpinSpeed, PentagramSystemModel model);
+        public bool SetInputValueInModel(IReactiveProperty<float> inputValue, float multiDistanceCorrected, Vector2ReactiveProperty previousInput, float autoSpinSpeed, PentagramSystemModel model, FloatReactiveProperty previousInputMidiJack);
         /// <summary>
         /// モデルコンポーネントを監視して第1引数へセットされた値を更新
         /// スティック座標をセット
@@ -849,6 +757,7 @@ namespace Main.Utility
         /// <param name="model">陰陽（昼夜）の切り替えモデル</param>
         /// <returns>成功／失敗</returns>
         public bool SetOnmyoStateInModel(IReactiveProperty<float> onmyoState, float[] durations, SunMoonSystemModel model);
+
         /// <summary>
         /// モデルコンポーネントを監視して第1引数へセットされた値を更新
         /// 入力された内容に基づいてリソースとレベルを変更
@@ -856,9 +765,11 @@ namespace Main.Utility
         /// <param name="candleInfo">蠟燭の情報</param>
         /// <param name="shikigamiInfos">式神の情報</param>
         /// <param name="updateCorrected">更新の補正値</param>
+        /// <param name="updateCorrectedMidiJack">更新の補正値（MidiJack）</param>
         /// <param name="model">式神スキル管理システムモデル</param>
         /// <returns>成功／失敗</returns>
-        public bool SetCandleResourceAndTempoLevelsInModel(CandleInfo candleInfo, ShikigamiInfo[] shikigamiInfos, float updateCorrected, ShikigamiSkillSystemModel model);
+        public bool SetCandleResourceAndTempoLevelsInModel(CandleInfo candleInfo, ShikigamiInfo[] shikigamiInfos, float updateCorrected, float updateCorrectedMidiJack, ShikigamiSkillSystemModel model);
+
         /// <summary>
         /// リソースを更新
         /// 引数の+-は考慮せずリソースは消費される
@@ -867,9 +778,10 @@ namespace Main.Utility
         /// <param name="jkeyCmdTypePrevious">1つ前のジョッキーコマンドタイプ</param>
         /// <param name="candleInfo">蠟燭の情報</param>
         /// <param name="downValue">更新の補正値</param>
+        /// <param name="downValueMidiJack">更新の補正値（MidiJack）</param>
         /// <param name="model">式神スキル管理システムモデル</param>
         /// <returns>成功／失敗</returns>
-        public bool UpdateCandleResourceByPentagram(JockeyCommandType jkeyCmdTypeCurrent, JockeyCommandType jkeyCmdTypePrevious, CandleInfo candleInfo, float downValue, ShikigamiSkillSystemModel model);
+        public bool UpdateCandleResourceByPentagram(JockeyCommandType jkeyCmdTypeCurrent, JockeyCommandType jkeyCmdTypePrevious, CandleInfo candleInfo, float downValue, float downValueMidiJack, ShikigamiSkillSystemModel model);
         /// <summary>
         /// リソースを更新
         /// スリップループのみ使用

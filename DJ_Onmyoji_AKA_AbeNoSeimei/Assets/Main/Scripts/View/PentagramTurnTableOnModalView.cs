@@ -15,6 +15,11 @@ namespace Main.View
     /// </summary>
     public class PentagramTurnTableOnModalView : PentagramTurnTableCommonView, IPentagramTurnTableView
     {
+        public bool AdjustBGM(JockeyCommandType jockeyCommandTypePrevious, JockeyCommandType jockeyCommandTypeCurrent)
+        {
+            throw new System.NotImplementedException();
+        }
+
         public bool CalibrationToTarget(Transform transform)
         {
             throw new System.NotImplementedException();
