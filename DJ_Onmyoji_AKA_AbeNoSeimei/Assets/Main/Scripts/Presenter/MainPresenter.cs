@@ -620,6 +620,9 @@ namespace Main.Presenter
                         Debug.LogError("UpdateCandleResource");
                     if (!pentagramTurnTableModel.BuffAllTurrets((JockeyCommandType)pair.Current))
                         Debug.LogError("BuffAllTurrets");
+                    // バックスピンはSPゲージ回復中は無効
+                    if (!shikigamiSkillSystemModel.CandleInfo.isRest.Value)
+                    {
                     if (!shikigamiSkillSystemModel.ForceZeroAndRapidRecoveryCandleResource((JockeyCommandType)pair.Current))
                         Debug.LogError("ForceZeroAndRapidRecoveryCandleResource");
                     Observable.FromCoroutine<bool>(observer => pentagramTurnTableView.PlayDirectionBackSpin(observer, (JockeyCommandType)pair.Current))
@@ -629,6 +632,13 @@ namespace Main.Presenter
                                 Debug.LogError("ResetJockeyCommandType");
                         })
                         .AddTo(gameObject);
+                    }
+                    else
+                    {
+                        // バックスピンの呼び出しが無効の場合は、即座に入力状態をリセット
+                        if (!pentagramSystemModel.ResetJockeyCommandType())
+                            Debug.LogError("ResetJockeyCommandType");
+                    }
                     if (!pentagramSystemModel.SetIsLooping((JockeyCommandType)pair.Current))
                         Debug.LogError("SetIsLooping");
                     if (!shikigamiSkillSystemModel.SetIsStopRecovery((JockeyCommandType)pair.Current))
