@@ -59,6 +59,7 @@ namespace Main.Common
                 BeatLength.OneBeat => baseValue * 1f,
                 BeatLength.HalfBeat => baseValue * .5f,
                 BeatLength.QuarterBeat => baseValue * .25f,
+                BeatLength.None => baseValue * 0f,
                 _ => throw new System.ArgumentOutOfRangeException($"指定不可の条件:[{(BeatLength)inputSlipLoopState.beatLength.Value}]"),
             };
         }
