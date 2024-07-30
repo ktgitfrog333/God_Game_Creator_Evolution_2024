@@ -106,6 +106,15 @@ namespace Main.Model
                         inputSlipLoopState.IsLooping.Value = true;
 
                         break;
+                    case Common.JockeyCommandType.Scratch:
+
+                        break;
+                    case Common.JockeyCommandType.Hold:
+
+                        break;
+                    case Common.JockeyCommandType.None:
+
+                        break;
                     default:
                         inputSlipLoopState.IsLooping.Value = false;
 

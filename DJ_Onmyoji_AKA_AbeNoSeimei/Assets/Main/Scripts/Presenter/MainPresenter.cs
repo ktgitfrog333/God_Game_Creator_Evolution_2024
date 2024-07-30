@@ -608,9 +608,12 @@ namespace Main.Presenter
                 .Select(_ => pentagramSystemModel.InputValue)
                 .Subscribe(x =>
                 {
-                    bgmConfDetails.InputValue = x.Value;
-                    if (!pentagramTurnTableView.MoveSpin(bgmConfDetails))
-                        Debug.LogError("MoveSpin");
+                    if (!pentagramSystemModel.InputSlipLoopState.IsLooping.Value)
+                    {
+                        bgmConfDetails.InputValue = x.Value;
+                        if (!pentagramTurnTableView.MoveSpin(bgmConfDetails))
+                            Debug.LogError("MoveSpin");
+                    }
                 });
             pentagramSystemModel.JockeyCommandType.ObserveEveryValueChanged(x => x.Value)
                 .Pairwise()
