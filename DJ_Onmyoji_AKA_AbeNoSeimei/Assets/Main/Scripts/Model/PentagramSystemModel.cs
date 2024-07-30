@@ -67,7 +67,7 @@ namespace Main.Model
             this.UpdateAsObservable()
                 .Subscribe(_ =>
                 {
-                    if (inputSlipLoopState.IsLooping.Value)
+                    if (inputSlipLoopState.IsLooping.Value && (BeatLength)inputSlipLoopState.beatLength.Value != BeatLength.None)
                     {
                         var limit = BeatLengthApp.GetTotalReverse(inputSlipLoopState, audioOwner.GetBeatBGM());
                         if (limit <= elapsedTime.Value)
