@@ -19,5 +19,7 @@ namespace Main.Common
         BackSpin,
         /// <summary>スリップループ</summary>
         SlipLoop,
+        /// <summary>スリップループ</summary>
+        SlipLoopEnd,
     }    
 }

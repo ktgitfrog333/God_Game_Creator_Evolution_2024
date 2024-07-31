@@ -1,3 +1,4 @@
+using Main.Common;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -21,6 +22,9 @@ namespace Main.Audio
 
         /// <summary>偽：時計回り、真：反時計回り</summary>
         private bool invert = false;
+
+        /// <summary>ペンダグラムの回転状態</summary>
+        public PentagramSpinState PentagramSpinState { get; set; }
 
         /// <summary>再生速度</summary>
         public float PbSpeed
