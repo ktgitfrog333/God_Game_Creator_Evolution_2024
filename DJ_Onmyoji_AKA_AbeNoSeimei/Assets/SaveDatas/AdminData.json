@@ -103,11 +103,11 @@
 		}
 	},
 	"pentagramSystemModel": {
-		"autoSpinSpeed": 0.05,
+		"autoSpinSpeed": 50,
 		"inputHistoriesLimit": 100
 	},
 	"pentagramTurnTableView": {
-		"angleCorrectionValue": 5
+		"angleCorrectionValue": -1
 	},
 	"pentagramTurnTableModel": {
 		"distance": 1.5

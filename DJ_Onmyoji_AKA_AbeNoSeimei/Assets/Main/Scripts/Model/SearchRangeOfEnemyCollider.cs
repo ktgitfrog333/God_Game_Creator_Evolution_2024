@@ -11,8 +11,6 @@ namespace Main.Model
     /// </summary>
     public class SearchRangeOfEnemyCollider : DamageSufferedZoneModel
     {
-        /// <summary>ユーティリティ</summary>
-        private EnemyPlayerModelUtility _utility = new EnemyPlayerModelUtility();
         /// <summary>ターゲット</summary>
         public Transform Target { get; private set; }
 

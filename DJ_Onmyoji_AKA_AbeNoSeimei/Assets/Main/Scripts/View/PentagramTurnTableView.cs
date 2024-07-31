@@ -32,7 +32,7 @@ namespace Main.View
             {
                 if (!ControllAudio(bgmConfDetails))
                     throw new System.Exception("ControllAudio");
-                float angle = bgmConfDetails.InputValue * -0.3f * angleCorrectionValue;
+                float angle = bgmConfDetails.InputValue * angleCorrectionValue;
                 image.transform.Rotate(new Vector3(0f, 0f, angle));
                 return true;
             }

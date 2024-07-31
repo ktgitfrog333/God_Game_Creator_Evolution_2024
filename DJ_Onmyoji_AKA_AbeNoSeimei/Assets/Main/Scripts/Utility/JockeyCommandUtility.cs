@@ -51,6 +51,10 @@ namespace Main.Utility
 
                 // inputValueの変更を購読
                 inputValue.ObserveEveryValueChanged(x => x.Value)
+                    .Select(x => x / Time.deltaTime)
+                    .Pairwise()
+                    .Where(pair => !Mathf.Approximately(pair.Previous, pair.Current))
+                    .Select(pair => pair.Current)
                     .Subscribe(value => 
                     {
                         // 入力履歴が10を超えた場合、最初の要素を削除
