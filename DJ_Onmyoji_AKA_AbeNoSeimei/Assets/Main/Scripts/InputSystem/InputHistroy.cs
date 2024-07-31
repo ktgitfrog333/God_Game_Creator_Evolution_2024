@@ -83,8 +83,8 @@ namespace Main.InputSystem
             var chargeSun = inputSystemsOwner.InputUI.ChargeSun;
             var chargeMoon = inputSystemsOwner.InputUI.ChargeMoon;
             InputType result = InputType.None;
-            if (chargeSun ||
-            chargeMoon)
+            if ((chargeSun ||
+            chargeMoon) && Time.timeScale != 0)
             {
                 if (chargeSun)
                     result = InputType.ChargeSun;

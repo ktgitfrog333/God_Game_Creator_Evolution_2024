@@ -57,6 +57,11 @@ namespace Main.View
             image.fillMethod = Image.FillMethod.Vertical;
             image.fillOrigin = 0;
         }
+
+        public void ChangeColor(Color newColor)
+        {
+            image.color = newColor;
+        }
     }
 
     /// <summary>

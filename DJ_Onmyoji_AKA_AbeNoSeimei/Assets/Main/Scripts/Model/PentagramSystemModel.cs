@@ -20,8 +20,12 @@ namespace Main.Model
         [SerializeField] private static float autoSpinSpeed = .01f;
         /// <summary>入力角度</summary>
         public IReactiveProperty<float> InputValue { get; private set; } = new FloatReactiveProperty(autoSpinSpeed);
+        /// <summary>ペンダグラムの回転状態</summary>
+        public IReactiveProperty<int> PentagramSpinState { get; private set; } = new IntReactiveProperty();
         /// <summary>距離の補正乗算値</summary>
         private float _multiDistanceCorrected = 7.5f;
+        /// <summary>距離の補正乗算値（MidiJack）</summary>
+        [SerializeField] private float multiDistanceCorrectedMidiJack = 15f;
         /// <summary>ジョッキーコマンドタイプ</summary>
         public IReactiveProperty<int> JockeyCommandType { get; private set; } = new IntReactiveProperty((int)Common.JockeyCommandType.None);
         /// <summary>コマンドの最大入力数</summary>
@@ -48,8 +52,7 @@ namespace Main.Model
             autoSpinSpeed = adminDataSingleton.AdminBean.pentagramSystemModel.autoSpinSpeed;
             inputHistoriesLimit = adminDataSingleton.AdminBean.pentagramSystemModel.inputHistoriesLimit;
             Vector2ReactiveProperty previousInput = new Vector2ReactiveProperty(Vector2.zero); // 前回の入力を保存する変数
-            FloatReactiveProperty previousInputMidiJack = new FloatReactiveProperty(0.0f); // 前回の入力を保存する変数
-            if (!_inputSystemUtility.SetInputValueInModel(InputValue, _multiDistanceCorrected, previousInput, autoSpinSpeed, this, previousInputMidiJack))
+            if (!_inputSystemUtility.SetInputValueInModel(InputValue, _multiDistanceCorrected, previousInput, autoSpinSpeed, this, multiDistanceCorrectedMidiJack, PentagramSpinState))
                 Debug.LogError("SetInputValueInModel");
             inputBackSpinState.inputVelocityValue = new Vector2ReactiveProperty();
             inputBackSpinState.recordInputTimeSec = new FloatReactiveProperty();
@@ -67,7 +70,7 @@ namespace Main.Model
             this.UpdateAsObservable()
                 .Subscribe(_ =>
                 {
-                    if (inputSlipLoopState.IsLooping.Value)
+                    if (inputSlipLoopState.IsLooping.Value && (BeatLength)inputSlipLoopState.beatLength.Value != BeatLength.None)
                     {
                         var limit = BeatLengthApp.GetTotalReverse(inputSlipLoopState, audioOwner.GetBeatBGM());
                         if (limit <= elapsedTime.Value)
@@ -104,6 +107,15 @@ namespace Main.Model
                 {
                     case Common.JockeyCommandType.SlipLoop:
                         inputSlipLoopState.IsLooping.Value = true;
+
+                        break;
+                    case Common.JockeyCommandType.Scratch:
+
+                        break;
+                    case Common.JockeyCommandType.Hold:
+
+                        break;
+                    case Common.JockeyCommandType.None:
 
                         break;
                     default:
