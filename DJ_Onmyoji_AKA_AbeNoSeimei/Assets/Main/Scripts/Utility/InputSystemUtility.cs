@@ -368,6 +368,10 @@ namespace Main.Utility
                         _modelUpdObservable.Dispose();
                         // 何もしない
                         break;
+                    case JockeyCommandType.SlipLoopEnd:
+                        _modelUpdObservable.Dispose();
+                        // 何もしない
+                        break;
                     default:
                         throw new System.Exception("未定義のジョッキーコマンドタイプ");
                 }

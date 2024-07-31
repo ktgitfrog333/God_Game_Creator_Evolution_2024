@@ -57,33 +57,37 @@ namespace Main.Utility
                     .Select(pair => pair.Current)
                     .Subscribe(value => 
                     {
-                        // 入力履歴が10を超えた場合、最初の要素を削除
-                        if (inputHistory.Count >= inputHistoriesLimit)
-                            inputHistory.RemoveAt(0);
-
-                        // 最後の入力と異なる場合のみ履歴に追加
-                        if (inputHistory.Count == 0 ||
-                            inputHistory[inputHistory.Count - 1] != value)
-                            inputHistory.Add(value);
-
-                        // 最後の入力が0の場合、jockeyCommandTypeをHoldに設定
-                        if (value == 0 ||
-                            isScratch(inputHistory, autoSpinSpeed))
+                        // ループ中ならスクラッチの入力を無視
+                        if (jockeyCommandType.Value != (int)JockeyCommandType.SlipLoop)
                         {
-                            if (value == 0)
-                                jockeyCommandType.Value = (int)JockeyCommandType.Hold;
-                            if (isScratch(inputHistory, autoSpinSpeed))
+                            // 入力履歴が10を超えた場合、最初の要素を削除
+                            if (inputHistory.Count >= inputHistoriesLimit)
+                                inputHistory.RemoveAt(0);
+
+                            // 最後の入力と異なる場合のみ履歴に追加
+                            if (inputHistory.Count == 0 ||
+                                inputHistory[inputHistory.Count - 1] != value)
+                                inputHistory.Add(value);
+
+                            // 最後の入力が0の場合、jockeyCommandTypeをHoldに設定
+                            if (value == 0 ||
+                                isScratch(inputHistory, autoSpinSpeed))
                             {
-                                jockeyCommandType.Value = (int)JockeyCommandType.Scratch;
+                                if (value == 0)
+                                    jockeyCommandType.Value = (int)JockeyCommandType.Hold;
+                                if (isScratch(inputHistory, autoSpinSpeed))
+                                {
+                                    jockeyCommandType.Value = (int)JockeyCommandType.Scratch;
+                                    if (0 < inputHistory.Count)
+                                        inputHistory.Clear();
+                                }
+                            }
+                            else if (value == autoSpinSpeed)
+                            {
+                                jockeyCommandType.Value = (int)JockeyCommandType.None;
                                 if (0 < inputHistory.Count)
                                     inputHistory.Clear();
                             }
-                        }
-                        else if (value == autoSpinSpeed)
-                        {
-                            jockeyCommandType.Value = (int)JockeyCommandType.None;
-                            if (0 < inputHistory.Count)
-                                inputHistory.Clear();
                         }
                     });
                 
@@ -206,7 +210,7 @@ namespace Main.Utility
                             if (differentCount % 2 == 0)
                             {
                                 inputSlipLoopState.beatLength.Value = (int)BeatLength.None;
-                                jockeyCommandType.Value = (int)JockeyCommandType.None;
+                                jockeyCommandType.Value = (int)JockeyCommandType.SlipLoopEnd;
                                 inputSlipLoopState.crossVectorHistory.Clear();
                             }
                             else
