@@ -112,6 +112,14 @@ namespace Main.Audio
         {
             try
             {
+                switch (bgmConfDetails.PentagramSpinState)
+                {
+                    case PentagramSpinState.autoSpin:
+                        // 自動回転の場合はSE鳴らさない
+                        return true;
+                    default:
+                        break;
+                }
                 if ((int)clipToPlay <= (clip.Length - 1))
                 {
                     if (!_isLookUpdOfPitch)

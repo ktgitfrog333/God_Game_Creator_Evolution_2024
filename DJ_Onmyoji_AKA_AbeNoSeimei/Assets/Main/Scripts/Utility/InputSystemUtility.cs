@@ -26,7 +26,7 @@ namespace Main.Utility
         /// <summary>式神タイプ別パラメータ管理</summary>
         private ShikigamiParameterUtility _shikigamiParameterUtility = new ShikigamiParameterUtility();
 
-        public bool SetInputValueInModel(IReactiveProperty<float> inputValue, float multiDistanceCorrected, Vector2ReactiveProperty previousInput, float autoSpinSpeed, PentagramSystemModel model, FloatReactiveProperty previousInputMidiJack)
+        public bool SetInputValueInModel(IReactiveProperty<float> inputValue, float multiDistanceCorrected, Vector2ReactiveProperty previousInput, float autoSpinSpeed, PentagramSystemModel model, float multiDistanceCorrectedMidiJack, IReactiveProperty<int> pentagramSpinState)
         {
             try
             {
@@ -51,7 +51,7 @@ namespace Main.Utility
 
                                 break;
                             case InputMode.MidiJackDDJ200:
-                                if (!UpdateInputMidiJack(previousInputMidiJack, inputValue, autoSpinSpeed, x.InputMidiJackDDJ200.Scratch))
+                                if (!UpdateInputMidiJack(inputValue, autoSpinSpeed, x.InputMidiJackDDJ200.Scratch, multiDistanceCorrectedMidiJack, pentagramSpinState))
                                     throw new System.Exception("UpdateInputMidiJack");
 
                                 break;
@@ -73,20 +73,26 @@ namespace Main.Utility
         /// <summary>
         /// InputMidiJackの更新
         /// </summary>
-        /// <param name="previousInputMidiJack">過去の入力（MIDIJack）</param>
         /// <param name="inputValue">入力角度</param>
         /// <param name="autoSpinSpeed">自動回転の速度</param>
         /// <param name="currentInputMidiJack">スクラッチ値</param>
+        /// <param name="multiDistanceCorrectedMidiJack">距離の補正乗算値（MidiJack）</param>
+        /// <param name="pentagramSpinState">ペンダグラムの回転状態</param>
         /// <returns>成功／失敗</returns>
-        private bool UpdateInputMidiJack(FloatReactiveProperty previousInputMidiJack, IReactiveProperty<float> inputValue, float autoSpinSpeed, float currentInputMidiJack)
+        private bool UpdateInputMidiJack(IReactiveProperty<float> inputValue, float autoSpinSpeed, float currentInputMidiJack, float multiDistanceCorrectedMidiJack, IReactiveProperty<int> pentagramSpinState)
         {
             try
             {
-                if (IsPerformed(previousInputMidiJack.Value, currentInputMidiJack, true))
-                    inputValue.Value = previousInputMidiJack.Value - currentInputMidiJack;
+                if (0f != currentInputMidiJack)
+                {
+                    inputValue.Value = currentInputMidiJack * multiDistanceCorrectedMidiJack * Time.deltaTime;
+                    pentagramSpinState.Value = (int)PentagramSpinState.manualSpin;
+                }
                 else
-                    inputValue.Value = autoSpinSpeed;
-                previousInputMidiJack.Value = currentInputMidiJack; // 現在の入力を保存
+                {
+                    inputValue.Value = autoSpinSpeed * Time.deltaTime;
+                    pentagramSpinState.Value = (int)PentagramSpinState.autoSpin;
+                }
 
                 return true;
             }
@@ -102,14 +108,11 @@ namespace Main.Utility
         /// </summary>
         /// <param name="prevMagnitude">直前の入力値</param>
         /// <param name="currentMagnitude">現在の入力値</param>
-        /// <param name="isAbsMath">絶対値とするか</param>
         /// <returns>真／偽</returns>
-        private bool IsPerformed(float prevMagnitude, float currentMagnitude, bool isAbsMath = false)
+        private bool IsPerformed(float prevMagnitude, float currentMagnitude)
         {
-            return !isAbsMath ? 0f < prevMagnitude &&
-                0f < currentMagnitude :
-                0f < Mathf.Abs(prevMagnitude) &&
-                0f < Mathf.Abs(currentMagnitude);
+            return 0f < prevMagnitude &&
+                0f < currentMagnitude;
         }
 
         public bool SetInputValueInModel(InputBackSpinState inputBackSpinState, PentagramSystemModel model)
@@ -733,9 +736,10 @@ namespace Main.Utility
         /// <param name="previousInput">過去の入力</param>
         /// <param name="autoSpinSpeed">自動回転の速度</param>
         /// <param name="model">ペンダグラムシステムモデル</param>
-        /// <param name="previousInputMidiJack">過去の入力（MIDIJack）</param>
+        /// <param name="multiDistanceCorrectedMidiJack">距離の補正乗算値（MidiJack）</param>
+        /// <param name="pentagramSpinState">ペンダグラムの回転状態</param>
         /// <returns>成功／失敗</returns>
-        public bool SetInputValueInModel(IReactiveProperty<float> inputValue, float multiDistanceCorrected, Vector2ReactiveProperty previousInput, float autoSpinSpeed, PentagramSystemModel model, FloatReactiveProperty previousInputMidiJack);
+        public bool SetInputValueInModel(IReactiveProperty<float> inputValue, float multiDistanceCorrected, Vector2ReactiveProperty previousInput, float autoSpinSpeed, PentagramSystemModel model, float multiDistanceCorrectedMidiJack, IReactiveProperty<int> pentagramSpinState);
         /// <summary>
         /// モデルコンポーネントを監視して第1引数へセットされた値を更新
         /// スティック座標をセット

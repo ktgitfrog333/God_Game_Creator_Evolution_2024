@@ -605,12 +605,13 @@ namespace Main.Presenter
                 });
             BgmConfDetails bgmConfDetails = new BgmConfDetails();
             this.UpdateAsObservable()
-                .Select(_ => pentagramSystemModel.InputValue)
+                .Select(_ => pentagramSystemModel)
                 .Subscribe(x =>
                 {
                     if (!pentagramSystemModel.InputSlipLoopState.IsLooping.Value)
                     {
-                        bgmConfDetails.InputValue = x.Value;
+                        bgmConfDetails.InputValue = x.InputValue.Value;
+                        bgmConfDetails.PentagramSpinState = (PentagramSpinState)x.PentagramSpinState.Value;
                         if (!pentagramTurnTableView.MoveSpin(bgmConfDetails))
                             Debug.LogError("MoveSpin");
                     }
@@ -723,7 +724,6 @@ namespace Main.Presenter
                                         break;
                                     default:
                                         throw new System.Exception("例外エラー");
-                                        break;
                                 }
 
                                 //SP回復中は強制的にTempoLevelをMINに設定
