@@ -11,6 +11,9 @@ using UnityEngine;
 /// </summary>
 public class InputMidiJackDDJ200 : MonoBehaviour
 {
+    /// <summary>入力の制限時間</summary>
+    private float _elapsedTime;
+
     private void Start()
     {
         MidiMaster.knobDelegate += OnScratch;
@@ -19,16 +22,38 @@ public class InputMidiJackDDJ200 : MonoBehaviour
         MidiMaster.knobDelegate += OnMixers;
         FloatReactiveProperty elapsedTime = new FloatReactiveProperty();
         this.UpdateAsObservable()
+            .Where(_ => _scratch != 0f)
             .Subscribe(_ =>
             {
-                elapsedTime.Value += Time.deltaTime;
-                if (userActionTime < elapsedTime.Value)
-                {
-                    elapsedTime.Value = 0f;
-                    _scratch = 0f;
-                }
+                _elapsedTime += Time.deltaTime;
+                if (userActionTime < _elapsedTime)
+                    if (!ResetTime(ref _scratch, ref _elapsedTime))
+                        Debug.LogError("ResetTime");
             });
     }
+
+    /// <summary>
+    /// 時間をリセット
+    /// </summary>
+    /// <param name="scratch">スクラッチ</param>
+    /// <param name="elapsedTime">入力の制限時間</param>
+    /// <returns>成功／失敗</returns>
+    private bool ResetTime(ref float scratch, ref float elapsedTime)
+    {
+        try
+        {
+            elapsedTime = 0f;
+            scratch = 0f;
+
+            return true;
+        }
+        catch (System.Exception e)
+        {
+            Debug.LogError(e);
+            return false;
+        }
+    }
+
     private void OnDestroy()
     {
         MidiMaster.knobDelegate -= OnScratch;
@@ -98,12 +123,18 @@ public class InputMidiJackDDJ200 : MonoBehaviour
             if (value == .496063f)
             {
                 // 反時計回りの場合、_scratchを減少させる
-                _scratch += scratchLevel; // この値は調整が必要かもしれません
+                if (0f < _scratch)
+                    if (!ResetTime(ref _scratch, ref _elapsedTime))
+                        Debug.LogError("ResetTime");
+                _scratch -= scratchLevel; // この値は調整が必要かもしれません
             }
             else if (value == .511811f)
             {
+                if (_scratch < 0f)
+                    if (!ResetTime(ref _scratch, ref _elapsedTime))
+                        Debug.LogError("ResetTime");
                 // 時計回りの場合、_scratchを増加させる
-                _scratch -= scratchLevel; // この値は調整が必要かもしれません
+                _scratch += scratchLevel; // この値は調整が必要かもしれません
             }
 
             return true;
