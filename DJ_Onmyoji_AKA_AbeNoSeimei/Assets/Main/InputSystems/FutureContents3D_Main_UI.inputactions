@@ -345,17 +345,6 @@
                 },
                 {
                     "name": "",
-                    "id": "f185949d-f0ee-4028-8968-2e6ecaf9f98e",
-                    "path": "<XInputController>/rightShoulder",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "Gamepad",
-                    "action": "Cancel",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
                     "id": "aa3fce25-3fda-4547-a248-3f5a34510357",
                     "path": "<Keyboard>/r",
                     "interactions": "",
