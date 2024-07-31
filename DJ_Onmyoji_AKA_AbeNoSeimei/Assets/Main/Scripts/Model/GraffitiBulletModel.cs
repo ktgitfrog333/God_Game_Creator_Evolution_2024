@@ -33,6 +33,8 @@ namespace Main.Model
                 Transform.position = position;
                 if (0f < updateConf.range)
                     _rangeMax = updateConf.range;
+                if (!attackColliderOfOnmyoBullet.SetAttackPoint(updateConf.attackPoint))
+                    throw new System.Exception("SetAttackPoint");
 
                 return true;
             }

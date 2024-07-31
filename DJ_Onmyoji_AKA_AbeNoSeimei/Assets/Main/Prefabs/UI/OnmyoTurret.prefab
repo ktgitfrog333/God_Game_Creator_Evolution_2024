@@ -96,6 +96,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: OnmyoTurret
       objectReference: {fileID: 0}
+    - target: {fileID: 7559912414069828042, guid: 7691e9e14c105c24280bd76b731b5100, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -124,3 +128,4 @@ MonoBehaviour:
   objectsPoolPrefab: {fileID: 7497276588651718180, guid: 4434f5da33952be4c941a59c25b13d50, type: 3}
   instanceRateTimeSec: 0.5
   instanceRateTimeSecCorrection: 2
+  image: {fileID: 0}

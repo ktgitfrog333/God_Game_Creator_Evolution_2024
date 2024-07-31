@@ -125,6 +125,8 @@ namespace Universal.Bean
 
         /// <summary>魂のお金</summary>
         public int soulMoney = 0;
+        /// <summary>入力モード</summary>
+        public int inputMode = 0;
 
         /// <summary>
         /// ユーザー情報を保持するクラス
@@ -225,6 +227,7 @@ namespace Universal.Bean
             vibrationEnableIndex = userBean.vibrationEnableIndex;
             pentagramTurnTableInfo = userBean.pentagramTurnTableInfo;
             soulMoney = userBean.soulMoney;
+            inputMode = userBean.inputMode;
         }
     }
 }

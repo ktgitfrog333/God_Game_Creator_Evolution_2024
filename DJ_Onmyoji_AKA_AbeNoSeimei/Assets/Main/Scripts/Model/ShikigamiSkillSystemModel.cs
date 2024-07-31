@@ -31,6 +31,8 @@ namespace Main.Model
         public ShikigamiInfo[] ShikigamiInfos => _shikigamiInfos;
         /// <summary>更新の補正値</summary>
         [SerializeField] private float[] updateCorrected = { 1f, 1f };
+        /// <summary>更新の補正値（MidiJack）</summary>
+        [SerializeField] private float[] updateCorrectedMidiJack = { 1f, 1f };
         /// <summary>InputSystemのユーティリティ</summary>
         private InputSystemUtility _inputSysUtility = new InputSystemUtility();
         /// <summary>演出の再生時間</summary>
@@ -49,21 +51,23 @@ namespace Main.Model
             candleInfo.IsOutCost = new BoolReactiveProperty();
             candleInfo.rapidRecoveryState = new IntReactiveProperty((int)RapidRecoveryType.None);
             candleInfo.isStopRecovery = new BoolReactiveProperty();
+            candleInfo.isRest = new BoolReactiveProperty();
             var utility = new ShikigamiParameterUtility();
             var shikigamis = utility.GetPentagramTurnTableInfo().slots.Select(q => q.prop.shikigamiInfo).ToArray();
             for (var i = 0; i < shikigamis.Length; i++)
             {
                 shikigamis[i].state.tempoLevel = new FloatReactiveProperty();
                 shikigamis[i].state.tempoLevelRevertState = new IntReactiveProperty((int)RapidRecoveryType.None);
+                shikigamis[i].state.isRest = new BoolReactiveProperty(false);
             }
             _shikigamiInfos = shikigamis;
-            if (!_inputSysUtility.SetCandleResourceAndTempoLevelsInModel(candleInfo, _shikigamiInfos, updateCorrected[0], this))
+            if (!_inputSysUtility.SetCandleResourceAndTempoLevelsInModel(candleInfo, _shikigamiInfos, updateCorrected[0], updateCorrectedMidiJack[0], this))
                 Debug.LogError("SetCandleResourceAndTempoLevels");
         }
 
         public bool UpdateCandleResource(JockeyCommandType jkeyCmdTypeCurrent, JockeyCommandType jkeyCmdTypePrevious)
         {
-            return _inputSysUtility.UpdateCandleResourceByPentagram(jkeyCmdTypeCurrent, jkeyCmdTypePrevious, candleInfo, updateCorrected[1], this);
+            return _inputSysUtility.UpdateCandleResourceByPentagram(jkeyCmdTypeCurrent, jkeyCmdTypePrevious, candleInfo, updateCorrected[1], updateCorrectedMidiJack[1], this);
         }
 
         public bool ForceZeroAndRapidRecoveryCandleResource(JockeyCommandType jockeyCommandType)
@@ -144,6 +148,8 @@ namespace Main.Model
         public IReactiveProperty<int> rapidRecoveryState { get; set; }
         /// <summary>回復停止状態か（スリップループのみ使用）</summary>
         public IReactiveProperty<bool> isStopRecovery;
+        /// <summary>SPゲージ回復中</summary>
+        public IReactiveProperty<bool> isRest;
     }
 
     /// <summary>
