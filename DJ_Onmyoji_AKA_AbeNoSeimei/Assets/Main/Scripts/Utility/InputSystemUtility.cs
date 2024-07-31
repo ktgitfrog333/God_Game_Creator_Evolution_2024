@@ -32,7 +32,8 @@ namespace Main.Utility
             {
                 Observable.FromCoroutine<InputSystemsOwner>(observer => UpdateAsObservableOfInputSystemsOwner(observer, model))
                     .Where(x => x != null &&
-                        x.CurrentInputMode != null)
+                        x.CurrentInputMode != null &&
+                        Time.timeScale != 0)
                     .Subscribe(x =>
                     {
                         switch ((InputMode)x.CurrentInputMode.Value)
