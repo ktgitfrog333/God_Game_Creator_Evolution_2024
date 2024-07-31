@@ -40,6 +40,7 @@ namespace Main.View
                 Observable.FromCoroutine<bool>(observer => SetAsLastSiblingAndPlayFadeAnimation(observer, fadeLevelBackgroundViews, GAMEOBJECT_NAME_FADEIMAGEDAY))
                     .Subscribe(_ => observer.OnNext(true))
                     .AddTo(gameObject);
+                MainGameManager.Instance.AudioOwner.SwitchClipDay();
             }
             else if (onmyoStateValue <= switchNightLevel &&
                 !IsSwitched(SunMoonState.Night, fadeLevelBackgroundViews))
@@ -47,6 +48,7 @@ namespace Main.View
                 Observable.FromCoroutine<bool>(observer => SetAsLastSiblingAndPlayFadeAnimation(observer, fadeLevelBackgroundViews, GAMEOBJECT_NAME_FADEIMAGENIGHT))
                     .Subscribe(_ => observer.OnNext(true))
                     .AddTo(gameObject);
+                MainGameManager.Instance.AudioOwner.SwitchClipNight();
             }
 
             yield return null;

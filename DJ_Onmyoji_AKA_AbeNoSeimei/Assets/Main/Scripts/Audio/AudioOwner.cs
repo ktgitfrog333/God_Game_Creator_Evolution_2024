@@ -103,6 +103,16 @@ namespace Main.Audio
         {
             return bgmPlayer.AdjustBGM();
         }
+
+        public bool SwitchClipDay()
+        {
+            return bgmPlayer.SwitchClipDay();
+        }
+
+        public bool SwitchClipNight()
+        {
+            return bgmPlayer.SwitchClipNight();
+        }
     }
 
     /// <summary>
@@ -211,6 +221,15 @@ namespace Main.Audio
         /// </summary>
         /// <returns>成功／失敗</returns>
         public bool AdjustBGM();
+        /// オーディオクリップ切替（昼）
+        /// </summary>
+        /// <returns>成功／失敗</returns>
+        public bool SwitchClipDay();
+        /// <summary>
+        /// オーディオクリップ切替（夜）
+        /// </summary>
+        /// <returns>成功／失敗</returns>
+        public bool SwitchClipNight();
     }
 
     /// <summary>
