@@ -605,12 +605,16 @@ namespace Main.Presenter
                 });
             BgmConfDetails bgmConfDetails = new BgmConfDetails();
             this.UpdateAsObservable()
-                .Select(_ => pentagramSystemModel.InputValue)
+                .Select(_ => pentagramSystemModel)
                 .Subscribe(x =>
                 {
-                    bgmConfDetails.InputValue = x.Value;
-                    if (!pentagramTurnTableView.MoveSpin(bgmConfDetails))
-                        Debug.LogError("MoveSpin");
+                    if (!pentagramSystemModel.InputSlipLoopState.IsLooping.Value)
+                    {
+                        bgmConfDetails.InputValue = x.InputValue.Value;
+                        bgmConfDetails.PentagramSpinState = (PentagramSpinState)x.PentagramSpinState.Value;
+                        if (!pentagramTurnTableView.MoveSpin(bgmConfDetails))
+                            Debug.LogError("MoveSpin");
+                    }
                 });
             pentagramSystemModel.JockeyCommandType.ObserveEveryValueChanged(x => x.Value)
                 .Pairwise()
@@ -620,6 +624,9 @@ namespace Main.Presenter
                         Debug.LogError("UpdateCandleResource");
                     if (!pentagramTurnTableModel.BuffAllTurrets((JockeyCommandType)pair.Current))
                         Debug.LogError("BuffAllTurrets");
+                    // バックスピンはSPゲージ回復中は無効
+                    if (!shikigamiSkillSystemModel.CandleInfo.isRest.Value)
+                    {
                     if (!shikigamiSkillSystemModel.ForceZeroAndRapidRecoveryCandleResource((JockeyCommandType)pair.Current))
                         Debug.LogError("ForceZeroAndRapidRecoveryCandleResource");
                     Observable.FromCoroutine<bool>(observer => pentagramTurnTableView.PlayDirectionBackSpin(observer, (JockeyCommandType)pair.Current))
@@ -629,6 +636,13 @@ namespace Main.Presenter
                                 Debug.LogError("ResetJockeyCommandType");
                         })
                         .AddTo(gameObject);
+                    }
+                    else
+                    {
+                        // バックスピンの呼び出しが無効の場合は、即座に入力状態をリセット
+                        if (!pentagramSystemModel.ResetJockeyCommandType())
+                            Debug.LogError("ResetJockeyCommandType");
+                    }
                     if (!pentagramSystemModel.SetIsLooping((JockeyCommandType)pair.Current))
                         Debug.LogError("SetIsLooping");
                     if (!shikigamiSkillSystemModel.SetIsStopRecovery((JockeyCommandType)pair.Current))
@@ -710,7 +724,6 @@ namespace Main.Presenter
                                         break;
                                     default:
                                         throw new System.Exception("例外エラー");
-                                        break;
                                 }
 
                                 //SP回復中は強制的にTempoLevelをMINに設定

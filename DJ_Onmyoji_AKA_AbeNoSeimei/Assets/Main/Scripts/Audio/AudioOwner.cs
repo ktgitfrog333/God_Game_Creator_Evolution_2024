@@ -89,6 +89,11 @@ namespace Main.Audio
             return bgmPlayer.GetBeatBGM();
         }
 
+        public void SetEQ(float value, string groupsName)
+        {
+            audioMixer.SetEQ(value, groupsName);
+        }
+
         public bool SetVolumeOn()
         {
             return bgmPlayer.SetVolumeOn();
@@ -98,9 +103,15 @@ namespace Main.Audio
         {
             return bgmPlayer.AdjustBGM();
         }
-        public void SetEQ(float value, string groupsName)
+
+        public bool SwitchClipDay()
         {
-            audioMixer.SetEQ(value, groupsName);
+            return bgmPlayer.SwitchClipDay();
+        }
+
+        public bool SwitchClipNight()
+        {
+            return bgmPlayer.SwitchClipNight();
         }
     }
 
@@ -210,6 +221,15 @@ namespace Main.Audio
         /// </summary>
         /// <returns>成功／失敗</returns>
         public bool AdjustBGM();
+        /// オーディオクリップ切替（昼）
+        /// </summary>
+        /// <returns>成功／失敗</returns>
+        public bool SwitchClipDay();
+        /// <summary>
+        /// オーディオクリップ切替（夜）
+        /// </summary>
+        /// <returns>成功／失敗</returns>
+        public bool SwitchClipNight();
     }
 
     /// <summary>

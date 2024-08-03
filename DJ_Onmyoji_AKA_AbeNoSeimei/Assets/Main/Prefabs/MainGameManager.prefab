@@ -692,6 +692,28 @@ MonoBehaviour:
     bpm: 143
   - clipToPlayBGM: 14
     bpm: 144
+  bGMDayOrNightMaps:
+  - sceneId: 1
+    clipToPlayBGMDay: 0
+    clipToPlayBGMNight: 7
+  - sceneId: 2
+    clipToPlayBGMDay: 1
+    clipToPlayBGMNight: 8
+  - sceneId: 3
+    clipToPlayBGMDay: 2
+    clipToPlayBGMNight: 9
+  - sceneId: 4
+    clipToPlayBGMDay: 3
+    clipToPlayBGMNight: 10
+  - sceneId: 5
+    clipToPlayBGMDay: 4
+    clipToPlayBGMNight: 11
+  - sceneId: 6
+    clipToPlayBGMDay: 5
+    clipToPlayBGMNight: 12
+  - sceneId: 7
+    clipToPlayBGMDay: 6
+    clipToPlayBGMNight: 13
 --- !u!1 &1369696455348085395
 GameObject:
   m_ObjectHideFlags: 0
