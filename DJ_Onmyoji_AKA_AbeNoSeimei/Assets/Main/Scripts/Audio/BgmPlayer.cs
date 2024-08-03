@@ -6,6 +6,7 @@ using Universal.Common;
 using DG.Tweening;
 using Main.Common;
 using System.Linq;
+using Main.Utility;
 
 namespace Main.Audio
 {
@@ -25,6 +26,14 @@ namespace Main.Audio
         [SerializeField] private float reverseTLTimeSecAddRandomRangeMax = 2f;
         /// <summary>処理場で必要なBGMの情報</summary>
         [SerializeField] private BGMInfo[] bGMInfos;
+        /// <summary>
+        /// ステージごとのBGMの組み合わせマップ
+        /// ここの設定は AdminData.json の playBgmNames と連動していないため
+        /// 上記を変更した場合はインスペクタからここの設定も変更する
+        /// ※オーディオファイルの紐づけを変えてしまった方が早いかもしれない
+        /// </summary>
+        /// <see cref="Assets/SaveDatas/AdminData.json"/>
+        [SerializeField] private BGMDayOrNightMap[] bGMDayOrNightMaps;
 
         private void Reset()
         {
@@ -39,14 +48,29 @@ namespace Main.Audio
 
         public void OnStartAndPlayBGM()
         {
-            var temp = new TemplateResourcesAccessory();
-            // ステージIDの取得
-            var userDatas = temp.LoadSaveDatasJsonOfUserBean(ConstResorcesNames.USER_DATA);
-            // ステージ共通設定の取得
-            var adminDatas = temp.LoadSaveDatasJsonOfAdminBean(ConstResorcesNames.ADMIN_DATA);
-            var clipToPlay = adminDatas.playBgmNames[userDatas.sceneId - 1] - 1;
+            var utility = new MainCommonUtility();
+            // clipToPlayBGMNight
+            SwitchClip(bGMDayOrNightMaps.Where(q => q.sceneId == utility.UserDataSingleton.UserBean.sceneId)
+                .Select(q => q.clipToPlayBGMNight)
+                .ToArray());
+            // clipToPlayBGMDay
+            SwitchClip(bGMDayOrNightMaps.Where(q => q.sceneId == utility.UserDataSingleton.UserBean.sceneId)
+                .Select(q => q.clipToPlayBGMDay)
+                .ToArray());
+        }
 
-            PlayAudioSource((ClipToPlayBGM)clipToPlay);
+        /// <summary>
+        /// シーンIDを元にBGMを取得
+        /// </summary>
+        /// <returns>BGM</returns>
+        private int GetClipToPlayFromSceneId()
+        {
+            var utility = new MainCommonUtility();
+            // ステージIDの取得
+            var userDatas = utility.UserDataSingleton.UserBean;
+            // ステージ共通設定の取得
+            var adminDatas = utility.AdminDataSingleton.AdminBean;
+            return adminDatas.playBgmNames[userDatas.sceneId - 1] - 1;
         }
 
         /// <summary>
@@ -170,6 +194,63 @@ namespace Main.Audio
                 return false;
             }
         }
+
+        public bool SwitchClipDay()
+        {
+            try
+            {
+                var utility = new MainCommonUtility();
+                return SwitchClip(bGMDayOrNightMaps.Where(q => q.sceneId == utility.UserDataSingleton.UserBean.sceneId)
+                    .Select(q => q.clipToPlayBGMDay)
+                    .ToArray());
+            }
+            catch (System.Exception e)
+            {
+                Debug.LogError(e);
+                return false;
+            }
+        }
+
+        public bool SwitchClipNight()
+        {
+            try
+            {
+                var utility = new MainCommonUtility();
+                return SwitchClip(bGMDayOrNightMaps.Where(q => q.sceneId == utility.UserDataSingleton.UserBean.sceneId)
+                    .Select(q => q.clipToPlayBGMNight)
+                    .ToArray());
+            }
+            catch (System.Exception e)
+            {
+                Debug.LogError(e);
+                return false;
+            }
+        }
+
+        /// <summary>
+        /// オーディオクリップ切替
+        /// </summary>
+        /// <param name="clipToPlayBGMs">BGMオーディオクリップリストのインデックス</param>
+        /// <returns>成功／失敗</returns>
+        private bool SwitchClip(ClipToPlayBGM[] clipToPlayBGMs)
+        {
+            try
+            {
+                if (0 < clipToPlayBGMs.Length)
+                {
+                    var time = audioSource.time;
+                    PlayAudioSource(clipToPlayBGMs[0]);
+                    audioSource.time = time;
+                }
+
+                return true;
+            }
+            catch (System.Exception e)
+            {
+                Debug.LogError(e);
+                return false;
+            }
+        }
     }
 
     /// <summary>
@@ -182,5 +263,19 @@ namespace Main.Audio
         public ClipToPlayBGM clipToPlayBGM;
         /// <summary>BPM</summary>
         public float bpm;
+    }
+
+    /// <summary>
+    /// ステージごとのBGMの組み合わせマップ
+    /// </summary>
+    [System.Serializable]
+    public struct BGMDayOrNightMap
+    {
+        /// <summary>シーンID</summary>
+        public int sceneId;
+        /// <summary>オーディオクリップ</summary>
+        public ClipToPlayBGM clipToPlayBGMDay;
+        /// <summary>オーディオクリップ</summary>
+        public ClipToPlayBGM clipToPlayBGMNight;
     }
 }
