@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Select.Presenter;
 using Select.Audio;
+using Select.InputSystem;
 
 namespace Select.Common
 {
@@ -36,6 +37,10 @@ namespace Select.Common
         [SerializeField] private AnalyticsOwner analyticsOwner;
         /// <summary>アナリティクスのオーナー</summary>
         public AnalyticsOwner AnalyticsOwner => analyticsOwner;
+        /// <summary>InputSystemのオーナー</summary>
+        [SerializeField] private InputSystemsOwner inputSystemsOwner;
+        /// <summary>InputSystemのオーナー</summary>
+        public InputSystemsOwner InputSystemsOwner => inputSystemsOwner;
 
         private void Reset()
         {
@@ -44,6 +49,7 @@ namespace Select.Common
             sceneOwner = GameObject.Find("SceneOwner").GetComponent<SceneOwner>();
             cursorVisible = GameObject.Find("CursorVisible").GetComponent<CursorVisible>();
             analyticsOwner = GameObject.Find("AnalyticsOwner").GetComponent<AnalyticsOwner>();
+            inputSystemsOwner = GameObject.Find("InputSystemsOwner").GetComponent<InputSystemsOwner>();
         }
 
         private void Awake()
@@ -62,6 +68,8 @@ namespace Select.Common
                 cursorVisible.OnStart();
             if (sceneOwner.isActiveAndEnabled)
                 sceneOwner.OnStart();
+            if (inputSystemsOwner.isActiveAndEnabled)
+                inputSystemsOwner.OnStart();
         }
     }
 
