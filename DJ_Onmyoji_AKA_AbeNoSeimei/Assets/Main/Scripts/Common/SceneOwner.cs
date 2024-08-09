@@ -17,6 +17,8 @@ namespace Main.Common
         [SerializeField] private string nextSceneName = "MainScene";
         /// <summary>前のシーン名</summary>
         [SerializeField] private string backSceneName = "SelectScene";
+        /// <summary>タイトルのシーン名</summary>
+        [SerializeField] private string titleSceneName = "TitleScene";
 
         public void OnStart()
         {
@@ -105,6 +107,14 @@ namespace Main.Common
         public void LoadSelectScene()
         {
             SceneManager.LoadScene(backSceneName);
+        }
+
+        /// <summary>
+        /// タイトルシーンをロード
+        /// </summary>
+        public void LoadTitleScene()
+        {
+            SceneManager.LoadScene(titleSceneName);
         }
     }
 
