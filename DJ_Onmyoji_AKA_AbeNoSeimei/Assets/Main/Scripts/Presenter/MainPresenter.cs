@@ -35,12 +35,6 @@ namespace Main.Presenter
         [SerializeField] private GameSelectButtonView gameSelectButtonView;
         /// <summary>ステージ選択へ戻るのモデル</summary>
         [SerializeField] private GameSelectButtonModel gameSelectButtonModel;
-        /// <summary>ゲームオーバー画面のビュー</summary>
-        [SerializeField] private GameOverView gameOverView;
-        /// <summary>タイトルに戻るボタンのビュー</summary>
-        [SerializeField] private GameTitleButtonView gameTitleButtonView;
-        /// <summary>タイトルに戻るボタンのモデル</summary>
-        [SerializeField] private GameTitleButtonModel gameTitleButtonModel;
         /// <summary>カーソルのビュー</summary>
         [SerializeField] private CursorIconView cursorIconView;
         /// <summary>カーソルのモデル</summary>
@@ -114,9 +108,6 @@ namespace Main.Presenter
             gameRetryButtonModel = GameObject.Find("GameRetryButton").GetComponent<GameRetryButtonModel>();
             gameSelectButtonView = GameObject.Find("GameSelectButton").GetComponent<GameSelectButtonView>();
             gameSelectButtonModel = GameObject.Find("GameSelectButton").GetComponent<GameSelectButtonModel>();
-            gameOverView = GameObject.Find("GameOver").GetComponent<GameOverView>();
-            gameTitleButtonView = GameObject.Find("GameTitleButton").GetComponent<GameTitleButtonView>();
-            gameTitleButtonModel = GameObject.Find("GameTitleButton").GetComponent<GameTitleButtonModel>();
             cursorIconView = GameObject.Find("CursorIcon").GetComponent<CursorIconView>();
             cursorIconModel = GameObject.Find("CursorIcon").GetComponent<CursorIconModel>();
             gameManualScrollView = GameObject.Find("GameManualScroll").GetComponent<GameManualScrollView>();
@@ -177,8 +168,6 @@ namespace Main.Presenter
             pauseView.gameObject.SetActive(false);
             gameRetryButtonView.gameObject.SetActive(false);
             gameSelectButtonView.gameObject.SetActive(false);
-            gameOverView.gameObject.SetActive(false);
-            gameTitleButtonView.gameObject.SetActive(false);
             cursorIconView.gameObject.SetActive(false);
             gameManualScrollView.gameObject.SetActive(false);
             moveGuideView.SetAlpha(EnumFadeState.Close);
@@ -410,67 +399,6 @@ namespace Main.Presenter
                             break;
                     }
                 });
-            // ゲームオーバー画面表示のため、HP0になった時ののフラグ更新
-            var isPlayerDead = new BoolReactiveProperty();
-            isPlayerDead.ObserveEveryValueChanged(x => x.Value)
-                .Subscribe(x =>
-                {
-                    if (x)
-                    {
-                        MainGameManager.Instance.AudioOwner.PlaySFX(ClipToPlay.me_game_clear);
-                        // 初期処理
-                        Debug.Log("ゲームオーバー画面の初期処理");
-                        if (!gameOverView.SetActiveGameObject(true))
-                            Debug.LogError("SetActiveGameObject");
-                        gameTitleButtonView.gameObject.SetActive(true);
-                        gameTitleButtonModel.SetSelectedGameObject();
-                        if (!playerModel.SetInputBan(true))
-                            Debug.LogError("操作禁止フラグをセット呼び出しの失敗");
-                    }
-                });
-            // ゲームオーバー画面 -> タイトル画面へ戻る
-            gameTitleButtonModel.EventState.ObserveEveryValueChanged(x => x.Value)
-                .Subscribe(x =>
-                {
-                    switch ((EnumEventCommand)x)
-                    {
-                        case EnumEventCommand.Default:
-                            Debug.Log("デフォルト");
-                            // 処理無し
-                            break;
-                        case EnumEventCommand.Selected:
-                            Debug.Log("セレクトボタン押下");
-                            // 処理無し
-                            break;
-                        case EnumEventCommand.DeSelected:
-                            Debug.Log("セレクトしない");
-                            // 処理無し
-                            break;
-                        case EnumEventCommand.Submited:
-                            Debug.Log("決定ボタン押下");
-                            MainGameManager.Instance.AudioOwner.PlaySFX(ClipToPlay.se_decided);
-                            if (!gameTitleButtonModel.SetButtonEnabled(false))
-                                Debug.LogError("ボタン有効／無効切り替え呼び出しの失敗");
-                            if (!gameTitleButtonModel.SetEventTriggerEnabled(false))
-                                Debug.LogError("イベント有効／無効切り替え呼び出しの失敗");
-                            // プレイヤーの挙動によって発生するイベント無効　など
-                            if (!MainGameManager.Instance.InputSystemsOwner.Exit())
-                                Debug.LogError("InputSystem終了呼び出しの失敗");
-                            // シーン読み込み時のアニメーション
-                            Observable.FromCoroutine<bool>(observer => fadeImageView.PlayFadeAnimation(observer, EnumFadeState.Close))
-                                .Subscribe(_ => MainGameManager.Instance.SceneOwner.LoadTitleScene())
-                                .AddTo(gameObject);
-                            break;
-                        case EnumEventCommand.Canceled:
-                            Debug.Log("キャンセルボタン押下");
-                            // 処理無し
-                            break;
-                        default:
-                            Debug.LogWarning("例外ケース");
-                            break;
-                    }
-                });
-            
             // ショートカットキー
             var inputUIPushedTime = new FloatReactiveProperty();
             var inputUIActionsState = new IntReactiveProperty((int)EnumShortcuActionMode.None);
@@ -613,9 +541,7 @@ namespace Main.Presenter
                                             {
                                                 if (!pentagramTurnTableView.SetSpriteIndex(0f, playerModel.State.HPMax))
                                                     Debug.LogError("SetSpriteIndex");
-                                                // ゲームオーバー画面を表示する為には以下の処理を変更する必要がある。
-                                                isPlayerDead.Value = true;
-                                                // isGoalReached.Value = true;
+                                                isGoalReached.Value = true;
                                             }
                                         });
                                 }
