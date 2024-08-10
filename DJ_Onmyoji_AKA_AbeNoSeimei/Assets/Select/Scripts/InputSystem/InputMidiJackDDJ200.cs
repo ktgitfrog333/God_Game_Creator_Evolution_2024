@@ -5,7 +5,7 @@ using UniRx.Triggers;
 using UniRx;
 using UnityEngine;
 
-namespace Main.InputSystem
+namespace Select.InputSystem
 {
     /// <summary>
     /// MidiJack

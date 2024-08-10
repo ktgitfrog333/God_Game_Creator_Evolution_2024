@@ -814,7 +814,23 @@ namespace Main.Presenter
                 .Subscribe(_ =>
                 {
                     if (isInputUIPausedEnabled.Value)
-                        inputUIPausedState.Value = MainGameManager.Instance.InputSystemsOwner.GetComponent<InputSystemsOwner>().InputUI.Paused;
+                    {
+                        var inputSystemsOwner = MainGameManager.Instance.InputSystemsOwner;
+                        switch ((InputMode)inputSystemsOwner.CurrentInputMode.Value)
+                        {
+                            case InputMode.Gamepad:
+                                inputUIPausedState.Value = inputSystemsOwner.InputUI.Paused;
+
+                                break;
+                            case InputMode.MidiJackDDJ200:
+                                inputUIPausedState.Value = inputSystemsOwner.InputMidiJackDDJ200.PlayOrPause ||
+                                    inputSystemsOwner.InputMidiJackDDJ200.Cue;
+
+                                break;
+                            default:
+                                break;
+                        }
+                    }
                     if (isInputUIActionsEnabled.Value)
                     {
                         if (((EnumShortcuActionMode)inputUIActionsState.Value).Equals(EnumShortcuActionMode.None))

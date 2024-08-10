@@ -5,7 +5,7 @@ using UniRx.Triggers;
 using UniRx;
 using UnityEngine;
 
-namespace Main.InputSystem
+namespace Title.InputSystem
 {
     /// <summary>
     /// MidiJack
@@ -66,10 +66,34 @@ namespace Main.InputSystem
             MidiMaster.noteOnDelegate -= OnUiButton;
             MidiMaster.knobDelegate -= OnMixer8;
             MidiMaster.knobDelegate -= OnMixers;
+            ResetAllKey();
+        }
+
+        /// <summary>
+        /// 全てのキーをリセット
+        /// </summary>
+        public void DoResetAllKey()
+        {
+            ResetAllKey();
+        }
+        /// <summary>
+        /// 全てのキーをリセット
+        /// </summary>
+        private void ResetAllKey()
+        {
             _scratch = 0f;
+            _pad1 = false;
+            _pad2 = false;
+            _pad3 = false;
+            _pad4 = false;
             _pad5 = false;
+            _pad6 = false;
+            _pad7 = false;
+            _pad8 = false;
             _mixer8 = 0f;
             _mixer1 = 0f;
+            _playOrPause = false;
+            _cue = false;
         }
         /// <summary>スクラッチ</summary>
         private float _scratch;
@@ -172,6 +196,18 @@ namespace Main.InputSystem
         private bool _pad5;
         /// <summary>パッド5</summary>
         public bool Pad5 => _pad5;
+        /// <summary>パッド6</summary>
+        public bool _pad6;
+        /// <summary>パッド6</summary>
+        public bool Pad6 => _pad6;
+        /// <summary>パッド7</summary>
+        public bool _pad7;
+        /// <summary>パッド7</summary>
+        public bool Pad7 => _pad7;
+        /// <summary>パッド8</summary>
+        public bool _pad8;
+        /// <summary>パッド8</summary>
+        public bool Pad8 => _pad8;
         /// <summary>
         /// パッド5
         /// </summary>
@@ -205,12 +241,27 @@ namespace Main.InputSystem
                             _pad5 = value == 1;
 
                             break;
+                        case MidiChannelKnob.P6:
+                            _pad6 = value == 1;
+
+                            break;
+                        case MidiChannelKnob.P7:
+                            _pad7 = value == 1;
+
+                            break;
+                        case MidiChannelKnob.P8:
+                            _pad8 = value == 1;
+
+                            break;
                         default:
                             _pad1 = false;
                             _pad2 = false;
                             _pad3 = false;
                             _pad4 = false;
                             _pad5 = false;
+                            _pad6 = false;
+                            _pad7 = false;
+                            _pad8 = false;
 
                             break;
                     }
@@ -322,6 +373,8 @@ namespace Main.InputSystem
 
                     break;
                 default:
+                    _playOrPause = false;
+                    _cue = false;
 
                     break;
             }
@@ -345,6 +398,9 @@ namespace Main.InputSystem
             P3 = 2,
             P4 = 3,
             P5 = 4,
+            P6 = 5,
+            P7 = 6,
+            P8 = 7,
             // 63は別の法則による取得値のため無視する
             M8 = 31,
             //A = 0,
