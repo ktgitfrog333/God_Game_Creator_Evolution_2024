@@ -452,6 +452,7 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 83b11e912e5ef9e4b8d5292505402f65, type: 3}
   - {fileID: 8300000, guid: a37106fce8a04494789e19164c77cc17, type: 3}
   - {fileID: 8300000, guid: 95b60bf3b9758a74eb397c2cf5ffedf8, type: 3}
+  - {fileID: 8300000, guid: 25c8b0e3c21921648bb688383733b759, type: 3}
   sFXChannelPrefab: {fileID: 1821450510366777210, guid: 13aae3403db5d45428b59ad80eca3da0, type: 3}
   delaies:
   - 0.1
