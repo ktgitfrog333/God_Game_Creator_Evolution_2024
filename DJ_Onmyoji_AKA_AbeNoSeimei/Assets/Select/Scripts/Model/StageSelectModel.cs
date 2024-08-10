@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using UniRx;
 using UnityEngine;
+using UnityEngine.UI;
 
 namespace Select.Model
 {
@@ -17,6 +18,8 @@ namespace Select.Model
         [SerializeField] private AreaContentModel[] areaContentModels;
         /// <summary>実行イベント</summary>
         public IReactiveProperty<int>[] EventStates => areaContentModels.Select(q => q.EventState).ToArray();
+        /// <summary>ボタン</summary>
+        public Button[] Buttons => areaContentModels.Select(q => q.GetComponent<Button>()).ToArray();
 
         private void Reset()
         {

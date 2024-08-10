@@ -27,9 +27,7 @@ namespace Main.Model
         {
             var utility = new MainCommonUtility();
             var userDataSingleton = utility.UserDataSingleton;
-            //TODO BitSummitが終わったら元に戻す
-            //SoulMoney.Value = userDataSingleton.UserBean.soulMoney;
-            SoulMoney.Value = 0;
+            SoulMoney.Value = userDataSingleton.UserBean.soulMoney;
             this.UpdateAsObservable()
                 .Where(_ => GameObject.FindGameObjectWithTag(ConstTagNames.TAG_NAME_PLAYER) != null)
                 .Select(_ => GameObject.FindGameObjectWithTag(ConstTagNames.TAG_NAME_PLAYER).GetComponent<PlayerModel>())

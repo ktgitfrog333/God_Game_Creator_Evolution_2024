@@ -222,6 +222,8 @@ namespace Title.Presenter
                                 cursorIcon.SetActive(true);
                             if (!cursorIconView.SetSelect(gameStartLogoView.transform.position))
                                 Debug.LogError("カーソル選択位置変更処理呼び出しの失敗");
+                            gameStartLogoModel.SetButtonEnabled(false);
+                            gameStartLogoModel.SetEventTriggerEnabled(false);
                             // ゲームスタートSEを再生
                             TitleGameManager.Instance.AudioOwner.PlaySFX(ClipToPlay.se_game_start);
                             break;
@@ -286,6 +288,7 @@ namespace Title.Presenter
                         case EnumEventCommand.Canceled:
                             cursorIcon.SetActive(false);
                             gameStartOrExit.SetActive(false);
+                            TitleGameManager.Instance.InputSystemsOwner.InputMidiJackDDJ200.DoResetAllKey();
                             pushGameStart.SetActive(true);
                             // キャンセルSEを再生
                             TitleGameManager.Instance.AudioOwner.PlaySFX(ClipToPlay.se_cancel);
