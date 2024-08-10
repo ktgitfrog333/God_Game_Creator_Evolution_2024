@@ -11026,6 +11026,10 @@ PrefabInstance:
       propertyPath: lastContent
       value: 
       objectReference: {fileID: 3116255076051718365}
+    - target: {fileID: 4338290647816432322, guid: f9df1c95592bcb047833a0eb220ee79d, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -91
+      objectReference: {fileID: 0}
     - target: {fileID: 4455790506874201942, guid: f9df1c95592bcb047833a0eb220ee79d, type: 3}
       propertyPath: m_Name
       value: Clear
@@ -11190,6 +11194,26 @@ PrefabInstance:
       propertyPath: m_Enabled
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6893305762038331177, guid: f9df1c95592bcb047833a0eb220ee79d, type: 3}
+      propertyPath: m_text
+      value: "\u4ED6\u306E\u30B9\u30C6\u30FC\u30B8\u3092\u9078\u3076"
+      objectReference: {fileID: 0}
+    - target: {fileID: 6893305762038331177, guid: f9df1c95592bcb047833a0eb220ee79d, type: 3}
+      propertyPath: m_fontColor.b
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6893305762038331177, guid: f9df1c95592bcb047833a0eb220ee79d, type: 3}
+      propertyPath: m_fontColor.g
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6893305762038331177, guid: f9df1c95592bcb047833a0eb220ee79d, type: 3}
+      propertyPath: m_fontColor.r
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6893305762038331177, guid: f9df1c95592bcb047833a0eb220ee79d, type: 3}
+      propertyPath: m_fontColor32.rgba
+      value: 4294967295
+      objectReference: {fileID: 0}
     - target: {fileID: 7021405559546524460, guid: f9df1c95592bcb047833a0eb220ee79d, type: 3}
       propertyPath: m_AnchorMax.y
       value: 1
@@ -11209,6 +11233,14 @@ PrefabInstance:
     - target: {fileID: 7224004776691259099, guid: f9df1c95592bcb047833a0eb220ee79d, type: 3}
       propertyPath: m_Navigation.m_SelectOnDown
       value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 7247914498640430952, guid: f9df1c95592bcb047833a0eb220ee79d, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 317
+      objectReference: {fileID: 0}
+    - target: {fileID: 7247914498640430952, guid: f9df1c95592bcb047833a0eb220ee79d, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 109
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
