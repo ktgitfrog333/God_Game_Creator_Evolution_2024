@@ -9,7 +9,7 @@ namespace Select.View
     /// ステージコンテンツ
     /// ビュー
     /// </summary>
-    public class StageContetsView : MonoBehaviour
+    public class StageContetsView : MonoBehaviour, IStageContetsView
     {
         /// <summary>子要素のトランスフォーム/summary>
         [SerializeField] private RectTransform[] anchoredPositionsInChild;
@@ -19,6 +19,8 @@ namespace Select.View
         [SerializeField] private RectTransform[] anchoredPositionsInChild1;
         /// <summary>子要素のトランスフォーム</summary>
         public RectTransform[] AnchoredPositionsInChild1 => anchoredPositionsInChild1;
+        /// <summary>ロゴステージのビュー</summary>
+        [SerializeField] private LogoStageView[] logoStageViews;
 
         private void Reset()
         {
@@ -26,6 +28,27 @@ namespace Select.View
             foreach (Transform item in transform)
                 rectTransforms.Add(item as RectTransform);
             anchoredPositionsInChild = rectTransforms.ToArray();
+            logoStageViews = GetComponentsInChildren<LogoStageView>();
         }
+
+        public bool RenderTargetMark(int index)
+        {
+            return logoStageViews[index].RenderTargetMark();
+        }
+    }
+
+    /// <summary>
+    /// ステージコンテンツ
+    /// ビュー
+    /// インターフェース
+    /// </summary>
+    public interface IStageContetsView
+    {
+        /// <summary>
+        /// 選択済みマークを表示
+        /// </summary>
+        /// <param name="index">インデックス</param>
+        /// <returns>成功／失敗</returns>
+        public bool RenderTargetMark(int index);
     }
 }

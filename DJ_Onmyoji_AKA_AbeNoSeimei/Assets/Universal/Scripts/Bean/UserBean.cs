@@ -25,12 +25,12 @@ namespace Universal.Bean
         /// <summary>
         /// デフォルトのクリアステータス
         /// </summary>
-        private readonly int[] STATE_DEFAULT = {1,0,0,0,0,0,0,0,0,0,0,0,0,0,0};
+        private readonly int[] STATE_DEFAULT = {1,0,0,0,0,0,0};
         
         /// <summary>
         /// 全解放時のクリアステータス
         /// </summary>
-        private readonly int[] STATE_ALL = {2,2,2,2,2,2,2,2,2,2,2,2,2,2,2};
+        private readonly int[] STATE_ALL = {2,2,2,2,2,2,2};
 
         /// <summary>
         /// シーンID

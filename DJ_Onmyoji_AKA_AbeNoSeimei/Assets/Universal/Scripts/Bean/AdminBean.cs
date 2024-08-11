@@ -13,19 +13,19 @@ namespace Universal.Bean
         /// <summary>
         /// デフォルトのBGM名
         /// </summary>
-        private static readonly int[] PLAYBGMNAMES_DEFAULT = {1,2,3,4,0,0,0,0,0,0,0,0,0,0,0};
+        private static readonly int[] PLAYBGMNAMES_DEFAULT = {0,0,0,0,0,0,0};
         /// <summary>
         /// デフォルトの最終ステージ
         /// </summary>
-        private static readonly int[] FINALSTAGES_DEFAULT = {0,0,0,0,0,0,0,0,0,0,0,0,0,0,1};
+        private static readonly int[] FINALSTAGES_DEFAULT = {0,0,0,0,0,0,1};
         /// <summary>
         /// デフォルトのスカイボックス
         /// </summary>
-        private static readonly int[] SKYBOXS_DEFAULT = {1,2,0,0,0,0,0,0,0,0,0,0,0,0,0};
+        private static readonly int[] SKYBOXS_DEFAULT = {1,1,1,1,1,1,1};
         /// <summary>
         /// デフォルトのカウントダウンタイマー
         /// </summary>
-        private static readonly float[] CLEAR_COUNTDOWN_TIMER_DEFAULT = {300f,5f,5f,5f,5f,5f,5f,5f,5f,5f,5f,5f,5f,5f,5f};
+        private static readonly float[] CLEAR_COUNTDOWN_TIMER_DEFAULT = {182f,5f,5f,5f,5f,5f,5f};
 
         /// <summary>
         /// BGM名
