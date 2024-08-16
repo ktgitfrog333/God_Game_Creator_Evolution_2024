@@ -1,5 +1,5 @@
 {
-    "name": "ConnectCity_Select",
+    "name": "FutureContents3D_Select",
     "maps": [
         {
             "name": "UI",
@@ -27,6 +27,15 @@
                     "name": "Cancel",
                     "type": "Button",
                     "id": "2a6440eb-f943-4335-a87e-3f7b49598d5a",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "AnyKeysPushed",
+                    "type": "Button",
+                    "id": "51e56d20-70c5-4a79-b570-690a81f0fabf",
                     "expectedControlType": "Button",
                     "processors": "",
                     "interactions": "",
@@ -240,6 +249,17 @@
                     "processors": "",
                     "groups": "Gamepad",
                     "action": "Cancel",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "e9b0a58e-c0d7-4302-8769-328ed6071417",
+                    "path": "<Gamepad>/start",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Gamepad",
+                    "action": "AnyKeysPushed",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

@@ -57,7 +57,8 @@ namespace Select.View
                             .AddTo(gameObject);
 
                         break;
-                    case EnumEventCommand.Submited:
+                    // case EnumEventCommand.Submited:
+                    case EnumEventCommand.AnyKeysPushed:
                         // 決定SEを再生
                         SelectGameManager.Instance.AudioOwner.PlaySFX(ClipToPlay.se_decided);
                         // シーン読み込み時のアニメーション
@@ -69,6 +70,9 @@ namespace Select.View
                             })
                             .AddTo(gameObject);
 
+                        break;
+                    // case EnumEventCommand.AnyKeysPushed:
+                    case EnumEventCommand.Submited:
                         break;
                     default:
                         // 処理無し

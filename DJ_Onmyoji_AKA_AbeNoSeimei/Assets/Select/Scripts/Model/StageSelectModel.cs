@@ -49,7 +49,8 @@ namespace Select.Model
                                     Debug.LogError("SetEventTriggerEnabled");
 
                                 break;
-                            case EnumEventCommand.Submited:
+                            // case EnumEventCommand.Submited:
+                            case EnumEventCommand.AnyKeysPushed:
                                 // メインシーンへの遷移
                                 saveDatas.sceneId = areaContentModels[eventState.Index].Index;
                                 if (!SelectGameManager.Instance.SceneOwner.SetSaveDatas(saveDatas))
