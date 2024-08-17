@@ -4,6 +4,7 @@ using System.Linq;
 using UnityEngine;
 using Main.Common;
 using UniRx;
+using UnityEngine.UI;
 
 namespace Main.Model
 {
@@ -23,11 +24,14 @@ namespace Main.Model
         private readonly BoolReactiveProperty _isCompleted = new BoolReactiveProperty();
         /// <summary>実行済み</summary>
         public IReactiveProperty<bool> IsCompleted => _isCompleted;
+        /// <summary>（最後のみ使用）次の項目ボタン</summary>
+        [SerializeField] private Button lastContent;
 
         private void Reset()
         {
             rewardContentModels = GetComponentsInChildren<RewardContentModel>();
             rewardsModel = GetComponent<RewardsModel>();
+            lastContent = GameObject.Find("GameRetryButton").GetComponent<Button>();
         }
 
         private void Start()
@@ -39,7 +43,7 @@ namespace Main.Model
                 // インデックス0の場合は前のボタンはnull
                 if (!item.Content.SetNavigationOfButton(0 < item.Index ? models.ToArray()[item.Index - 1].Content.Button : null,
                     // インデックスがmaxの場合は次のボタンはnull
-                    item.Index < (models.ToArray().Length - 1) ? models.ToArray()[item.Index + 1].Content.Button : null))
+                    item.Index < (models.ToArray().Length - 1) ? models.ToArray()[item.Index + 1].Content.Button : lastContent))
                     Debug.LogError("SetNavigationOfButton");
                 if (!item.Content.SetRewardContentProp(rewardsModel.GetRewardContentProp(item.Index)))
                     Debug.LogError("SetRewardContentProp");

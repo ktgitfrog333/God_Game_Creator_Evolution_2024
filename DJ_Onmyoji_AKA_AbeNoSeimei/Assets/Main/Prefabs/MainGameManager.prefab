@@ -95,13 +95,13 @@ MonoBehaviour:
   level: {fileID: 0}
   levelPrefabs:
   - {fileID: 0}
-  - {fileID: 360757283206218720, guid: 754dd4cd0c790564aabf883cc21fc722, type: 3}
-  - {fileID: 360757283206218720, guid: 6fa9ab8bab783ff448f9c62ec0ce68c2, type: 3}
   - {fileID: 360757283206218720, guid: 656230e281bf8404faaa3ceac383f444, type: 3}
-  - {fileID: 360757283206218720, guid: 695014b8d512e7041954d40d7810d76f, type: 3}
-  - {fileID: 360757283206218720, guid: 41f23ad67c91f4b4cb6c488a3b2d51c0, type: 3}
-  - {fileID: 360757283206218720, guid: 9a7bf8dc6e1e6c141b0760d9a247a9b5, type: 3}
-  - {fileID: 360757283206218720, guid: 422c9979699b9db449c08289e058d832, type: 3}
+  - {fileID: 360757283206218720, guid: d8007b7d976ee9f48b210463e0af80f2, type: 3}
+  - {fileID: 360757283206218720, guid: ec87aefe31b033b47a13302e0613860c, type: 3}
+  - {fileID: 360757283206218720, guid: 656230e281bf8404faaa3ceac383f444, type: 3}
+  - {fileID: 360757283206218720, guid: 656230e281bf8404faaa3ceac383f444, type: 3}
+  - {fileID: 360757283206218720, guid: 656230e281bf8404faaa3ceac383f444, type: 3}
+  - {fileID: 360757283206218720, guid: 656230e281bf8404faaa3ceac383f444, type: 3}
 --- !u!1 &1827416082
 GameObject:
   m_ObjectHideFlags: 0
@@ -456,6 +456,7 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 83b11e912e5ef9e4b8d5292505402f65, type: 3}
   - {fileID: 8300000, guid: a37106fce8a04494789e19164c77cc17, type: 3}
   - {fileID: 8300000, guid: 95b60bf3b9758a74eb397c2cf5ffedf8, type: 3}
+  - {fileID: 8300000, guid: 25c8b0e3c21921648bb688383733b759, type: 3}
   sFXChannelPrefab: {fileID: 1821450510366777210, guid: 13aae3403db5d45428b59ad80eca3da0, type: 3}
   delaies:
   - 0.1
@@ -696,6 +697,28 @@ MonoBehaviour:
     bpm: 143
   - clipToPlayBGM: 14
     bpm: 144
+  bGMDayOrNightMaps:
+  - sceneId: 1
+    clipToPlayBGMDay: 0
+    clipToPlayBGMNight: 7
+  - sceneId: 2
+    clipToPlayBGMDay: 1
+    clipToPlayBGMNight: 8
+  - sceneId: 3
+    clipToPlayBGMDay: 2
+    clipToPlayBGMNight: 9
+  - sceneId: 4
+    clipToPlayBGMDay: 3
+    clipToPlayBGMNight: 10
+  - sceneId: 5
+    clipToPlayBGMDay: 4
+    clipToPlayBGMNight: 11
+  - sceneId: 6
+    clipToPlayBGMDay: 5
+    clipToPlayBGMNight: 12
+  - sceneId: 7
+    clipToPlayBGMDay: 6
+    clipToPlayBGMNight: 13
 --- !u!1 &1369696455348085395
 GameObject:
   m_ObjectHideFlags: 0
