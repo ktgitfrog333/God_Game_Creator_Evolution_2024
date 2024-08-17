@@ -31,9 +31,6 @@ namespace Main.Model
         protected override void OnEnable()
         {
             base.OnEnable();
-            var common = new MainPresenterCommon();
-            if (common.IsFinalLevel())
-                GetComponent<Button>().navigation = gameContentsConfig.Navigations[0];
         }
 
         /// <summary>
