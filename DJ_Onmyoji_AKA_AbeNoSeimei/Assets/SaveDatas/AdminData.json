@@ -27,13 +27,13 @@
 	],
 	"clearCountdownTimer": [
 		182,
-		5,
-		5,
-		5,
-		5,
-		5,
-		5
-	],
+        182,
+        182,
+        182,
+        182,
+        182,
+        182
+],
 	"enemyModel": {
 		"prop": {
 			"moveSpeed": 0.25,
