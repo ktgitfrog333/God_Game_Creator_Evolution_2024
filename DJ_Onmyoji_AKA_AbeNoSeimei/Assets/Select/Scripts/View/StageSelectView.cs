@@ -42,6 +42,8 @@ namespace Select.View
                             Debug.LogError("SetAnchorPosition");
                         if (!circleCursorViews[1].SetAnchorPosition(stageContetsViews[1].AnchoredPositionsInChild[index].position))
                             Debug.LogError("SetAnchorPosition");
+                        if (!stageContetsViews[0].RenderTargetMark(index))
+                            Debug.LogError("RenderTargetMark");
                         SelectGameManager.Instance.AudioOwner.PlaySFX(ClipToPlay.se_select);
 
                         break;
