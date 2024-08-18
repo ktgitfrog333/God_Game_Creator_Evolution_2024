@@ -254,7 +254,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   clip:
   - {fileID: 8300000, guid: 4b47b81b4475adc419a350e4f3504761, type: 3}
-  - {fileID: 8300000, guid: 275bf6e4c4dee2640be52d3acf36e2ca, type: 3}
+  - {fileID: 8300000, guid: e6724e52bea5df247b26266c3f9c3a82, type: 3}
   - {fileID: 8300000, guid: 737b00ba08b9cc741b92d8462772a601, type: 3}
   sFXChannelPrefab: {fileID: 1821450510366777210, guid: 30db7f105e85d394bab9cb571ca4fc18, type: 3}
 --- !u!1 &3906211334230722722

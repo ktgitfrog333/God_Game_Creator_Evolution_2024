@@ -1,5 +1,6 @@
 using Effect.Model;
 using Effect.Utility;
+using Main.Common;
 using System.Collections;
 using System.Collections.Generic;
 using UniRx;
@@ -82,6 +83,7 @@ namespace Main.View
                 Observable.FromCoroutine(() => _effectsPoolModel.WaitForAllParticlesToStop(particleSystems))
                     .Subscribe(_ => _hitEffect.gameObject.SetActive(false))
                     .AddTo(gameObject);
+                MainGameManager.Instance.AudioOwner.PlaySFX(Audio.ClipToPlay.se_dageki21);
 
                 return true;
             }
@@ -107,6 +109,7 @@ namespace Main.View
                 Observable.FromCoroutine(() => _effectsPoolModel.WaitForAllParticlesToStop(particleSystems))
                     .Subscribe(_ => _enemyDownEffect.gameObject.SetActive(false))
                     .AddTo(gameObject);
+                MainGameManager.Instance.AudioOwner.PlaySFX(Audio.ClipToPlay.se_dead4);
 
                 return true;
             }

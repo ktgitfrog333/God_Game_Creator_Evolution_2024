@@ -194,38 +194,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: LevelBackground
       objectReference: {fileID: 0}
-    - target: {fileID: 7505708240668586762, guid: 18483d1d19192ab4e8778127d7edf675, type: 3}
-      propertyPath: fadeLevelBackgroundProps.Array.data[1].sprite
-      value: 
-      objectReference: {fileID: 21300000, guid: 29a38f00af6dfd848b70a916e6b0dbaf, type: 3}
-    - target: {fileID: 7505708240668586762, guid: 18483d1d19192ab4e8778127d7edf675, type: 3}
-      propertyPath: fadeLevelBackgroundProps.Array.data[2].sprite
-      value: 
-      objectReference: {fileID: 21300000, guid: 883f786008e30214eb8401e1f9af2e9e, type: 3}
-    - target: {fileID: 7505708240668586762, guid: 18483d1d19192ab4e8778127d7edf675, type: 3}
-      propertyPath: fadeLevelBackgroundProps.Array.data[3].sprite
-      value: 
-      objectReference: {fileID: 21300000, guid: bdd7f6556e8f099479463171291b1654, type: 3}
-    - target: {fileID: 7505708240668586762, guid: 18483d1d19192ab4e8778127d7edf675, type: 3}
-      propertyPath: fadeLevelBackgroundProps.Array.data[4].sprite
-      value: 
-      objectReference: {fileID: 21300000, guid: df9eab04793be2644b18bd510d469046, type: 3}
-    - target: {fileID: 7944404579955446079, guid: 18483d1d19192ab4e8778127d7edf675, type: 3}
-      propertyPath: fadeLevelBackgroundProps.Array.data[1].sprite
-      value: 
-      objectReference: {fileID: 21300000, guid: 07763fe81c18f5e4586f923c4c5fdd12, type: 3}
-    - target: {fileID: 7944404579955446079, guid: 18483d1d19192ab4e8778127d7edf675, type: 3}
-      propertyPath: fadeLevelBackgroundProps.Array.data[2].sprite
-      value: 
-      objectReference: {fileID: 21300000, guid: eb47baa5fc9481f44893b5754f1cb2c6, type: 3}
-    - target: {fileID: 7944404579955446079, guid: 18483d1d19192ab4e8778127d7edf675, type: 3}
-      propertyPath: fadeLevelBackgroundProps.Array.data[3].sprite
-      value: 
-      objectReference: {fileID: 21300000, guid: 513b03a1639ae1a49bd1bd94d636c8b8, type: 3}
-    - target: {fileID: 7944404579955446079, guid: 18483d1d19192ab4e8778127d7edf675, type: 3}
-      propertyPath: fadeLevelBackgroundProps.Array.data[4].sprite
-      value: 
-      objectReference: {fileID: 21300000, guid: b1cb4b584d3da5242b136f1252975dfb, type: 3}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
