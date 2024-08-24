@@ -106,7 +106,6 @@ namespace Main.Model
 
         // 接触しているオブジェクトを格納するリスト
         private List<GameObject> objectsInContact = new List<GameObject>();
-
         // タグを指定
         private string targetTag = "GraffTarget";
 
@@ -117,7 +116,6 @@ namespace Main.Model
             if (other.CompareTag(targetTag))
             {
                 objectsInContact.Add(other.gameObject);
-                Debug.Log(true);
             }
         }
 
