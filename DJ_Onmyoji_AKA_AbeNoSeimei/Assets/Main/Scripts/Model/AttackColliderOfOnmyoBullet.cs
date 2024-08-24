@@ -12,6 +12,8 @@ namespace Main.Model
     {
         /// <summary>円形コライダー2D</summary>
         [SerializeField] private CircleCollider2D circleCollider2D;
+        /// <summary>グラフィティ弾Model</summary>
+        [SerializeField] private GraffitiBulletModel graffitiBulletModel;
 
         private void Reset()
         {
@@ -20,16 +22,31 @@ namespace Main.Model
             circleCollider2D = GetComponent<CircleCollider2D>();
         }
 
-        protected override void Start() { }
+        protected override void Start()
+        {
+            graffitiBulletModel = this.transform.parent.GetComponent<GraffitiBulletModel>();
+        }
 
         protected override void OnTriggerEnter2D(Collider2D other)
         {
-            base.OnTriggerEnter2D(other);
+            if (ShikigamiType.Graffiti.Equals(shikigamiType[0]))
+            {
+                //弾の通常当たり判定を無効化(当たり判定を無効化しないと連続Hitするため)
+                if (circleCollider2D != null)
+                    circleCollider2D.enabled = false;
+                //グラフィティエリアを展開
+                if (graffitiBulletModel != null)
+                    graffitiBulletModel.StartGraffAttack();
+            }
+            else
+                base.OnTriggerEnter2D(other);
         }
 
         protected override void OnDisable()
         {
             IsHit.Value = false;
+            if (circleCollider2D != null)
+                circleCollider2D.enabled = true;
         }
 
         public bool SetRadiosOfCircleCollier2D(float radios)

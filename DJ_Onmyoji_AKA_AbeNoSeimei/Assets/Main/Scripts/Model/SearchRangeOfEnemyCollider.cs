@@ -12,7 +12,7 @@ namespace Main.Model
     public class SearchRangeOfEnemyCollider : DamageSufferedZoneModel
     {
         /// <summary>ターゲット</summary>
-        public Transform Target { get; private set; }
+        public Transform Target {get; set; }
 
         private void Reset()
         {

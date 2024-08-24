@@ -11,6 +11,8 @@ TagManager:
   - Turret
   - BossEnemy
   - EffectsPool
+  - Graff
+  - GraffTarget
   layers:
   - Default
   - TransparentFX
