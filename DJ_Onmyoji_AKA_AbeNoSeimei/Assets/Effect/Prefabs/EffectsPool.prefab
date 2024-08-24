@@ -1,0 +1,52 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &6494865554490060705
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 7297453423588510426}
+  - component: {fileID: 7797577818633622646}
+  m_Layer: 0
+  m_Name: EffectsPool
+  m_TagString: EffectsPool
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &7297453423588510426
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6494865554490060705}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &7797577818633622646
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6494865554490060705}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b7e37840fb0b82040ba1db247a198bc7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  countLimit: 30
+  danceShockwavePrefab: {fileID: 6595143038667555428, guid: 245a623576d8fec47a385936d1b1cfb4, type: 3}
+  shikigamiWrapExplosionPrefab: {fileID: 3435150693679526477, guid: 0e31d55bb6219324ab397eb9bea85ca1, type: 3}
+  hitEffectPrefab: {fileID: 1581955440468241620, guid: f5ec047c93f1e684ca94ea77e2869bdc, type: 3}
+  enemyDownEffectPrefab: {fileID: 8263214036597188430, guid: 075b37e69f578a64abaafd3abde3417f, type: 3}
+  playerDownEffectPrefab: {fileID: 8765647619098184246, guid: cf1bcba24ebf2c64194763afcdb7afcf, type: 3}
