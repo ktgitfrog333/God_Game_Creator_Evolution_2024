@@ -12,6 +12,7 @@ using System.Linq;
 using Fungus;
 using Unity.Collections;
 using Main.Test.Driver;
+using DG.Tweening;
 
 namespace Main.Presenter
 {
@@ -57,38 +58,6 @@ namespace Main.Presenter
 
         public void OnStart()
         {
-            soulWalletModelTeest.IsUnLockUpdateOfSoulMoney.ObserveEveryValueChanged(x => x.Value)
-                .Subscribe(x =>
-                {
-                    if (!soulWalletModel.SetIsUnLockUpdateOfSoulMoney(x))
-                        Debug.LogError("SetIsUnLockUpdateOfSoulMoney");
-                });
-            gameRetryButtonModel.EventState.ObserveEveryValueChanged(x => x.Value)
-                .Subscribe(x =>
-                {
-                    switch ((EnumEventCommand)x)
-                    {
-                        case EnumEventCommand.Default:
-                            break;
-                        case EnumEventCommand.Selected:
-                            // 選択された時の処理
-                            if (!cursorIconView.SetSelectAndScale(gameRetryButtonModel.transform.position, (gameRetryButtonModel.transform as RectTransform).sizeDelta))
-                                Debug.LogError("SetSelectAndScale");
-
-                            break;
-                        case EnumEventCommand.DeSelected:
-                            // 選択解除された時の処理
-                            break;
-                        case EnumEventCommand.Submited:
-                            // 実行された時の処理
-                            break;
-                        case EnumEventCommand.Canceled:
-                            // キャンセルされた時の処理
-                            break;
-                        default:
-                            break;
-                    }
-                });
             gameSelectButtonModel.EventState.ObserveEveryValueChanged(x => x.Value)
                 .Subscribe(x =>
                 {
@@ -115,6 +84,12 @@ namespace Main.Presenter
                             break;
                     }
                 });
+            rewardSelectModel.IsCompleted.ObserveEveryValueChanged(x => x.Value)
+                .Subscribe(x =>
+                {
+                    if (!rewardSelectView.SetContents(rewardSelectModel.RewardContentProps))
+                        Debug.LogError("SetContents");
+                });
             soulWalletModel.SoulMoney.ObserveEveryValueChanged(x => x.Value)
                 .Subscribe(x =>
                 {
@@ -134,11 +109,8 @@ namespace Main.Presenter
                     // }, rewardSelectModel.RewardContentModels.Select(q => q.RewardContentProp).ToArray()))
                     //     Debug.LogError("UpdateCheckState");
                 });
-            rewardSelectModelTest.TargetIndex.ObserveEveryValueChanged(x => x.Value)
-                .Subscribe(x =>
-                {
-                    rewardSelectModel.RewardContentModels[x].SetSelectedGameObject();
-                });
+            // *** 動作確認用 ***
+            DOVirtual.DelayedCall(0.5f, () => rewardSelectModel.RewardContentModels[0].SetSelectedGameObject());
             foreach (var item in rewardSelectModel.RewardContentModels.Select((p, i) => new { Content = p, Index = i}))
             {
                 item.Content.CheckState.ObserveEveryValueChanged(x => x.Value)
@@ -153,6 +125,8 @@ namespace Main.Presenter
                                 {
                                     if (soulWalletModel.AddSoulMoney(1 * item.Content.RewardContentProp.soulMoney) < 0)
                                         Debug.LogError("AddSoulMoney");
+                                    if (!MainGameManager.Instance.LevelOwner.AddRewardID(item.Index, true))
+                                        Debug.LogError("AddRewardID");
                                 }
                                 // Disabled⇒UnCheckの場合は金額計算を行わない
                                 else if (pair.Previous == (int)CheckState.Disabled)
@@ -168,6 +142,8 @@ namespace Main.Presenter
                                     Debug.LogError("AddSoulMoney");
                                 if (!rewardSelectView.Check(item.Index))
                                     Debug.LogError("Check");
+                                if (!MainGameManager.Instance.LevelOwner.AddRewardID(item.Index))
+                                    Debug.LogError("AddRewardID");
 
                                 break;
                             case CheckState.Disabled:
@@ -188,7 +164,7 @@ namespace Main.Presenter
                                 // 処理無し
                                 break;
                             case EnumEventCommand.Selected:
-                                if (!rewardSelectView.SetContents(item.Content.RewardContentProp.rewardType))
+                                if (!rewardSelectView.SetContents(item.Content.RewardContentProp))
                                     Debug.LogError("SetContents");
                                 if (!rewardSelectView.ScaleUp(item.Index))
                                     Debug.LogError("ScaleUp");
@@ -217,6 +193,32 @@ namespace Main.Presenter
                         }
                     });
             }
+            // クリア画面 -> ステージ選択画面へ戻る
+            gameSelectButtonModel.EventState.ObserveEveryValueChanged(x => x.Value)
+                .Subscribe(x =>
+                {
+                    switch ((EnumEventCommand)x)
+                    {
+                        case EnumEventCommand.Default:
+                            // 処理無し
+                            break;
+                        case EnumEventCommand.Selected:
+
+                            break;
+                        case EnumEventCommand.DeSelected:
+                            break;
+                        case EnumEventCommand.Submited:
+                            if (!MainGameManager.Instance.LevelOwner.SetSlots())
+                                Debug.LogError("SetSlots");
+                            break;
+                        case EnumEventCommand.Canceled:
+                            // 処理無し
+                            break;
+                        default:
+                            Debug.LogWarning("例外ケース");
+                            break;
+                    }
+                });
 
             // cursorIconTest.UpdateAsObservable()
             //     .Select(x => cursorIconTest.Position.Value)
@@ -316,17 +318,17 @@ namespace Main.Presenter
             // shikigamiSkillSystemModel.CandleInfo.CandleResource.ObserveEveryValueChanged(x => x.Value)
             //     .Subscribe(x =>
             //     {
-                    // _demo.candleResource = x;
-                    // Debug.Log($"CandleResource:[{x}]");
-                    // if (!spGaugeView.SetVertical(x, shikigamiSkillSystemModel.CandleInfo.LimitCandleResorceMax))
-                    //     Debug.LogError("SetVertical");
-                // });
+            // _demo.candleResource = x;
+            // Debug.Log($"CandleResource:[{x}]");
+            // if (!spGaugeView.SetVertical(x, shikigamiSkillSystemModel.CandleInfo.LimitCandleResorceMax))
+            //     Debug.LogError("SetVertical");
+            // });
             // shikigamiSkillSystemModel.CandleInfo.IsOutCost.ObserveEveryValueChanged(x => x.Value)
             //     .Subscribe(x =>
             //     {
-                    // _demo.isOutCost = x;
-                    // Debug.Log($"IsOutCost:[{x}]");
-                // });
+            // _demo.isOutCost = x;
+            // Debug.Log($"IsOutCost:[{x}]");
+            // });
             // playerModel.IsInstanced.ObserveEveryValueChanged(x => x.Value)
             //     .Subscribe(x =>
             //     {
@@ -433,11 +435,11 @@ namespace Main.Presenter
             // pentagramSystemModel.InputValue.ObserveEveryValueChanged(x => x.Value)
             //     .Subscribe(x =>
             //     {
-                    // ObserveEveryValueChangedCnt++;
-                    // bgmConfDetails.InputValue = x;
-                    // if (!pentagramTurnTableView.MoveSpin(bgmConfDetails))
-                    //     Debug.LogError("MoveSpin");
-                // });
+            // ObserveEveryValueChangedCnt++;
+            // bgmConfDetails.InputValue = x;
+            // if (!pentagramTurnTableView.MoveSpin(bgmConfDetails))
+            //     Debug.LogError("MoveSpin");
+            // });
             // pentagramSystemModel.JockeyCommandType.ObserveEveryValueChanged(x => x.Value)
             //     .Pairwise()
             //     .Subscribe(pair =>
@@ -474,11 +476,7 @@ namespace Main.Presenter
 
         private void Reset()
         {
-            soulWalletModelTeest = GameObject.Find("SoulWalletModelTeest").GetComponent<SoulWalletModelTeest>();
             gameSelectButtonModel = GameObject.Find("GameSelectButton").GetComponent<GameSelectButtonModel>();
-            gameRetryButtonModel = GameObject.Find("GameRetryButton").GetComponent<GameRetryButtonModel>();
-            gameProceedButtonModel = GameObject.Find("GameProceedButton").GetComponent<GameProceedButtonModel>();
-            rewardSelectModelTest = GameObject.Find("RewardSelectModelTest").GetComponent<RewardSelectModelTest>();
             rewardSelectModel = GameObject.Find("RewardSelect").GetComponent<RewardSelectModel>();
             cursorIconView = GameObject.Find("CursorIcon").GetComponent<CursorIconView>();
             // cursorIconTest = GameObject.Find("CursorIconTest").GetComponent<CursorIconTest>();

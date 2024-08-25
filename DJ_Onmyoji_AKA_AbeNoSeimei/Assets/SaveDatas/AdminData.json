@@ -178,14 +178,1027 @@
 				"skillRank": 0,
 				"value": 1.5
 			},
-			{
-				"shikigamiType": 2,
-				"mainSkillType": 7,
-				"skillRank": 0,
-				"value": 10
-			}
-		]
-	},
+            {
+                "shikigamiType": 2,
+                "mainSkillType": 7,
+                "skillRank": 0,
+                "value": 10
+            }
+		],
+        "rewardContentProps": [
+            {
+                "rewardType": 0,
+                "shikigamiInfo": {
+                    "characterID": 0,
+                    "genomeType": 0,
+                    "name": "勾陳",
+                    "type": 2,
+                    "slotId": 2,
+                    "level": 1,
+                    "mainSkills": [
+                        {
+                            "type": 1,
+                            "rank": 0
+                        },
+                        {
+                            "type": 6,
+                            "rank": 0
+                        },
+                        {
+                            "type": 7,
+                            "rank": 0
+                        },
+                        {
+                            "type": 2,
+                            "rank": 0
+                        }
+                    ],
+                    "subSkills": [
+                        {
+                            "type": 1,
+                            "rank": 0
+                        },
+                        {
+                            "type": 1,
+                            "rank": 0
+                        },
+                        {
+                            "type": 1,
+                            "rank": 0
+                        },
+                        {
+                            "type": 1,
+                            "rank": 0
+                        },
+                        {
+                            "type": 1,
+                            "rank": 0
+                        }
+                    ]
+                },
+                "soulMoney": 100
+            },
+            {
+                "rewardType": 0,
+                "shikigamiInfo": {
+                    "characterID": 1,
+                    "genomeType": 0,
+                    "name": "六合",
+                    "type": 0,
+                    "slotId": 3,
+                    "level": 1,
+                    "mainSkills": [
+                        {
+                            "type": 1,
+                            "rank": 0
+                        },
+                        {
+                            "type": 3,
+                            "rank": 0
+                        },
+                        {
+                            "type": 2,
+                            "rank": 0
+                        }
+                    ],
+                    "subSkills": [
+                        {
+                            "type": 1,
+                            "rank": 0
+                        },
+                        {
+                            "type": 1,
+                            "rank": 0
+                        },
+                        {
+                            "type": 1,
+                            "rank": 0
+                        },
+                        {
+                            "type": 1,
+                            "rank": 0
+                        },
+                        {
+                            "type": 1,
+                            "rank": 0
+                        }
+                    ]
+                },
+                "soulMoney": 100
+            },
+            {
+                "rewardType": 0,
+                "shikigamiInfo": {
+                    "characterID": 2,
+                    "genomeType": 0,
+                    "name": "天后",
+                    "type": 0,
+                    "slotId": 3,
+                    "level": 1,
+                    "mainSkills": [
+                        {
+                            "type": 1,
+                            "rank": 0
+                        },
+                        {
+                            "type": 3,
+                            "rank": 0
+                        },
+                        {
+                            "type": 2,
+                            "rank": 0
+                        }
+                    ],
+                    "subSkills": [
+                        {
+                            "type": 1,
+                            "rank": 0
+                        },
+                        {
+                            "type": 1,
+                            "rank": 0
+                        },
+                        {
+                            "type": 1,
+                            "rank": 0
+                        },
+                        {
+                            "type": 1,
+                            "rank": 0
+                        },
+                        {
+                            "type": 1,
+                            "rank": 0
+                        }
+                    ]
+                },
+                "soulMoney": 100
+            },
+            {
+                "rewardType": 0,
+                "shikigamiInfo": {
+                    "characterID": 3,
+                    "genomeType": 0,
+                    "name": "朱雀",
+                    "type": 1,
+                    "slotId": 0,
+                    "level": 1,
+                    "mainSkills": [
+                        {
+                            "type": 1,
+                            "rank": 0
+                        },
+                        {
+                            "type": 3,
+                            "rank": 0
+                        },
+                        {
+                            "type": 6,
+                            "rank": 0
+                        },
+                        {
+                            "type": 2,
+                            "rank": 0
+                        }
+                    ],
+                    "subSkills": [
+                        {
+                            "type": 1,
+                            "rank": 0
+                        },
+                        {
+                            "type": 1,
+                            "rank": 0
+                        },
+                        {
+                            "type": 1,
+                            "rank": 0
+                        },
+                        {
+                            "type": 1,
+                            "rank": 0
+                        },
+                        {
+                            "type": 1,
+                            "rank": 0
+                        }
+                    ]
+                },
+                "soulMoney": 100
+            },
+            {
+                "rewardType": 0,
+                "shikigamiInfo": {
+                    "characterID": 4,
+                    "genomeType": 0,
+                    "name": "貴人",
+                    "type": 2,
+                    "slotId": 2,
+                    "level": 1,
+                    "mainSkills": [
+                        {
+                            "type": 1,
+                            "rank": 0
+                        },
+                        {
+                            "type": 6,
+                            "rank": 0
+                        },
+                        {
+                            "type": 7,
+                            "rank": 0
+                        },
+                        {
+                            "type": 2,
+                            "rank": 0
+                        }
+                    ],
+                    "subSkills": [
+                        {
+                            "type": 1,
+                            "rank": 0
+                        },
+                        {
+                            "type": 1,
+                            "rank": 0
+                        },
+                        {
+                            "type": 1,
+                            "rank": 0
+                        },
+                        {
+                            "type": 1,
+                            "rank": 0
+                        },
+                        {
+                            "type": 1,
+                            "rank": 0
+                        }
+                    ]
+                },
+                "soulMoney": 100
+            },
+            {
+                "rewardType": 0,
+                "shikigamiInfo": {
+                    "characterID": 5,
+                    "genomeType": 0,
+                    "name": "天空",
+                    "type": 2,
+                    "slotId": 2,
+                    "level": 1,
+                    "mainSkills": [
+                        {
+                            "type": 1,
+                            "rank": 0
+                        },
+                        {
+                            "type": 6,
+                            "rank": 0
+                        },
+                        {
+                            "type": 7,
+                            "rank": 0
+                        },
+                        {
+                            "type": 2,
+                            "rank": 0
+                        }
+                    ],
+                    "subSkills": [
+                        {
+                            "type": 1,
+                            "rank": 0
+                        },
+                        {
+                            "type": 1,
+                            "rank": 0
+                        },
+                        {
+                            "type": 1,
+                            "rank": 0
+                        },
+                        {
+                            "type": 1,
+                            "rank": 0
+                        },
+                        {
+                            "type": 1,
+                            "rank": 0
+                        }
+                    ]
+                },
+                "soulMoney": 100
+            },
+            {
+                "rewardType": 0,
+                "shikigamiInfo": {
+                    "characterID": 6,
+                    "genomeType": 0,
+                    "name": "騰蛇",
+                    "type": 0,
+                    "slotId": 3,
+                    "level": 1,
+                    "mainSkills": [
+                        {
+                            "type": 1,
+                            "rank": 0
+                        },
+                        {
+                            "type": 3,
+                            "rank": 0
+                        },
+                        {
+                            "type": 2,
+                            "rank": 0
+                        }
+                    ],
+                    "subSkills": [
+                        {
+                            "type": 1,
+                            "rank": 0
+                        },
+                        {
+                            "type": 1,
+                            "rank": 0
+                        },
+                        {
+                            "type": 1,
+                            "rank": 0
+                        },
+                        {
+                            "type": 1,
+                            "rank": 0
+                        },
+                        {
+                            "type": 1,
+                            "rank": 0
+                        }
+                    ]
+                },
+                "soulMoney": 100
+            },
+            {
+                "rewardType": 0,
+                "shikigamiInfo": {
+                    "characterID": 7,
+                    "genomeType": 0,
+                    "name": "太陰",
+                    "type": 0,
+                    "slotId": 3,
+                    "level": 1,
+                    "mainSkills": [
+                        {
+                            "type": 1,
+                            "rank": 0
+                        },
+                        {
+                            "type": 3,
+                            "rank": 0
+                        },
+                        {
+                            "type": 2,
+                            "rank": 0
+                        }
+                    ],
+                    "subSkills": [
+                        {
+                            "type": 1,
+                            "rank": 0
+                        },
+                        {
+                            "type": 1,
+                            "rank": 0
+                        },
+                        {
+                            "type": 1,
+                            "rank": 0
+                        },
+                        {
+                            "type": 1,
+                            "rank": 0
+                        },
+                        {
+                            "type": 1,
+                            "rank": 0
+                        }
+                    ]
+                },
+                "soulMoney": 100
+            },
+            {
+                "rewardType": 0,
+                "shikigamiInfo": {
+                    "characterID": 8,
+                    "genomeType": 0,
+                    "name": "青龍",
+                    "type": 1,
+                    "slotId": 0,
+                    "level": 1,
+                    "mainSkills": [
+                        {
+                            "type": 1,
+                            "rank": 0
+                        },
+                        {
+                            "type": 3,
+                            "rank": 0
+                        },
+                        {
+                            "type": 6,
+                            "rank": 0
+                        },
+                        {
+                            "type": 2,
+                            "rank": 0
+                        }
+                    ],
+                    "subSkills": [
+                        {
+                            "type": 1,
+                            "rank": 0
+                        },
+                        {
+                            "type": 1,
+                            "rank": 0
+                        },
+                        {
+                            "type": 1,
+                            "rank": 0
+                        },
+                        {
+                            "type": 1,
+                            "rank": 0
+                        },
+                        {
+                            "type": 1,
+                            "rank": 0
+                        }
+                    ]
+                },
+                "soulMoney": 100
+            },
+            {
+                "rewardType": 0,
+                "shikigamiInfo": {
+                    "characterID": 9,
+                    "genomeType": 0,
+                    "name": "玄武",
+                    "type": 1,
+                    "slotId": 0,
+                    "level": 1,
+                    "mainSkills": [
+                        {
+                            "type": 1,
+                            "rank": 0
+                        },
+                        {
+                            "type": 3,
+                            "rank": 0
+                        },
+                        {
+                            "type": 6,
+                            "rank": 0
+                        },
+                        {
+                            "type": 2,
+                            "rank": 0
+                        }
+                    ],
+                    "subSkills": [
+                        {
+                            "type": 1,
+                            "rank": 0
+                        },
+                        {
+                            "type": 1,
+                            "rank": 0
+                        },
+                        {
+                            "type": 1,
+                            "rank": 0
+                        },
+                        {
+                            "type": 1,
+                            "rank": 0
+                        },
+                        {
+                            "type": 1,
+                            "rank": 0
+                        }
+                    ]
+                },
+                "soulMoney": 100
+            },
+            {
+                "rewardType": 0,
+                "shikigamiInfo": {
+                    "characterID": 10,
+                    "genomeType": 0,
+                    "name": "白虎",
+                    "type": 1,
+                    "slotId": 0,
+                    "level": 1,
+                    "mainSkills": [
+                        {
+                            "type": 1,
+                            "rank": 0
+                        },
+                        {
+                            "type": 3,
+                            "rank": 0
+                        },
+                        {
+                            "type": 6,
+                            "rank": 0
+                        },
+                        {
+                            "type": 2,
+                            "rank": 0
+                        }
+                    ],
+                    "subSkills": [
+                        {
+                            "type": 1,
+                            "rank": 0
+                        },
+                        {
+                            "type": 1,
+                            "rank": 0
+                        },
+                        {
+                            "type": 1,
+                            "rank": 0
+                        },
+                        {
+                            "type": 1,
+                            "rank": 0
+                        },
+                        {
+                            "type": 1,
+                            "rank": 0
+                        }
+                    ]
+                },
+                "soulMoney": 100
+            },
+            {
+                "rewardType": 0,
+                "shikigamiInfo": {
+                    "characterID": 11,
+                    "genomeType": 0,
+                    "name": "太裳",
+                    "type": 2,
+                    "slotId": 2,
+                    "level": 1,
+                    "mainSkills": [
+                        {
+                            "type": 1,
+                            "rank": 0
+                        },
+                        {
+                            "type": 6,
+                            "rank": 0
+                        },
+                        {
+                            "type": 7,
+                            "rank": 0
+                        },
+                        {
+                            "type": 2,
+                            "rank": 0
+                        }
+                    ],
+                    "subSkills": [
+                        {
+                            "type": 1,
+                            "rank": 0
+                        },
+                        {
+                            "type": 1,
+                            "rank": 0
+                        },
+                        {
+                            "type": 1,
+                            "rank": 0
+                        },
+                        {
+                            "type": 1,
+                            "rank": 0
+                        },
+                        {
+                            "type": 1,
+                            "rank": 0
+                        }
+                    ]
+                },
+                "soulMoney": 100
+            },
+            {
+                "rewardType": 1,
+                "shikigamiInfo": {
+                    "characterID": 0,
+                    "genomeType": 0,
+                    "name": "",
+                    "type": 2,
+                    "slotId": 0,
+                    "level": 0,
+                    "mainSkills": [
+                        {
+                            "type": 1,
+                            "rank": 0
+                        },
+                        {
+                            "type": 1,
+                            "rank": 0
+                        },
+                        {
+                            "type": 1,
+                            "rank": 0
+                        },
+                        {
+                            "type": 1,
+                            "rank": 0
+                        }
+                    ],
+                    "subSkills": []
+                },
+                "soulMoney": 50
+            },
+            {
+                "rewardType": 1,
+                "shikigamiInfo": {
+                    "characterID": 1,
+                    "genomeType": 0,
+                    "name": "",
+                    "type": 0,
+                    "slotId": 0,
+                    "level": 0,
+                    "mainSkills": [
+                        {
+                            "type": 1,
+                            "rank": 0
+                        },
+                        {
+                            "type": 1,
+                            "rank": 0
+                        },
+                        {
+                            "type": 1,
+                            "rank": 0
+                        },
+                        {
+                            "type": 1,
+                            "rank": 0
+                        }
+                    ],
+                    "subSkills": []
+                },
+                "soulMoney": 50
+            },
+            {
+                "rewardType": 1,
+                "shikigamiInfo": {
+                    "characterID": 2,
+                    "genomeType": 0,
+                    "name": "",
+                    "type": 0,
+                    "slotId": 0,
+                    "level": 0,
+                    "mainSkills": [
+                        {
+                            "type": 1,
+                            "rank": 0
+                        },
+                        {
+                            "type": 1,
+                            "rank": 0
+                        },
+                        {
+                            "type": 1,
+                            "rank": 0
+                        },
+                        {
+                            "type": 1,
+                            "rank": 0
+                        }
+                    ],
+                    "subSkills": []
+                },
+                "soulMoney": 50
+            },
+            {
+                "rewardType": 1,
+                "shikigamiInfo": {
+                    "characterID": 3,
+                    "genomeType": 0,
+                    "name": "",
+                    "type": 1,
+                    "slotId": 0,
+                    "level": 0,
+                    "mainSkills": [
+                        {
+                            "type": 1,
+                            "rank": 0
+                        },
+                        {
+                            "type": 1,
+                            "rank": 0
+                        },
+                        {
+                            "type": 1,
+                            "rank": 0
+                        },
+                        {
+                            "type": 1,
+                            "rank": 0
+                        }
+                    ],
+                    "subSkills": []
+                },
+                "soulMoney": 50
+            },
+            {
+                "rewardType": 1,
+                "shikigamiInfo": {
+                    "characterID": 4,
+                    "genomeType": 0,
+                    "name": "",
+                    "type": 2,
+                    "slotId": 0,
+                    "level": 0,
+                    "mainSkills": [
+                        {
+                            "type": 1,
+                            "rank": 0
+                        },
+                        {
+                            "type": 1,
+                            "rank": 0
+                        },
+                        {
+                            "type": 1,
+                            "rank": 0
+                        },
+                        {
+                            "type": 1,
+                            "rank": 0
+                        }
+                    ],
+                    "subSkills": []
+                },
+                "soulMoney": 50
+            },
+            {
+                "rewardType": 1,
+                "shikigamiInfo": {
+                    "characterID": 5,
+                    "genomeType": 0,
+                    "name": "",
+                    "type": 2,
+                    "slotId": 0,
+                    "level": 0,
+                    "mainSkills": [
+                        {
+                            "type": 1,
+                            "rank": 0
+                        },
+                        {
+                            "type": 1,
+                            "rank": 0
+                        },
+                        {
+                            "type": 1,
+                            "rank": 0
+                        },
+                        {
+                            "type": 1,
+                            "rank": 0
+                        }
+                    ],
+                    "subSkills": []
+                },
+                "soulMoney": 50
+            },
+            {
+                "rewardType": 1,
+                "shikigamiInfo": {
+                    "characterID": 6,
+                    "genomeType": 0,
+                    "name": "",
+                    "type": 0,
+                    "slotId": 0,
+                    "level": 0,
+                    "mainSkills": [
+                        {
+                            "type": 1,
+                            "rank": 0
+                        },
+                        {
+                            "type": 1,
+                            "rank": 0
+                        },
+                        {
+                            "type": 1,
+                            "rank": 0
+                        },
+                        {
+                            "type": 1,
+                            "rank": 0
+                        }
+                    ],
+                    "subSkills": []
+                },
+                "soulMoney": 50
+            },
+            {
+                "rewardType": 1,
+                "shikigamiInfo": {
+                    "characterID": 7,
+                    "genomeType": 0,
+                    "name": "",
+                    "type": 0,
+                    "slotId": 0,
+                    "level": 0,
+                    "mainSkills": [
+                        {
+                            "type": 1,
+                            "rank": 0
+                        },
+                        {
+                            "type": 1,
+                            "rank": 0
+                        },
+                        {
+                            "type": 1,
+                            "rank": 0
+                        },
+                        {
+                            "type": 1,
+                            "rank": 0
+                        }
+                    ],
+                    "subSkills": []
+                },
+                "soulMoney": 50
+            },
+            {
+                "rewardType": 1,
+                "shikigamiInfo": {
+                    "characterID": 8,
+                    "genomeType": 0,
+                    "name": "",
+                    "type": 1,
+                    "slotId": 0,
+                    "level": 0,
+                    "mainSkills": [
+                        {
+                            "type": 1,
+                            "rank": 0
+                        },
+                        {
+                            "type": 1,
+                            "rank": 0
+                        },
+                        {
+                            "type": 1,
+                            "rank": 0
+                        },
+                        {
+                            "type": 1,
+                            "rank": 0
+                        }
+                    ],
+                    "subSkills": []
+                },
+                "soulMoney": 50
+            },
+            {
+                "rewardType": 1,
+                "shikigamiInfo": {
+                    "characterID": 9,
+                    "genomeType": 0,
+                    "name": "",
+                    "type": 1,
+                    "slotId": 0,
+                    "level": 0,
+                    "mainSkills": [
+                        {
+                            "type": 1,
+                            "rank": 0
+                        },
+                        {
+                            "type": 1,
+                            "rank": 0
+                        },
+                        {
+                            "type": 1,
+                            "rank": 0
+                        },
+                        {
+                            "type": 1,
+                            "rank": 0
+                        }
+                    ],
+                    "subSkills": []
+                },
+                "soulMoney": 50
+            },
+            {
+                "rewardType": 1,
+                "shikigamiInfo": {
+                    "characterID": 10,
+                    "genomeType": 0,
+                    "name": "",
+                    "type": 1,
+                    "slotId": 0,
+                    "level": 0,
+                    "mainSkills": [
+                        {
+                            "type": 1,
+                            "rank": 0
+                        },
+                        {
+                            "type": 1,
+                            "rank": 0
+                        },
+                        {
+                            "type": 1,
+                            "rank": 0
+                        },
+                        {
+                            "type": 1,
+                            "rank": 0
+                        }
+                    ],
+                    "subSkills": []
+                },
+                "soulMoney": 50
+            },
+            {
+                "rewardType": 1,
+                "shikigamiInfo": {
+                    "characterID": 11,
+                    "genomeType": 0,
+                    "name": "",
+                    "type": 2,
+                    "slotId": 0,
+                    "level": 0,
+                    "mainSkills": [
+                        {
+                            "type": 1,
+                            "rank": 0
+                        },
+                        {
+                            "type": 1,
+                            "rank": 0
+                        },
+                        {
+                            "type": 1,
+                            "rank": 0
+                        },
+                        {
+                            "type": 1,
+                            "rank": 0
+                        }
+                    ],
+                    "subSkills": []
+                },
+                "soulMoney": 50
+            },
+            {
+                "rewardType": 2,
+                "shikigamiInfo": {
+                    "characterID": 12,
+                    "genomeType": 0,
+                    "name": "",
+                    "type": 3,
+                    "slotId": 0,
+                    "level": 0,
+                    "mainSkills": [
+                        {
+                            "type": 1,
+                            "rank": 0
+                        },
+                        {
+                            "type": 1,
+                            "rank": 0
+                        },
+                        {
+                            "type": 1,
+                            "rank": 0
+                        },
+                        {
+                            "type": 1,
+                            "rank": 0
+                        }
+                    ],
+                    "subSkills": []
+                },
+                "soulMoney": 50
+            }
+        ]
+                      },
 	"clearCountdownTimerCircleView": {
 		"maskAngle": 0.20000000298023224
 	},

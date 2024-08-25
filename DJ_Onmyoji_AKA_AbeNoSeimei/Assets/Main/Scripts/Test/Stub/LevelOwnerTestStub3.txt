@@ -1,0 +1,34 @@
+using Main.Common;
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+using Universal.Bean;
+
+namespace Main.Test.Stub
+{
+    public class LevelOwnerTestStub3 : MonoBehaviour
+    {
+        [SerializeField] private Input[] inputs;
+        public Input[] Inputs => inputs;
+        [SerializeField] private Output[] outputs;
+        public Output[] Outputs => outputs;
+
+        [System.Serializable]
+        public struct Input
+        {
+            public int caseId;
+            /// <summary>クリア報酬のコンテンツプロパティ</summary>
+            public Main.Common.RewardContentProp[] rewardContentProps;
+            /// <summary>選択したリワードID</summary>
+            public List<RewardID> selectedRewardIDs;
+        }
+
+        [System.Serializable]
+        public struct Output
+        {
+            public int caseId;
+            public UserBean userBean;
+            public string throwMessage;
+        }
+    }
+}

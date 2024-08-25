@@ -1,0 +1,36 @@
+using Main.Common;
+using System.Collections;
+using System.Collections.Generic;
+using TMPro;
+using UnityEngine;
+using UnityEngine.UI;
+
+namespace Main.Test.Stub
+{
+    public class AfterTestStub : MonoBehaviour
+    {
+        [SerializeField] private Input[] inputs;
+        public Input[] Inputs => inputs;
+        [SerializeField] private Output[] outputs;
+        public Output[] Outputs => outputs;
+
+        [System.Serializable]
+        public struct Input
+        {
+            public int caseId;
+            public TextMeshProUGUI text;
+            [TextArea] public string template;
+            public ShikigamiInfo.Prop prop;
+            public ShikigamiInfoVisualMaps shikigamiInfoVisualMaps;
+            public string defaultFormat;
+        }
+
+        [System.Serializable]
+        public struct Output
+        {
+            public int caseId;
+            public TextMeshProUGUI text;
+            public string throwMessage;
+        }
+    }
+}

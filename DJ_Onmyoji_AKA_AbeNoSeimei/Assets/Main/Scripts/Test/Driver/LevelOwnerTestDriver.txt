@@ -1,0 +1,180 @@
+using Main.Common;
+using Main.Test.Common;
+using Main.Test.Stub;
+using Main.Utility;
+using System.Collections;
+using System.Collections.Generic;
+using System.Linq;
+using UnityEngine;
+
+namespace Main.Test.Driver
+{
+    public class LevelOwnerTestDriver : CommonUtilityTest
+    {
+        protected override void Start()
+        {
+            // 正常系
+            CaseNormalSystem(0000);
+            CaseNormalSystem(0001);
+            CaseNormalSystem(0002);
+            CaseNormalSystem(0003);
+            CaseNormalSystem(0004);
+            CaseNormalSystem(0005);
+            CaseNormalSystem(0006);
+            CaseNormalSystem(0007);
+            CaseNormalSystem(0008);
+            CaseNormalSystem(0009);
+            CaseNormalSystem(0010);
+            CaseNormalSystem(0011);
+            CaseNormalSystem(0012);
+            CaseNormalSystem(0013);
+            CaseNormalSystem(0014);
+            CaseNormalSystem(0015);
+            CaseNormalSystem(0016);
+            CaseNormalSystem(0017);
+            CaseNormalSystem(0018);
+            CaseNormalSystem(0019);
+            CaseNormalSystem(0020);
+            CaseNormalSystem(0021);
+            CaseNormalSystem(0022);
+            CaseNormalSystem(0023);
+            CaseNormalSystem(0024);
+            CaseNormalSystem(0025);
+            CaseNormalSystem(0026);
+            CaseNormalSystem(0027);
+            CaseNormalSystem(0028);
+            CaseNormalSystem(0029);
+            CaseNormalSystem(0030);
+            CaseNormalSystem(0031);
+            CaseNormalSystem(0032);
+            CaseNormalSystem(0033);
+            CaseNormalSystem(0034);
+            CaseNormalSystem(0035);
+            CaseNormalSystem(0036);
+            CaseNormalSystem(0037);
+        }
+
+        protected override void Case(int caseId, bool isAbnormal = false)
+        {
+            var name = System.Reflection.MethodBase.GetCurrentMethod().Name;
+            var utility = new MainRewardsUtility();
+            var input = GetComponent<LevelOwnerTestStub>().Inputs
+                .Where(q => q.caseId == caseId)
+                .Select(q => q)
+                .ToArray()[0];
+            var output = GetComponent<LevelOwnerTestStub>().Outputs
+                .Where(q => q.caseId == caseId)
+                .Select(q => q)
+                .ToArray()[0];
+            if (!isAbnormal)
+            {
+                var prop = ((ILevelOwnerTestDriver)utility).GetRewardContentDetailProp(input.rewardContentProp, input.rewardContentPropBean, input.slots);
+                switch (input.rewardContentProp.rewardType)
+                {
+                    case ClearRewardType.AddShikigami:
+                        OutputResult(prop.detailProp.beforeShikigamiInfoProp.mainSkills[0].type == output.rewardContentProp.detailProp.beforeShikigamiInfoProp.mainSkills[0].type &&
+                            prop.detailProp.beforeShikigamiInfoProp.mainSkills[0].rank == output.rewardContentProp.detailProp.beforeShikigamiInfoProp.mainSkills[0].rank &&
+                            prop.detailProp.beforeShikigamiInfoProp.mainSkills[1].type == output.rewardContentProp.detailProp.beforeShikigamiInfoProp.mainSkills[1].type &&
+                            prop.detailProp.beforeShikigamiInfoProp.mainSkills[1].rank == output.rewardContentProp.detailProp.beforeShikigamiInfoProp.mainSkills[1].rank &&
+                            prop.detailProp.beforeShikigamiInfoProp.mainSkills[2].type == output.rewardContentProp.detailProp.beforeShikigamiInfoProp.mainSkills[2].type &&
+                            prop.detailProp.beforeShikigamiInfoProp.mainSkills[2].rank == output.rewardContentProp.detailProp.beforeShikigamiInfoProp.mainSkills[2].rank, caseId);
+
+                        break;
+                    case ClearRewardType.EnhanceShikigami:
+                        var main = prop.detailProp.beforeShikigamiInfoProp.mainSkills[0].type == output.rewardContentProp.detailProp.beforeShikigamiInfoProp.mainSkills[0].type &&
+                            prop.detailProp.beforeShikigamiInfoProp.mainSkills[0].rank == output.rewardContentProp.detailProp.beforeShikigamiInfoProp.mainSkills[0].rank &&
+                            prop.detailProp.beforeShikigamiInfoProp.mainSkills[1].type == output.rewardContentProp.detailProp.beforeShikigamiInfoProp.mainSkills[1].type &&
+                            prop.detailProp.beforeShikigamiInfoProp.mainSkills[1].rank == output.rewardContentProp.detailProp.beforeShikigamiInfoProp.mainSkills[1].rank &&
+                            prop.detailProp.beforeShikigamiInfoProp.mainSkills[2].type == output.rewardContentProp.detailProp.beforeShikigamiInfoProp.mainSkills[2].type &&
+                            prop.detailProp.beforeShikigamiInfoProp.mainSkills[2].rank == output.rewardContentProp.detailProp.beforeShikigamiInfoProp.mainSkills[2].rank &&
+                            prop.detailProp.afterShikigamiInfoProp.mainSkills[0].type == output.rewardContentProp.detailProp.afterShikigamiInfoProp.mainSkills[0].type &&
+                            prop.detailProp.afterShikigamiInfoProp.mainSkills[0].rank == output.rewardContentProp.detailProp.afterShikigamiInfoProp.mainSkills[0].rank &&
+                            prop.detailProp.afterShikigamiInfoProp.mainSkills[0].emphasisType == output.rewardContentProp.detailProp.afterShikigamiInfoProp.mainSkills[0].emphasisType &&
+                            prop.detailProp.afterShikigamiInfoProp.mainSkills[1].type == output.rewardContentProp.detailProp.afterShikigamiInfoProp.mainSkills[1].type &&
+                            prop.detailProp.afterShikigamiInfoProp.mainSkills[1].rank == output.rewardContentProp.detailProp.afterShikigamiInfoProp.mainSkills[1].rank &&
+                            prop.detailProp.afterShikigamiInfoProp.mainSkills[1].emphasisType == output.rewardContentProp.detailProp.afterShikigamiInfoProp.mainSkills[1].emphasisType &&
+                            prop.detailProp.afterShikigamiInfoProp.mainSkills[2].type == output.rewardContentProp.detailProp.afterShikigamiInfoProp.mainSkills[2].type &&
+                            prop.detailProp.afterShikigamiInfoProp.mainSkills[2].rank == output.rewardContentProp.detailProp.afterShikigamiInfoProp.mainSkills[2].rank &&
+                            prop.detailProp.afterShikigamiInfoProp.mainSkills[2].emphasisType == output.rewardContentProp.detailProp.afterShikigamiInfoProp.mainSkills[2].emphasisType;
+                        if (prop.detailProp.beforeShikigamiInfoProp.subSkills.Length != output.rewardContentProp.detailProp.beforeShikigamiInfoProp.subSkills.Length)
+                            throw new System.Exception("スタブ設定ミス");
+                        var sub = true;
+                        foreach (var item in prop.detailProp.beforeShikigamiInfoProp.subSkills.Select((p, i) => new { Content = p, Index = i }))
+                        {
+                            if (sub)
+                                sub = item.Content.type == output.rewardContentProp.detailProp.beforeShikigamiInfoProp.subSkills[item.Index].type &&
+                                    item.Content.rank == output.rewardContentProp.detailProp.beforeShikigamiInfoProp.subSkills[item.Index].rank;
+                        }
+                        if (prop.detailProp.afterShikigamiInfoProp.subSkills.Length != output.rewardContentProp.detailProp.afterShikigamiInfoProp.subSkills.Length)
+                            throw new System.Exception("スタブ設定ミス");
+                        var sub2 = true;
+                        foreach (var item in prop.detailProp.afterShikigamiInfoProp.subSkills.Select((p, i) => new { Content = p, Index = i }))
+                        {
+                            if (sub2)
+                                sub2 = item.Content.type == output.rewardContentProp.detailProp.afterShikigamiInfoProp.subSkills[item.Index].type &&
+                                    item.Content.rank == output.rewardContentProp.detailProp.afterShikigamiInfoProp.subSkills[item.Index].rank &&
+                                    item.Content.emphasisType == output.rewardContentProp.detailProp.afterShikigamiInfoProp.subSkills[item.Index].emphasisType;
+                        }
+                        OutputResult(main &&
+                            sub &&
+                            sub2
+                            , caseId);
+
+                        break;
+                    case ClearRewardType.EnhancePlayer:
+                        OutputResult(prop.detailProp.playerInfoProp.beforePlayerInfoProps[0].mainSkills[0].type == output.rewardContentProp.detailProp.playerInfoProp.beforePlayerInfoProps[0].mainSkills[0].type &&
+                            prop.detailProp.playerInfoProp.beforePlayerInfoProps[0].mainSkills[0].rank == output.rewardContentProp.detailProp.playerInfoProp.beforePlayerInfoProps[0].mainSkills[0].rank &&
+                            prop.detailProp.playerInfoProp.beforePlayerInfoProps[0].mainSkills[1].type == output.rewardContentProp.detailProp.playerInfoProp.beforePlayerInfoProps[0].mainSkills[1].type &&
+                            prop.detailProp.playerInfoProp.beforePlayerInfoProps[0].mainSkills[1].rank == output.rewardContentProp.detailProp.playerInfoProp.beforePlayerInfoProps[0].mainSkills[1].rank &&
+                            prop.detailProp.playerInfoProp.beforePlayerInfoProps[0].mainSkills[2].type == output.rewardContentProp.detailProp.playerInfoProp.beforePlayerInfoProps[0].mainSkills[2].type &&
+                            prop.detailProp.playerInfoProp.beforePlayerInfoProps[0].mainSkills[2].rank == output.rewardContentProp.detailProp.playerInfoProp.beforePlayerInfoProps[0].mainSkills[2].rank &&
+                            prop.detailProp.playerInfoProp.afterPlayerInfoProps[0].mainSkills[0].type == output.rewardContentProp.detailProp.playerInfoProp.afterPlayerInfoProps[0].mainSkills[0].type &&
+                            prop.detailProp.playerInfoProp.afterPlayerInfoProps[0].mainSkills[0].rank == output.rewardContentProp.detailProp.playerInfoProp.afterPlayerInfoProps[0].mainSkills[0].rank &&
+                            prop.detailProp.playerInfoProp.afterPlayerInfoProps[0].mainSkills[0].emphasisType == output.rewardContentProp.detailProp.playerInfoProp.afterPlayerInfoProps[0].mainSkills[0].emphasisType &&
+                            prop.detailProp.playerInfoProp.afterPlayerInfoProps[0].mainSkills[1].type == output.rewardContentProp.detailProp.playerInfoProp.afterPlayerInfoProps[0].mainSkills[1].type &&
+                            prop.detailProp.playerInfoProp.afterPlayerInfoProps[0].mainSkills[1].rank == output.rewardContentProp.detailProp.playerInfoProp.afterPlayerInfoProps[0].mainSkills[1].rank &&
+                            prop.detailProp.playerInfoProp.afterPlayerInfoProps[0].mainSkills[1].emphasisType == output.rewardContentProp.detailProp.playerInfoProp.afterPlayerInfoProps[0].mainSkills[1].emphasisType &&
+                            prop.detailProp.playerInfoProp.afterPlayerInfoProps[0].mainSkills[2].type == output.rewardContentProp.detailProp.playerInfoProp.afterPlayerInfoProps[0].mainSkills[2].type &&
+                            prop.detailProp.playerInfoProp.afterPlayerInfoProps[0].mainSkills[2].rank == output.rewardContentProp.detailProp.playerInfoProp.afterPlayerInfoProps[0].mainSkills[2].rank &&
+                            prop.detailProp.playerInfoProp.afterPlayerInfoProps[0].mainSkills[2].emphasisType == output.rewardContentProp.detailProp.playerInfoProp.afterPlayerInfoProps[0].mainSkills[2].emphasisType &&
+
+                            prop.detailProp.playerInfoProp.beforePlayerInfoProps[1].mainSkills[0].type == output.rewardContentProp.detailProp.playerInfoProp.beforePlayerInfoProps[1].mainSkills[0].type &&
+                            prop.detailProp.playerInfoProp.beforePlayerInfoProps[1].mainSkills[0].rank == output.rewardContentProp.detailProp.playerInfoProp.beforePlayerInfoProps[1].mainSkills[0].rank &&
+                            prop.detailProp.playerInfoProp.beforePlayerInfoProps[1].mainSkills[1].type == output.rewardContentProp.detailProp.playerInfoProp.beforePlayerInfoProps[1].mainSkills[1].type &&
+                            prop.detailProp.playerInfoProp.beforePlayerInfoProps[1].mainSkills[1].rank == output.rewardContentProp.detailProp.playerInfoProp.beforePlayerInfoProps[1].mainSkills[1].rank &&
+                            prop.detailProp.playerInfoProp.beforePlayerInfoProps[1].mainSkills[2].type == output.rewardContentProp.detailProp.playerInfoProp.beforePlayerInfoProps[1].mainSkills[2].type &&
+                            prop.detailProp.playerInfoProp.beforePlayerInfoProps[1].mainSkills[2].rank == output.rewardContentProp.detailProp.playerInfoProp.beforePlayerInfoProps[1].mainSkills[2].rank &&
+                            prop.detailProp.playerInfoProp.afterPlayerInfoProps[1].mainSkills[0].type == output.rewardContentProp.detailProp.playerInfoProp.afterPlayerInfoProps[1].mainSkills[0].type &&
+                            prop.detailProp.playerInfoProp.afterPlayerInfoProps[1].mainSkills[0].rank == output.rewardContentProp.detailProp.playerInfoProp.afterPlayerInfoProps[1].mainSkills[0].rank &&
+                            prop.detailProp.playerInfoProp.afterPlayerInfoProps[1].mainSkills[0].emphasisType == output.rewardContentProp.detailProp.playerInfoProp.afterPlayerInfoProps[1].mainSkills[0].emphasisType &&
+                            prop.detailProp.playerInfoProp.afterPlayerInfoProps[1].mainSkills[1].type == output.rewardContentProp.detailProp.playerInfoProp.afterPlayerInfoProps[1].mainSkills[1].type &&
+                            prop.detailProp.playerInfoProp.afterPlayerInfoProps[1].mainSkills[1].rank == output.rewardContentProp.detailProp.playerInfoProp.afterPlayerInfoProps[1].mainSkills[1].rank &&
+                            prop.detailProp.playerInfoProp.afterPlayerInfoProps[1].mainSkills[1].emphasisType == output.rewardContentProp.detailProp.playerInfoProp.afterPlayerInfoProps[1].mainSkills[1].emphasisType &&
+                            prop.detailProp.playerInfoProp.afterPlayerInfoProps[1].mainSkills[2].type == output.rewardContentProp.detailProp.playerInfoProp.afterPlayerInfoProps[1].mainSkills[2].type &&
+                            prop.detailProp.playerInfoProp.afterPlayerInfoProps[1].mainSkills[2].rank == output.rewardContentProp.detailProp.playerInfoProp.afterPlayerInfoProps[1].mainSkills[2].rank &&
+                            prop.detailProp.playerInfoProp.afterPlayerInfoProps[1].mainSkills[2].emphasisType == output.rewardContentProp.detailProp.playerInfoProp.afterPlayerInfoProps[1].mainSkills[2].emphasisType
+                            , caseId);
+
+                        break;
+                    default:
+                        break;
+                }
+            }
+            else
+                ExceptionResult(() => ((ILevelOwnerTestDriver)utility).GetRewardContentDetailProp(input.rewardContentProp, input.rewardContentPropBean, input.slots), caseId, output.throwMessage);
+        }
+    }
+
+    public interface ILevelOwnerTestDriver
+    {
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="rewardContentProp"></param>
+        /// <param name="rewardContentPropBean"></param>
+        /// <param name="slots"></param>
+        /// <returns></returns>
+        /// <see cref="Main.Utility.MainRewardsUtility.GetRewardContentDetailProp(RewardContentProp, Universal.Bean.RewardContentProp, Universal.Bean.UserBean.PentagramTurnTableInfo.Slot[])"/>
+        public RewardContentProp GetRewardContentDetailProp(RewardContentProp rewardContentProp, Universal.Bean.RewardContentProp rewardContentPropBean, Universal.Bean.UserBean.PentagramTurnTableInfo.Slot[] slots);
+    }
+}

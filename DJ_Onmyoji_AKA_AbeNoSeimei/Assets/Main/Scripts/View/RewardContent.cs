@@ -28,10 +28,12 @@ namespace Main.View
         public Transform Transform => _transform != null ? _transform : _transform = transform;
         /// <summary>スケールサイズの種類</summary>
         [SerializeField] private float[] scaleSizes = { 1f, 1.05f};
+        /// <summary>式神タイプイメージ</summary>
+        [SerializeField] private Sprite[] shikigamiTypeImages;
         /// <summary>タイプアイコン</summary>
         [SerializeField] private Sprite[] typeIcons;
         /// <summary>名前末尾の文言</summary>
-        [SerializeField] private string[] nameSuffix = { "-召喚", "-強化" };
+        [SerializeField] private string[] nameSuffix = { "-召喚", "-強化", "-強化" };
         /// <summary>スケール</summary>
         private Vector3? _scale;
         /// <summary>スケール</summary>
@@ -81,16 +83,16 @@ namespace Main.View
         {
             try
             {
-                if (!clearRewardImageContents[0].SetSprite(rewardContentProp.image))
+                if (!clearRewardImageContents[0].SetSprite(shikigamiTypeImages[(int)rewardContentProp.shikigamiType]))
                     throw new System.Exception("SetSprite");
-                if (!clearRewardImageContents[1].SetSprite(typeIcons[(int)rewardContentProp.rewardType]))
+                if (!clearRewardImageContents[1].SetSprite(rewardContentProp.image))
+                    throw new System.Exception("SetSprite");
+                if (!clearRewardImageContents[2].SetSprite(typeIcons[(int)rewardContentProp.rewardType]))
                     throw new System.Exception("SetSprite");
                 if (!clearRewardTextContents.SetName($"{rewardContentProp.name}{nameSuffix[(int)rewardContentProp.rewardType]}"))
                     throw new System.Exception("SetName");
                 if (!clearRewardTMPContents.SetSoulMoney(rewardContentProp.soulMoney))
                     throw new System.Exception("SetSoulMoney");
-                if (!imagesGroup.SetEnabledByAlpha())
-                    throw new System.Exception("SetEnabledByAlpha");
                 
                 return true;
             }

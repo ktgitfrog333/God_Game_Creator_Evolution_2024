@@ -26,8 +26,6 @@ namespace Main.Model
         [SerializeField] private float unDeadTimeSec = .2f;
         /// <summary>スクラッチ入力の調整値</summary>
         [SerializeField] private float sensibilityScratch = 5f;
-        /// <summary>もう一度遊ぶボタンのモデル</summary>
-        [SerializeField] private GameRetryButtonModel gameRetryButtonModel;
         /// <summary>ステージ選択へ戻るのモデル</summary>
         [SerializeField] private GameSelectButtonModel gameSelectButtonModel;
 
@@ -35,7 +33,6 @@ namespace Main.Model
         {
             gamePauseModel = GameObject.Find("GamePause").GetComponent<GamePauseModel>();
             rewardSelectModel = GameObject.Find("RewardSelect").GetComponent<RewardSelectModel>();
-            gameRetryButtonModel = GameObject.Find("GameRetryButton").GetComponent<GameRetryButtonModel>();
             gameSelectButtonModel = GameObject.Find("GameSelectButton").GetComponent<GameSelectButtonModel>();
         }
 
@@ -69,7 +66,6 @@ namespace Main.Model
                 {
                     List<Button> buttons = new List<Button>();
                     buttons.AddRange(rewardSelectModel.RewardContentModels.Select(q => q.GetComponent<Button>()));
-                    buttons.Add(gameRetryButtonModel.GetComponent<Button>());
                     buttons.Add(gameSelectButtonModel.GetComponent<Button>());
                     currentButton = buttons
                         .FirstOrDefault(y => y == x.GetComponent<Button>());

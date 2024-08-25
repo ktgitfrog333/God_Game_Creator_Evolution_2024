@@ -1,0 +1,65 @@
+using Main.Common;
+using Main.Test.Common;
+using Main.Test.Stub;
+using Main.Utility;
+using System.Collections;
+using System.Collections.Generic;
+using System.Linq;
+using TMPro;
+using UnityEngine;
+
+namespace Main.Test.Driver
+{
+    public class AfterTestDriver1 : CommonUtilityTest
+    {
+        protected override void Start()
+        {
+            // ê≥èÌån
+            CaseNormalSystem(0000);
+            CaseNormalSystem(0001);
+            CaseNormalSystem(0002);
+            CaseNormalSystem(0003);
+            CaseNormalSystem(0004);
+            CaseNormalSystem(0005);
+            CaseNormalSystem(0006);
+            CaseNormalSystem(0007);
+            CaseNormalSystem(0008);
+        }
+
+        protected override void Case(int caseId, bool isAbnormal = false)
+        {
+            var name = System.Reflection.MethodBase.GetCurrentMethod().Name;
+            var utility = new MainViewUtility();
+            var input = GetComponent<AfterTestStub1>().Inputs
+                .Where(q => q.caseId == caseId)
+                .Select(q => q)
+                .ToArray()[0];
+            var output = GetComponent<AfterTestStub1>().Outputs
+                .Where(q => q.caseId == caseId)
+                .Select(q => q)
+                .ToArray()[0];
+            if (!isAbnormal)
+            {
+                ((IAfterTestDriver1)utility).SetPlayerInfoPropOfText(input.text, input.template, input.props, input.shikigamiInfoVisualMaps, input.defaultFormat);
+                OutputResult(input.text.text.Equals(output.text.text), caseId);
+            }
+            else
+                ExceptionResult(() => ((IAfterTestDriver1)utility).SetPlayerInfoPropOfText(input.text, input.template, input.props, input.shikigamiInfoVisualMaps, input.defaultFormat), caseId, output.throwMessage);
+        }
+    }
+
+    public interface IAfterTestDriver1
+    {
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="text"></param>
+        /// <param name="template"></param>
+        /// <param name="props"></param>
+        /// <param name="shikigamiInfoVisualMaps"></param>
+        /// <param name="defaultFormat"></param>
+        /// <returns></returns>
+        /// <see cref="Main.Utility.MainViewUtility.SetPlayerInfoPropOfText(TextMeshProUGUI, string, ShikigamiInfo.Prop[], ShikigamiInfoVisualMaps, string)"/>
+        public bool SetPlayerInfoPropOfText(TextMeshProUGUI text, string template, ShikigamiInfo.Prop[] props, ShikigamiInfoVisualMaps shikigamiInfoVisualMaps, string defaultFormat);
+    }
+}

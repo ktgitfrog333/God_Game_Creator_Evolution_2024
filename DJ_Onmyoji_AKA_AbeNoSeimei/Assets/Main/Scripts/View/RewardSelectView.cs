@@ -72,9 +72,9 @@ namespace Main.View
             }
         }
 
-        public bool SetContents(ClearRewardType clearRewardType)
+        public bool SetContents(RewardContentProp rewardContentProp)
         {
-            return description.SetDescription(clearRewardType);
+            return description.SetDescription(rewardContentProp);
         }
 
         public bool UnCheck(int index)
@@ -117,9 +117,9 @@ namespace Main.View
         /// <summary>
         /// コンテンツをセット
         /// </summary>
-        /// <param name="clearRewardType">タイトル用クリア報酬タイプ種別</param>
+        /// <param name="rewardContentProp">リワード情報</param>
         /// <returns>成功／失敗</returns>
-        public bool SetContents(ClearRewardType clearRewardType);
+        public bool SetContents(RewardContentProp rewardContentProp);
         /// <summary>
         /// 大きくする
         /// </summary>

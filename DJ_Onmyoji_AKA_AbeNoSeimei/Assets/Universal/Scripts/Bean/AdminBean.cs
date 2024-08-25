@@ -83,6 +83,39 @@ namespace Universal.Bean
                     value = 10f,
                 },
             },
+            rewardContentProps = new RewardContentProp[]
+            {
+                new RewardContentProp()
+                {
+                    rewardType = 0,
+                    shikigamiInfo = new UserBean.ShikigamiInfo()
+                    {
+                        characterID = 0,
+                        genomeType = 0,
+                        name = "",
+                        type = 0,
+                        slotId = 0,
+                        level = 0,
+                        mainSkills = new UserBean.ShikigamiInfo.MainSkill[]
+                        {
+                            new UserBean.ShikigamiInfo.MainSkill()
+                            {
+                                type = 0,
+                                rank = 0,
+                            },
+                        },
+                        subSkills = new UserBean.ShikigamiInfo.SubSkill[]
+                        {
+                            new UserBean.ShikigamiInfo.SubSkill()
+                            {
+                                type = 0,
+                                rank = 0,
+                            }
+                        }
+                    },
+                    soulMoney = 0,
+                },
+            },
         };
         public ClearCountdownTimerCircleView clearCountdownTimerCircleView = new ClearCountdownTimerCircleView()
         {
@@ -257,6 +290,7 @@ namespace Universal.Bean
     public class LevelDesign
     {
         public MainSkillList[] mainSkillLists;
+        public RewardContentProp[] rewardContentProps;
     }
 
     [System.Serializable]
@@ -267,6 +301,29 @@ namespace Universal.Bean
         public int skillRank;
         public float value;
         public float valueBuffMax;
+    }
+
+    [System.Serializable]
+    public class RewardContentProp
+    {
+        public int rewardType;
+        public UserBean.ShikigamiInfo shikigamiInfo;
+        public int soulMoney;
+
+        public RewardContentProp()
+        {
+
+        }
+
+        // コピーコンストラクタ
+        public RewardContentProp(RewardContentProp source)
+        {
+            // 必要に応じてプロパティをコピー
+            this.rewardType = source.rewardType;
+            // サブオブジェクト（deep copyが必要な場合）
+            this.shikigamiInfo = new UserBean.ShikigamiInfo(source.shikigamiInfo);
+            this.soulMoney = source.soulMoney;
+        }
     }
 
     [System.Serializable]

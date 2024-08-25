@@ -17,6 +17,37 @@ namespace Main.Common
     }
 
     /// <summary>
+    /// 式神キャラクターID
+    /// </summary>
+    public enum ShikigamiCharacterID
+    {
+        SH0000,
+        SH0001,
+        SH0002,
+        SH0003,
+        SH0004,
+        SH0005,
+        SH0006,
+        SH0007,
+        SH0008,
+        SH0009,
+        SH0010,
+        SH0011,
+        SH0012,
+    }
+
+    /// <summary>
+    /// 遺伝子タイプ
+    /// タイプA、タイプB……の様に一つの式神を複数タイプ生成させたい場合に使用する
+    /// </summary>
+    public enum GenomeType
+    {
+        GE0000,
+        GE0001,
+        GE0002,
+    }
+
+    /// <summary>
     /// 式神タイプ
     /// </summary>
     public enum ShikigamiType
@@ -42,6 +73,19 @@ namespace Main.Common
         B,
         A,
         S,
+    }
+
+    /// <summary>
+    /// 強調（強化遷移など）
+    /// </summary>
+    public enum EmphasisType
+    {
+        /// <summary>変化なし</summary>
+        Neutral,
+        /// <summary>増加</summary>
+        Positive,
+        /// <summary>減少</summary>
+        Negative,
     }
 
     /// <summary>
