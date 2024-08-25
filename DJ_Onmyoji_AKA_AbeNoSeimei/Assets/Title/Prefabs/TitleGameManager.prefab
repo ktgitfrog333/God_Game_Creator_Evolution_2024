@@ -92,8 +92,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   clip:
   - {fileID: 8300000, guid: 8cb6e02071b1a4142b8919f9b6649f24, type: 3}
-  - {fileID: 8300000, guid: f88307b8794c15d44afa8d3726140c19, type: 3}
-  - {fileID: 8300000, guid: 5c81ae6e4cb5b4e42aedb8efc33b1b68, type: 3}
+  - {fileID: 8300000, guid: 6c3a1b086955013409abcf0d771f3f39, type: 3}
+  - {fileID: 8300000, guid: 7a74c46f317b8b24a8d2261ace4c5c06, type: 3}
   - {fileID: 8300000, guid: 460546909e641a741aef92e371d9afb1, type: 3}
   sFXChannelPrefab: {fileID: 1821450510366777210, guid: 01bf97f22af8625419b03b624a421f4a, type: 3}
 --- !u!1 &804468584
@@ -557,6 +557,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   scratchLevel: 1
   userActionTime: 0.2
+  _pad6: 0
+  _pad7: 0
+  _pad8: 0
 --- !u!1 &2159880399094193818
 GameObject:
   m_ObjectHideFlags: 0

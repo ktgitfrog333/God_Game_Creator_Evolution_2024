@@ -172,6 +172,14 @@ namespace Main.Audio
         se_scratch_1,
         /// <summary>DJのスクラッチ2</summary>
         se_backspin,
+        /// <summary>ゲームオーバー（※並び変でごめんなさい）</summary>
+        me_game_over,
+        /// <summary>敵に当たった時のSE（打撃音-21）</summary>
+        se_dageki21,
+        /// <summary>プレイヤーがダメージを受けた時のSE（打撃1）</summary>
+        se_dageki1,
+        /// <summary>敵を倒した時の音（RPGの敵死亡）</summary>
+        se_dead4,
     }
 
     /// <summary>
