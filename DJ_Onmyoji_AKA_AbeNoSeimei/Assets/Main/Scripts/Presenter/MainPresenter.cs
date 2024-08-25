@@ -93,6 +93,8 @@ namespace Main.Presenter
         private float danceTempoLevelBeforeRest;
         /// <summary>SP回復前のグラフィティ保存値</summary>
         private float graffitiTempoLevelBeforeRest;
+        /// <summary>プレイヤーのHP保存値 前回HPから減少した場合のみ、HP減少処理を実行すすために使用</summary>
+        private float beforeHP = 0;
 
         private void Reset()
         {
@@ -487,8 +489,13 @@ namespace Main.Presenter
                                         {
                                             if (!circleView.Set(x, playerModel.State.HPMax))
                                                 Debug.LogError("Set");
-                                            if (!playerView.PlayHitEffect())
-                                                Debug.LogError("PlayHitEffect");
+
+                                            //HPの変化量がマイナス（ダメージ）の場合のみ、エフェクトを発生
+                                            if (beforeHP - x > 0)
+                                                if (!playerView.PlayHitEffect())
+                                                    Debug.LogError("PlayHitEffect");
+                                            beforeHP = x;
+
                                         });
                                     playerModel.State.IsDead.ObserveEveryValueChanged(x => x.Value)
                                         .Subscribe(x =>

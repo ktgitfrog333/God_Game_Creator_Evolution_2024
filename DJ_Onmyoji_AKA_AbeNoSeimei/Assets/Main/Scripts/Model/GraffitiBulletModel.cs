@@ -111,7 +111,6 @@ namespace Main.Model
 
         void OnTriggerEnter2D(Collider2D other)
         {
-            Debug.Log(other.CompareTag(targetTag));
             // 特定のタグを持つオブジェクトがトリガーに入った場合にリストに追加
             if (other.CompareTag(targetTag))
             {
