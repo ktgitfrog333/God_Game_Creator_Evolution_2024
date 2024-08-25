@@ -98,6 +98,33 @@ MonoBehaviour:
   - {fileID: 360757283206218720, guid: d8007b7d976ee9f48b210463e0af80f2, type: 3}
   - {fileID: 360757283206218720, guid: ec87aefe31b033b47a13302e0613860c, type: 3}
   - {fileID: 360757283206218720, guid: 656230e281bf8404faaa3ceac383f444, type: 3}
+  shikigamiInfoSplitesProps:
+  - shikigamiCharacterID: 0
+    image: {fileID: 21300000, guid: c0b4996d937d9534480ffd51b427eb35, type: 3}
+  - shikigamiCharacterID: 1
+    image: {fileID: 21300000, guid: 24fa103679e856642808deb517a794c5, type: 3}
+  - shikigamiCharacterID: 2
+    image: {fileID: 21300000, guid: 404ec98cc8f44af4193d4c0fd2afb71d, type: 3}
+  - shikigamiCharacterID: 3
+    image: {fileID: 21300000, guid: c658e7d00a8d8cc439c8a47c2a0b8ccf, type: 3}
+  - shikigamiCharacterID: 4
+    image: {fileID: 21300000, guid: 93082591bad2cbb479d5c51e157adfb2, type: 3}
+  - shikigamiCharacterID: 5
+    image: {fileID: 21300000, guid: aaef747f836462f498846fa82da43db5, type: 3}
+  - shikigamiCharacterID: 6
+    image: {fileID: 21300000, guid: 51adbdb8665875a46b6f481efc7b84a4, type: 3}
+  - shikigamiCharacterID: 7
+    image: {fileID: 21300000, guid: 198949d2e7e1fe14f8544559ccc3b6a0, type: 3}
+  - shikigamiCharacterID: 8
+    image: {fileID: 21300000, guid: ec7ab8d4c04fdd84dbc5efdd5e6d2f5f, type: 3}
+  - shikigamiCharacterID: 9
+    image: {fileID: 21300000, guid: 37632b8e8e79cf34aaa3a56b9ac1474d, type: 3}
+  - shikigamiCharacterID: 10
+    image: {fileID: 21300000, guid: e2bdd08faf76e194b85c441c0a950399, type: 3}
+  - shikigamiCharacterID: 11
+    image: {fileID: 21300000, guid: 5ba25ba5e0c51e34cb77b3d2e297102c, type: 3}
+  - shikigamiCharacterID: 12
+    image: {fileID: 21300000, guid: bfa93a3222f4740469acb95016ea06e7, type: 3}
 --- !u!1 &1827416082
 GameObject:
   m_ObjectHideFlags: 0

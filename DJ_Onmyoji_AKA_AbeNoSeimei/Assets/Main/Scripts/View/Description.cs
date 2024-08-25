@@ -15,17 +15,17 @@ namespace Main.View
         /// <summary>クリア報酬のコンテンツ</summary>
         [SerializeField] private ClearRewardTMPContents[] clearRewardTMPContents;
 
-        public bool SetDescription(ClearRewardType clearRewardType)
+        public bool SetDescription(RewardContentProp rewardContentProp)
         {
             try
             {
-                if (!clearRewardTextContents[0].SetTitleOfDescription(clearRewardType))
+                if (!clearRewardTextContents[0].SetTitleOfDescription(rewardContentProp.rewardType))
                     throw new System.Exception("SetTitleOfDescription");
-                if (!clearRewardTextContents[1].SetPropetiesBeforeOfDescription(clearRewardType))
+                if (!clearRewardTextContents[1].SetPropetiesBeforeOfDescription(rewardContentProp))
                     throw new System.Exception("SetPropetiesBeforeOfDescription");
-                if (!clearRewardTMPContents[0].SetPropetiesAfterOfDescription(clearRewardType))
+                if (!clearRewardTMPContents[0].SetPropetiesAfterOfDescription(rewardContentProp))
                     throw new System.Exception("SetPropetiesAfterOfDescription");
-                if (!clearRewardTMPContents[1].SetPropetiesAfterOfDescription(clearRewardType))
+                if (!clearRewardTMPContents[1].SetPropetiesAfterOfDescription(rewardContentProp))
                     throw new System.Exception("SetPropetiesAfterOfDescription");
                 
                 return true;
@@ -49,8 +49,8 @@ namespace Main.View
         /// <summary>
         /// 説明をセット
         /// </summary>
-        /// <param name="clearRewardType">タイトル用クリア報酬タイプ種別</param>
+        /// <param name="rewardContentProp">リワード情報</param>
         /// <returns>成功／失敗</returns>
-        public bool SetDescription(ClearRewardType clearRewardType);
+        public bool SetDescription(RewardContentProp rewardContentProp);
     }
 }

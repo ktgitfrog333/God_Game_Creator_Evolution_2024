@@ -13,6 +13,8 @@ namespace Main.Common
     {
         /// <summary>リワードID</summary>
         public RewardID rewardID;
+        /// <summary>式神タイプ</summary>
+        public ShikigamiType shikigamiType;
         /// <summary>リワードタイプ</summary>
         public ClearRewardType rewardType;
         /// <summary>イメージ</summary>
@@ -21,6 +23,35 @@ namespace Main.Common
         public string name;
         /// <summary>魂のお金</summary>
         public int soulMoney;
+        /// <summary>クリア報酬のコンテンツ詳細のプロパティ</summary>
+        public RewardContentDetailProp detailProp;
+    }
+
+    /// <summary>
+    /// クリア報酬のコンテンツ詳細
+    /// プロパティ
+    /// </summary>
+    [System.Serializable]
+    public class RewardContentDetailProp
+    {
+        /// <summary>パラメータ情報（変更前）</summary>
+        public ShikigamiInfo.Prop beforeShikigamiInfoProp;
+        /// <summary>パラメータ情報（変更後）</summary>
+        public ShikigamiInfo.Prop afterShikigamiInfoProp;
+        /// <summary>プレイヤー情報</summary>
+        public PlayerInfo playerInfoProp;
+
+        /// <summary>
+        /// プレイヤー情報
+        /// </summary>
+        [System.Serializable]
+        public class PlayerInfo
+        {
+            /// <summary>パラメータ情報（変更前）</summary>
+            public ShikigamiInfo.Prop[] beforePlayerInfoProps;
+            /// <summary>パラメータ情報（変更後）</summary>
+            public ShikigamiInfo.Prop[] afterPlayerInfoProps;
+        }
     }
 
     /// <summary>

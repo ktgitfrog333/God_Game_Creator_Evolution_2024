@@ -1,0 +1,60 @@
+using Main.Common;
+using Main.Test.Common;
+using Main.Test.Stub;
+using Main.Utility;
+using Main.View;
+using System.Collections;
+using System.Collections.Generic;
+using System.Linq;
+using TMPro;
+using UnityEngine;
+
+namespace Main.Test.Driver
+{
+    public class AfterTestDriver2 : CommonUtilityTest
+    {
+        [SerializeField] private ClearRewardTMPContents clearRewardTMPContents;
+
+        protected override void Start()
+        {
+            // ê≥èÌån
+            CaseNormalSystem(0000);
+            CaseNormalSystem(0001);
+            CaseNormalSystem(0002);
+        }
+
+        protected override void Case(int caseId, bool isAbnormal = false)
+        {
+            var name = System.Reflection.MethodBase.GetCurrentMethod().Name;
+            //var utility = new MainViewUtility();
+            var input = GetComponent<AfterTestStub2>().Inputs
+                .Where(q => q.caseId == caseId)
+                .Select(q => q)
+                .ToArray()[0];
+            var output = GetComponent<AfterTestStub2>().Outputs
+                .Where(q => q.caseId == caseId)
+                .Select(q => q)
+                .ToArray()[0];
+            if (!isAbnormal)
+            {
+                ((IAfterTestDriver2)clearRewardTMPContents).SetPropetiesAfterOfDescription(input.rewardContentProp);
+                var text = ((IAfterTestDriver2)clearRewardTMPContents).GetText();
+                OutputResult(text.text.Equals(output.text.text), caseId);
+            }
+            else
+                ExceptionResult(() => ((IAfterTestDriver2)clearRewardTMPContents).SetPropetiesAfterOfDescription(input.rewardContentProp), caseId, output.throwMessage);
+        }
+    }
+
+    public interface IAfterTestDriver2
+    {
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="rewardContentProp"></param>
+        /// <returns></returns>
+        /// <see cref="Main.View.ClearRewardTMPContents.SetPropetiesAfterOfDescription(RewardContentProp)"/>
+        public bool SetPropetiesAfterOfDescription(RewardContentProp rewardContentProp);
+        public TextMeshProUGUI GetText();
+    }
+}

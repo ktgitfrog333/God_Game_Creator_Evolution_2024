@@ -27,10 +27,6 @@ namespace Main.Presenter
         [SerializeField] private GamePauseModel gamePauseModel;
         /// <summary>クリア画面のビュー</summary>
         [SerializeField] private ClearView clearView;
-        /// <summary>もう一度遊ぶボタンのビュー</summary>
-        [SerializeField] private GameRetryButtonView gameRetryButtonView;
-        /// <summary>もう一度遊ぶボタンのモデル</summary>
-        [SerializeField] private GameRetryButtonModel gameRetryButtonModel;
         /// <summary>ステージ選択へ戻るのビュー</summary>
         [SerializeField] private GameSelectButtonView gameSelectButtonView;
         /// <summary>ステージ選択へ戻るのモデル</summary>
@@ -104,8 +100,6 @@ namespace Main.Presenter
             gamePauseView = GameObject.Find("GamePause").GetComponent<GamePauseView>();
             gamePauseModel = GameObject.Find("GamePause").GetComponent<GamePauseModel>();
             clearView = GameObject.Find("Clear").GetComponent<ClearView>();
-            gameRetryButtonView = GameObject.Find("GameRetryButton").GetComponent<GameRetryButtonView>();
-            gameRetryButtonModel = GameObject.Find("GameRetryButton").GetComponent<GameRetryButtonModel>();
             gameSelectButtonView = GameObject.Find("GameSelectButton").GetComponent<GameSelectButtonView>();
             gameSelectButtonModel = GameObject.Find("GameSelectButton").GetComponent<GameSelectButtonModel>();
             cursorIconView = GameObject.Find("CursorIcon").GetComponent<CursorIconView>();
@@ -166,7 +160,6 @@ namespace Main.Presenter
 
             // 初期設定
             pauseView.gameObject.SetActive(false);
-            gameRetryButtonView.gameObject.SetActive(false);
             gameSelectButtonView.gameObject.SetActive(false);
             cursorIconView.gameObject.SetActive(false);
             gameManualScrollView.gameObject.SetActive(false);
@@ -292,12 +285,11 @@ namespace Main.Presenter
                         if (!MainGameManager.Instance.SceneOwner.SetSaveDatas(datas))
                             Debug.LogError("クリア済みデータ保存呼び出しの失敗");
                         // 初期処理
+                        if (!rewardSelectView.SetContents(rewardSelectModel.RewardContentProps))
+                            Debug.LogError("SetContents");
                         if (!clearView.SetActiveGameObject(true))
                             Debug.LogError("SetActiveGameObject");
-                        gameRetryButtonView.gameObject.SetActive(false);
                         gameSelectButtonView.gameObject.SetActive(false);
-                        if (!soulWalletModel.SetIsUnLockUpdateOfSoulMoney(false))
-                            Debug.LogError("SetIsUnLockUpdateOfSoulMoney");
                         // 初回のみ最初から拡大表示
                         if (!common.IsFinalLevel())
                         {
@@ -309,54 +301,11 @@ namespace Main.Presenter
                         else
                         {
                         }
-                        gameRetryButtonView.gameObject.SetActive(true);
                         gameSelectButtonView.gameObject.SetActive(true);
                         cursorIconView.gameObject.SetActive(true);
                     }
                 });
 
-            // クリア画面 -> もう一度遊ぶ
-            gameRetryButtonModel.EventState.ObserveEveryValueChanged(x => x.Value)
-                .Subscribe(x =>
-                {
-                    switch ((EnumEventCommand)x)
-                    {
-                        case EnumEventCommand.Default:
-                            // 処理無し
-                            break;
-                        case EnumEventCommand.Selected:
-                            MainGameManager.Instance.AudioOwner.PlaySFX(ClipToPlay.se_select);
-                            // 選択された時の処理
-                            if (!cursorIconView.SetSelectAndScale(gameRetryButtonModel.transform.position, (gameRetryButtonModel.transform as RectTransform).sizeDelta))
-                                Debug.LogError("SetSelectAndScale");
-
-                            break;
-                        case EnumEventCommand.DeSelected:
-                            if (!gameRetryButtonView.SetDefaultScale())
-                                Debug.LogError("デフォルトサイズへ変更呼び出しの失敗");
-                            break;
-                        case EnumEventCommand.Submited:
-                            MainGameManager.Instance.AudioOwner.PlaySFX(ClipToPlay.se_decided);
-                            if (!gameRetryButtonModel.SetButtonEnabled(false))
-                                Debug.LogError("ボタン有効／無効切り替え呼び出しの失敗");
-                            if (!gameRetryButtonModel.SetEventTriggerEnabled(false))
-                                Debug.LogError("イベント有効／無効切り替え呼び出しの失敗");
-                            // プレイヤーの挙動によって発生するイベント無効　など
-                            if (!MainGameManager.Instance.InputSystemsOwner.Exit())
-                                Debug.LogError("InputSystem終了呼び出しの失敗");
-                            // シーン読み込み時のアニメーション
-                            Observable.FromCoroutine<bool>(observer => fadeImageView.PlayFadeAnimation(observer, EnumFadeState.Close))
-                                .Subscribe(_ => MainGameManager.Instance.SceneOwner.LoadMainScene())
-                                .AddTo(gameObject);
-                            break;
-                        case EnumEventCommand.Canceled:
-                            // 処理無し
-                            break;
-                        default:
-                            Debug.LogWarning("例外ケース");
-                            break;
-                    }
-                });
             // クリア画面 -> ステージ選択画面へ戻る
             gameSelectButtonModel.EventState.ObserveEveryValueChanged(x => x.Value)
                 .Subscribe(x =>
@@ -386,6 +335,8 @@ namespace Main.Presenter
                             // プレイヤーの挙動によって発生するイベント無効　など
                             if (!MainGameManager.Instance.InputSystemsOwner.Exit())
                                 Debug.LogError("InputSystem終了呼び出しの失敗");
+                            if (!MainGameManager.Instance.LevelOwner.SetSlots())
+                                Debug.LogError("SetSlots");
                             // シーン読み込み時のアニメーション
                             Observable.FromCoroutine<bool>(observer => fadeImageView.PlayFadeAnimation(observer, EnumFadeState.Close))
                                 .Subscribe(_ => MainGameManager.Instance.SceneOwner.LoadSelectScene())
@@ -888,6 +839,8 @@ namespace Main.Presenter
                                 {
                                     if (soulWalletModel.AddSoulMoney(1 * item.Content.RewardContentProp.soulMoney) < 0)
                                         Debug.LogError("AddSoulMoney");
+                                    if (!MainGameManager.Instance.LevelOwner.AddRewardID(item.Index, true))
+                                        Debug.LogError("AddRewardID");
                                 }
                                 // Disabled⇒UnCheckの場合は金額計算を行わない
                                 else if (pair.Previous == (int)CheckState.Disabled)
@@ -903,6 +856,8 @@ namespace Main.Presenter
                                     Debug.LogError("AddSoulMoney");
                                 if (!rewardSelectView.Check(item.Index))
                                     Debug.LogError("Check");
+                                if (!MainGameManager.Instance.LevelOwner.AddRewardID(item.Index))
+                                    Debug.LogError("AddRewardID");
 
                                 break;
                             case CheckState.Disabled:
@@ -923,12 +878,13 @@ namespace Main.Presenter
                                 // 処理無し
                                 break;
                             case EnumEventCommand.Selected:
-                                if (!rewardSelectView.SetContents(item.Content.RewardContentProp.rewardType))
+                                if (!rewardSelectView.SetContents(item.Content.RewardContentProp))
                                     Debug.LogError("SetContents");
                                 if (!rewardSelectView.ScaleUp(item.Index))
                                     Debug.LogError("ScaleUp");
                                 if (!cursorIconView.SetSelectAndScale(item.Content.transform.position, item.Content.CurrentSizeDelta))
                                     Debug.LogError("SetSelectAndScale");
+                                MainGameManager.Instance.AudioOwner.PlaySFX(ClipToPlay.se_select);
 
                                 break;
                             case EnumEventCommand.DeSelected:
@@ -939,11 +895,13 @@ namespace Main.Presenter
                             case EnumEventCommand.Submited:
                                 if (!rewardSelectModel.Check(item.Index))
                                     Debug.LogError("Check");
+                                MainGameManager.Instance.AudioOwner.PlaySFX(ClipToPlay.se_decided);
 
                                 break;
                             case EnumEventCommand.Canceled:
                                 if (!rewardSelectModel.UnCheck(item.Index))
                                     Debug.LogError("UnCheck");
+                                MainGameManager.Instance.AudioOwner.PlaySFX(ClipToPlay.se_cancel);
 
                                 break;
                             default:

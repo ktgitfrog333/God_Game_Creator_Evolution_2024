@@ -26,6 +26,8 @@ namespace Main.Model
         public IReactiveProperty<bool> IsCompleted => _isCompleted;
         /// <summary>（最後のみ使用）次の項目ボタン</summary>
         [SerializeField] private Button lastContent;
+        /// <summary>クリア報酬のコンテンツのプロパティ</summary>
+        public RewardContentProp[] RewardContentProps => rewardsModel.GetRewardContentProps();
 
         private void Reset()
         {
@@ -36,19 +38,24 @@ namespace Main.Model
 
         private void Start()
         {
-            var models = rewardContentModels.Select((p, i) => new { Content = p, Index = i })
-                .Where(q => q.Content.isActiveAndEnabled);
-            foreach (var item in models)
-            {
-                // インデックス0の場合は前のボタンはnull
-                if (!item.Content.SetNavigationOfButton(0 < item.Index ? models.ToArray()[item.Index - 1].Content.Button : null,
-                    // インデックスがmaxの場合は次のボタンはnull
-                    item.Index < (models.ToArray().Length - 1) ? models.ToArray()[item.Index + 1].Content.Button : lastContent))
-                    Debug.LogError("SetNavigationOfButton");
-                if (!item.Content.SetRewardContentProp(rewardsModel.GetRewardContentProp(item.Index)))
-                    Debug.LogError("SetRewardContentProp");
-            }
-            _isCompleted.Value = true;
+            rewardsModel.IsLoadedData.ObserveEveryValueChanged(x => x.Value)
+                .Where(x => x)
+                .Subscribe(_ =>
+                {
+                    var models = rewardContentModels.Select((p, i) => new { Content = p, Index = i })
+                        .Where(q => q.Content.isActiveAndEnabled);
+                    foreach (var item in models)
+                    {
+                        // インデックス0の場合は前のボタンはnull
+                        if (!item.Content.SetNavigationOfButton(0 < item.Index ? models.ToArray()[item.Index - 1].Content.Button : null,
+                            // インデックスがmaxの場合は次のボタンはnull
+                            item.Index < (models.ToArray().Length - 1) ? models.ToArray()[item.Index + 1].Content.Button : lastContent))
+                            Debug.LogError("SetNavigationOfButton");
+                        if (!item.Content.SetRewardContentProp(rewardsModel.GetRewardContentProp(item.Index)))
+                            Debug.LogError("SetRewardContentProp");
+                    }
+                    _isCompleted.Value = true;
+                });
         }
 
         public bool Check(int index)

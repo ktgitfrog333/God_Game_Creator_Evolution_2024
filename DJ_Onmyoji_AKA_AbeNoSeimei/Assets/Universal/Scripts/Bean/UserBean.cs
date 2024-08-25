@@ -1,5 +1,7 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using Universal.Common;
 
@@ -157,8 +159,19 @@ namespace Universal.Bean
         [System.Serializable]
         public class ShikigamiInfo
         {
+            /// <summary>式神キャラクターID</summary>
+            public int characterID;
+            /// <summary>
+            /// 遺伝子タイプ
+            /// タイプA、タイプB……の様に一つの式神を複数タイプ生成させたい場合に使用する
+            /// </summary>
+            public int genomeType;
+            /// <summary>名称</summary>
+            public string name;
             /// <summary>式神タイプ</summary>
             public int type;
+            /// <summary>スロット番号</summary>
+            public int slotId;
             /// <summary>レベル</summary>
             public int level;
             /// <summary>メインスキル</summary>
@@ -176,6 +189,13 @@ namespace Universal.Bean
                 public int type;
                 /// <summary>スキルランク</summary>
                 public int rank;
+
+                public MainSkill() { }
+                public MainSkill(MainSkill source)
+                {
+                    type = source.type;
+                    rank = source.rank;
+                }
             }
 
             /// <summary>
@@ -188,6 +208,44 @@ namespace Universal.Bean
                 public int type;
                 /// <summary>スキルランク</summary>
                 public int rank;
+
+                public SubSkill() { }
+                public SubSkill(SubSkill source)
+                {
+                    type = source.type;
+                    rank = source.rank;
+                }
+
+                // 参考：ChatGpt-4o
+                public override bool Equals(object obj)
+                {
+                    if (obj is SubSkill other)
+                    {
+                        return type == other.type && rank == other.rank;
+                    }
+                    else
+                    {
+                        return false;
+                    }
+                }
+
+                public override int GetHashCode()
+                {
+                    return HashCode.Combine(type, rank);
+                }
+            }
+
+            public ShikigamiInfo() { }
+            public ShikigamiInfo(ShikigamiInfo source)
+            {
+                characterID = source.characterID;
+                genomeType = source.genomeType;
+                name = source.name;
+                type = source.type;
+                slotId = source.slotId;
+                level = source.level;
+                mainSkills = source.mainSkills.Select(ms => new MainSkill(ms)).ToArray();
+                subSkills = source.subSkills.Select(ss => new SubSkill(ss)).ToArray();
             }
         }
 

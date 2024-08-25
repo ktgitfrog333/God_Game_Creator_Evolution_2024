@@ -1,0 +1,104 @@
+using Main.Common;
+using Main.Test.Common;
+using Main.Test.Stub;
+using Main.Utility;
+using System.Collections;
+using System.Collections.Generic;
+using System.Linq;
+using UnityEditor.Playables;
+using UnityEngine;
+
+namespace Main.Test.Driver
+{
+    public class LevelOwnerTestDriver3 : CommonUtilityTest
+    {
+        [SerializeField] private int caseId;
+        protected override void Start()
+        {
+            // 正常系
+            CaseNormalSystem(caseId);
+        }
+
+        protected override void Case(int caseId, bool isAbnormal = false)
+        {
+            var name = System.Reflection.MethodBase.GetCurrentMethod().Name;
+            var input = GetComponent<LevelOwnerTestStub3>().Inputs
+                .Where(q => q.caseId == caseId)
+                .Select(q => q)
+                .ToArray()[0];
+            var output = GetComponent<LevelOwnerTestStub3>().Outputs
+                .Where(q => q.caseId == caseId)
+                .Select(q => q)
+                .ToArray()[0];
+
+            if (!isAbnormal)
+            {
+                ((ILevelOwnerTestDriver3)MainGameManager.Instance.LevelOwner).SetRewardContentProps(input.rewardContentProps);
+                ((ILevelOwnerTestDriver3)MainGameManager.Instance.LevelOwner).SetSelectedRewardIDs(input.selectedRewardIDs);
+                ((ILevelOwnerTestDriver3)MainGameManager.Instance.LevelOwner).SetSlots();
+
+                var utility = new MainCommonUtility();
+                var isSucceded = false;
+                foreach (var slot in utility.UserDataSingleton.UserBean.pentagramTurnTableInfo.slots.Select((p, i) => new { Content = p, Index = i }))
+                {
+                    isSucceded = slot.Content.slotId == output.userBean.pentagramTurnTableInfo.slots[slot.Index].slotId &&
+                        slot.Content.shikigamiInfo.characterID == output.userBean.pentagramTurnTableInfo.slots[slot.Index].shikigamiInfo.characterID &&
+                        slot.Content.shikigamiInfo.genomeType == output.userBean.pentagramTurnTableInfo.slots[slot.Index].shikigamiInfo.genomeType &&
+                        slot.Content.shikigamiInfo.name == output.userBean.pentagramTurnTableInfo.slots[slot.Index].shikigamiInfo.name &&
+                        slot.Content.shikigamiInfo.type == output.userBean.pentagramTurnTableInfo.slots[slot.Index].shikigamiInfo.type &&
+                        slot.Content.shikigamiInfo.slotId == output.userBean.pentagramTurnTableInfo.slots[slot.Index].shikigamiInfo.slotId &&
+                        slot.Content.shikigamiInfo.level == output.userBean.pentagramTurnTableInfo.slots[slot.Index].shikigamiInfo.level
+                        ;
+                    /*
+                                 public int characterID;
+            /// <summary>
+            /// 遺伝子タイプ
+            /// タイプA、タイプB……の様に一つの式神を複数タイプ生成させたい場合に使用する
+            /// </summary>
+            public int genomeType;
+            /// <summary>名称</summary>
+            public string name;
+            /// <summary>式神タイプ</summary>
+            public int type;
+            /// <summary>スロット番号</summary>
+            public int slotId;
+            /// <summary>レベル</summary>
+            public int level;
+
+                     */
+                    if (!isSucceded)
+                        break;
+                }
+                OutputResult(isSucceded, caseId);
+            }
+            else
+            {
+                ((ILevelOwnerTestDriver3)MainGameManager.Instance.LevelOwner).SetRewardContentProps(input.rewardContentProps);
+                ((ILevelOwnerTestDriver3)MainGameManager.Instance.LevelOwner).SetSelectedRewardIDs(input.selectedRewardIDs);
+                ExceptionResult(() => ((ILevelOwnerTestDriver3)MainGameManager.Instance.LevelOwner).SetSlots(), caseId, output.throwMessage);
+            }
+        }
+    }
+
+    public interface ILevelOwnerTestDriver3
+    {
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="rewardContentProps"></param>
+        /// <see cref="Main.Common.LevelOwner._rewardContentProps"/>
+        public void SetRewardContentProps(RewardContentProp[] rewardContentProps);
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="rewardIDs"></param>
+        /// <see cref="Main.Common.LevelOwner._selectedRewardIDs"/>
+        public void SetSelectedRewardIDs(List<RewardID> selectedRewardIDs);
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        /// <see cref="Main.Common.LevelOwner.SetSlots"/>
+        public bool SetSlots();
+    }
+}

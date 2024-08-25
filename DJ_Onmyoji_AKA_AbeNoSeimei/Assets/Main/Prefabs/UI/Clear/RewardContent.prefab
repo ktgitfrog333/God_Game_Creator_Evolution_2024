@@ -132,6 +132,7 @@ GameObject:
   - component: {fileID: 1942226308713648163}
   - component: {fileID: 3299467377657466166}
   - component: {fileID: 4965429371504569162}
+  - component: {fileID: 4140646755196589678}
   m_Layer: 5
   m_Name: Background
   m_TagString: Untagged
@@ -196,6 +197,19 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!114 &4140646755196589678
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2906486896208421404}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 59d90ddfbd3873742b3ac97a16dd84d6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  image: {fileID: 4965429371504569162}
 --- !u!1 &3906154521581057705
 GameObject:
   m_ObjectHideFlags: 0
@@ -534,6 +548,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   clearRewardTextContents: {fileID: 236858398932732761}
   clearRewardImageContents:
+  - {fileID: 4140646755196589678}
   - {fileID: 8758066811896433458}
   - {fileID: 3774168063758337391}
   clearRewardTMPContents: {fileID: 5956717525548198797}
@@ -542,11 +557,18 @@ MonoBehaviour:
   scaleSizes:
   - 1
   - 1.05
+  shikigamiTypeImages:
+  - {fileID: 21300000, guid: 168c170826caca143b76e94b56eed2bc, type: 3}
+  - {fileID: 21300000, guid: 875f5889c32f00549bbc12e283186ae2, type: 3}
+  - {fileID: 21300000, guid: dd84dc418ce21744b82f0385b33816ac, type: 3}
+  - {fileID: 21300000, guid: c1cf2a9b86281a841ae7b26710872c38, type: 3}
   typeIcons:
   - {fileID: 21300000, guid: 875146090b498c74eb5e6e5eea0321b1, type: 3}
   - {fileID: 21300000, guid: 236bdf7c3b9fee1499987c072819cfdd, type: 3}
+  - {fileID: 21300000, guid: 236bdf7c3b9fee1499987c072819cfdd, type: 3}
   nameSuffix:
   - "-\u53EC\u559A"
+  - "-\u5F37\u5316"
   - "-\u5F37\u5316"
 --- !u!114 &8228835708706936325
 MonoBehaviour:

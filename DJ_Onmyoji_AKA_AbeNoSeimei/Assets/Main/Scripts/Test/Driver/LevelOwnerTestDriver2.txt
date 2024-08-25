@@ -1,0 +1,86 @@
+using Main.Test.Common;
+using Main.Test.Driver;
+using Main.Test.Stub;
+using Main.Utility;
+using System.Collections;
+using System.Collections.Generic;
+using System.Linq;
+using UnityEngine;
+
+namespace Main.Test.Driver
+{
+    public class LevelOwnerTestDriver2 : CommonUtilityTest
+    {
+        protected override void Start()
+        {
+            // ê≥èÌån
+            //CaseNormalSystem(0001);
+        }
+
+        protected override void Case(int caseId, bool isAbnormal = false)
+        {
+            var name = System.Reflection.MethodBase.GetCurrentMethod().Name;
+            var utility = new MainRewardsUtility();
+            var input = GetComponent<LevelOwnerTestStub1>().Inputs
+                .Where(q => q.caseId == caseId)
+                .Select(q => q)
+                .ToArray()[0];
+            var output = GetComponent<LevelOwnerTestStub1>().Outputs
+                .Where(q => q.caseId == caseId)
+                .Select(q => q)
+                .ToArray()[0];
+
+            if (!isAbnormal)
+            {
+                var records = ((ILevelOwnerTestDriver1)utility).GetEnhanceRecord(input.slots);
+                var isSucceed = true;
+                foreach (var record in records.Select((p, i) => new { Content = p, Index = i }))
+                {
+                    isSucceed = record.Content.rewardType == output.rewardContentProps[record.Index].rewardType &&
+                        record.Content.shikigamiInfo.characterID == output.rewardContentProps[record.Index].shikigamiInfo.characterID &&
+                        record.Content.shikigamiInfo.genomeType == output.rewardContentProps[record.Index].shikigamiInfo.genomeType &&
+                        record.Content.shikigamiInfo.name == output.rewardContentProps[record.Index].shikigamiInfo.name &&
+                        record.Content.shikigamiInfo.type == output.rewardContentProps[record.Index].shikigamiInfo.type &&
+                        record.Content.shikigamiInfo.slotId == output.rewardContentProps[record.Index].shikigamiInfo.slotId &&
+                        record.Content.shikigamiInfo.level == output.rewardContentProps[record.Index].shikigamiInfo.level;
+
+                    if (!isSucceed)
+                        break;
+
+                    foreach (var mainSkill in record.Content.shikigamiInfo.mainSkills.Select((p, i) => new { Content = p, Index = i }))
+                    {
+                        isSucceed = mainSkill.Content.type == output.rewardContentProps[record.Index].shikigamiInfo.mainSkills[mainSkill.Index].type &&
+                            mainSkill.Content.rank == output.rewardContentProps[record.Index].shikigamiInfo.mainSkills[mainSkill.Index].rank;
+
+                        if (!isSucceed)
+                            break;
+                    }
+
+                    if (!isSucceed)
+                        break;
+
+                    if ((record.Index == 0 &&
+                            output.rewardContentProps[record.Index].shikigamiInfo.subSkills.Length == 0) ||
+                        (record.Index == 6 &&
+                            output.rewardContentProps[record.Index].shikigamiInfo.subSkills.Length == 0)
+                            )
+                    {
+                        continue;
+                    }
+                    if (0 < record.Index && record.Index < 6)
+                    {
+                        isSucceed = record.Content.shikigamiInfo.subSkills[record.Index - 1].type == output.rewardContentProps[record.Index].shikigamiInfo.subSkills[0].type &&
+                            record.Content.shikigamiInfo.subSkills[record.Index - 1].rank == output.rewardContentProps[record.Index].shikigamiInfo.subSkills[0].rank;
+                    }
+                    else if (5 < record.Index)
+                    {
+
+                    }
+                }
+                OutputResult(isSucceed, caseId);
+            }
+            else
+                ExceptionResult(() => ((ILevelOwnerTestDriver1)utility).GetEnhanceRecord(input.slots), caseId, output.throwMessage);
+        }
+    }
+}

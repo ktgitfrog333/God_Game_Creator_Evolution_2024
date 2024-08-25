@@ -5,6 +5,10 @@ using UnityEngine;
 using UnityEngine.UI;
 using DG.Tweening;
 using TMPro;
+using System.Text.RegularExpressions;
+using UniRx;
+using System.Linq;
+using System.Text;
 
 namespace Main.Utility
 {
@@ -24,6 +28,10 @@ namespace Main.Utility
         }
         /// <summary>ループアニメーションSeqence管理</summary>
         private LoopAnimations _loopAnimations = new LoopAnimations();
+        /// <summary>報酬画面の強調開始タグ</summary>
+        private const string CLEARREWARD_POSITIVE_BEGIN = "<color=#ff0000>";
+        /// <summary>報酬画面の強調終了タグ</summary>
+        private const string CLEARREWARD_POSITIVE_END = "</color>";
 
         public IEnumerator PlayFadeAnimation<T>(System.IObserver<bool> observer, EnumFadeState state, float duration, T component) where T : Component
         {
@@ -332,6 +340,306 @@ namespace Main.Utility
 
             yield return null;
         }
+
+        public bool SetShikigamiInfoPropOfText(Text text, string template, ShikigamiInfo.Prop prop, ShikigamiInfoVisualMaps shikigamiInfoVisualMaps, string defaultFormat)
+        {
+            try
+            {
+                template = ReplaceTemplateOfShikigamiInfoProp(template, prop, shikigamiInfoVisualMaps, defaultFormat);
+                if (string.IsNullOrEmpty(template))
+                    throw new System.Exception("ReplaceTemplateOfShikigamiInfoProp");
+
+                return SetContentOfText(text, template, defaultFormat);
+            }
+            catch (System.Exception e)
+            {
+                Debug.LogError(e);
+                return false;
+            }
+        }
+
+        public bool SetPlayerInfoPropOfText(Text text, string template, ShikigamiInfo.Prop[] props, ShikigamiInfoVisualMaps shikigamiInfoVisualMaps, string defaultFormat)
+        {
+            try
+            {
+                template = ReplaceTemplateOfPlayerInfoProp(template, props, shikigamiInfoVisualMaps, defaultFormat);
+                if (string.IsNullOrEmpty(template))
+                    throw new System.Exception("ReplaceTemplateOfPlayerInfoProp");
+
+                return SetContentOfText(text, template, defaultFormat);
+            }
+            catch (System.Exception e)
+            {
+                Debug.LogError(e);
+                return false;
+            }
+        }
+
+        public bool SetShikigamiInfoPropOfText(TextMeshProUGUI text, string template, ShikigamiInfo.Prop prop, ShikigamiInfoVisualMaps shikigamiInfoVisualMaps, string defaultFormat)
+        {
+            try
+            {
+                template = ReplaceTemplateOfShikigamiInfoProp(template, prop, shikigamiInfoVisualMaps, defaultFormat);
+                if (string.IsNullOrEmpty(template))
+                    throw new System.Exception("ReplaceTemplateOfShikigamiInfoProp");
+                template = Regex.Replace(template, AbsoluteSharpPattern("mainSkillTypeEmphasisType"), !prop.mainSkills[0].emphasisType.Equals(EmphasisType.Neutral) ? CLEARREWARD_POSITIVE_BEGIN : string.Empty)
+                        .Replace(AbsoluteSharpPattern("mainSkillTypeEmphasisType", true), !prop.mainSkills[0].emphasisType.Equals(EmphasisType.Neutral) ? CLEARREWARD_POSITIVE_END : string.Empty)
+                    .Replace(AbsoluteSharpPattern("mainSkillTypeEmphasisType2"), !prop.mainSkills[1].emphasisType.Equals(EmphasisType.Neutral) ? CLEARREWARD_POSITIVE_BEGIN : string.Empty)
+                        .Replace(AbsoluteSharpPattern("mainSkillTypeEmphasisType2", true), !prop.mainSkills[1].emphasisType.Equals(EmphasisType.Neutral) ? CLEARREWARD_POSITIVE_END : string.Empty)
+                    .Replace(AbsoluteSharpPattern("mainSkillTypeEmphasisType3"), !prop.mainSkills[2].emphasisType.Equals(EmphasisType.Neutral) ? CLEARREWARD_POSITIVE_BEGIN : string.Empty)
+                        .Replace(AbsoluteSharpPattern("mainSkillTypeEmphasisType3", true), !prop.mainSkills[2].emphasisType.Equals(EmphasisType.Neutral) ? CLEARREWARD_POSITIVE_END : string.Empty)
+                    ;
+                var subSkillsLen = prop.subSkills != null ? prop.subSkills.Length : 0;
+                template = Regex.Replace(template, AbsoluteSharpPattern("subSkillTypeEmphasisType"), 0 < subSkillsLen &&
+                            !prop.subSkills[0].emphasisType.Equals(EmphasisType.Neutral) ? CLEARREWARD_POSITIVE_BEGIN : string.Empty)
+                        .Replace(AbsoluteSharpPattern("subSkillTypeEmphasisType", true), 0 < subSkillsLen &&
+                            !prop.subSkills[0].emphasisType.Equals(EmphasisType.Neutral) ? CLEARREWARD_POSITIVE_END : string.Empty)
+                    .Replace(AbsoluteSharpPattern("subSkillTypeEmphasisType2"), 1 < subSkillsLen &&
+                            !prop.subSkills[1].emphasisType.Equals(EmphasisType.Neutral) ? CLEARREWARD_POSITIVE_BEGIN : string.Empty)
+                        .Replace(AbsoluteSharpPattern("subSkillTypeEmphasisType2", true), 1 < subSkillsLen &&
+                            !prop.subSkills[1].emphasisType.Equals(EmphasisType.Neutral) ? CLEARREWARD_POSITIVE_END : string.Empty)
+                    .Replace(AbsoluteSharpPattern("subSkillTypeEmphasisType3"), 2 < subSkillsLen &&
+                            !prop.subSkills[2].emphasisType.Equals(EmphasisType.Neutral) ? CLEARREWARD_POSITIVE_BEGIN : string.Empty)
+                        .Replace(AbsoluteSharpPattern("subSkillTypeEmphasisType3", true), 2 < subSkillsLen &&
+                            !prop.subSkills[2].emphasisType.Equals(EmphasisType.Neutral) ? CLEARREWARD_POSITIVE_END : string.Empty)
+                    ;
+
+                return SetContentOfText(text, template, defaultFormat);
+            }
+            catch (System.Exception e)
+            {
+                Debug.LogError(e);
+                return false;
+            }
+        }
+
+        /// <summary>
+        /// テンプレートを置換する
+        /// </summary>
+        /// <param name="template">テンプレート</param>
+        /// <param name="prop">式神の情報プロパティ</param>
+        /// <param name="shikigamiInfoVisualMaps">ステータス表示で使用</param>
+        /// <param name="defaultFormat">テキストのデフォルトフォーマット</param>
+        /// <returns>置換後のテンプレート</returns>
+        private string ReplaceTemplateOfShikigamiInfoProp(string template, ShikigamiInfo.Prop prop, ShikigamiInfoVisualMaps shikigamiInfoVisualMaps, string defaultFormat)
+        {
+            try
+            {
+                template = Regex.Replace(template, AbsolutePattern("shikigamiType"), shikigamiInfoVisualMaps.shikigamiTypes.Where(q => q.type.Equals(prop.type))
+                        .Select(q => q.value)
+                        .ToArray()[0])
+                    .Replace(AbsolutePattern("mainSkillType"), shikigamiInfoVisualMaps.mainSkilltypes.Where(q => q.type.Equals(prop.mainSkills[0].type))
+                        .Select(q => q.value)
+                        .ToArray()[0])
+                    .Replace(AbsolutePattern("mainSkillTypeSkillRank"), ToZenkaku($"{prop.mainSkills[0].rank}"))
+                    .Replace(AbsolutePattern("mainSkillType2"), shikigamiInfoVisualMaps.mainSkilltypes.Where(q => q.type.Equals(prop.mainSkills[1].type))
+                        .Select(q => q.value)
+                        .ToArray()[0])
+                    .Replace(AbsolutePattern("mainSkillTypeSkillRank2"), ToZenkaku($"{prop.mainSkills[1].rank}"))
+                    .Replace(AbsolutePattern("mainSkillType3"), shikigamiInfoVisualMaps.mainSkilltypes.Where(q => q.type.Equals(prop.mainSkills[2].type))
+                        .Select(q => q.value)
+                        .ToArray()[0])
+                    .Replace(AbsolutePattern("mainSkillTypeSkillRank3"), ToZenkaku($"{prop.mainSkills[2].rank}"))
+                    ;
+                var subSkillsLen = prop.subSkills != null ? prop.subSkills.Length : 0;
+                template = Regex.Replace(template, AbsolutePattern("subSkillType"), 0 < subSkillsLen ?
+                        shikigamiInfoVisualMaps.subSkillTypes.Where(q => q.type.Equals(prop.subSkills[0].type))
+                            .Select(q => q.value)
+                            .ToArray()[0] :
+                        defaultFormat)
+                    .Replace(AbsolutePattern("subSkillTypeSkillRank"), 0 < subSkillsLen ?
+                        ToZenkaku($"{prop.subSkills[0].rank}") :
+                        string.Empty)
+                    .Replace(AbsolutePattern("subSkillType2"), 1 < subSkillsLen ?
+                        shikigamiInfoVisualMaps.subSkillTypes.Where(q => q.type.Equals(prop.subSkills[1].type))
+                            .Select(q => q.value)
+                            .ToArray()[0] :
+                        defaultFormat)
+                    .Replace(AbsolutePattern("subSkillTypeSkillRank2"), 1 < subSkillsLen ?
+                        ToZenkaku($"{prop.subSkills[1].rank}") :
+                        string.Empty)
+                    .Replace(AbsolutePattern("subSkillType3"), 2 < subSkillsLen ?
+                        shikigamiInfoVisualMaps.subSkillTypes.Where(q => q.type.Equals(prop.subSkills[2].type))
+                            .Select(q => q.value)
+                            .ToArray()[0] :
+                        defaultFormat)
+                    .Replace(AbsolutePattern("subSkillTypeSkillRank3"), 2 < subSkillsLen ?
+                        ToZenkaku($"{prop.subSkills[2].rank}") :
+                        string.Empty)
+                    ;
+
+                return template;
+            }
+            catch (System.Exception e)
+            {
+                Debug.LogError(e);
+                return null;
+            }
+        }
+
+        public bool SetPlayerInfoPropOfText(TextMeshProUGUI text, string template, ShikigamiInfo.Prop[] props, ShikigamiInfoVisualMaps shikigamiInfoVisualMaps, string defaultFormat)
+        {
+            try
+            {
+                template = ReplaceTemplateOfPlayerInfoProp(template, props, shikigamiInfoVisualMaps, defaultFormat);
+                if (string.IsNullOrEmpty(template))
+                    throw new System.Exception("ReplaceTemplateOfPlayerInfoProp");
+                foreach (var prop in props.Select((p, i) => new { Content = p, Index = i }))
+                {
+                    template = Regex.Replace(template, AbsoluteSharpPattern($"mainSkillTypeEmphasisType{AddSuffix(prop.Index)}"), !prop.Content.mainSkills[0].emphasisType.Equals(EmphasisType.Neutral) ? CLEARREWARD_POSITIVE_BEGIN : string.Empty)
+                            .Replace(AbsoluteSharpPattern($"mainSkillTypeEmphasisType{AddSuffix(prop.Index)}", true), !prop.Content.mainSkills[0].emphasisType.Equals(EmphasisType.Neutral) ? CLEARREWARD_POSITIVE_END : string.Empty)
+                        .Replace(AbsoluteSharpPattern($"mainSkillTypeEmphasisType{AddSuffix(prop.Index, 2)}"), !prop.Content.mainSkills[1].emphasisType.Equals(EmphasisType.Neutral) ? CLEARREWARD_POSITIVE_BEGIN : string.Empty)
+                            .Replace(AbsoluteSharpPattern($"mainSkillTypeEmphasisType{AddSuffix(prop.Index, 2)}", true), !prop.Content.mainSkills[1].emphasisType.Equals(EmphasisType.Neutral) ? CLEARREWARD_POSITIVE_END : string.Empty)
+                        .Replace(AbsoluteSharpPattern($"mainSkillTypeEmphasisType{AddSuffix(prop.Index, 3)}"), !prop.Content.mainSkills[2].emphasisType.Equals(EmphasisType.Neutral) ? CLEARREWARD_POSITIVE_BEGIN : string.Empty)
+                            .Replace(AbsoluteSharpPattern($"mainSkillTypeEmphasisType{AddSuffix(prop.Index, 3)}", true), !prop.Content.mainSkills[2].emphasisType.Equals(EmphasisType.Neutral) ? CLEARREWARD_POSITIVE_END : string.Empty)
+                        ;
+                }
+
+                return SetContentOfText(text, template, defaultFormat);
+            }
+            catch (System.Exception e)
+            {
+                Debug.LogError(e);
+                return false;
+            }
+        }
+
+        /// <summary>
+        /// 完全パターンを取得
+        /// </summary>
+        /// <param name="keyword">キーワード</param>
+        /// <param name="isEnd">タブ閉じか</param>
+        /// <returns>完全パターン</returns>
+        private string AbsoluteSharpPattern(string keyword, bool isEnd = false)
+        {
+            try
+            {
+                const string PREFIX = "##AMGT", SUFFIX = "##";
+                var keyword2 = !isEnd ? "Begin" : "End";
+
+                return $"{PREFIX}{keyword}{keyword2}{SUFFIX}";
+            }
+            catch (System.Exception e)
+            {
+                Debug.LogError(e);
+                return null;
+            }
+        }
+
+        /// <summary>
+        /// テンプレートを置換する
+        /// </summary>
+        /// <param name="template">テンプレート</param>
+        /// <param name="props">式神の情報プロパティ</param>
+        /// <param name="shikigamiInfoVisualMaps">ステータス表示で使用</param>
+        /// <param name="defaultFormat">テキストのデフォルトフォーマット</param>
+        /// <returns>置換後のテンプレート</returns>
+        private string ReplaceTemplateOfPlayerInfoProp(string template, ShikigamiInfo.Prop[] props, ShikigamiInfoVisualMaps shikigamiInfoVisualMaps, string defaultFormat)
+        {
+            try
+            {
+                foreach (var prop in props.Select((p, i) => new { Content = p, Index = i }))
+                {
+                    template = Regex.Replace(template, AbsolutePattern("shikigamiType"), shikigamiInfoVisualMaps.shikigamiTypes.Where(q => q.type.Equals(prop.Content.type))
+                        .Select(q => q.value)
+                        .ToArray()[0])
+                    .Replace(AbsolutePattern($"mainSkillType{AddSuffix(prop.Index)}"), shikigamiInfoVisualMaps.mainSkilltypes.Where(q => q.type.Equals(prop.Content.mainSkills[0].type))
+                        .Select(q => q.value)
+                        .ToArray()[0])
+                    .Replace(AbsolutePattern($"mainSkillTypeSkillRank{AddSuffix(prop.Index)}"), ToZenkaku($"{prop.Content.mainSkills[0].rank}"))
+                    .Replace(AbsolutePattern($"mainSkillType{AddSuffix(prop.Index, 2)}"), shikigamiInfoVisualMaps.mainSkilltypes.Where(q => q.type.Equals(prop.Content.mainSkills[1].type))
+                        .Select(q => q.value)
+                        .ToArray()[0])
+                    .Replace(AbsolutePattern($"mainSkillTypeSkillRank{AddSuffix(prop.Index, 2)}"), ToZenkaku($"{prop.Content.mainSkills[1].rank}"))
+                    .Replace(AbsolutePattern($"mainSkillType{AddSuffix(prop.Index, 3)}"), shikigamiInfoVisualMaps.mainSkilltypes.Where(q => q.type.Equals(prop.Content.mainSkills[2].type))
+                        .Select(q => q.value)
+                        .ToArray()[0])
+                    .Replace(AbsolutePattern($"mainSkillTypeSkillRank{AddSuffix(prop.Index, 3)}"), ToZenkaku($"{prop.Content.mainSkills[2].rank}"))
+                    ;
+                }
+
+                return template;
+            }
+            catch (System.Exception e)
+            {
+                Debug.LogError(e);
+                return null;
+            }
+        }
+
+        /// <summary>
+        /// 完全パターンを取得
+        /// </summary>
+        /// <param name="keyword">キーワード</param>
+        /// <returns>完全パターン</returns>
+        private string AbsolutePattern(string keyword)
+        {
+            try
+            {
+                const string PREFIX = "__AMGT", SUFFIX = "__";
+
+                return $"{PREFIX}{keyword}{SUFFIX}";
+            }
+            catch (System.Exception e)
+            {
+                Debug.LogError(e);
+                return null;
+            }
+        }
+
+        /// <summary>
+        /// サフィックスを追加
+        /// </summary>
+        /// <param name="index">インデックス</param>
+        /// <param name="offset">変数の番号</param>
+        /// <returns>サフィックス</returns>
+        /// <exception cref="System.ArgumentOutOfRangeException">この組み合わせは範囲外 index: [{index}]_offset: [{offset}]</exception>
+        private string AddSuffix(int index, int offset = 1)
+        {
+            if (index == 0)
+                return offset == 1 ? string.Empty : $"{offset}";
+            else if (index == 1)
+                return $"{offset + 3}";
+            else
+                throw new System.ArgumentOutOfRangeException($"この組み合わせは範囲外 index: [{index}]_offset: [{offset}]");
+        }
+
+        /// <summary>
+        /// 全角に変換する
+        /// </summary>
+        /// <param name="input">入力値</param>
+        /// <returns>全角変換後の値</returns>
+        /// <remarks>作成者：ChatGPT-4o</remarks>
+        private string ToZenkaku(string input)
+        {
+            try
+            {
+                StringBuilder sb = new StringBuilder(input.Length);
+
+                foreach (char c in input)
+                {
+                    if (c >= 0x21 && c <= 0x7E) // 半角英数字や記号の範囲
+                    {
+                        sb.Append((char)(c + 0xFEE0)); // 全角に変換
+                    }
+                    else if (c == 0x20) // 半角スペース
+                    {
+                        sb.Append((char)0x3000); // 全角スペースに変換
+                    }
+                    else
+                    {
+                        sb.Append(c); // それ以外の文字はそのまま
+                    }
+                }
+
+                return sb.ToString();
+            }
+            catch (System.Exception e)
+            {
+                Debug.LogError(e);
+                return null;
+            }
+        }
     }
 
     /// <summary>
@@ -461,5 +769,45 @@ namespace Main.Utility
         /// <param name="defaultFormat">テキストのデフォルトフォーマット</param>
         /// <returns>成功／失敗</returns>
         public bool SetNameOfText(TextMeshProUGUI text, string name, string defaultFormat);
+        /// <summary>
+        /// 式神情報をセット
+        /// </summary>
+        /// <param name="text">テキスト</param>
+        /// <param name="template">テンプレート</param>
+        /// <param name="prop">式神の情報プロパティ</param>
+        /// <param name="shikigamiInfoVisualMaps">ステータス表示で使用</param>
+        /// <param name="defaultFormat">テキストのデフォルトフォーマット</param>
+        /// <returns>成功／失敗</returns>
+        public bool SetShikigamiInfoPropOfText(Text text, string template, ShikigamiInfo.Prop prop, ShikigamiInfoVisualMaps shikigamiInfoVisualMaps, string defaultFormat);
+        /// <summary>
+        /// プレイヤー情報をセット
+        /// </summary>
+        /// <param name="text">テキスト</param>
+        /// <param name="template">テンプレート</param>
+        /// <param name="props">式神の情報プロパティ</param>
+        /// <param name="shikigamiInfoVisualMaps">ステータス表示で使用</param>
+        /// <param name="defaultFormat">テキストのデフォルトフォーマット</param>
+        /// <returns>成功／失敗</returns>
+        public bool SetPlayerInfoPropOfText(Text text, string template, ShikigamiInfo.Prop[] props, ShikigamiInfoVisualMaps shikigamiInfoVisualMaps, string defaultFormat);
+        /// <summary>
+        /// 式神情報をセット
+        /// </summary>
+        /// <param name="text">テキスト</param>
+        /// <param name="template">テンプレート</param>
+        /// <param name="prop">式神の情報プロパティ</param>
+        /// <param name="shikigamiInfoVisualMaps">ステータス表示で使用</param>
+        /// <param name="defaultFormat">テキストのデフォルトフォーマット</param>
+        /// <returns>成功／失敗</returns>
+        public bool SetShikigamiInfoPropOfText(TextMeshProUGUI text, string template, ShikigamiInfo.Prop prop, ShikigamiInfoVisualMaps shikigamiInfoVisualMaps, string defaultFormat);
+        /// <summary>
+        /// プレイヤー情報をセット
+        /// </summary>
+        /// <param name="text">テキスト</param>
+        /// <param name="template">テンプレート</param>
+        /// <param name="prop">式神の情報プロパティ</param>
+        /// <param name="shikigamiInfoVisualMaps">ステータス表示で使用</param>
+        /// <param name="defaultFormat">テキストのデフォルトフォーマット</param>
+        /// <returns>成功／失敗</returns>
+        public bool SetPlayerInfoPropOfText(TextMeshProUGUI text, string template, ShikigamiInfo.Prop[] props, ShikigamiInfoVisualMaps shikigamiInfoVisualMaps, string defaultFormat);
     }
 }
