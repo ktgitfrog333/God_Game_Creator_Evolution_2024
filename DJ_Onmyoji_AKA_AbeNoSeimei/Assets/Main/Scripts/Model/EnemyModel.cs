@@ -130,17 +130,11 @@ namespace Main.Model
             // プレイヤーから攻撃を受ける
             State.HP.Value = prop.hpMax;
             State.IsDead.Value = false;
-            // 左側から出現する敵は向きを反転させる
+            // 敵の向きを調整
             if (Transform.position.x < 0)
-            {
                 Transform.rotation = Quaternion.Euler(0, 180, 0);
-                Debug.Log(this.gameObject + "," + "true" + "," + Transform.position.x + "," + Transform.eulerAngles.y);
-            }
             else
-            {
                 Transform.rotation = Quaternion.Euler(0, 0, 0);
-                Debug.Log(this.gameObject + "," + "false" + "," + Transform.position.x + "," + Transform.eulerAngles.y);
-            }
         }
 
         protected override void Start()
