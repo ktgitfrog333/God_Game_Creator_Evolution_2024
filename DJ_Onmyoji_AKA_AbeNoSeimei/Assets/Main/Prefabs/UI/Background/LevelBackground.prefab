@@ -94,17 +94,17 @@ MonoBehaviour:
   - stageId: 1
     sprite: {fileID: 21300000, guid: b2b889b8ecb610048b55080e17c106e7, type: 3}
   - stageId: 2
-    sprite: {fileID: 21300000, guid: b2b889b8ecb610048b55080e17c106e7, type: 3}
+    sprite: {fileID: 21300000, guid: 07763fe81c18f5e4586f923c4c5fdd12, type: 3}
   - stageId: 3
-    sprite: {fileID: 21300000, guid: b2b889b8ecb610048b55080e17c106e7, type: 3}
+    sprite: {fileID: 21300000, guid: eb47baa5fc9481f44893b5754f1cb2c6, type: 3}
   - stageId: 4
-    sprite: {fileID: 21300000, guid: b2b889b8ecb610048b55080e17c106e7, type: 3}
+    sprite: {fileID: 21300000, guid: 513b03a1639ae1a49bd1bd94d636c8b8, type: 3}
   - stageId: 5
-    sprite: {fileID: 21300000, guid: b2b889b8ecb610048b55080e17c106e7, type: 3}
+    sprite: {fileID: 21300000, guid: b1cb4b584d3da5242b136f1252975dfb, type: 3}
   - stageId: 6
-    sprite: {fileID: 21300000, guid: b2b889b8ecb610048b55080e17c106e7, type: 3}
+    sprite: {fileID: 21300000, guid: 7cdb85f82e42a094f820c2bfdaff818d, type: 3}
   - stageId: 7
-    sprite: {fileID: 21300000, guid: b2b889b8ecb610048b55080e17c106e7, type: 3}
+    sprite: {fileID: 21300000, guid: e3d420e909262854dab087680740831d, type: 3}
 --- !u!1 &5550250950986989139
 GameObject:
   m_ObjectHideFlags: 0
@@ -199,17 +199,17 @@ MonoBehaviour:
   - stageId: 1
     sprite: {fileID: 21300000, guid: 2f796fa55616a1145805eb7ee8edc544, type: 3}
   - stageId: 2
-    sprite: {fileID: 21300000, guid: 2f796fa55616a1145805eb7ee8edc544, type: 3}
+    sprite: {fileID: 21300000, guid: 29a38f00af6dfd848b70a916e6b0dbaf, type: 3}
   - stageId: 3
-    sprite: {fileID: 21300000, guid: 2f796fa55616a1145805eb7ee8edc544, type: 3}
+    sprite: {fileID: 21300000, guid: 883f786008e30214eb8401e1f9af2e9e, type: 3}
   - stageId: 4
-    sprite: {fileID: 21300000, guid: 2f796fa55616a1145805eb7ee8edc544, type: 3}
+    sprite: {fileID: 21300000, guid: bdd7f6556e8f099479463171291b1654, type: 3}
   - stageId: 5
-    sprite: {fileID: 21300000, guid: 2f796fa55616a1145805eb7ee8edc544, type: 3}
+    sprite: {fileID: 21300000, guid: df9eab04793be2644b18bd510d469046, type: 3}
   - stageId: 6
-    sprite: {fileID: 21300000, guid: 2f796fa55616a1145805eb7ee8edc544, type: 3}
+    sprite: {fileID: 21300000, guid: cd4f7b8d614c776428be735e17917cce, type: 3}
   - stageId: 7
-    sprite: {fileID: 21300000, guid: 2f796fa55616a1145805eb7ee8edc544, type: 3}
+    sprite: {fileID: 21300000, guid: d74d71f2ad2e8e0459b0660338b3fe29, type: 3}
 --- !u!1 &6336898554115481298
 GameObject:
   m_ObjectHideFlags: 0

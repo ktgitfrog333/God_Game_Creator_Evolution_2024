@@ -282,8 +282,6 @@ namespace Main.Presenter
                         if (datas.sceneId < datas.state.Length - 1 &&
                             datas.state[(datas.sceneId)] < 1)
                             datas.state[(datas.sceneId)] = 1;
-                        if (!MainGameManager.Instance.SceneOwner.SetSaveDatas(datas))
-                            Debug.LogError("クリア済みデータ保存呼び出しの失敗");
                         // 初期処理
                         if (!rewardSelectView.SetContents(rewardSelectModel.RewardContentProps))
                             Debug.LogError("SetContents");
@@ -291,16 +289,23 @@ namespace Main.Presenter
                             Debug.LogError("SetActiveGameObject");
                         gameSelectButtonView.gameObject.SetActive(false);
                         // 初回のみ最初から拡大表示
-                        if (!common.IsFinalLevel())
+                        if (!common.IsFinalLevel(datas))
+                        {
+                            var rewardContentModel = rewardSelectModel.RewardContentModels[0];
+                            if (!cursorIconView.SetSelectAndScale(rewardContentModel.transform.position, (rewardContentModel.transform as RectTransform).sizeDelta))
+                                Debug.LogError("SetSelectAndScale");
+                            rewardContentModel.SetSelectedGameObject();
+                            datas.sceneId++;
+                        }
+                        else
                         {
                             var rewardContentModel = rewardSelectModel.RewardContentModels[0];
                             if (!cursorIconView.SetSelectAndScale(rewardContentModel.transform.position, (rewardContentModel.transform as RectTransform).sizeDelta))
                                 Debug.LogError("SetSelectAndScale");
                             rewardContentModel.SetSelectedGameObject();
                         }
-                        else
-                        {
-                        }
+                        if (!MainGameManager.Instance.SceneOwner.SetSaveDatas(datas))
+                            Debug.LogError("クリア済みデータ保存呼び出しの失敗");
                         gameSelectButtonView.gameObject.SetActive(true);
                         cursorIconView.gameObject.SetActive(true);
                     }

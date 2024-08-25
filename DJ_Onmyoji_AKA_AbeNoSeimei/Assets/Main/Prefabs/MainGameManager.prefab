@@ -95,9 +95,13 @@ MonoBehaviour:
   level: {fileID: 0}
   levelPrefabs:
   - {fileID: 0}
-  - {fileID: 360757283206218720, guid: d8007b7d976ee9f48b210463e0af80f2, type: 3}
   - {fileID: 360757283206218720, guid: ec87aefe31b033b47a13302e0613860c, type: 3}
-  - {fileID: 360757283206218720, guid: 656230e281bf8404faaa3ceac383f444, type: 3}
+  - {fileID: 360757283206218720, guid: 754dd4cd0c790564aabf883cc21fc722, type: 3}
+  - {fileID: 360757283206218720, guid: 6fa9ab8bab783ff448f9c62ec0ce68c2, type: 3}
+  - {fileID: 360757283206218720, guid: 695014b8d512e7041954d40d7810d76f, type: 3}
+  - {fileID: 360757283206218720, guid: 41f23ad67c91f4b4cb6c488a3b2d51c0, type: 3}
+  - {fileID: 360757283206218720, guid: 9a7bf8dc6e1e6c141b0760d9a247a9b5, type: 3}
+  - {fileID: 360757283206218720, guid: 422c9979699b9db449c08289e058d832, type: 3}
   shikigamiInfoSplitesProps:
   - shikigamiCharacterID: 0
     image: {fileID: 21300000, guid: c0b4996d937d9534480ffd51b427eb35, type: 3}
@@ -285,8 +289,6 @@ MonoBehaviour:
   gamePauseView: {fileID: 0}
   gamePauseModel: {fileID: 0}
   clearView: {fileID: 0}
-  gameRetryButtonView: {fileID: 0}
-  gameRetryButtonModel: {fileID: 0}
   gameSelectButtonView: {fileID: 0}
   gameSelectButtonModel: {fileID: 0}
   cursorIconView: {fileID: 0}
@@ -470,7 +472,7 @@ MonoBehaviour:
   clip:
   - {fileID: 8300000, guid: 9382e559dc7e54e4d808cf03011379f2, type: 3}
   - {fileID: 8300000, guid: 61c536dd865fc1540bc0c703e7602b9f, type: 3}
-  - {fileID: 8300000, guid: ce85255f01a910447bd8985fcce634ed, type: 3}
+  - {fileID: 8300000, guid: d7c37a0c962ae9f4584aeea0018207c0, type: 3}
   - {fileID: 8300000, guid: f624c07d8884fcc4baacfce191daffb9, type: 3}
   - {fileID: 8300000, guid: d1bbae9c3d78d8b4286f995d4d44fd1c, type: 3}
   - {fileID: 8300000, guid: f5263225548b47848b9fa0cdf75194e8, type: 3}
@@ -480,6 +482,9 @@ MonoBehaviour:
   - {fileID: 8300000, guid: a37106fce8a04494789e19164c77cc17, type: 3}
   - {fileID: 8300000, guid: 95b60bf3b9758a74eb397c2cf5ffedf8, type: 3}
   - {fileID: 8300000, guid: 25c8b0e3c21921648bb688383733b759, type: 3}
+  - {fileID: 8300000, guid: 98fe67f00b72e5d4c86feca14d3b82ef, type: 3}
+  - {fileID: 8300000, guid: 63b7253ed59972e4d87e6d153402a191, type: 3}
+  - {fileID: 8300000, guid: 3b1a3c2ac3b2e4245aaa28c0274d8e06, type: 3}
   sFXChannelPrefab: {fileID: 1821450510366777210, guid: 13aae3403db5d45428b59ad80eca3da0, type: 3}
   delaies:
   - 0.1

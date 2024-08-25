@@ -24,7 +24,7 @@ namespace Main.Model
         /// <summary>無敵時間（秒）</summary>
         [Tooltip("無敵時間（秒）")]
         [SerializeField] protected float invincibleTimeSec = 1f;
-        [SerializeField] private ShikigamiType[] shikigamiType;
+        [SerializeField] protected ShikigamiType[] shikigamiType;
         /// <summary>ユーティリティ</summary>
         protected EnemyPlayerModelUtility _utility = new EnemyPlayerModelUtility();
         /// <summary>2Dコライダー</summary>
@@ -67,6 +67,15 @@ namespace Main.Model
                     Damage.Value = atttack.AttackPoint * atttack_type_point;
                 else
                     Damage.Value = 1;
+                IsHit.Value = true;
+            }
+        }
+
+        public void OnTriggerEnter2DPublic(Collider2D other)
+        {
+            if (_utility.IsCompareTagAndUpdateReactiveFlagPublic(other, tags, IsHit))
+            {
+                Damage.Value = 1;
                 IsHit.Value = true;
             }
         }

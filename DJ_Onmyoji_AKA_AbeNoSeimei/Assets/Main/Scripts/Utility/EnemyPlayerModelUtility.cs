@@ -61,6 +61,16 @@ namespace Main.Utility
             return false;
         }
 
+        public bool IsCompareTagAndUpdateReactiveFlagPublic(Collider2D other, string[] tags, IReactiveProperty<bool> isHit)
+        {
+            if (!isHit.Value)
+            {
+                isHit.Value = true;
+                return true;
+            }
+            return false;
+        }
+
 
         public bool MoveTowardsOfEnemyModel(Transform enemyTransform, ref Vector3 targetPosition, float moveSpeedBlendDeltaTime, Vector3 firstActivePosition, float spinSpeedBlendDeltaTime, ref float leapLevel, KingAoandonProp kingAoandonProp)
         {

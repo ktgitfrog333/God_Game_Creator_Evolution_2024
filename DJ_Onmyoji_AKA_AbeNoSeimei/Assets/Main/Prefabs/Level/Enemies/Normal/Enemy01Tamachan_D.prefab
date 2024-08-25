@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 4771599399997114491}
   m_Layer: 0
   m_Name: DamageSufferedZone
-  m_TagString: Untagged
+  m_TagString: GraffTarget
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -388,7 +388,7 @@ MonoBehaviour:
   attackColliderOfEnemy: {fileID: 6154129831138059817}
   enemiesID: 16
   enemiesProp:
-    soulMoneyPoint: 1
+    soulMoneyPoint: 3
     attackPoint: 1
 --- !u!114 &2198367664600045414
 MonoBehaviour:
