@@ -112,11 +112,11 @@ MonoBehaviour:
   - shikigamiCharacterID: 3
     image: {fileID: 21300000, guid: c658e7d00a8d8cc439c8a47c2a0b8ccf, type: 3}
   - shikigamiCharacterID: 4
-    image: {fileID: 21300000, guid: 93082591bad2cbb479d5c51e157adfb2, type: 3}
+    image: {fileID: 21300000, guid: d03ae039266a1af4ea90453106545ed3, type: 3}
   - shikigamiCharacterID: 5
-    image: {fileID: 21300000, guid: aaef747f836462f498846fa82da43db5, type: 3}
+    image: {fileID: 21300000, guid: daf85716dd46e7f43a75b136ecb9a30a, type: 3}
   - shikigamiCharacterID: 6
-    image: {fileID: 21300000, guid: 51adbdb8665875a46b6f481efc7b84a4, type: 3}
+    image: {fileID: 21300000, guid: ebe6f10df0897f248bfe29523d1f7035, type: 3}
   - shikigamiCharacterID: 7
     image: {fileID: 21300000, guid: 198949d2e7e1fe14f8544559ccc3b6a0, type: 3}
   - shikigamiCharacterID: 8
