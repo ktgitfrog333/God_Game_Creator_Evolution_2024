@@ -1,0 +1,29 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+namespace Main.Test.Stub
+{
+    public class LevelOwnerTestStub1 : MonoBehaviour
+    {
+        [SerializeField] private Input[] inputs;
+        public Input[] Inputs => inputs;
+        [SerializeField] private Output[] outputs;
+        public Output[] Outputs => outputs;
+
+        [System.Serializable]
+        public struct Input
+        {
+            public int caseId;
+            public Universal.Bean.UserBean.PentagramTurnTableInfo.Slot[] slots;
+        }
+
+        [System.Serializable]
+        public struct Output
+        {
+            public int caseId;
+            public Universal.Bean.RewardContentProp[] rewardContentProps;
+            public string throwMessage;
+        }
+    }
+}

@@ -13,7 +13,8 @@ PlayerSettings:
   useOnDemandResources: 0
   accelerometerFrequency: 60
   companyName: DefaultCompany
-  productName: "\u3010BitSummit\u7248\u3011DJ \u9670\u967D\u5E2B a.k.a \u5B89\u500D\u6674\u660E(\u30A8\u30F3\u30BF\u30ED\u30D4\u30FC\u30B2\u30FC\u30E0\u30BA)"
+  productName: "\u3010\u795E\u30B2\u30FC3\u6B21\u5BE9\u67FB\u3011DJ \u9670\u967D\u5E2B
+    \uFF5Ea.k.a\u2606\u5B89\u500D\u6674\u660E\uFF5E(\u30A8\u30F3\u30BF\u30ED\u30D4\u30FC\u30B2\u30FC\u30E0\u30BA)"
   defaultCursor: {fileID: 0}
   cursorHotspot: {x: 0, y: 0}
   m_SplashScreenBackgroundColor: {r: 0.13725491, g: 0.12156863, b: 0.1254902, a: 1}
@@ -136,7 +137,7 @@ PlayerSettings:
   vulkanEnableLateAcquireNextImage: 0
   vulkanEnableCommandBufferRecycling: 1
   loadStoreDebugModeEnabled: 0
-  bundleVersion: 0.10.0
+  bundleVersion: 0.11.0
   preloadedAssets: []
   metroInputSource: 0
   wsaTransparentSwapchain: 0

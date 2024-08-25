@@ -1,0 +1,80 @@
+using Main.Common;
+using Main.Test.Common;
+using Main.Test.Stub;
+using Main.Utility;
+using System.Collections;
+using System.Collections.Generic;
+using System.Linq;
+using TMPro;
+using UnityEngine;
+
+namespace Main.Test.Driver
+{
+    public class AfterTestDriver : CommonUtilityTest
+    {
+        protected override void Start()
+        {
+            // ê≥èÌån
+            CaseNormalSystem(0000);
+            CaseNormalSystem(0001);
+            CaseNormalSystem(0002);
+            CaseNormalSystem(0003);
+            CaseNormalSystem(0004);
+            CaseNormalSystem(0005);
+            CaseNormalSystem(0006);
+            CaseNormalSystem(0007);
+            CaseNormalSystem(0008);
+            CaseNormalSystem(0009);
+            CaseNormalSystem(0010);
+            CaseNormalSystem(0011);
+            CaseNormalSystem(0012);
+            CaseNormalSystem(0013);
+            CaseNormalSystem(0014);
+            CaseNormalSystem(0015);
+            CaseNormalSystem(0016);
+            CaseNormalSystem(0017);
+            CaseNormalSystem(0018);
+            CaseNormalSystem(0019);
+            CaseNormalSystem(0020);
+            CaseNormalSystem(0021);
+            CaseNormalSystem(0022);
+            CaseNormalSystem(0023);
+        }
+
+        protected override void Case(int caseId, bool isAbnormal = false)
+        {
+            var name = System.Reflection.MethodBase.GetCurrentMethod().Name;
+            var utility = new MainViewUtility();
+            var input = GetComponent<AfterTestStub>().Inputs
+                .Where(q => q.caseId == caseId)
+                .Select(q => q)
+                .ToArray()[0];
+            var output = GetComponent<AfterTestStub>().Outputs
+                .Where(q => q.caseId == caseId)
+                .Select(q => q)
+                .ToArray()[0];
+            if (!isAbnormal)
+            {
+                ((IAfterTestDriver)utility).SetShikigamiInfoPropOfText(input.text, input.template, input.prop, input.shikigamiInfoVisualMaps, input.defaultFormat);
+                OutputResult(input.text.text.Equals(output.text.text), caseId);
+            }
+            else
+                ExceptionResult(() => ((IAfterTestDriver)utility).SetShikigamiInfoPropOfText(input.text, input.template, input.prop, input.shikigamiInfoVisualMaps, input.defaultFormat), caseId, output.throwMessage);
+        }
+    }
+
+    public interface IAfterTestDriver
+    {
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="text"></param>
+        /// <param name="template"></param>
+        /// <param name="prop"></param>
+        /// <param name="shikigamiInfoVisualMaps"></param>
+        /// <param name="defaultFormat"></param>
+        /// <returns></returns>
+        /// <see cref="Main.Utility.MainViewUtility.SetShikigamiInfoPropOfText(TextMeshProUGUI, string, ShikigamiInfo.Prop, ShikigamiInfoVisualMaps, string)"/>
+        public bool SetShikigamiInfoPropOfText(TextMeshProUGUI text, string template, ShikigamiInfo.Prop prop, ShikigamiInfoVisualMaps shikigamiInfoVisualMaps, string defaultFormat);
+    }
+}

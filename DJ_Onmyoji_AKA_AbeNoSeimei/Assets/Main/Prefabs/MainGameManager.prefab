@@ -102,6 +102,33 @@ MonoBehaviour:
   - {fileID: 360757283206218720, guid: 41f23ad67c91f4b4cb6c488a3b2d51c0, type: 3}
   - {fileID: 360757283206218720, guid: 9a7bf8dc6e1e6c141b0760d9a247a9b5, type: 3}
   - {fileID: 360757283206218720, guid: 422c9979699b9db449c08289e058d832, type: 3}
+  shikigamiInfoSplitesProps:
+  - shikigamiCharacterID: 0
+    image: {fileID: 21300000, guid: c0b4996d937d9534480ffd51b427eb35, type: 3}
+  - shikigamiCharacterID: 1
+    image: {fileID: 21300000, guid: 24fa103679e856642808deb517a794c5, type: 3}
+  - shikigamiCharacterID: 2
+    image: {fileID: 21300000, guid: 404ec98cc8f44af4193d4c0fd2afb71d, type: 3}
+  - shikigamiCharacterID: 3
+    image: {fileID: 21300000, guid: c658e7d00a8d8cc439c8a47c2a0b8ccf, type: 3}
+  - shikigamiCharacterID: 4
+    image: {fileID: 21300000, guid: d03ae039266a1af4ea90453106545ed3, type: 3}
+  - shikigamiCharacterID: 5
+    image: {fileID: 21300000, guid: daf85716dd46e7f43a75b136ecb9a30a, type: 3}
+  - shikigamiCharacterID: 6
+    image: {fileID: 21300000, guid: ebe6f10df0897f248bfe29523d1f7035, type: 3}
+  - shikigamiCharacterID: 7
+    image: {fileID: 21300000, guid: 198949d2e7e1fe14f8544559ccc3b6a0, type: 3}
+  - shikigamiCharacterID: 8
+    image: {fileID: 21300000, guid: ec7ab8d4c04fdd84dbc5efdd5e6d2f5f, type: 3}
+  - shikigamiCharacterID: 9
+    image: {fileID: 21300000, guid: 37632b8e8e79cf34aaa3a56b9ac1474d, type: 3}
+  - shikigamiCharacterID: 10
+    image: {fileID: 21300000, guid: e2bdd08faf76e194b85c441c0a950399, type: 3}
+  - shikigamiCharacterID: 11
+    image: {fileID: 21300000, guid: 5ba25ba5e0c51e34cb77b3d2e297102c, type: 3}
+  - shikigamiCharacterID: 12
+    image: {fileID: 21300000, guid: bfa93a3222f4740469acb95016ea06e7, type: 3}
 --- !u!1 &1827416082
 GameObject:
   m_ObjectHideFlags: 0
@@ -262,8 +289,6 @@ MonoBehaviour:
   gamePauseView: {fileID: 0}
   gamePauseModel: {fileID: 0}
   clearView: {fileID: 0}
-  gameRetryButtonView: {fileID: 0}
-  gameRetryButtonModel: {fileID: 0}
   gameSelectButtonView: {fileID: 0}
   gameSelectButtonModel: {fileID: 0}
   cursorIconView: {fileID: 0}
@@ -447,7 +472,7 @@ MonoBehaviour:
   clip:
   - {fileID: 8300000, guid: 9382e559dc7e54e4d808cf03011379f2, type: 3}
   - {fileID: 8300000, guid: 61c536dd865fc1540bc0c703e7602b9f, type: 3}
-  - {fileID: 8300000, guid: ce85255f01a910447bd8985fcce634ed, type: 3}
+  - {fileID: 8300000, guid: d7c37a0c962ae9f4584aeea0018207c0, type: 3}
   - {fileID: 8300000, guid: f624c07d8884fcc4baacfce191daffb9, type: 3}
   - {fileID: 8300000, guid: d1bbae9c3d78d8b4286f995d4d44fd1c, type: 3}
   - {fileID: 8300000, guid: f5263225548b47848b9fa0cdf75194e8, type: 3}
@@ -457,6 +482,9 @@ MonoBehaviour:
   - {fileID: 8300000, guid: a37106fce8a04494789e19164c77cc17, type: 3}
   - {fileID: 8300000, guid: 95b60bf3b9758a74eb397c2cf5ffedf8, type: 3}
   - {fileID: 8300000, guid: 25c8b0e3c21921648bb688383733b759, type: 3}
+  - {fileID: 8300000, guid: 98fe67f00b72e5d4c86feca14d3b82ef, type: 3}
+  - {fileID: 8300000, guid: 63b7253ed59972e4d87e6d153402a191, type: 3}
+  - {fileID: 8300000, guid: 3b1a3c2ac3b2e4245aaa28c0274d8e06, type: 3}
   sFXChannelPrefab: {fileID: 1821450510366777210, guid: 13aae3403db5d45428b59ad80eca3da0, type: 3}
   delaies:
   - 0.1

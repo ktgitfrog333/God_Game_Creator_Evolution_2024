@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using Main.Common;
+using UniRx;
+using UniRx.Triggers;
 using UnityEngine;
 
 namespace Main.Model
@@ -13,6 +15,23 @@ namespace Main.Model
     {
         /// <summary>クリア報酬のコンテンツのプロパティ</summary>
         [SerializeField] private RewardContentProp[] rewardContentProps;
+        /// <summary>データロード完了</summary>
+        public IReactiveProperty<bool> IsLoadedData { private set; get; } = new BoolReactiveProperty();
+
+        private void Start()
+        {
+            this.UpdateAsObservable()
+                .Select(_ => MainGameManager.Instance)
+                .Where(x => x != null)
+                .Take(1)
+                .Subscribe(x =>
+                {
+                    rewardContentProps = x.LevelOwner.GetRewardContentProps();
+                    if (rewardContentProps == null)
+                        Debug.LogError("GetRewardContentProps");
+                    IsLoadedData.Value = true;
+                });
+        }
 
         public RewardContentProp GetRewardContentProp(RewardID rewardID)
         {
@@ -33,6 +52,11 @@ namespace Main.Model
                 Debug.LogError(e);
                 return new RewardContentProp();
             }
+        }
+
+        public RewardContentProp[] GetRewardContentProps()
+        {
+            return rewardContentProps;
         }
     }
 
@@ -55,5 +79,10 @@ namespace Main.Model
         /// <param name="index">インデックス</param>
         /// <returns>リワード情報</returns>
         public RewardContentProp GetRewardContentProp(int index);
+        /// <summary>
+        /// リワード情報を全て取得
+        /// </summary>
+        /// <returns>リワード情報（全て）</returns>
+        public RewardContentProp[] GetRewardContentProps();
     }
 }

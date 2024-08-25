@@ -19,6 +19,7 @@ namespace Universal.Common
         public UserBean UserBean => _userBean != null ?
             _userBean :
             _userBean = new TemplateResourcesAccessory().LoadSaveDatasJsonOfUserBean(ConstResorcesNames.USER_DATA);
+        public UserBean UserBeanReloaded => new TemplateResourcesAccessory().LoadSaveDatasJsonOfUserBean(ConstResorcesNames.USER_DATA);
 
         public static UserDataSingleton Instance => instance;
 

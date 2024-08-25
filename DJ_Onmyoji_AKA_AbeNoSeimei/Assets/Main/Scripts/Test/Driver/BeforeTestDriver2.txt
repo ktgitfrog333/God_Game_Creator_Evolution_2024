@@ -1,0 +1,64 @@
+using Main.Test.Common;
+using Main.Test.Stub;
+using Main.Utility;
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+using System.Linq;
+using Main.Common;
+using Main.View;
+using UnityEngine.UI;
+
+namespace Main.Test.Driver
+{
+    public class BeforeTestDriver2 : CommonUtilityTest
+    {
+        [SerializeField] private ClearRewardTextContents rewardTextContents;
+
+        protected override void Start()
+        {
+            // ê≥èÌån
+            CaseNormalSystem(0000);
+            CaseNormalSystem(0001);
+            CaseNormalSystem(0002);
+        }
+
+        protected override void Case(int caseId, bool isAbnormal = false)
+        {
+            var name = System.Reflection.MethodBase.GetCurrentMethod().Name;
+            //var utility = new MainViewUtility();
+            var input = GetComponent<BeforeTestStub2>().Inputs
+                .Where(q => q.caseId == caseId)
+                .Select(q => q)
+                .ToArray()[0];
+            var output = GetComponent<BeforeTestStub2>().Outputs
+                .Where(q => q.caseId == caseId)
+                .Select(q => q)
+                .ToArray()[0];
+            if (!isAbnormal)
+            {
+                ((IBeforeTestDriver2)rewardTextContents).SetPropetiesBeforeOfDescription(input.rewardContentProp);
+                OutputResult(((IBeforeTestDriver2)rewardTextContents).GetText().text.Equals(output.text.text), caseId);
+            }
+            else
+                ExceptionResult(() => ((IBeforeTestDriver2)rewardTextContents).SetPropetiesBeforeOfDescription(input.rewardContentProp), caseId, output.throwMessage);
+        }
+    }
+
+    public interface IBeforeTestDriver2
+    {
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="rewardContentProp"></param>
+        /// <returns></returns>
+        /// <see cref="Main.View.ClearRewardTextContents.SetPropetiesBeforeOfDescription(RewardContentProp)"/>
+        public bool SetPropetiesBeforeOfDescription(RewardContentProp rewardContentProp);
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        /// <see cref="Main.View.ClearRewardTextContents.text"/>
+        public Text GetText();
+    }
+}

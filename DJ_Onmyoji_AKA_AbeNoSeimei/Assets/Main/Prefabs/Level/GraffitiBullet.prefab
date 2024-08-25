@@ -12,6 +12,14 @@ PrefabInstance:
       propertyPath: m_Name
       value: GraffitiBullet
       objectReference: {fileID: 0}
+    - target: {fileID: 1042771152154514872, guid: 5611dace4c6b51746907311e71c4a6ef, type: 3}
+      propertyPath: m_TagString
+      value: Untagged
+      objectReference: {fileID: 0}
+    - target: {fileID: 2719502068726504412, guid: 5611dace4c6b51746907311e71c4a6ef, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 2719502068726504412, guid: 5611dace4c6b51746907311e71c4a6ef, type: 3}
       propertyPath: shikigamiType.Array.size
       value: 1
@@ -74,6 +82,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 1042771152154514872, guid: 5611dace4c6b51746907311e71c4a6ef, type: 3}
       insertIndex: -1
       addedObject: {fileID: 6667124053140351248}
+    - targetCorrespondingSourceObject: {fileID: 1042771152154514872, guid: 5611dace4c6b51746907311e71c4a6ef, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 349666954873860338}
     - targetCorrespondingSourceObject: {fileID: 1691269226412639012, guid: 5611dace4c6b51746907311e71c4a6ef, type: 3}
       insertIndex: -1
       addedObject: {fileID: 5640956514148308555}
@@ -133,6 +144,41 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   animatorView: {fileID: 337762647051733588}
+--- !u!58 &349666954873860338
+CircleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2396527294428878114}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_ForceSendLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ForceReceiveLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ContactCaptureLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_CallbackLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  serializedVersion: 2
+  m_Radius: 1
 --- !u!114 &3799551887007710427 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 1981652527703505985, guid: 5611dace4c6b51746907311e71c4a6ef, type: 3}
