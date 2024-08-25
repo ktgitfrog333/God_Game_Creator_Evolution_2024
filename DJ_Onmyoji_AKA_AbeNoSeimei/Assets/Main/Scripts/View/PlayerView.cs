@@ -4,7 +4,6 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UniRx;
-using Main.Common;
 
 namespace Main.View
 {
@@ -57,7 +56,6 @@ namespace Main.View
                 Observable.FromCoroutine(() => _effectsPoolModel.WaitForAllParticlesToStop(particleSystems))
                     .Subscribe(_ => _hitEffect.gameObject.SetActive(false))
                     .AddTo(gameObject);
-                MainGameManager.Instance.AudioOwner.PlaySFX(Audio.ClipToPlay.se_dageki1);
 
                 return true;
             }
