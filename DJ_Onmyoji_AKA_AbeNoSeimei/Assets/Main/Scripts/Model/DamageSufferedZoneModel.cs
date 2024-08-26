@@ -71,9 +71,9 @@ namespace Main.Model
             }
         }
 
-        public void OnTriggerEnter2DPublic(Collider2D other)
+        public void OnTriggerEnter2DGraff(Collider2D other)
         {
-            if (_utility.IsCompareTagAndUpdateReactiveFlagPublic(other, tags, IsHit))
+            if (_utility.IsCompareTagAndUpdateReactiveFlagPublic(other, tags, IsHit, shikigamiType))
             {
                 Damage.Value = 1;
                 IsHit.Value = true;
