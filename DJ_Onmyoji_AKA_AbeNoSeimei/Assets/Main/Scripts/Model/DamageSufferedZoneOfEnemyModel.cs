@@ -46,7 +46,7 @@ namespace Main.Model
 
         public void OnTriggerEnter2DGraff(Collider2D other)
         {
-            base.OnTriggerEnter2DPublic(other);
+            base.OnTriggerEnter2DGraff(other);
         }
 
         protected override void OnDisable()

@@ -4,6 +4,7 @@ using System.Linq;
 using Main.Model;
 using UniRx;
 using UnityEngine;
+using Main.Common;
 
 namespace Main.Utility
 {
@@ -61,12 +62,15 @@ namespace Main.Utility
             return false;
         }
 
-        public bool IsCompareTagAndUpdateReactiveFlagPublic(Collider2D other, string[] tags, IReactiveProperty<bool> isHit)
+        public bool IsCompareTagAndUpdateReactiveFlagPublic(Collider2D other, string[] tags, IReactiveProperty<bool> isHit, ShikigamiType[] shikigamiType)
         {
-            if (!isHit.Value)
+            if (shikigamiType.Contains(ShikigamiType.Graffiti))
             {
-                isHit.Value = true;
-                return true;
+                if (!isHit.Value)
+                {
+                    isHit.Value = true;
+                    return true;
+                }
             }
             return false;
         }
