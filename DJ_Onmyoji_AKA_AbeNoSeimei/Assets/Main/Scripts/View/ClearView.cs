@@ -13,6 +13,7 @@ namespace Main.View
     {
         /// <summary>クリア結果のコンテンツ</summary>
         [SerializeField] private ClearResultContents[] clearResultContents;
+        [SerializeField] public RectTransform targetRectTransform;
 
         private void Reset()
         {
@@ -77,6 +78,9 @@ namespace Main.View
             try
             {
                 gameObject.SetActive(active);
+
+                if (active)
+                    targetRectTransform.anchoredPosition = Vector2.zero;
 
                 return true;
             }
