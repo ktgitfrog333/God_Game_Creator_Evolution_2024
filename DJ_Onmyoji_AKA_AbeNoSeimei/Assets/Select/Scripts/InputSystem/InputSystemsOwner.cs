@@ -41,15 +41,23 @@ namespace Select.InputSystem
         [SerializeField] private InputMidiJackDDJ200 inputMidiJackDDJ200;
         /// <summary>MIDIJack（DDJ-200）の入力を取得</summary>
         public InputMidiJackDDJ200 InputMidiJackDDJ200 => inputMidiJackDDJ200;
+        /// <summary>UI用のInputAction</summary>
+        [SerializeField] private InputUI inputUI;
+        /// <summary>UI用のInputAction</summary>
+        public InputUI InputUI => inputUI;
 
         private void Reset()
         {
             inputMidiJackDDJ200 = GetComponent<InputMidiJackDDJ200>();
+            inputUI = GetComponent<InputUI>();
         }
 
         public void OnStart()
         {
             _inputActions = new FutureContents3D_Main();
+            _inputActions.UI.Pause.started += inputUI.OnPaused;
+            _inputActions.UI.Pause.performed += inputUI.OnPaused;
+            _inputActions.UI.Pause.canceled += inputUI.OnPaused;
 
             _inputActions.Enable();
 
