@@ -19,12 +19,15 @@ namespace Select.View
         [SerializeField] private LineRectTransformView lineRectTransformView;
         /// <summary>サークルカーソル</summary>
         [SerializeField] private CircleCursorView[] circleCursorViews;
+        /// <summary>日本地図のビュー</summary>
+        [SerializeField] private MapOfJapanView mapOfJapanView;
 
         private void Reset()
         {
             stageContetsViews = GetComponentsInChildren<StageContetsView>();
             lineRectTransformView = GetComponentInChildren<LineRectTransformView>();
             circleCursorViews = GetComponentsInChildren<CircleCursorView>();
+            mapOfJapanView = GetComponentInChildren<MapOfJapanView>();
         }
 
         public bool RenderLineStageContetsBetweenTargetPoints(int index, EnumEventCommand enumEventCommand, FadeImageView fadeImageView)
@@ -43,6 +46,8 @@ namespace Select.View
                         if (!circleCursorViews[1].SetAnchorPosition(stageContetsViews[1].AnchoredPositionsInChild[index].position))
                             Debug.LogError("SetAnchorPosition");
                         if (!stageContetsViews[0].RenderTargetMark(index))
+                            Debug.LogError("RenderTargetMark");
+                        if (!mapOfJapanView.RenderTargetMark(index))
                             Debug.LogError("RenderTargetMark");
                         SelectGameManager.Instance.AudioOwner.PlaySFX(ClipToPlay.se_select);
 

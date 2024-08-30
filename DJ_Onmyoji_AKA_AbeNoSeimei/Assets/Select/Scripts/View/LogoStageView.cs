@@ -20,11 +20,14 @@ namespace Select.View
         [SerializeField] private Color targetColor;
         /// <summary>トランスフォーム</summary>
         private Transform _transform;
+        /// <summary>エリアTMPのビュー</summary>
+        [SerializeField] private AreaTMPView areaTMPView;
 
         private void Reset()
         {
             //selectStageFrame = GameObject.Find("SelectStageFrame");
             stageImage = GetComponent<Image>(); // Imageコンポーネントの取得
+            areaTMPView = GetComponentInChildren<AreaTMPView>();
         }
 
         public bool MoveSelectStageFrame()
@@ -77,6 +80,10 @@ namespace Select.View
             try
             {
                 stageImage.color = targetColor;
+                if (areaTMPView != null)
+                    if (!areaTMPView.RenderTargetMark())
+                        throw new System.Exception("RenderTargetMark");
+
                 return true;
             }
             catch (System.Exception e)
