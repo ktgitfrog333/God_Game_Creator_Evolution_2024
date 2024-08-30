@@ -24,6 +24,10 @@ namespace Main.View
         private Transform _danceShockwave;
         /// <summary>エフェクトプール生成済みか監視</summary>
         private System.IDisposable _isCompletedObservableDisposable;
+        /// <summary>エフェクトサイズ</summary>
+        public float effectSize;
+        /// <summary>パーティクルシステムのメインモジュール</summary>
+        private ParticleSystem.MainModule _mainModule;
 
         private void OnEnable()
         {
@@ -43,7 +47,11 @@ namespace Main.View
                     _danceShockwave.gameObject.SetActive(true);
                     var particleSystems = _danceShockwave.GetComponentsInChildren<ParticleSystem>();
                     foreach (var particleSystem in particleSystems)
+                    {
+                        _mainModule = particleSystem.main;
+                        _mainModule.startSize = effectSize * 3.0f;
                         particleSystem.Play();
+                    }
                     Observable.FromCoroutine(() => _effectsPoolModel.WaitForAllParticlesToStop(particleSystems))
                         .Subscribe(_ => _danceShockwave.gameObject.SetActive(false))
                         .AddTo(gameObject);

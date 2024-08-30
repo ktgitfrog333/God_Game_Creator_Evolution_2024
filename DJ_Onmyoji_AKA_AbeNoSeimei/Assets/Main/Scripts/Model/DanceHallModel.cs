@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Main.Common;
 using UnityEngine;
+using Main.View;
 
 namespace Main.Model
 {
@@ -27,6 +28,11 @@ namespace Main.Model
                     if (!attackColliderOfOnmyoBullet.SetRadiosOfCircleCollier2D(updateConf.range))
                         throw new System.Exception("SetRadiosOfCircleCollier2D");
                 _target = updateConf.trackingOfAny;
+
+                //ダンスエフェクトのサイズ調整
+                var danceHallView = GetComponent<DanceHallView>();
+                if (danceHallView != null)
+                    danceHallView.effectSize = updateConf.range;
 
                 return true;
             }
