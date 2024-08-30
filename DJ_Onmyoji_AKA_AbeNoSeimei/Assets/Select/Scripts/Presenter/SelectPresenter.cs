@@ -8,6 +8,7 @@ using UniRx;
 using UniRx.Triggers;
 using Select.Audio;
 using System.Linq;
+using DG.Tweening;
 
 namespace Select.Presenter
 {
@@ -33,6 +34,8 @@ namespace Select.Presenter
         [SerializeField] private TutorialViewPageView[] tutorialViewPageViews;
         /// <summary>遊び方確認ページのモデル</summary>
         [SerializeField] private TutorialViewPageModel[] tutorialViewPageModels;
+        /// <summary>遅延処理</summary>
+        private Tween _tween;
 
         private void Reset()
         {
@@ -63,6 +66,9 @@ namespace Select.Presenter
             // ステージ番号を取得する処理を追加する
             tutorialView.gameObject.SetActive(false);
             SelectGameManager.Instance.AudioOwner.PlayBGM(ClipToPlayBGM.bgm_select);
+            // ステージ番号を取得する処理を追加する
+            var saveDatas = SelectGameManager.Instance.SceneOwner.GetSaveDatas();
+            var stageIndex = new IntReactiveProperty(saveDatas.sceneId);
             // シーン読み込み時のアニメーション
             Observable.FromCoroutine<bool>(observer => fadeImageView.PlayFadeAnimation(observer, EnumFadeState.Open))
                 .Subscribe(_ =>
@@ -70,17 +76,45 @@ namespace Select.Presenter
                     // UI操作を許可
                     if (!stageSelectModel.SetButtonAndEventTriggerEnabled(true))
                         Debug.LogError("SetButtonAndEventTriggerEnabled");
+                    switch (stageIndex.Value)
+                    {
+                        case 1:
+                            _tween = DOVirtual.DelayedCall(0.5f, () =>
+                            {
+                                if (!tutorialView.gameObject.activeSelf)
+                                {
+                                    // チュートリアル画面の表示
+                                    tutorialView.gameObject.SetActive(true);
+                                    if (!tutorialView.SetPage(EnumTutorialPagesIndex.Page_1))
+                                        Debug.LogError("ページ変更呼び出しの失敗");
+                                    tutorialViewPageModels[(int)EnumTutorialPagesIndex.Page_1].SetSelectedGameObject();
+                                }
+                            });
+
+                            break;
+                        default:
+                            _tween = DOVirtual.DelayedCall(5.0f, () =>
+                            {
+                                if (!tutorialView.gameObject.activeSelf)
+                                {
+                                    // チュートリアル画面の表示
+                                    tutorialView.gameObject.SetActive(true);
+                                    if (!tutorialView.SetPage(EnumTutorialPagesIndex.Page_1))
+                                        Debug.LogError("ページ変更呼び出しの失敗");
+                                    tutorialViewPageModels[(int)EnumTutorialPagesIndex.Page_1].SetSelectedGameObject();
+                                }
+                            });
+
+                            break;
+                    }
                 })
                 .AddTo(gameObject);
-            // ステージ番号を取得する処理を追加する
-            var saveDatas = SelectGameManager.Instance.SceneOwner.GetSaveDatas();
-            var stageIndex = new IntReactiveProperty(saveDatas.sceneId);
             foreach (var eventState in stageSelectModel.EventStates.Select((p, i) => new { Content = p, Index = i }))
             {
                 eventState.Content.ObserveEveryValueChanged(x => x.Value)
                     .Subscribe(x =>
                     {
-                        if (!stageSelectView.RenderLineStageContetsBetweenTargetPoints(eventState.Index, (EnumEventCommand)x, fadeImageView))
+                        if (!stageSelectView.RenderLineStageContetsBetweenTargetPoints(eventState.Index, (EnumEventCommand)x, fadeImageView, _tween))
                             Debug.LogError("RenderLineStageContetsBetweenTargetPoints");
                     });
             }

@@ -4,6 +4,7 @@ using Select.Audio;
 using Select.Common;
 using UnityEngine;
 using UniRx;
+using DG.Tweening;
 
 namespace Select.View
 {
@@ -30,7 +31,7 @@ namespace Select.View
             mapOfJapanView = GetComponentInChildren<MapOfJapanView>();
         }
 
-        public bool RenderLineStageContetsBetweenTargetPoints(int index, EnumEventCommand enumEventCommand, FadeImageView fadeImageView)
+        public bool RenderLineStageContetsBetweenTargetPoints(int index, EnumEventCommand enumEventCommand, FadeImageView fadeImageView, Tween tween)
         {
             try
             {
@@ -62,6 +63,8 @@ namespace Select.View
                                 SelectGameManager.Instance.SceneOwner.LoadTitleScene();
                             })
                             .AddTo(gameObject);
+                        if (tween != null && tween.IsPlaying())
+                            tween.Kill();
 
                         break;
                     case EnumEventCommand.Submited:
@@ -75,6 +78,8 @@ namespace Select.View
                                 SelectGameManager.Instance.SceneOwner.LoadMainScene();
                             })
                             .AddTo(gameObject);
+                        if (tween != null && tween.IsPlaying())
+                            tween.Kill();
 
                         break;
                     default:
@@ -106,6 +111,6 @@ namespace Select.View
         /// <param name="enumEventCommand">イベントコマンド入力</param>
         /// <param name="fadeImageView">フェードイメージのビュー</param>
         /// <returns>成功／失敗</returns>
-        public bool RenderLineStageContetsBetweenTargetPoints(int index, EnumEventCommand enumEventCommand, FadeImageView fadeImageView);
+        public bool RenderLineStageContetsBetweenTargetPoints(int index, EnumEventCommand enumEventCommand, FadeImageView fadeImageView, Tween tween);
     }
 }
