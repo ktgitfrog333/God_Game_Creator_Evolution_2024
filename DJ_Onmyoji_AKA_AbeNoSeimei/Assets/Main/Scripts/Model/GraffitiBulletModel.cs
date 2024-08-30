@@ -7,6 +7,7 @@ using Main.View;
 using Effect.Model;
 using Effect.Utility;
 using UniRx.Triggers;
+using Universal.Utility;
 
 namespace Main.Model
 {
@@ -24,6 +25,12 @@ namespace Main.Model
         IReactiveProperty<float> elapsedTime = new FloatReactiveProperty();
         /// <summary>最大範囲</summary>
         private bool _StartedGraffAttack = false;
+        /// <summary>グラフィティ効果時間</summary>
+        private float _debuffEffectLifeTime = 0f;
+        /// <summary>グラフィティ効果範囲Sprite</summary>
+        public SpriteRenderer graffSprite;
+        /// <summary>グラフィティ効果範囲コライダー</summary>
+        private CircleCollider2D circleCollider2DGraff;
 
         public bool Initialize(Vector2 position, Vector3 eulerAngles, OnmyoBulletConfig updateConf)
         {
@@ -38,8 +45,11 @@ namespace Main.Model
                 Transform.position = position;
                 if (0f < updateConf.range)
                     _rangeMax = updateConf.range;
+                _debuffEffectLifeTime = updateConf.debuffEffectLifeTime;
                 if (!attackColliderOfOnmyoBullet.SetAttackPoint(updateConf.attackPoint))
                     throw new System.Exception("SetAttackPoint");
+
+                circleCollider2DGraff = GetComponent<CircleCollider2D>();
 
                 return true;
             }
@@ -72,6 +82,15 @@ namespace Main.Model
             base.OnEnable();
             elapsedTime.Value = 0f;
             _StartedGraffAttack = false;
+
+            if (circleCollider2DGraff != null)
+                circleCollider2DGraff.radius = _rangeMax;
+            if (graffSprite != null)
+            {
+                graffSprite.enabled = false;
+                graffSprite.transform.localScale = new Vector3(_rangeMax * 2.5f, _rangeMax * 2.5f, 1.0f);
+            }
+                
         }
 
         protected override void FixedUpdate()
@@ -85,9 +104,12 @@ namespace Main.Model
         {
             if (!_StartedGraffAttack)
             {
-            //接敵地点から動かないようにする
-            _moveSpeed = 0f;
-            _StartedGraffAttack = true;
+                //接敵地点から動かないようにする
+                _moveSpeed = 0f;
+                _StartedGraffAttack = true;
+                //グラフィティの持続タイマー起動
+                StartCoroutine(GeneralUtility.ActionsAfterDelay(_debuffEffectLifeTime, () => gameObject.SetActive(false)));
+                graffSprite.enabled = true;
 
                 // 一定間隔でダメージ判定するための実装
                 Observable.Interval(System.TimeSpan.FromSeconds(1))
