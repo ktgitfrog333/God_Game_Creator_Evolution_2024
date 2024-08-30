@@ -65,9 +65,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   anchoredPositionsInChild:
-  - {fileID: 5409190962573693831}
   - {fileID: 3142973729962541461}
   - {fileID: 4923036910373763431}
+  - {fileID: 5409190962573693831}
   - {fileID: 2405188883508573725}
   - {fileID: 1735591631176114838}
   - {fileID: 4556462113887986718}
