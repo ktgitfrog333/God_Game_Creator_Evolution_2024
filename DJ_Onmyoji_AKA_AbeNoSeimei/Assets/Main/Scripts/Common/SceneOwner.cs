@@ -17,6 +17,8 @@ namespace Main.Common
         [SerializeField] private string nextSceneName = "MainScene";
         /// <summary>前のシーン名</summary>
         [SerializeField] private string backSceneName = "SelectScene";
+        /// <summary>タイトルのシーン名</summary>
+        [SerializeField] private string titleSceneName = "TitleScene";
 
         public void OnStart()
         {
@@ -92,6 +94,32 @@ namespace Main.Common
         }
 
         /// <summary>
+        /// ステージクリア済みデータの削除
+        /// </summary>
+        /// <returns>成功／失敗</returns>
+        public bool DestroyMainSceneStagesState()
+        {
+            try
+            {
+                var temp = new TemplateResourcesAccessory();
+                var bean = temp.LoadSaveDatasJsonOfUserBean(ConstResorcesNames.USER_DATA);
+                var beanDefault = temp.LoadSaveDatasJsonOfUserBean(ConstResorcesNames.USER_DATA, EnumLoadMode.Default);
+                var beanUpdate = temp.UpdateSceneStates(bean, beanDefault);
+                if (beanUpdate == null)
+                    throw new System.Exception("シーン更新の失敗");
+                if (!temp.SaveDatasJsonOfUserBean(ConstResorcesNames.USER_DATA, beanUpdate))
+                    throw new System.Exception("Json保存呼び出しの失敗");
+
+                return true;
+            }
+            catch (System.Exception e)
+            {
+                Debug.LogError(e);
+                return false;
+            }
+        }
+
+        /// <summary>
         /// メインシーンをロード
         /// </summary>
         public void LoadMainScene()
@@ -106,9 +134,27 @@ namespace Main.Common
         {
             SceneManager.LoadScene(backSceneName);
         }
+
+
+        /// <summary>
+        /// タイトルシーンをロード
+        /// </summary>
+        public void LoadTitleScene()
+        {
+            SceneManager.LoadScene(titleSceneName);
+        }
     }
 
+    /// <summary>
+    /// シーンオーナー
+    /// インターフェース
+    /// </summary>
     public interface ISceneOwner
     {
+        /// <summary>
+        /// セーブデータをリセット
+        /// </summary>
+        /// <returns>成功／失敗</returns>
+        public bool DestroyMainSceneStagesState();
     }
 }

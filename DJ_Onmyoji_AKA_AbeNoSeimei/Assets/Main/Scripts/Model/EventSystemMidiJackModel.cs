@@ -16,7 +16,7 @@ namespace Main.Model
     /// MIDIJack用
     /// イベントシステム
     /// </summary>
-    public class EventSystemMidiJackModel : MonoBehaviour
+    public class EventSystemMidiJackModel : MonoBehaviour, IEventSystemMidiJackModel
     {
         /// <summary>ポーズボタンのモデル</summary>
         [SerializeField] private GamePauseModel gamePauseModel;
@@ -28,12 +28,15 @@ namespace Main.Model
         [SerializeField] private float sensibilityScratch = 5f;
         /// <summary>ステージ選択へ戻るのモデル</summary>
         [SerializeField] private GameSelectButtonModel gameSelectButtonModel;
+        /// <summary>タイトルへ戻るボタン</summary>
+        [SerializeField] private GameTitleButtonModel gameTitleButtonModel;
 
         private void Reset()
         {
             gamePauseModel = GameObject.Find("GamePause").GetComponent<GamePauseModel>();
             rewardSelectModel = GameObject.Find("RewardSelect").GetComponent<RewardSelectModel>();
             gameSelectButtonModel = GameObject.Find("GameSelectButton").GetComponent<GameSelectButtonModel>();
+            gameTitleButtonModel = GameObject.Find("GameTitleButton").GetComponent<GameTitleButtonModel>();
         }
 
         private void Start()
@@ -67,6 +70,7 @@ namespace Main.Model
                     List<Button> buttons = new List<Button>();
                     buttons.AddRange(rewardSelectModel.RewardContentModels.Select(q => q.GetComponent<Button>()));
                     buttons.Add(gameSelectButtonModel.GetComponent<Button>());
+                    buttons.Add(gameTitleButtonModel.GetComponent <Button>());
                     currentButton = buttons
                         .FirstOrDefault(y => y == x.GetComponent<Button>());
                 });
@@ -161,5 +165,14 @@ namespace Main.Model
             /// <summary>次へ</summary>
             Next = 1,
         }
+    }
+
+    /// <summary>
+    /// MIDIJack用
+    /// イベントシステム
+    /// インターフェース
+    /// </summary>
+    public interface IEventSystemMidiJackModel
+    {
     }
 }

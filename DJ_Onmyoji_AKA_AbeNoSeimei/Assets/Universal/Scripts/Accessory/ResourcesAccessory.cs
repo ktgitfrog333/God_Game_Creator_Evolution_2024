@@ -170,6 +170,8 @@ namespace Universal.Accessory
             {
                 continues.sceneId = defaults.sceneId;
                 continues.state = defaults.state;
+                continues.pentagramTurnTableInfo = defaults.pentagramTurnTableInfo;
+                continues.soulMoney = defaults.soulMoney;
 
                 return continues;
             }

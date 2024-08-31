@@ -47,3 +47,9 @@ MonoBehaviour:
   unDeadTimeSec: 0.2
   sensibilityScratch: 5
   stageSelectModel: {fileID: 0}
+  tutorialViewPageModels:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}

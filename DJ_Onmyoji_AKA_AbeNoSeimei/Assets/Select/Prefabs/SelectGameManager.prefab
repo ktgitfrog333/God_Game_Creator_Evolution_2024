@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 1233096896079171232}
   - component: {fileID: 222796457182783573}
   - component: {fileID: 8091785084562915726}
+  - component: {fileID: 1137129681505716658}
   m_Layer: 0
   m_Name: InputSystemsOwner
   m_TagString: Untagged
@@ -50,6 +51,7 @@ MonoBehaviour:
   delayTime: 0.3
   isVibrationEnabled: 0
   inputMidiJackDDJ200: {fileID: 8091785084562915726}
+  inputUI: {fileID: 1137129681505716658}
 --- !u!114 &8091785084562915726
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -64,6 +66,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   scratchLevel: 1
   userActionTime: 0.2
+--- !u!114 &1137129681505716658
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2311593326728748014}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5d041fcd61360ee49ad634a58972d6ff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &3906211333385564421
 GameObject:
   m_ObjectHideFlags: 0
@@ -305,6 +319,19 @@ MonoBehaviour:
   fadeImageModel: {fileID: 0}
   stageSelectView: {fileID: 0}
   stageSelectModel: {fileID: 0}
+  tutorialView: {fileID: 0}
+  tutorialViewPageViews:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  tutorialViewPageModels:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
 --- !u!1 &3906211334646022044
 GameObject:
   m_ObjectHideFlags: 0

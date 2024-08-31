@@ -30,10 +30,13 @@ namespace Main.View
         {
             try
             {
-                if (!ControllAudio(bgmConfDetails))
-                    throw new System.Exception("ControllAudio");
-                float angle = bgmConfDetails.InputValue * angleCorrectionValue;
-                image.transform.Rotate(new Vector3(0f, 0f, angle));
+                if (0f < Time.timeScale)
+                {
+                    if (!ControllAudio(bgmConfDetails))
+                        throw new System.Exception("ControllAudio");
+                    float angle = bgmConfDetails.InputValue * angleCorrectionValue;
+                    image.transform.Rotate(new Vector3(0f, 0f, angle));
+                }
                 return true;
             }
             catch (System.Exception e)

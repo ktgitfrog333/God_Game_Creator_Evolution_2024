@@ -4,6 +4,7 @@ using Select.Audio;
 using Select.Common;
 using UnityEngine;
 using UniRx;
+using DG.Tweening;
 
 namespace Select.View
 {
@@ -19,15 +20,18 @@ namespace Select.View
         [SerializeField] private LineRectTransformView lineRectTransformView;
         /// <summary>サークルカーソル</summary>
         [SerializeField] private CircleCursorView[] circleCursorViews;
+        /// <summary>日本地図のビュー</summary>
+        [SerializeField] private MapOfJapanView mapOfJapanView;
 
         private void Reset()
         {
             stageContetsViews = GetComponentsInChildren<StageContetsView>();
             lineRectTransformView = GetComponentInChildren<LineRectTransformView>();
             circleCursorViews = GetComponentsInChildren<CircleCursorView>();
+            mapOfJapanView = GetComponentInChildren<MapOfJapanView>();
         }
 
-        public bool RenderLineStageContetsBetweenTargetPoints(int index, EnumEventCommand enumEventCommand, FadeImageView fadeImageView)
+        public bool RenderLineStageContetsBetweenTargetPoints(int index, EnumEventCommand enumEventCommand, FadeImageView fadeImageView, Tween tween)
         {
             try
             {
@@ -44,6 +48,8 @@ namespace Select.View
                             Debug.LogError("SetAnchorPosition");
                         if (!stageContetsViews[0].RenderTargetMark(index))
                             Debug.LogError("RenderTargetMark");
+                        if (!mapOfJapanView.RenderTargetMark(index))
+                            Debug.LogError("RenderTargetMark");
                         SelectGameManager.Instance.AudioOwner.PlaySFX(ClipToPlay.se_select);
 
                         break;
@@ -57,6 +63,8 @@ namespace Select.View
                                 SelectGameManager.Instance.SceneOwner.LoadTitleScene();
                             })
                             .AddTo(gameObject);
+                        if (tween != null && tween.IsPlaying())
+                            tween.Kill();
 
                         break;
                     case EnumEventCommand.Submited:
@@ -70,6 +78,8 @@ namespace Select.View
                                 SelectGameManager.Instance.SceneOwner.LoadMainScene();
                             })
                             .AddTo(gameObject);
+                        if (tween != null && tween.IsPlaying())
+                            tween.Kill();
 
                         break;
                     default:
@@ -101,6 +111,6 @@ namespace Select.View
         /// <param name="enumEventCommand">イベントコマンド入力</param>
         /// <param name="fadeImageView">フェードイメージのビュー</param>
         /// <returns>成功／失敗</returns>
-        public bool RenderLineStageContetsBetweenTargetPoints(int index, EnumEventCommand enumEventCommand, FadeImageView fadeImageView);
+        public bool RenderLineStageContetsBetweenTargetPoints(int index, EnumEventCommand enumEventCommand, FadeImageView fadeImageView, Tween tween);
     }
 }

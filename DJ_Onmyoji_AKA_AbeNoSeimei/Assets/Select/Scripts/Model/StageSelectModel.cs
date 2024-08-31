@@ -85,6 +85,23 @@ namespace Select.Model
                 return false;
             }
         }
+
+        public bool SetSelectedGameObjectOfAreaContentModels(int stageIndex)
+        {
+            try
+            {
+                areaContentModels.Where(q => q.Index == stageIndex)
+                    .ToArray()[0]
+                    .SetSelectedGameObject();
+
+                return true;
+            }
+            catch (System.Exception e)
+            {
+                Debug.LogError(e);
+                return false;
+            }
+        }
     }
 
     /// <summary>
@@ -100,5 +117,11 @@ namespace Select.Model
         /// <param name="enabled">有効／無効</param>
         /// <returns>成功／失敗</returns>
         public bool SetButtonAndEventTriggerEnabled(bool enabled);
+        /// <summary>
+        /// エリアモデルを選択する
+        /// </summary>
+        /// <param name="stageIndex">ステージ番号</param>
+        /// <returns>成功／失敗</returns>
+        public bool SetSelectedGameObjectOfAreaContentModels(int stageIndex);
     }
 }

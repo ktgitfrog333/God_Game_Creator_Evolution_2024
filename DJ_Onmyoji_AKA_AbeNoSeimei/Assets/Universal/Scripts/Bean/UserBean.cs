@@ -64,6 +64,254 @@ namespace Universal.Bean
         /// </summary>
         public int vibrationEnableIndex = 0;
 
+        private readonly PentagramTurnTableInfo PENTAGRAM_TURN_TABLE_INFO_DEFAULT = new PentagramTurnTableInfo()
+        {
+            slots = new PentagramTurnTableInfo.Slot[]
+            {
+                new PentagramTurnTableInfo.Slot()
+                {
+                    slotId = 0,
+                    shikigamiInfo = new ShikigamiInfo()
+                    {
+                        characterID = 3,
+                        genomeType = 0,
+                        name = "朱雀",
+                        type = 1,
+                        slotId = 0,
+                        level = 1,
+                        mainSkills = new ShikigamiInfo.MainSkill[]
+                        {
+                            new ShikigamiInfo.MainSkill()
+                            {
+                                type = 1,
+                                rank = 0,
+                            },
+                            new ShikigamiInfo.MainSkill()
+                            {
+                                type = 3,
+                                rank = 0,
+                            },
+                            new ShikigamiInfo.MainSkill()
+                            {
+                                type = 6,
+                                rank = 0,
+                            },
+                            new ShikigamiInfo.MainSkill()
+                            {
+                                type = 2,
+                                rank = 0,
+                            },
+                        },
+                        subSkills = new ShikigamiInfo.SubSkill[0],
+                    }
+                },
+                new PentagramTurnTableInfo.Slot()
+                {
+                    slotId = 1,
+                    shikigamiInfo = new ShikigamiInfo()
+                    {
+                        characterID = 12,
+                        genomeType = 0,
+                        name = "晴明",
+                        type = 3,
+                        slotId = 1,
+                        level = 1,
+                        mainSkills = new ShikigamiInfo.MainSkill[]
+                        {
+                            new ShikigamiInfo.MainSkill()
+                            {
+                                type = 1,
+                                rank = 0,
+                            },
+                            new ShikigamiInfo.MainSkill()
+                            {
+                                type = 3,
+                                rank = 0,
+                            },
+                            new ShikigamiInfo.MainSkill()
+                            {
+                                type = 2,
+                                rank = 0,
+                            },
+                        },
+                        subSkills = new ShikigamiInfo.SubSkill[0],
+                    }
+                },
+                new PentagramTurnTableInfo.Slot()
+                {
+                    slotId = 2,
+                    shikigamiInfo = new ShikigamiInfo()
+                    {
+                        characterID = 0,
+                        genomeType = 0,
+                        name = "勾陳",
+                        type = 2,
+                        slotId = 2,
+                        level = 1,
+                        mainSkills = new ShikigamiInfo.MainSkill[]
+                        {
+                            new ShikigamiInfo.MainSkill()
+                            {
+                                type = 1,
+                                rank = 0,
+                            },
+                            new ShikigamiInfo.MainSkill()
+                            {
+                                type = 6,
+                                rank = 0,
+                            },
+                            new ShikigamiInfo.MainSkill()
+                            {
+                                type = 7,
+                                rank = 0,
+                            },
+                            new ShikigamiInfo.MainSkill()
+                            {
+                                type = 2,
+                                rank = 0,
+                            },
+                        },
+                        subSkills = new ShikigamiInfo.SubSkill[0],
+                    }
+                },
+                new PentagramTurnTableInfo.Slot()
+                {
+                    slotId = 3,
+                    shikigamiInfo = new ShikigamiInfo()
+                    {
+                        characterID = 1,
+                        genomeType = 0,
+                        name = "六合",
+                        type = 0,
+                        slotId = 3,
+                        level = 1,
+                        mainSkills = new ShikigamiInfo.MainSkill[]
+                        {
+                            new ShikigamiInfo.MainSkill()
+                            {
+                                type = 1,
+                                rank = 0,
+                            },
+                            new ShikigamiInfo.MainSkill()
+                            {
+                                type = 3,
+                                rank = 0,
+                            },
+                            new ShikigamiInfo.MainSkill()
+                            {
+                                type = 2,
+                                rank = 0,
+                            },
+                        },
+                        subSkills = new ShikigamiInfo.SubSkill[0],
+                    }
+                },
+                new PentagramTurnTableInfo.Slot()
+                {
+                    slotId = 4,
+                    shikigamiInfo = new ShikigamiInfo()
+                    {
+                        characterID = 12,
+                        genomeType = 0,
+                        name = "晴明",
+                        type = 3,
+                        slotId = 4,
+                        level = 1,
+                        mainSkills = new ShikigamiInfo.MainSkill[]
+                        {
+                            new ShikigamiInfo.MainSkill()
+                            {
+                                type = 1,
+                                rank = 0,
+                            },
+                            new ShikigamiInfo.MainSkill()
+                            {
+                                type = 3,
+                                rank = 0,
+                            },
+                            new ShikigamiInfo.MainSkill()
+                            {
+                                type = 2,
+                                rank = 0,
+                            },
+                        },
+                        subSkills = new ShikigamiInfo.SubSkill[0],
+                    }
+                },
+            }
+        };
+
+        private readonly PentagramTurnTableInfo PENTAGRAM_TURN_TABLE_INFO_DEFAULT_2 = new PentagramTurnTableInfo()
+        {
+            slots = new PentagramTurnTableInfo.Slot[]
+            {
+                new PentagramTurnTableInfo.Slot()
+                {
+                    slotId = 1,
+                    shikigamiInfo = new ShikigamiInfo()
+                    {
+                        characterID = 12,
+                        genomeType = 0,
+                        name = "晴明",
+                        type = 3,
+                        slotId = 1,
+                        level = 1,
+                        mainSkills = new ShikigamiInfo.MainSkill[]
+                        {
+                            new ShikigamiInfo.MainSkill()
+                            {
+                                type = 1,
+                                rank = 0,
+                            },
+                            new ShikigamiInfo.MainSkill()
+                            {
+                                type = 3,
+                                rank = 0,
+                            },
+                            new ShikigamiInfo.MainSkill()
+                            {
+                                type = 2,
+                                rank = 0,
+                            },
+                        },
+                        subSkills = new ShikigamiInfo.SubSkill[0],
+                    }
+                },
+                new PentagramTurnTableInfo.Slot()
+                {
+                    slotId = 4,
+                    shikigamiInfo = new ShikigamiInfo()
+                    {
+                        characterID = 12,
+                        genomeType = 0,
+                        name = "晴明",
+                        type = 3,
+                        slotId = 4,
+                        level = 1,
+                        mainSkills = new ShikigamiInfo.MainSkill[]
+                        {
+                            new ShikigamiInfo.MainSkill()
+                            {
+                                type = 1,
+                                rank = 0,
+                            },
+                            new ShikigamiInfo.MainSkill()
+                            {
+                                type = 3,
+                                rank = 0,
+                            },
+                            new ShikigamiInfo.MainSkill()
+                            {
+                                type = 2,
+                                rank = 0,
+                            },
+                        },
+                        subSkills = new ShikigamiInfo.SubSkill[0],
+                    }
+                },
+            }
+        };
+
         public PentagramTurnTableInfo pentagramTurnTableInfo = new PentagramTurnTableInfo()
         {
             slots = new PentagramTurnTableInfo.Slot[]
@@ -127,6 +375,7 @@ namespace Universal.Bean
 
         /// <summary>魂のお金</summary>
         public int soulMoney = 0;
+        private readonly int SOUL_MONEY = 0;
         /// <summary>入力モード</summary>
         public int inputMode = 0;
 
@@ -142,6 +391,10 @@ namespace Universal.Bean
                 case EnumLoadMode.Default:
                     sceneId = SCENEID_DEFAULT;
                     state = STATE_DEFAULT;
+                    // TODO: デフォルトは結局どちらなのか
+                    // PENTAGRAM_TURN_TABLE_INFO_DEFAULT / PENTAGRAM_TURN_TABLE_INFO_DEFAULT_2
+                    pentagramTurnTableInfo = PENTAGRAM_TURN_TABLE_INFO_DEFAULT;
+                    soulMoney = SOUL_MONEY;
 
                     break;
                 case EnumLoadMode.All:
