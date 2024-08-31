@@ -283,8 +283,9 @@ namespace Main.Utility
                 }
                 else
                 {
-                    var cost = tempoLv * shikigamiLv * actionRate;
-                    costSum += cost * rapidRate;
+                    //var cost = tempoLv * shikigamiLv * actionRate;
+                    var cost = tempoLv * shikigamiLv;
+                    costSum += cost * rapidRate * 0.75f;
                 }
             }
 
