@@ -202,7 +202,8 @@ namespace Main.Utility
                             mainSkill.Content.rank < ms.rank))
                         .ToArray()
                         .Length;
-                    if (length < 1)
+                    if (length < 1 &&
+                         mainSkill.Content.rank < (int)SkillRank.S)
                     {
                         // 存在しない場合はスキルランク+1を格納する
                         var clone = new Universal.Bean.RewardContentProp(createdRewardContentProp);
