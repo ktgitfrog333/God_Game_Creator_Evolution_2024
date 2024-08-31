@@ -113,6 +113,11 @@ namespace Main.Audio
         {
             return bgmPlayer.SwitchClipNight();
         }
+
+        public void StopBGM()
+        {
+            bgmPlayer.StopBGM();
+        }
     }
 
     /// <summary>
@@ -192,6 +197,10 @@ namespace Main.Audio
         /// </summary>
         /// <param name="clipToPlay">BGM</param>
         public void PlayBGM(ClipToPlayBGM clipToPlay) { }
+        /// <summary>
+        /// BGMを止める
+        /// </summary>
+        public void StopBGM();
         /// <summary>
         /// BGMを再生
         /// ※ステージ開始時に呼ばれる
