@@ -251,6 +251,11 @@ namespace Main.Audio
                 return false;
             }
         }
+
+        public void StopBGM()
+        {
+            audioSource.Stop();
+        }
     }
 
     /// <summary>

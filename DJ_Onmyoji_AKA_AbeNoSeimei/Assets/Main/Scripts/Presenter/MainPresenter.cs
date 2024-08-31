@@ -95,6 +95,12 @@ namespace Main.Presenter
         private float graffitiTempoLevelBeforeRest;
         /// <summary>プレイヤーのHP保存値 前回HPから減少した場合のみ、HP減少処理を実行すすために使用</summary>
         private float beforeHP = 0;
+        /// <summary>ゲームオーバー画面のビュー</summary>
+        [SerializeField] private GameOverView gameOverView;
+        /// <summary>タイトルに戻るボタンのビュー</summary>
+        [SerializeField] private GameTitleButtonView gameTitleButtonView;
+        /// <summary>タイトルに戻るボタンのモデル</summary>
+        [SerializeField] private GameTitleButtonModel gameTitleButtonModel;
 
         private void Reset()
         {
@@ -147,6 +153,9 @@ namespace Main.Presenter
             clearRewardTextContents = GameObject.Find("Resources").GetComponentInChildren<ClearRewardTextContents>();
             levelBackgroundView = GameObject.Find("LevelBackground").GetComponent<LevelBackgroundView>();
             clearCountdownTimerGaugeView = GameObject.Find("PlayerHP").GetComponent<ClearCountdownTimerGaugeView>();
+            gameOverView = GameObject.Find("GameOver").GetComponent<GameOverView>();
+            gameTitleButtonView = GameObject.Find("GameTitleButton").GetComponent<GameTitleButtonView>();
+            gameTitleButtonModel = GameObject.Find("GameTitleButton").GetComponent<GameTitleButtonModel>();
         }
 
         public void OnStart()
@@ -169,6 +178,8 @@ namespace Main.Presenter
             moveGuideView.gameObject.SetActive(false);
             jumpGuideView.SetAlpha(EnumFadeState.Close);
             jumpGuideView.gameObject.SetActive(false);
+            gameOverView.gameObject.SetActive(false);
+            gameTitleButtonView.gameObject.SetActive(false);
 
             MainGameManager.Instance.AudioOwner.OnStartAndPlayBGM();
             // T.B.D ステージ開始演出
@@ -207,7 +218,8 @@ namespace Main.Presenter
                     // クリア画面が閉じている
                     if (x &&
                         !pauseView.gameObject.activeSelf &&
-                        !clearView.gameObject.activeSelf)
+                        !clearView.gameObject.activeSelf &&
+                        !gameOverView.gameObject.activeSelf)
                     {
                         MainGameManager.Instance.AudioOwner.PlaySFX(ClipToPlay.se_play_open);
                         // 遊び方確認ページを開いているなら閉じる
@@ -273,43 +285,42 @@ namespace Main.Presenter
             // クリア画面表示のため、ゴール到達のフラグ更新
             var datas = MainGameManager.Instance.SceneOwner.GetSaveDatas();
             var isGoalReached = new BoolReactiveProperty();
+            // ゲームオーバー画面表示のため、HP0になった時ののフラグ更新
+            var isPlayerDead = new BoolReactiveProperty();
             isGoalReached.ObserveEveryValueChanged(x => x.Value)
                 .Subscribe(x =>
                 {
                     if (x)
                     {
-                        MainGameManager.Instance.AudioOwner.PlaySFX(ClipToPlay.me_game_clear);
                         // クリア済みデータの更新
                         datas.state[datas.sceneId - 1] = 2;
                         if (datas.sceneId < datas.state.Length - 1 &&
                             datas.state[(datas.sceneId)] < 1)
                             datas.state[(datas.sceneId)] = 1;
-                        // 初期処理
-                        if (!rewardSelectView.SetContents(rewardSelectModel.RewardContentProps))
-                            Debug.LogError("SetContents");
-                        if (!clearView.SetActiveGameObject(true))
-                            Debug.LogError("SetActiveGameObject");
-                        gameSelectButtonView.gameObject.SetActive(false);
                         // 初回のみ最初から拡大表示
                         if (!common.IsFinalLevel(datas))
                         {
+                            MainGameManager.Instance.AudioOwner.PlaySFX(ClipToPlay.me_game_clear);
+                            // 初期処理
+                            if (!rewardSelectView.SetContents(rewardSelectModel.RewardContentProps))
+                                Debug.LogError("SetContents");
+                            if (!clearView.SetActiveGameObject(true))
+                                Debug.LogError("SetActiveGameObject");
+                            gameSelectButtonView.gameObject.SetActive(false);
                             var rewardContentModel = rewardSelectModel.RewardContentModels[0];
                             if (!cursorIconView.SetSelectAndScale(rewardContentModel.transform.position, (rewardContentModel.transform as RectTransform).sizeDelta))
                                 Debug.LogError("SetSelectAndScale");
                             rewardContentModel.SetSelectedGameObject();
                             datas.sceneId++;
+                            if (!MainGameManager.Instance.SceneOwner.SetSaveDatas(datas))
+                                Debug.LogError("クリア済みデータ保存呼び出しの失敗");
+                            gameSelectButtonView.gameObject.SetActive(true);
+                            cursorIconView.gameObject.SetActive(true);
                         }
                         else
                         {
-                            var rewardContentModel = rewardSelectModel.RewardContentModels[0];
-                            if (!cursorIconView.SetSelectAndScale(rewardContentModel.transform.position, (rewardContentModel.transform as RectTransform).sizeDelta))
-                                Debug.LogError("SetSelectAndScale");
-                            rewardContentModel.SetSelectedGameObject();
+                            isPlayerDead.Value = true;
                         }
-                        if (!MainGameManager.Instance.SceneOwner.SetSaveDatas(datas))
-                            Debug.LogError("クリア済みデータ保存呼び出しの失敗");
-                        gameSelectButtonView.gameObject.SetActive(true);
-                        cursorIconView.gameObject.SetActive(true);
                     }
                 });
 
@@ -357,6 +368,64 @@ namespace Main.Presenter
                             break;
                     }
                 });
+            isPlayerDead.ObserveEveryValueChanged(x => x.Value)
+                .Subscribe(x =>
+                {
+                    if (x)
+                    {
+                        var audioOwner = MainGameManager.Instance.AudioOwner;
+                        audioOwner.PlaySFX(ClipToPlay.me_game_over);
+                        audioOwner.StopBGM();
+
+                        // 初期処理
+                        if (!gameOverView.SetActiveGameObject(true))
+                            Debug.LogError("SetActiveGameObject");
+                        gameTitleButtonView.gameObject.SetActive(true);
+                        gameTitleButtonModel.SetSelectedGameObject();
+                        if (!playerModel.SetInputBan(true))
+                            Debug.LogError("操作禁止フラグをセット呼び出しの失敗");
+                        if (!MainGameManager.Instance.SceneOwner.DestroyMainSceneStagesState())
+                            Debug.LogError("DestroyMainSceneStagesState");
+                    }
+                });
+            // ゲームオーバー画面 -> タイトル画面へ戻る
+            gameTitleButtonModel.EventState.ObserveEveryValueChanged(x => x.Value)
+                .Subscribe(x =>
+                {
+                    switch ((EnumEventCommand)x)
+                    {
+                        case EnumEventCommand.Default:
+                            // 処理無し
+                            break;
+                        case EnumEventCommand.Selected:
+                            // 処理無し
+                            break;
+                        case EnumEventCommand.DeSelected:
+                            // 処理無し
+                            break;
+                        case EnumEventCommand.Submited:
+                            MainGameManager.Instance.AudioOwner.PlaySFX(ClipToPlay.se_decided);
+                            if (!gameTitleButtonModel.SetButtonEnabled(false))
+                                Debug.LogError("ボタン有効／無効切り替え呼び出しの失敗");
+                            if (!gameTitleButtonModel.SetEventTriggerEnabled(false))
+                                Debug.LogError("イベント有効／無効切り替え呼び出しの失敗");
+                            // プレイヤーの挙動によって発生するイベント無効　など
+                            if (!MainGameManager.Instance.InputSystemsOwner.Exit())
+                                Debug.LogError("InputSystem終了呼び出しの失敗");
+                            // シーン読み込み時のアニメーション
+                            Observable.FromCoroutine<bool>(observer => fadeImageView.PlayFadeAnimation(observer, EnumFadeState.Close))
+                                .Subscribe(_ => MainGameManager.Instance.SceneOwner.LoadTitleScene())
+                                .AddTo(gameObject);
+                            break;
+                        case EnumEventCommand.Canceled:
+                            // 処理無し
+                            break;
+                        default:
+                            Debug.LogWarning("例外ケース");
+                            break;
+                    }
+                });
+
             // ショートカットキー
             var inputUIPushedTime = new FloatReactiveProperty();
             var inputUIActionsState = new IntReactiveProperty((int)EnumShortcuActionMode.None);
@@ -504,7 +573,8 @@ namespace Main.Presenter
                                             {
                                                 if (!pentagramTurnTableView.SetSpriteIndex(0f, playerModel.State.HPMax))
                                                     Debug.LogError("SetSpriteIndex");
-                                                isGoalReached.Value = true;
+                                                // ゲームオーバー画面を表示する為には以下の処理を変更する必要がある。
+                                                isPlayerDead.Value = true;
                                             }
                                         });
                                 }
