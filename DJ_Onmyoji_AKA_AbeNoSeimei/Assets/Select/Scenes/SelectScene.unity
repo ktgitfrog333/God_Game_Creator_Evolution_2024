@@ -501,7 +501,7 @@ PrefabInstance:
     - target: {fileID: 3906211334230722720, guid: 233cb2b8fc460fa43a1047b403d2af36, type: 3}
       propertyPath: tutorialViewPageModels.Array.data[2]
       value: 
-      objectReference: {fileID: 5223149312306228698}
+      objectReference: {fileID: 1138612191}
     - target: {fileID: 3906211334230722720, guid: 233cb2b8fc460fa43a1047b403d2af36, type: 3}
       propertyPath: tutorialViewPageModels.Array.data[3]
       value: 
