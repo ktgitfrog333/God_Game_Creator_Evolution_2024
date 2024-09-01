@@ -75,6 +75,19 @@ namespace Main.Model
                                 Debug.LogError("PlayWalkingAnimation");
                     });
 
+            // 一定間隔でダメージ判定するための実装
+            Observable.Interval(System.TimeSpan.FromSeconds(1))
+                .Where(_ => _StartedGraffAttack)
+                .Subscribe(_ =>
+                {
+                    foreach (var obj in objectsInContact)
+                    {
+                        var circleCollider2D = obj.GetComponent<CircleCollider2D>();
+                        var damageSufferedZoneOfEnemyModel = obj.GetComponent<DamageSufferedZoneOfEnemyModel>();
+                        damageSufferedZoneOfEnemyModel.OnTriggerEnter2DGraff(circleCollider2D);
+                    }
+                }).AddTo(this);
+
         }
 
         protected override void OnEnable()
@@ -82,6 +95,7 @@ namespace Main.Model
             base.OnEnable();
             elapsedTime.Value = 0f;
             _StartedGraffAttack = false;
+            objectsInContact.Clear();
 
             if (circleCollider2DGraff != null)
                 circleCollider2DGraff.radius = _rangeMax;
@@ -110,19 +124,6 @@ namespace Main.Model
                 //グラフィティの持続タイマー起動
                 StartCoroutine(GeneralUtility.ActionsAfterDelay(_debuffEffectLifeTime, () => gameObject.SetActive(false)));
                 graffSprite.enabled = true;
-
-                // 一定間隔でダメージ判定するための実装
-                Observable.Interval(System.TimeSpan.FromSeconds(1))
-                    .Where(_ => _StartedGraffAttack)
-                    .Subscribe(_ =>
-                    {
-                        foreach (var obj in objectsInContact)
-                        {
-                            var circleCollider2D = obj.GetComponent<CircleCollider2D>();
-                            var damageSufferedZoneOfEnemyModel = obj.GetComponent<DamageSufferedZoneOfEnemyModel>();
-                            damageSufferedZoneOfEnemyModel.OnTriggerEnter2DGraff(circleCollider2D);
-                        }
-                    }).AddTo(this);
             }
         }
 

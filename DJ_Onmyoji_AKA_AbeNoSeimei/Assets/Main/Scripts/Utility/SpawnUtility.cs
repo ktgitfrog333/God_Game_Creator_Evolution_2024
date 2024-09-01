@@ -26,9 +26,9 @@ namespace Main.Utility
                     case JockeyCommandType.Hold:
                         timeSec = INSTANCE_RATE_TIME_SEC_STOP;
                         break;
-                    case JockeyCommandType.Scratch:
-                        timeSec = config.actionRate / instanceRateTimeSecCorrection;
-                        break;
+                    //case JockeyCommandType.Scratch:
+                    //    timeSec = config.actionRate / instanceRateTimeSecCorrection;
+                    //    break;
                     default:
                         // デフォルト値
                         timeSec = config.actionRate;

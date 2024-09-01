@@ -135,35 +135,35 @@
 				"mainSkillType": 3,
 				"skillRank": 4,
 				"value": 10,
-                "valueBuffMax": 1.5
+                "valueBuffMax": 1.0
 			},
 			{
 				"shikigamiType": 3,
 				"mainSkillType": 3,
 				"skillRank": 3,
 				"value": 8,
-                "valueBuffMax": 1.5
+                "valueBuffMax": 1.0
 			},
 			{
 				"shikigamiType": 3,
 				"mainSkillType": 3,
 				"skillRank": 2,
 				"value": 6,
-                "valueBuffMax": 1.5
+                "valueBuffMax": 1.0
 			},
 			{
 				"shikigamiType": 3,
 				"mainSkillType": 3,
 				"skillRank": 1,
 				"value": 4,
-                "valueBuffMax": 1.5
+                "valueBuffMax": 1.0
 			},
 			{
 				"shikigamiType": 3,
 				"mainSkillType": 3,
 				"skillRank": 0,
 				"value": 2,
-                "valueBuffMax": 1.5
+                "valueBuffMax": 1.0
 			},
 			{
 				"shikigamiType": 3,
@@ -175,14 +175,14 @@
 				"shikigamiType": 0,
 				"mainSkillType": 1,
 				"skillRank": 4,
-				"value": 0.4,
+				"value": 0.2,
                 "valueBuffMax": 1.5
 			},
 			{
 				"shikigamiType": 0,
 				"mainSkillType": 1,
 				"skillRank": 3,
-				"value": 0.5,
+				"value": 0.4,
                 "valueBuffMax": 1.5
 			},
 			{
@@ -210,36 +210,36 @@
 				"shikigamiType": 0,
 				"mainSkillType": 3,
 				"skillRank": 4,
-				"value": 10,
-                "valueBuffMax": 1.5
+				"value": 15,
+                "valueBuffMax": 1.0
 			},
 			{
 				"shikigamiType": 0,
 				"mainSkillType": 3,
 				"skillRank": 3,
-				"value": 8,
-                "valueBuffMax": 1.5
+				"value": 12,
+                "valueBuffMax": 1.0
 			},
 			{
 				"shikigamiType": 0,
 				"mainSkillType": 3,
 				"skillRank": 2,
-				"value": 6,
-                "valueBuffMax": 1.5
+				"value": 9,
+                "valueBuffMax": 1.0
 			},
 			{
 				"shikigamiType": 0,
 				"mainSkillType": 3,
 				"skillRank": 1,
-				"value": 4,
-                "valueBuffMax": 1.5
+				"value": 6,
+                "valueBuffMax": 1.0
 			},
 			{
 				"shikigamiType": 0,
 				"mainSkillType": 3,
 				"skillRank": 0,
-				"value": 2,
-                "valueBuffMax": 1.5
+				"value": 3,
+                "valueBuffMax": 1.0
 			},
 			{
 				"shikigamiType": 0,
@@ -251,35 +251,35 @@
 				"shikigamiType": 1,
 				"mainSkillType": 1,
 				"skillRank": 4,
-				"value": 0.4,
+				"value": 1.4,
                 "valueBuffMax": 1.5
 			},
 			{
 				"shikigamiType": 1,
 				"mainSkillType": 1,
 				"skillRank": 3,
-				"value": 0.5,
+				"value": 1.5,
                 "valueBuffMax": 1.5
 			},
 			{
 				"shikigamiType": 1,
 				"mainSkillType": 1,
 				"skillRank": 2,
-				"value": 0.6,
+				"value": 1.6,
                 "valueBuffMax": 1.5
 			},
 			{
 				"shikigamiType": 1,
 				"mainSkillType": 1,
 				"skillRank": 1,
-				"value": 0.8,
+				"value": 1.8,
                 "valueBuffMax": 1.5
 			},
 			{
 				"shikigamiType": 1,
 				"mainSkillType": 1,
 				"skillRank": 0,
-				"value": 1.0,
+				"value": 2.0,
                 "valueBuffMax": 1.5
 			},
 			{
@@ -287,35 +287,35 @@
 				"mainSkillType": 3,
 				"skillRank": 4,
 				"value": 10,
-                "valueBuffMax": 1.5
+                "valueBuffMax": 1.0
 			},
 			{
 				"shikigamiType": 1,
 				"mainSkillType": 3,
 				"skillRank": 3,
 				"value": 8,
-                "valueBuffMax": 1.5
+                "valueBuffMax": 1.0
 			},
 			{
 				"shikigamiType": 1,
 				"mainSkillType": 3,
 				"skillRank": 2,
 				"value": 6,
-                "valueBuffMax": 1.5
+                "valueBuffMax": 1.0
 			},
 			{
 				"shikigamiType": 1,
 				"mainSkillType": 3,
 				"skillRank": 1,
 				"value": 4,
-                "valueBuffMax": 1.5
+                "valueBuffMax": 1.0
 			},
 			{
 				"shikigamiType": 1,
 				"mainSkillType": 3,
 				"skillRank": 0,
 				"value": 2,
-                "valueBuffMax": 1.5
+                "valueBuffMax": 1.0
 			},
 			{
 				"shikigamiType": 1,
@@ -326,20 +326,32 @@
 			{
 				"shikigamiType": 1,
 				"mainSkillType": 6,
+				"skillRank": 4,
+				"value": 3.0
+			},
+			{
+				"shikigamiType": 1,
+				"mainSkillType": 6,
+				"skillRank": 3,
+				"value": 2.5
+			},
+			{
+				"shikigamiType": 1,
+				"mainSkillType": 6,
 				"skillRank": 2,
-				"value": 1.5
+				"value": 2.0
 			},
 			{
 				"shikigamiType": 1,
 				"mainSkillType": 6,
 				"skillRank": 1,
-				"value": 0.75
+				"value": 1.5
 			},
 			{
 				"shikigamiType": 1,
 				"mainSkillType": 6,
 				"skillRank": 0,
-				"value": 0.375
+				"value": 1.0
 			},
 			{
 				"shikigamiType": 2,
@@ -385,32 +397,56 @@
 			{
 				"shikigamiType": 2,
 				"mainSkillType": 6,
+				"skillRank": 4,
+				"value": 3.0
+			},
+			{
+				"shikigamiType": 2,
+				"mainSkillType": 6,
+				"skillRank": 3,
+				"value": 2.5
+			},
+			{
+				"shikigamiType": 2,
+				"mainSkillType": 6,
 				"skillRank": 2,
-				"value": 1.5
+				"value": 2.0
 			},
 			{
 				"shikigamiType": 2,
 				"mainSkillType": 6,
 				"skillRank": 1,
-				"value": 0.75
+				"value": 1.5
 			},
 			{
 				"shikigamiType": 2,
 				"mainSkillType": 6,
 				"skillRank": 0,
-				"value": 0.375
+				"value": 1.0
 			},
             {
                 "shikigamiType": 2,
                 "mainSkillType": 7,
+                "skillRank": 4,
+                "value": 10
+            },
+            {
+                "shikigamiType": 2,
+                "mainSkillType": 7,
+                "skillRank": 3,
+                "value": 8
+            },
+            {
+                "shikigamiType": 2,
+                "mainSkillType": 7,
                 "skillRank": 2,
-                "value": 4
+                "value": 6
             },
             {
                 "shikigamiType": 2,
                 "mainSkillType": 7,
                 "skillRank": 1,
-                "value": 3
+                "value": 4
             },
             {
                 "shikigamiType": 2,
@@ -1057,7 +1093,7 @@
                     ],
                     "subSkills": []
                 },
-                "soulMoney": 50
+                "soulMoney": 300
             },
             {
                 "rewardType": 1,
@@ -1088,7 +1124,7 @@
                     ],
                     "subSkills": []
                 },
-                "soulMoney": 50
+                "soulMoney": 300
             },
             {
                 "rewardType": 1,
@@ -1119,7 +1155,7 @@
                     ],
                     "subSkills": []
                 },
-                "soulMoney": 50
+                "soulMoney": 300
             },
             {
                 "rewardType": 1,
@@ -1150,7 +1186,7 @@
                     ],
                     "subSkills": []
                 },
-                "soulMoney": 50
+                "soulMoney": 300
             },
             {
                 "rewardType": 1,
@@ -1181,7 +1217,7 @@
                     ],
                     "subSkills": []
                 },
-                "soulMoney": 50
+                "soulMoney": 300
             },
             {
                 "rewardType": 1,
@@ -1212,7 +1248,7 @@
                     ],
                     "subSkills": []
                 },
-                "soulMoney": 50
+                "soulMoney": 300
             },
             {
                 "rewardType": 1,
@@ -1243,7 +1279,7 @@
                     ],
                     "subSkills": []
                 },
-                "soulMoney": 50
+                "soulMoney": 300
             },
             {
                 "rewardType": 1,
@@ -1274,7 +1310,7 @@
                     ],
                     "subSkills": []
                 },
-                "soulMoney": 50
+                "soulMoney": 300
             },
             {
                 "rewardType": 1,
@@ -1305,7 +1341,7 @@
                     ],
                     "subSkills": []
                 },
-                "soulMoney": 50
+                "soulMoney": 300
             },
             {
                 "rewardType": 1,
@@ -1336,7 +1372,7 @@
                     ],
                     "subSkills": []
                 },
-                "soulMoney": 50
+                "soulMoney": 300
             },
             {
                 "rewardType": 1,
@@ -1367,7 +1403,7 @@
                     ],
                     "subSkills": []
                 },
-                "soulMoney": 50
+                "soulMoney": 300
             },
             {
                 "rewardType": 1,
@@ -1398,7 +1434,7 @@
                     ],
                     "subSkills": []
                 },
-                "soulMoney": 50
+                "soulMoney": 300
             },
             {
                 "rewardType": 2,
@@ -1429,7 +1465,7 @@
                     ],
                     "subSkills": []
                 },
-                "soulMoney": 50
+                "soulMoney": 300
             }
         ]
                       },

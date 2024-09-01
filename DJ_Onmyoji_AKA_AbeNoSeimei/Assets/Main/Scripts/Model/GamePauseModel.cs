@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
+using Main.Audio;
+using Main.Common;
 
 namespace Main.Model
 {
@@ -18,6 +20,8 @@ namespace Main.Model
         private Button _button;
         /// <summary>イベントトリガー</summary>
         private EventTrigger _eventTrigger;
+        /// <summary>BGM停止用に取得</summary>
+        private AudioOwner _audioOwner;
 
         protected override void OnEnable()
         {
@@ -29,11 +33,17 @@ namespace Main.Model
             if (_eventTrigger == null)
                 _eventTrigger = GetComponent<EventTrigger>();
             _eventTrigger.enabled = true;
+            if (_audioOwner == null)
+                _audioOwner = MainGameManager.Instance.AudioOwner;
+            _audioOwner.Pause();
         }
 
         private void OnDisable()
         {
             Time.timeScale = 1f;
+            if (_audioOwner == null)
+                _audioOwner = MainGameManager.Instance.AudioOwner;
+            _audioOwner.UnPause();
         }
 
         /// <summary>
