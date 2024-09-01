@@ -118,6 +118,16 @@ namespace Main.Audio
         {
             bgmPlayer.StopBGM();
         }
+
+        public void UnPause()
+        {
+            bgmPlayer.UnPause();
+        }
+
+        public void Pause()
+        {
+            bgmPlayer.Pause();
+        }
     }
 
     /// <summary>
