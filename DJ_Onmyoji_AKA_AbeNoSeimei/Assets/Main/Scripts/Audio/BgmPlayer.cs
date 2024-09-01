@@ -256,6 +256,16 @@ namespace Main.Audio
         {
             audioSource.Stop();
         }
+
+        public void Pause()
+        {
+            audioSource.Pause();
+        }
+
+        public void UnPause()
+        {
+            audioSource.UnPause();
+        }
     }
 
     /// <summary>
