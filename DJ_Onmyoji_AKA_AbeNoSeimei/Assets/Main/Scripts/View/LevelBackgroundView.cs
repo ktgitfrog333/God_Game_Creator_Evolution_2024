@@ -25,6 +25,8 @@ namespace Main.View
         private const string GAMEOBJECT_NAME_FADEIMAGEDAY = "FadeImageDay";
         /// <summary>夜</summary>
         private const string GAMEOBJECT_NAME_FADEIMAGENIGHT = "FadeImageNight";
+        /// <summary>昼夜のフラグ</summary>
+        private bool isNight;
 
         private void Reset()
         {
@@ -33,19 +35,20 @@ namespace Main.View
 
         public IEnumerator SwitchLayerAndPlayFadeAnimation(System.IObserver<bool> observer, float onmyoStateValue)
         {
-            if (switchDayLevel <= onmyoStateValue &&
-                switchNightLevel < onmyoStateValue &&
-                !IsSwitched(SunMoonState.Daytime, fadeLevelBackgroundViews))
+            if (switchDayLevel <= onmyoStateValue && isNight)
             {
-                Observable.FromCoroutine<bool>(observer => SetAsLastSiblingAndPlayFadeAnimation(observer, fadeLevelBackgroundViews, GAMEOBJECT_NAME_FADEIMAGEDAY))
+                // 昼にする
+                isNight = false;
+                Observable.FromCoroutine<bool>(observer => SetAsLastSiblingAndPlayFadeAnimation(observer, fadeLevelBackgroundViews, EnumFadeState.Open))
                     .Subscribe(_ => observer.OnNext(true))
                     .AddTo(gameObject);
                 MainGameManager.Instance.AudioOwner.SwitchClipDay();
             }
-            else if (onmyoStateValue <= switchNightLevel &&
-                !IsSwitched(SunMoonState.Night, fadeLevelBackgroundViews))
+            else if (onmyoStateValue <= switchNightLevel && !isNight)
             {
-                Observable.FromCoroutine<bool>(observer => SetAsLastSiblingAndPlayFadeAnimation(observer, fadeLevelBackgroundViews, GAMEOBJECT_NAME_FADEIMAGENIGHT))
+                // 夜にする
+                isNight = true;
+                Observable.FromCoroutine<bool>(observer => SetAsLastSiblingAndPlayFadeAnimation(observer, fadeLevelBackgroundViews, EnumFadeState.Close))
                     .Subscribe(_ => observer.OnNext(true))
                     .AddTo(gameObject);
                 MainGameManager.Instance.AudioOwner.SwitchClipNight();
@@ -61,17 +64,14 @@ namespace Main.View
         /// <param name="fadeLevelBackgroundViews">レベル背景（昼／夜）用のビュー</param>
         /// <param name="gameObjectName">ゲームオブジェクト名</param>
         /// <returns>コルーチン</returns>
-        private IEnumerator SetAsLastSiblingAndPlayFadeAnimation(System.IObserver<bool> observer, FadeLevelBackgroundView[] fadeLevelBackgroundViews, string gameObjectName)
+        private IEnumerator SetAsLastSiblingAndPlayFadeAnimation(System.IObserver<bool> observer, FadeLevelBackgroundView[] fadeLevelBackgroundViews, EnumFadeState enumFadeState)
         {
-            var view = fadeLevelBackgroundViews.Where(q => q.name.Equals(gameObjectName))
+            var view = fadeLevelBackgroundViews.Where(q => q.name.Equals(GAMEOBJECT_NAME_FADEIMAGENIGHT))
                 .ToArray()[0];
             // 変化させる方を手前へ動かす
-            view.transform.SetAsLastSibling();
             // 透明度を0にする
-            if (!view.SetFade(EnumFadeState.Open))
-                Debug.LogError("SetFade");
             // フェードを入れる
-            Observable.FromCoroutine<bool>(observer => view.PlayFadeAnimation(observer, EnumFadeState.Close))
+            Observable.FromCoroutine<bool>(observer => view.PlayFadeAnimation(observer, enumFadeState))
                 .Subscribe(_ => observer.OnNext(true))
                 .AddTo(gameObject);
 
