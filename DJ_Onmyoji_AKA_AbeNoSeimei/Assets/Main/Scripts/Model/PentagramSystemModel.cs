@@ -115,9 +115,6 @@ namespace Main.Model
                     case Common.JockeyCommandType.Hold:
 
                         break;
-                    case Common.JockeyCommandType.None:
-
-                        break;
                     default:
                         inputSlipLoopState.IsLooping.Value = false;
 
