@@ -183,6 +183,14 @@ namespace Main.Utility
         {
             try
             {
+                // ループ解除時に入力もリセットする
+                inputSlipLoopState.IsLooping.ObserveEveryValueChanged(x => x.Value)
+                    .Where(x => !x)
+                    .Subscribe(_ =>
+                    {
+                        jockeyCommandType.Value = (int)JockeyCommandType.None;
+                        inputSlipLoopState.crossVectorHistory.Clear();
+                    });
                 inputSlipLoopState.crossVectorHistory.ObserveAdd()
                     .Select(x => x.Value)
                     .Subscribe(x =>
