@@ -33,6 +33,26 @@ namespace Main.Common
         private List<RewardID> _selectedRewardIDs = new List<RewardID>();
         /// <summary>クリア報酬のコンテンツプロパティ</summary>
         private RewardContentProp[] _rewardContentProps;
+        /// <summary>クリア報酬の強化プロパティ</summary>
+        [SerializeField]
+        private EnhanceProp[] enhanceProps = new EnhanceProp[]
+        {
+            new EnhanceProp()
+            {
+                level = EnhanceLevel.Mode1,
+                soulMoney = 300
+            },
+            new EnhanceProp()
+            {
+                level = EnhanceLevel.Mode2,
+                soulMoney = 500
+            },
+            new EnhanceProp()
+            {
+                level = EnhanceLevel.Mode3,
+                soulMoney = 800
+            },
+        };
 
         private void Reset()
         {
@@ -66,7 +86,7 @@ namespace Main.Common
             try
             {
                 var utility = new MainRewardsUtility();
-                _rewardContentProps = utility.InstanceRewardTablesAndGetRewards(shikigamiInfoSplitesProps);
+                _rewardContentProps = utility.InstanceRewardTablesAndGetRewards(shikigamiInfoSplitesProps, enhanceProps);
                 if (_rewardContentProps == null)
                     throw new System.Exception("InstanceRewardTablesAndGetRewards");
 
@@ -118,7 +138,7 @@ namespace Main.Common
                 var slots = userData.pentagramTurnTableInfo.slots.ToList();
                 List<UserBean.PentagramTurnTableInfo.Slot> slotsAdd = new List<UserBean.PentagramTurnTableInfo.Slot> ();
                 var rewardsUtility = new MainRewardsUtility();
-                foreach (var rewardContentProp in _rewardContentProps.Where(q => _selectedRewardIDs.Any(selectId => selectId.Equals(q.rewardID))))
+                foreach (var rewardContentProp in rewardsUtility.MergeRewards(_rewardContentProps.Where(q => _selectedRewardIDs.Any(selectId => selectId.Equals(q.rewardID))).ToArray()))
                 {
                     switch (rewardContentProp.rewardType)
                     {
@@ -203,5 +223,30 @@ namespace Main.Common
         public ShikigamiCharacterID shikigamiCharacterID;
         /// <summary>イメージ</summary>
         public Sprite image;
+    }
+
+    /// <summary>
+    /// 強化モード
+    /// </summary>
+    public enum EnhanceLevel
+    {
+        /// <summary>ノーマル相当</summary>
+        Mode1 = 1,
+        /// <summary>レア相当</summary>
+        Mode2 = 2,
+        /// <summary>Sレア相当</summary>
+        Mode3 = 3,
+    }
+
+    [System.Serializable]
+    /// <summary>
+    /// 強化プロパティ
+    /// </summary>
+    public struct EnhanceProp
+    {
+        /// <summary>強化モード</summary>
+        public EnhanceLevel level;
+        /// <summary>魂の経験値</summary>
+        public int soulMoney;
     }
 }

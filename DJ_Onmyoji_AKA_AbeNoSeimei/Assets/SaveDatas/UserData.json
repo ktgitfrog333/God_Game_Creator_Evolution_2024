@@ -27,19 +27,23 @@
 					"mainSkills": [
 						{
 							"type": 1,
-							"rank": 0
+							"rank": 0,
+							"addRankCnt": 0
 						},
 						{
 							"type": 3,
-							"rank": 0
+							"rank": 0,
+							"addRankCnt": 0
 						},
 						{
 							"type": 6,
-							"rank": 0
+							"rank": 0,
+							"addRankCnt": 0
 						},
 						{
 							"type": 2,
-							"rank": 0
+							"rank": 0,
+							"addRankCnt": 0
 						}
 					],
 					"subSkills": []
@@ -57,15 +61,18 @@
 					"mainSkills": [
 						{
 							"type": 1,
-							"rank": 0
+							"rank": 0,
+							"addRankCnt": 0
 						},
 						{
 							"type": 3,
-							"rank": 0
+							"rank": 0,
+							"addRankCnt": 0
 						},
 						{
 							"type": 2,
-							"rank": 0
+							"rank": 0,
+							"addRankCnt": 0
 						}
 					],
 					"subSkills": []
@@ -83,19 +90,23 @@
 					"mainSkills": [
 						{
 							"type": 1,
-							"rank": 0
+							"rank": 0,
+							"addRankCnt": 0
 						},
 						{
 							"type": 6,
-							"rank": 0
+							"rank": 0,
+							"addRankCnt": 0
 						},
 						{
 							"type": 7,
-							"rank": 0
+							"rank": 0,
+							"addRankCnt": 0
 						},
 						{
 							"type": 2,
-							"rank": 0
+							"rank": 0,
+							"addRankCnt": 0
 						}
 					],
 					"subSkills": []
@@ -113,15 +124,18 @@
 					"mainSkills": [
 						{
 							"type": 1,
-							"rank": 0
+							"rank": 0,
+							"addRankCnt": 0
 						},
 						{
 							"type": 3,
-							"rank": 0
+							"rank": 0,
+							"addRankCnt": 0
 						},
 						{
 							"type": 2,
-							"rank": 0
+							"rank": 0,
+							"addRankCnt": 0
 						}
 					],
 					"subSkills": []
@@ -139,15 +153,18 @@
 					"mainSkills": [
 						{
 							"type": 1,
-							"rank": 0
+							"rank": 0,
+							"addRankCnt": 0
 						},
 						{
 							"type": 3,
-							"rank": 0
+							"rank": 0,
+							"addRankCnt": 0
 						},
 						{
 							"type": 2,
-							"rank": 0
+							"rank": 0,
+							"addRankCnt": 0
 						}
 					],
 					"subSkills": []

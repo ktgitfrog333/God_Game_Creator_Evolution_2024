@@ -30,6 +30,8 @@ namespace Main.View
         [SerializeField] private float[] scaleSizes = { 1f, 1.05f};
         /// <summary>式神タイプイメージ</summary>
         [SerializeField] private Sprite[] shikigamiTypeImages;
+        /// <summary>レアイメージ</summary>
+        [SerializeField] private Sprite[] rareImages;
         /// <summary>タイプアイコン</summary>
         [SerializeField] private Sprite[] typeIcons;
         /// <summary>名前末尾の文言</summary>
@@ -85,9 +87,11 @@ namespace Main.View
             {
                 if (!clearRewardImageContents[0].SetSprite(shikigamiTypeImages[(int)rewardContentProp.shikigamiType]))
                     throw new System.Exception("SetSprite");
-                if (!clearRewardImageContents[1].SetSprite(rewardContentProp.image))
+                if (!clearRewardImageContents[1].SetSprite(rareImages[(int)rewardContentProp.rareType]))
                     throw new System.Exception("SetSprite");
-                if (!clearRewardImageContents[2].SetSprite(typeIcons[(int)rewardContentProp.rewardType]))
+                if (!clearRewardImageContents[2].SetSprite(rewardContentProp.image))
+                    throw new System.Exception("SetSprite");
+                if (!clearRewardImageContents[3].SetSprite(typeIcons[(int)rewardContentProp.rewardType]))
                     throw new System.Exception("SetSprite");
                 if (!clearRewardTextContents.SetName($"{rewardContentProp.name}{nameSuffix[(int)rewardContentProp.rewardType]}"))
                     throw new System.Exception("SetName");

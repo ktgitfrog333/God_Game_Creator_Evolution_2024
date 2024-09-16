@@ -55,6 +55,33 @@ namespace Main.Utility
                 return false;
             }
         }
+
+        public bool SetNavigationOfButton(Button prevButton, Button nextButton, Button button, Transform transform = null)
+        {
+            try
+            {
+                if (button == null)
+                {
+                    if (transform == null)
+                        throw new System.ArgumentNullException("transformがnull");
+
+                    button = transform.GetComponent<Button>();
+                }
+                Navigation navigation = button.navigation;
+                if (prevButton != null)
+                    navigation.selectOnLeft = prevButton;
+                if (nextButton != null)
+                    navigation.selectOnRight = nextButton;
+                button.navigation = navigation;
+
+                return true;
+            }
+            catch (System.Exception e)
+            {
+                Debug.LogError(e);
+                return false;
+            }
+        }
     }
 
     /// <summary>
@@ -79,5 +106,14 @@ namespace Main.Utility
         /// <param name="transform">トランスフォーム</param>
         /// <returns>成功／失敗</returns>
         public bool SetEventTriggerEnabledOfEventTrigger(bool enabled, EventTrigger eventTrigger, Transform transform=null);
+        /// <summary>
+        /// ボタンのナビゲーションをセット
+        /// </summary>
+        /// <param name="prevButton">前のボタン</param>
+        /// <param name="nextButton">次のボタン</param>
+        /// <param name="button">ボタン</param>
+        /// <param name="transform">トランスフォーム</param>
+        /// <returns>成功／失敗</returns>
+        public bool SetNavigationOfButton(Button prevButton, Button nextButton, Button button, Transform transform = null);
     }
 }

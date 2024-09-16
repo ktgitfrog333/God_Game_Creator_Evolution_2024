@@ -14,7 +14,7 @@ namespace Main.Model
     [RequireComponent(typeof(Button))]
     [RequireComponent(typeof(EventTrigger))]
     [RequireComponent(typeof(GameContentsConfig))]
-    public class GameSelectButtonModel : UIEventController, IButtonEventTriggerModel
+    public class GameSelectButtonModel : UIEventController, IButtonEventTriggerModel, IGameSelectButtonModel
     {
         /// <summary>ボタン</summary>
         private Button _button;
@@ -41,5 +41,31 @@ namespace Main.Model
         {
             return _mainUGUIsModelUtility.SetEventTriggerEnabledOfEventTrigger(enabled, _eventTrigger, Transform);
         }
+
+        public bool SetNavigation(Button prevButton, Button nextButton)
+        {
+            return _mainUGUIsModelUtility.SetNavigationOfButton(prevButton, nextButton, _button, Transform);
+        }
+    }
+
+    /// <summary>
+    /// モデル
+    /// ステージ選択へ戻るボタン
+    /// インターフェース
+    /// </summary>
+    public interface IGameSelectButtonModel : IButtonCommon
+    {
+
+    }
+
+    public interface IButtonCommon
+    {
+        /// <summary>
+        /// ボタンのナビゲーションをセット
+        /// </summary>
+        /// <param name="prevButton">前のボタン</param>
+        /// <param name="nextButton">次のボタン</param>
+        /// <returns>成功／失敗</returns>
+        public bool SetNavigation(Button prevButton, Button nextButton);
     }
 }
