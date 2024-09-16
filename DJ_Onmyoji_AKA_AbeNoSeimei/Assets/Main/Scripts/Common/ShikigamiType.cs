@@ -63,6 +63,19 @@ namespace Main.Common
     }
 
     /// <summary>
+    /// レア度
+    /// </summary>
+    public enum RareType
+    {
+        /// <summary>ノーマル</summary>
+        Normal,
+        /// <summary>レア</summary>
+        Rare,
+        /// <summary>Sレア</summary>
+        SRare,
+    }
+
+    /// <summary>
     /// スキルランク
     /// D < C < B < A < S
     /// </summary>

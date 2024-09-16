@@ -15,6 +15,8 @@ namespace Main.Common
         public RewardID rewardID;
         /// <summary>式神タイプ</summary>
         public ShikigamiType shikigamiType;
+        /// <summary>レアタイプ</summary>
+        public RareType rareType;
         /// <summary>リワードタイプ</summary>
         public ClearRewardType rewardType;
         /// <summary>イメージ</summary>

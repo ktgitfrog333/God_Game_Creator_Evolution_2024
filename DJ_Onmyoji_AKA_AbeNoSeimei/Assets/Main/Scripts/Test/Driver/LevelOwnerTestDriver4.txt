@@ -1,0 +1,58 @@
+using Main.Common;
+using Main.Test.Common;
+using Main.Test.Stub;
+using Main.Utility;
+using System.Collections;
+using System.Collections.Generic;
+using System.Linq;
+using UnityEngine;
+
+namespace Main.Test.Driver
+{
+    public class LevelOwnerTestDriver4 : CommonUtilityTest
+    {
+        protected override void Start()
+        {
+            // ê≥èÌån
+            CaseNormalSystem(0000);
+        }
+
+        protected override void Case(int caseId, bool isAbnormal = false)
+        {
+            var name = System.Reflection.MethodBase.GetCurrentMethod().Name;
+            var input = GetComponent<LevelOwnerTestStub4>().Inputs
+                .Where(q => q.caseId == caseId)
+                .Select(q => q)
+                .ToArray()[0];
+            var output = GetComponent<LevelOwnerTestStub4>().Outputs
+                .Where(q => q.caseId == caseId)
+                .Select(q => q)
+                .ToArray()[0];
+
+            if (!isAbnormal)
+            {
+                var utility = new MainRewardsUtility();
+                var result = ((ILevelOwnerTestDriver4)utility).GetMergeEnhancePlayer(input.rewardContentProps, input.newRewardContentProps);
+                OutputResult(result.SequenceEqual(output.GetMergeEnhancePlayer), caseId);
+            }
+            else
+            {
+                var utility = new MainRewardsUtility();
+                ExceptionResult(() => ((ILevelOwnerTestDriver4)utility).GetMergeEnhancePlayer(input.rewardContentProps, input.newRewardContentProps), caseId, output.throwMessage);
+            }
+        }
+
+    }
+
+    public interface ILevelOwnerTestDriver4
+    {
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="rewardContentProps"></param>
+        /// <param name="newRewardContentProps"></param>
+        /// <returns></returns>
+        /// <see cref="Main.Utility.MainRewardsUtility.GetMergeEnhancePlayer(RewardContentProp[], List{RewardContentProp})"/>
+        public List<RewardContentProp> GetMergeEnhancePlayer(RewardContentProp[] rewardContentProps, List<RewardContentProp> newRewardContentProps);
+    }
+}

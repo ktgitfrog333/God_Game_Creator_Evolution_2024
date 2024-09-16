@@ -309,6 +309,7 @@ namespace Universal.Bean
         public int rewardType;
         public UserBean.ShikigamiInfo shikigamiInfo;
         public int soulMoney;
+        public int rareType;
 
         public RewardContentProp()
         {

@@ -185,7 +185,7 @@ MonoBehaviour:
   - {fileID: 2737388676213699898}
   - {fileID: 4358895904515132334}
   rewardsModel: {fileID: 1468756092035247370}
-  lastContent: {fileID: 0}
+  lastContent: {fileID: 4455790507446570917}
 --- !u!114 &1468756092035247370
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -201,6 +201,7 @@ MonoBehaviour:
   rewardContentProps:
   - rewardID: 1
     shikigamiType: 0
+    rareType: 0
     rewardType: 0
     image: {fileID: 21300000, guid: 24fa103679e856642808deb517a794c5, type: 3}
     name: "\u516D\u5408"
@@ -238,6 +239,7 @@ MonoBehaviour:
         afterPlayerInfoProps: []
   - rewardID: 3
     shikigamiType: 1
+    rareType: 0
     rewardType: 1
     image: {fileID: 21300000, guid: c658e7d00a8d8cc439c8a47c2a0b8ccf, type: 3}
     name: "\u6731\u96C0"
@@ -275,6 +277,7 @@ MonoBehaviour:
         afterPlayerInfoProps: []
   - rewardID: 0
     shikigamiType: 2
+    rareType: 0
     rewardType: 0
     image: {fileID: 21300000, guid: c0b4996d937d9534480ffd51b427eb35, type: 3}
     name: "\u52FE\u9673"
@@ -312,6 +315,7 @@ MonoBehaviour:
         afterPlayerInfoProps: []
   - rewardID: 4
     shikigamiType: 3
+    rareType: 0
     rewardType: 2
     image: {fileID: 21300000, guid: bfa93a3222f4740469acb95016ea06e7, type: 3}
     name: "\u6674\u660E"
@@ -349,6 +353,7 @@ MonoBehaviour:
         afterPlayerInfoProps: []
   - rewardID: 2
     shikigamiType: 3
+    rareType: 0
     rewardType: 2
     image: {fileID: 21300000, guid: bfa93a3222f4740469acb95016ea06e7, type: 3}
     name: "\u6674\u660E"
@@ -1217,6 +1222,7 @@ MonoBehaviour:
   - {fileID: 7688040936246183182}
   - {fileID: 7528377189819036148}
   - {fileID: 4811906719832139707}
+  targetRectTransform: {fileID: 0}
 --- !u!1 &4455790507446570919
 GameObject:
   m_ObjectHideFlags: 0
