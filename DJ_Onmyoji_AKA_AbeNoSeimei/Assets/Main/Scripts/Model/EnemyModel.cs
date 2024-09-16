@@ -170,6 +170,8 @@ namespace Main.Model
                 {
                     if (!enemyView.PlayHitEffect())
                         Debug.LogError("PlayHitEffect");
+
+                    enemyView.SetHpBar(State.HP.Value, prop.hpMax);
                 });
             damageSufferedZoneModel.IsHitPlayer.ObserveEveryValueChanged(x => x.Value)
                 .Where(x => x)
