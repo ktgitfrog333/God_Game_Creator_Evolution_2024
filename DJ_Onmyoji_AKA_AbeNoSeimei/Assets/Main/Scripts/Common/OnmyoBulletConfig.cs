@@ -18,6 +18,8 @@ namespace Main.Common
         public float? moveSpeed;
         /// <summary>行動間隔</summary>
         public float actionRate;
+        /// <summary>ホーミング性能（searchRange）</summary>
+        public float homing;
         /// <summary>停止するまでの時間</summary>
         public float bulletLifeTime;
         /// <summary>攻撃力</summary>

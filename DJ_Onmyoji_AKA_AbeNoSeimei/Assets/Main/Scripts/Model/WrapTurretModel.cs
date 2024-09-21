@@ -19,6 +19,7 @@ namespace Main.Model
                 actionRate = _shikigamiUtility.GetMainSkillValue(_shikigamiInfo, MainSkillType.ActionRate),
                 attackPoint = (int)_shikigamiUtility.GetMainSkillValue(_shikigamiInfo, MainSkillType.AttackPoint),
                 bulletLifeTime = _shikigamiUtility.GetMainSkillValue(_shikigamiInfo, MainSkillType.BulletLifeTime),
+                homing = _shikigamiUtility.GetMainSkillValue(_shikigamiInfo, MainSkillType.Homing),
             };
         }
 

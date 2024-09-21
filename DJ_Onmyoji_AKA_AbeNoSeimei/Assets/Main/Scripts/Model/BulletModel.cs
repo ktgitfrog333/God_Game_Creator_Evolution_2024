@@ -27,7 +27,7 @@ namespace Main.Model
         [SerializeField] protected OnmyoBulletConfig onmyoBulletConfig;
         /// <summary>敵が攻撃範囲へ侵入した判定のトリガー</summary>
         [Tooltip("敵が攻撃範囲へ侵入した判定のトリガー")]
-        [SerializeField] private SearchRangeOfEnemyCollider searchRangeOfEnemyCollider;
+        [SerializeField] protected SearchRangeOfEnemyCollider searchRangeOfEnemyCollider;
         /// <summary>攻撃を与える判定のトリガー</summary>
         [SerializeField] protected AttackColliderOfOnmyoBullet attackColliderOfOnmyoBullet;
         /// <summary>砲台系ユーティリティ</summary>

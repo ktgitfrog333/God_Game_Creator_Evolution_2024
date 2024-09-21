@@ -199,6 +199,11 @@ namespace Universal.Bean
                             },
                             new ShikigamiInfo.MainSkill()
                             {
+                                type = 8,
+                                rank = 0,
+                            },
+                            new ShikigamiInfo.MainSkill()
+                            {
                                 type = 2,
                                 rank = 0,
                             },
@@ -377,7 +382,7 @@ namespace Universal.Bean
         public int soulMoney = 0;
         private readonly int SOUL_MONEY = 0;
         /// <summary>入力モード</summary>
-        public int inputMode = 0;
+        public int inputMode = 2;
 
         /// <summary>
         /// ユーザー情報を保持するクラス
