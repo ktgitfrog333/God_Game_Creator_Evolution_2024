@@ -116,6 +116,8 @@ namespace Main.Common
         Range = 6,
         /// <summary>デバフ効果時間</summary>
         DebuffEffectLifeTime = 7,
+        /// <summary>ホーミング性能</summary>
+        Homing = 8,
     }
 
     /// <summary>
@@ -123,8 +125,6 @@ namespace Main.Common
     /// </summary>
     public enum SubSkillType
     {
-        /// <summary>追尾性能</summary>
-        Homing = 2,
         /// <summary>爆発</summary>
         Explosion = 1,
         /// <summary>貫通</summary>

@@ -69,7 +69,15 @@ namespace Main.Model
     /// 攻撃を与える判定のトリガー
     /// インターフェース
     /// </summary>
-    public interface IAttackColliderOfOnmyoBullet
+    public interface IAttackColliderOfOnmyoBullet : IUniversalCollider
+    {
+    }
+
+    /// <summary>
+    /// 判定のトリガー
+    /// インターフェース
+    /// </summary>
+    public interface IUniversalCollider
     {
         /// <summary>
         /// 円形コライダー2Dの半径をセット

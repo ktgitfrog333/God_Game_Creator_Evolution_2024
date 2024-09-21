@@ -243,6 +243,36 @@
 			},
 			{
 				"shikigamiType": 0,
+				"mainSkillType": 8,
+				"skillRank": 4,
+				"value": 2.5
+			},
+			{
+				"shikigamiType": 0,
+				"mainSkillType": 8,
+				"skillRank": 3,
+				"value": 1.875
+			},
+			{
+				"shikigamiType": 0,
+				"mainSkillType": 8,
+				"skillRank": 2,
+				"value": 1.25
+			},
+			{
+				"shikigamiType": 0,
+				"mainSkillType": 8,
+				"skillRank": 1,
+				"value": 0.625
+			},
+			{
+				"shikigamiType": 0,
+				"mainSkillType": 8,
+				"skillRank": 0,
+				"value": 0
+			},
+			{
+				"shikigamiType": 0,
 				"mainSkillType": 2,
 				"skillRank": 0,
 				"value": 10

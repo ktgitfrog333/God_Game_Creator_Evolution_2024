@@ -65,6 +65,11 @@ namespace Main.View
                     type = MainSkillType.DebuffEffectLifeTime,
                     value = "展開時間",
                 },
+                new ShikigamiInfoVisualMapOfMainSkillType()
+                {
+                    type = MainSkillType.Homing,
+                    value = "ホーミング性能",
+                },
             },
             subSkillTypes = new ShikigamiInfoVisualMapOfSubSkillType[]
             {
@@ -72,11 +77,6 @@ namespace Main.View
                 {
                     type = SubSkillType.Explosion,
                     value = "爆発",
-                },
-                new ShikigamiInfoVisualMapOfSubSkillType()
-                {
-                    type = SubSkillType.Homing,
-                    value = "追尾性能",
                 },
                 new ShikigamiInfoVisualMapOfSubSkillType()
                 {
