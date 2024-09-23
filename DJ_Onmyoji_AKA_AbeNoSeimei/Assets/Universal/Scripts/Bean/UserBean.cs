@@ -468,6 +468,8 @@ namespace Universal.Bean
                 public int type;
                 /// <summary>スキルランク</summary>
                 public int rank;
+                /// <summary>スキルランク加算値</summary>
+                public int addRankCnt;
 
                 public SubSkill() { }
                 public SubSkill(SubSkill source)
