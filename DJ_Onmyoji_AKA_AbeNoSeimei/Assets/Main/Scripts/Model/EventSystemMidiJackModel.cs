@@ -29,14 +29,14 @@ namespace Main.Model
         /// <summary>ステージ選択へ戻るのモデル</summary>
         [SerializeField] private GameSelectButtonModel gameSelectButtonModel;
         /// <summary>タイトルへ戻るボタン</summary>
-        [SerializeField] private GameTitleButtonModel gameTitleButtonModel;
+        [SerializeField] private GameTitleButtonModel[] gameTitleButtonModels;
 
         private void Reset()
         {
             gamePauseModel = GameObject.Find("GamePause").GetComponent<GamePauseModel>();
             rewardSelectModel = GameObject.Find("RewardSelect").GetComponent<RewardSelectModel>();
             gameSelectButtonModel = GameObject.Find("GameSelectButton").GetComponent<GameSelectButtonModel>();
-            gameTitleButtonModel = GameObject.Find("GameTitleButton").GetComponent<GameTitleButtonModel>();
+            gameTitleButtonModels = GameObject.Find("Canvas").GetComponentsInChildren<GameTitleButtonModel>();
         }
 
         private void Start()
@@ -70,7 +70,7 @@ namespace Main.Model
                     List<Button> buttons = new List<Button>();
                     buttons.AddRange(rewardSelectModel.RewardContentModels.Select(q => q.GetComponent<Button>()));
                     buttons.Add(gameSelectButtonModel.GetComponent<Button>());
-                    buttons.Add(gameTitleButtonModel.GetComponent <Button>());
+                    buttons.AddRange(gameTitleButtonModels.Select(q => q.GetComponent<Button>()));
                     currentButton = buttons
                         .FirstOrDefault(y => y == x.GetComponent<Button>());
                 });
