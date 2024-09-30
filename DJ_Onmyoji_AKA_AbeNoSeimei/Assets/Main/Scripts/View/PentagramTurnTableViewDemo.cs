@@ -46,7 +46,7 @@ namespace Main.View
                     break;
                 case 3:
                     // text = GetComponent<Text>();
-                    text.text = $"ObserveEveryValueChangedCnt:\r\n[{mainPresenterDemo.ObserveEveryValueChangedCnt}]";
+                    //text.text = $"ObserveEveryValueChangedCnt:\r\n[{mainPresenterDemo.ObserveEveryValueChangedCnt}]";
                     break;
                 case 4:
                     // text = GetComponent<Text>();
