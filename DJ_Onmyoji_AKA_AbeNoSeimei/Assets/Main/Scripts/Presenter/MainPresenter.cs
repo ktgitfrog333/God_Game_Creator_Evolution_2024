@@ -103,6 +103,8 @@ namespace Main.Presenter
         [SerializeField] private GameTitleButtonModel[] gameTitleButtonModels;
         /// <summary>コングラチュレーション画面のビュー</summary>
         [SerializeField] private CongratulationsView congratulationsView;
+        /// <summary>カウントダウンロゴ（親）のビュー</summary>
+        [SerializeField] private CountdownLogosView countdownLogosView;
 
         private void Reset()
         {
@@ -159,6 +161,7 @@ namespace Main.Presenter
             gameTitleButtonViews = GameObject.Find("Canvas").GetComponentsInChildren<GameTitleButtonView>();
             gameTitleButtonModels = GameObject.Find("Canvas").GetComponentsInChildren<GameTitleButtonModel>();
             congratulationsView = GameObject.Find("Congratulations").GetComponent<CongratulationsView>();
+            countdownLogosView = GameObject.Find("CountdownLogos").GetComponent<CountdownLogosView>();
         }
 
         public void OnStart()
@@ -607,10 +610,18 @@ namespace Main.Presenter
                         clearCountdownTimerSystemModel.enabled = true;
                         IClearCountdownTimerViewAdapter circleView = new ClearCountdownTimerCircleViewAdapter(clearCountdownTimerCircleView);
                         clearCountdownTimerSystemModel.TimeSec.ObserveEveryValueChanged(x => x.Value)
+                            .Pairwise()    
                             .Subscribe(x =>
                             {
-                                if (!circleView.Set(x, clearCountdownTimerSystemModel.LimitTimeSecMax))
+                                if (!circleView.Set(x.Current, clearCountdownTimerSystemModel.LimitTimeSecMax))
                                     Debug.LogError("SetAngle");
+                                if (x.Current != 0f &&
+                                    x.Previous != 0f)
+                                {
+                                    Observable.FromCoroutine<bool>(observer => countdownLogosView.PlayCountDownDirection(observer, x.Current))
+                                        .Subscribe(_ => { })
+                                        .AddTo(gameObject);
+                                }
                             });
                         clearCountdownTimerSystemModel.IsTimeOut.ObserveEveryValueChanged(x => x.Value)
                             .Subscribe(x =>

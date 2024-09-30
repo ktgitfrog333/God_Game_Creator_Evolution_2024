@@ -136,6 +136,17 @@ MonoBehaviour:
     soulMoney: 500
   - level: 3
     soulMoney: 800
+  subSkillsSynergies:
+  - subSkillType: 1
+    subSkillTags: 01000000
+  - subSkillType: 3
+    subSkillTags: 00000000
+  - subSkillType: 4
+    subSkillTags: 00000000
+  - subSkillType: 5
+    subSkillTags: 00000000
+  - subSkillType: 9
+    subSkillTags: 02000000
 --- !u!1 &1827416082
 GameObject:
   m_ObjectHideFlags: 0
@@ -338,8 +349,14 @@ MonoBehaviour:
   levelBackgroundView: {fileID: 0}
   clearCountdownTimerGaugeView: {fileID: 0}
   gameOverView: {fileID: 0}
-  gameTitleButtonView: {fileID: 0}
-  gameTitleButtonModel: {fileID: 0}
+  gameTitleButtonViews:
+  - {fileID: 0}
+  - {fileID: 0}
+  gameTitleButtonModels:
+  - {fileID: 0}
+  - {fileID: 0}
+  congratulationsView: {fileID: 0}
+  countdownLogosView: {fileID: 0}
 --- !u!1 &1369696454729978949
 GameObject:
   m_ObjectHideFlags: 0
