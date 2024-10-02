@@ -55,6 +55,9 @@ namespace Main.Model
         protected virtual void OnEnable()
         {
             StartCoroutine(GeneralUtility.ActionsAfterDelay(_disableTimeSec, () => gameObject.SetActive(false)));
+
+            attackColliderOfOnmyoBullet.subSkillType = onmyoBulletConfig.subSkillType;
+            attackColliderOfOnmyoBullet.subSkillValue = onmyoBulletConfig.subSkillValue;
         }
 
         protected virtual void FixedUpdate()

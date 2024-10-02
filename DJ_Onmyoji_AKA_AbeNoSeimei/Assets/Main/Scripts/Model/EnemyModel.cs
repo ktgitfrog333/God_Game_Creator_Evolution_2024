@@ -4,6 +4,7 @@ using System.Data;
 using DG.Tweening;
 using Main.Utility;
 using Main.View;
+using Main.Common;
 using UniRx;
 using UniRx.Triggers;
 using UnityEngine;
@@ -135,6 +136,8 @@ namespace Main.Model
                 Transform.rotation = Quaternion.Euler(0, 180, 0);
             else
                 Transform.rotation = Quaternion.Euler(0, 0, 0);
+            // 状態異常のリセット
+            damageSufferedZoneModel.SetBadStatus(SubSkillType.None, 0f);
         }
 
         protected override void Start()
@@ -189,7 +192,12 @@ namespace Main.Model
                 var targetDirection = _target.position - Transform.position;
                 var moveDirection = targetDirection.normalized;
                 // 指定された方向と速度に弾を移動させる
-                Transform.position += moveDirection * _moveSpeed * Time.fixedDeltaTime;
+
+                if(SubSkillType.Paralysis.Equals(damageSufferedZoneModel.badStatus))
+                    //麻痺中は移動しない
+                    Transform.position += moveDirection * 0;
+                else
+                    Transform.position += moveDirection * _moveSpeed * Time.fixedDeltaTime;
             }
         }
 
