@@ -125,13 +125,31 @@ namespace Main.Common
     /// </summary>
     public enum SubSkillType
     {
-        /// <summary>爆発</summary>
+        /// <summary>サブスキルなし</summary>
+        None = 0,
+        /// <summary>爆発（ラップ）</summary>
         Explosion = 1,
-        /// <summary>貫通</summary>
+        /// <summary>麻痺（ラップ）</summary>
+        Paralysis = 2,
+        /// <summary>貫通（ラップ）</summary>
         Penetrating = 3,
-        /// <summary>拡散</summary>
+        /// <summary>拡散（ラップ）</summary>
         Spreading = 4,
-        /// <summary>連射</summary>
-        ContinuousFire = 5,
+        /// <summary>活力（ダンス）</summary>
+        Heal = 5,
+        /// <summary>炎上（ダンス）</summary>
+        Fire = 6,
+        /// <summary>突風（ダンス）</summary>
+        Knockback = 7,
+        /// <summary>急所（ダンス）</summary>
+        Critical = 8,
+        /// <summary>毒（グラフ）</summary>
+        Poison = 9,
+        /// <summary>暗闇（グラフ）</summary>
+        Darkness = 10,
+        /// <summary>雷撃（グラフ）</summary>
+        Thunder = 11,
+        /// <summary>呪詛（グラフ）</summary>
+        Curse = 12,
     }
 }

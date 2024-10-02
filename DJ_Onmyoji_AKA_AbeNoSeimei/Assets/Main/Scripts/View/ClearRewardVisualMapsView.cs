@@ -88,11 +88,6 @@ namespace Main.View
                     type = SubSkillType.Spreading,
                     value = "拡散",
                 },
-                new ShikigamiInfoVisualMapOfSubSkillType()
-                {
-                    type = SubSkillType.ContinuousFire,
-                    value = "連射",
-                },
             },
         };
 
