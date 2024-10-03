@@ -17,6 +17,8 @@ namespace Main.Model
         [SerializeField] private GraffitiBulletModel graffitiBulletModel;
         /// <summary>ラップ弾Model</summary>
         [SerializeField] private WrapBulletModel wrapBulletModel;
+        /// <summary>式神スキル管理システムの情報</summary>
+        private ShikigamiSkillSystemModel shikigamiSkillSystemModel;
         /// <summary>敵が攻撃範囲へ侵入した判定のトリガー</summary>
         [Tooltip("敵が攻撃範囲へ侵入した判定のトリガー")]
         [SerializeField] protected SearchRangeOfEnemyCollider searchRangeOfEnemyCollider;
@@ -41,6 +43,7 @@ namespace Main.Model
         {
             graffitiBulletModel = this.transform.parent.GetComponent<GraffitiBulletModel>();
             wrapBulletModel = this.transform.parent.GetComponent<WrapBulletModel>();
+            shikigamiSkillSystemModel = FindObjectOfType<ShikigamiSkillSystemModel>();
         }
 
         protected override void OnTriggerEnter2D(Collider2D other)
@@ -90,6 +93,13 @@ namespace Main.Model
                     damageSufferedZoneOfEnemyModel.SetBadStatus(subSkillType, subSkillValue);
 
                 base.OnTriggerEnter2D(other);
+            }
+            else if (SubSkillType.Heal.Equals(subSkillType))
+            {
+                DamageSufferedZoneOfEnemyModel damageSufferedZoneOfEnemyModel = other.GetComponent<DamageSufferedZoneOfEnemyModel>();
+                //敵に当たった時だけ回復
+                if (damageSufferedZoneOfEnemyModel != null)
+                    shikigamiSkillSystemModel.HealResource(subSkillValue);
             }
             else
                 base.OnTriggerEnter2D(other);

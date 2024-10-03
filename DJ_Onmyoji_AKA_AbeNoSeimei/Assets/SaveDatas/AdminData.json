@@ -607,6 +607,36 @@
         "value": 5.0
       },
       {
+        "shikigamiType": 1,
+        "subSkillType": 5,
+        "skillRank": 0,
+        "value": 0.1
+      },
+      {
+        "shikigamiType": 1,
+        "subSkillType": 5,
+        "skillRank": 1,
+        "value": 0.2
+      },
+      {
+        "shikigamiType": 1,
+        "subSkillType": 5,
+        "skillRank": 2,
+        "value": 0.3
+      },
+      {
+        "shikigamiType": 1,
+        "subSkillType": 5,
+        "skillRank": 3,
+        "value": 0.4
+      },
+      {
+        "shikigamiType": 1,
+        "subSkillType": 5,
+        "skillRank": 4,
+        "value": 0.5
+      },
+      {
         "shikigamiType": 0,
         "subSkillType": 6,
         "skillRank": 0,
