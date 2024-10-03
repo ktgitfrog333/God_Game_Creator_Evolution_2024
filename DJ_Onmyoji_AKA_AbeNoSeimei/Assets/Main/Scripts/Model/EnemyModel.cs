@@ -196,6 +196,19 @@ namespace Main.Model
                     if(enemyView != null)
                         enemyView.SetHpBar(State.HP.Value, prop.hpMax);
                 }).AddTo(this);
+
+            // 炎上の場合に一定間隔でダメージ判定するための実装
+            Observable.Interval(System.TimeSpan.FromSeconds(0.1f))
+                .Where(_ => SubSkillType.Fire.Equals(damageSufferedZoneModel.badStatus) && !State.IsDead.Value)
+                .Subscribe(_ =>
+                {
+                    State.HP.Value -= 1;
+                    if (State.HP.Value <= 0)
+                        State.IsDead.Value = true;
+
+                    if (enemyView != null)
+                        enemyView.SetHpBar(State.HP.Value, prop.hpMax);
+                }).AddTo(this);
         }
 
         private void FixedUpdate()
