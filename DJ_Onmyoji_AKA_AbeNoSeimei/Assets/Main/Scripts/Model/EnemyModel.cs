@@ -183,6 +183,19 @@ namespace Main.Model
                     enemiesProp.soulMoneyPoint = 0;
                     State.IsDead.Value = true;
                 });
+
+            // 毒の場合に一定間隔でダメージ判定するための実装
+            Observable.Interval(System.TimeSpan.FromSeconds(1))
+                .Where(_ => SubSkillType.Poison.Equals(damageSufferedZoneModel.badStatus) && !State.IsDead.Value)
+                .Subscribe(_ =>
+                {
+                    State.HP.Value -= Mathf.CeilToInt(prop.hpMax * 0.1f);
+                    if(State.HP.Value <= 0)
+                        State.IsDead.Value = true;
+
+                    if(enemyView != null)
+                        enemyView.SetHpBar(State.HP.Value, prop.hpMax);
+                }).AddTo(this);
         }
 
         private void FixedUpdate()
