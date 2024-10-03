@@ -19,6 +19,9 @@ namespace Main.Model
                 attackPoint = (int)_shikigamiUtility.GetMainSkillValue(_shikigamiInfo, MainSkillType.AttackPoint),
                 bulletLifeTime = _shikigamiUtility.GetMainSkillValue(_shikigamiInfo, MainSkillType.BulletLifeTime),
                 range = _shikigamiUtility.GetMainSkillValue(_shikigamiInfo, MainSkillType.Range),
+                subSkillType = _shikigamiUtility.GetSubSkillType(_shikigamiInfo),
+                subSkillRank = _shikigamiUtility.GetSubSkillRank(_shikigamiInfo),
+                subSkillValue = _shikigamiUtility.GetSubSkillValue(_shikigamiInfo),
                 // 陰陽玉と発射角度が異なるため再設定
                 moveSpeed = 0f,
                 trackingOfAny = RectTransform,

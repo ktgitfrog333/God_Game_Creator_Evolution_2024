@@ -29,6 +29,10 @@ namespace Main.Model
                         throw new System.Exception("SetRadiosOfCircleCollier2D");
                 _target = updateConf.trackingOfAny;
 
+                onmyoBulletConfig.subSkillType = updateConf.subSkillType;
+                onmyoBulletConfig.subSkillRank = updateConf.subSkillRank;
+                onmyoBulletConfig.subSkillValue = updateConf.subSkillValue;
+
                 //ダンスエフェクトのサイズ調整
                 var danceHallView = GetComponent<DanceHallView>();
                 if (danceHallView != null)

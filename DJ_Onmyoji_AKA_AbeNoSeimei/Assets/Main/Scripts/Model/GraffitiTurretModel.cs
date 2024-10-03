@@ -22,6 +22,9 @@ namespace Main.Model
                 range = _shikigamiUtility.GetMainSkillValue(_shikigamiInfo, MainSkillType.Range),
                 debuffEffectLifeTime = _shikigamiUtility.GetMainSkillValue(_shikigamiInfo, MainSkillType.DebuffEffectLifeTime),
                 attackPoint = 1,
+                subSkillType = _shikigamiUtility.GetSubSkillType(_shikigamiInfo),
+                subSkillRank = _shikigamiUtility.GetSubSkillRank(_shikigamiInfo),
+                subSkillValue = _shikigamiUtility.GetSubSkillValue(_shikigamiInfo),
             };
         }
 
