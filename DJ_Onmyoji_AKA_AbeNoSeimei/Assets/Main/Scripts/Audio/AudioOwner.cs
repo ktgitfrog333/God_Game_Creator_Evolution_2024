@@ -191,10 +191,14 @@ namespace Main.Audio
         me_game_over,
         /// <summary>敵に当たった時のSE（打撃音-21）</summary>
         se_dageki21,
-        /// <summary>プレイヤーがダメージを受けた時のSE（打撃1）</summary>
-        se_dageki1,
+        /// <summary>プレイヤーがダメージを受けた時のSE</summary>
+        se_player_damage,
         /// <summary>敵を倒した時の音（RPGの敵死亡）</summary>
         se_dead4,
+        /// <summary>ボスエンカウント（アラート音付き）</summary>
+        me_Boss_Encountered_1,
+        /// <summary>ボスエンカウント</summary>
+        me_Boss_Encountered_2,
     }
 
     /// <summary>

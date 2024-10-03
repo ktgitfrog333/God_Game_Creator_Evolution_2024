@@ -235,6 +235,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 94693bef2fba65c4b9c996ed2839870b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &359780208 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 409911106130839644, guid: d1f02c59a59dc8a4d89245becc051b3d, type: 3}
+  m_PrefabInstance: {fileID: 3116255076235499502}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d611ac0c8e0b1cd4dbfe8b02f29da540, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &434354310 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 3116255076115935080, guid: d1f02c59a59dc8a4d89245becc051b3d, type: 3}
@@ -596,6 +607,39 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: c5eef12e08b8e8c4fa2ff07db4f32cc4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &801737287 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 9005878781978478742, guid: d1f02c59a59dc8a4d89245becc051b3d, type: 3}
+  m_PrefabInstance: {fileID: 3116255076235499502}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: efcdb478d7bdd6a4fbd15c49489cd69b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &801737288 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 2936201931612239063, guid: d1f02c59a59dc8a4d89245becc051b3d, type: 3}
+  m_PrefabInstance: {fileID: 3116255076235499502}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5eb34d1c3a6187842bead1e2cb27ae9c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &801737289 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 7425212497640923863, guid: d1f02c59a59dc8a4d89245becc051b3d, type: 3}
+  m_PrefabInstance: {fileID: 3116255076235499502}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 81caa8369d9c8604dbb33ebe4c0df192, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!114 &852002762 stripped
@@ -1365,13 +1409,17 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 656231433}
     - target: {fileID: 5054490273931460206, guid: 50fd406f81b583f49ae7057cbd79c812, type: 3}
-      propertyPath: gameTitleButtonModel
-      value: 
-      objectReference: {fileID: 1070523751}
-    - target: {fileID: 5054490273931460206, guid: 50fd406f81b583f49ae7057cbd79c812, type: 3}
       propertyPath: gameSelectButtonModel
       value: 
       objectReference: {fileID: 434354310}
+    - target: {fileID: 5054490273931460206, guid: 50fd406f81b583f49ae7057cbd79c812, type: 3}
+      propertyPath: gameTitleButtonModels.Array.data[0]
+      value: 
+      objectReference: {fileID: 1070523751}
+    - target: {fileID: 5054490273931460206, guid: 50fd406f81b583f49ae7057cbd79c812, type: 3}
+      propertyPath: gameTitleButtonModels.Array.data[1]
+      value: 
+      objectReference: {fileID: 801737288}
     - target: {fileID: 5541732819645503582, guid: 50fd406f81b583f49ae7057cbd79c812, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -1498,9 +1546,17 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 656231433}
     - target: {fileID: 1181800399, guid: 898ade031a3ce554b8df63abbf1da280, type: 3}
+      propertyPath: countdownLogosView
+      value: 
+      objectReference: {fileID: 359780208}
+    - target: {fileID: 1181800399, guid: 898ade031a3ce554b8df63abbf1da280, type: 3}
       propertyPath: sunMoonSystemModel
       value: 
       objectReference: {fileID: 2094762497}
+    - target: {fileID: 1181800399, guid: 898ade031a3ce554b8df63abbf1da280, type: 3}
+      propertyPath: congratulationsView
+      value: 
+      objectReference: {fileID: 801737289}
     - target: {fileID: 1181800399, guid: 898ade031a3ce554b8df63abbf1da280, type: 3}
       propertyPath: gameTitleButtonView
       value: 
@@ -1585,6 +1641,22 @@ PrefabInstance:
       propertyPath: faderUniversalViews.Array.data[2]
       value: 
       objectReference: {fileID: 3116255076235499504}
+    - target: {fileID: 1181800399, guid: 898ade031a3ce554b8df63abbf1da280, type: 3}
+      propertyPath: gameTitleButtonViews.Array.data[0]
+      value: 
+      objectReference: {fileID: 1070523750}
+    - target: {fileID: 1181800399, guid: 898ade031a3ce554b8df63abbf1da280, type: 3}
+      propertyPath: gameTitleButtonViews.Array.data[1]
+      value: 
+      objectReference: {fileID: 801737287}
+    - target: {fileID: 1181800399, guid: 898ade031a3ce554b8df63abbf1da280, type: 3}
+      propertyPath: gameTitleButtonModels.Array.data[0]
+      value: 
+      objectReference: {fileID: 1070523751}
+    - target: {fileID: 1181800399, guid: 898ade031a3ce554b8df63abbf1da280, type: 3}
+      propertyPath: gameTitleButtonModels.Array.data[1]
+      value: 
+      objectReference: {fileID: 801737288}
     - target: {fileID: 1181800399, guid: 898ade031a3ce554b8df63abbf1da280, type: 3}
       propertyPath: gameManualViewPageViews.Array.data[0]
       value: 

@@ -59,6 +59,37 @@ namespace Main.Utility
             yield return null;
         }
 
+        public IEnumerator PlayFadeLoopsYoyoAnimation<T>(System.IObserver<bool> observer, EnumFadeState state, float duration, int loops, T component) where T : Component
+        {
+            // componentがImageかSpriteRendererかをチェック
+            if (component is Image image)
+            {
+                // Imageの場合の処理
+                SetFade(state.Equals(EnumFadeState.Open) ? EnumFadeState.Close : EnumFadeState.Open, component);
+                image.DOFade(endValue: state.Equals(EnumFadeState.Open) ? 0f : 1f, duration)
+                    .SetUpdate(true)
+                    .SetLoops(loops, LoopType.Yoyo)
+                    .OnComplete(() => observer.OnNext(true));
+            }
+            else if (component is SpriteRenderer spriteRenderer)
+            {
+                // SpriteRendererの場合の処理
+                SetFade(state.Equals(EnumFadeState.Open) ? EnumFadeState.Close : EnumFadeState.Open, component);
+                spriteRenderer.DOFade(endValue: state.Equals(EnumFadeState.Open) ? 1f : 0f, duration)
+                    .From(state.Equals(EnumFadeState.Open) ? 0f : 1f)
+                    .SetUpdate(true)
+                    .SetLoops(loops, LoopType.Yoyo)
+                    .OnComplete(() => observer.OnNext(true));
+            }
+            else
+            {
+                throw new System.ArgumentException("Unsupported component type. Only Image and SpriteRenderer are supported.", nameof(component));
+            }
+
+            yield return null;
+        }
+
+
         public bool SetFade<T>(EnumFadeState state, T component) where T : Component
         {
             try
@@ -713,6 +744,17 @@ namespace Main.Utility
         /// <param name="component">コンポーネント</param>
         /// <returns>コルーチン</returns>
         public IEnumerator PlayFadeAnimation<T>(System.IObserver<bool> observer, EnumFadeState state, float duration, T component) where T : Component;
+        /// <summary>
+        /// フェードのDOTweenアニメーション再生
+        /// ヨーヨー（行って戻ってくる）のループモード
+        /// </summary>
+        /// <param name="observer">バインド</param>
+        /// <param name="state">ステータス</param>
+        /// <param name="duration">終了時間</param>
+        /// <param name="loops">ループ回数</param>
+        /// <param name="component">コンポーネント</param>
+        /// <returns>コルーチン</returns>
+        public IEnumerator PlayFadeLoopsYoyoAnimation<T>(System.IObserver<bool> observer, EnumFadeState state, float duration, int loops, T component) where T : Component;
         /// <summary>
         /// 逆回転させるDOTweenアニメーション再生
         /// </summary>

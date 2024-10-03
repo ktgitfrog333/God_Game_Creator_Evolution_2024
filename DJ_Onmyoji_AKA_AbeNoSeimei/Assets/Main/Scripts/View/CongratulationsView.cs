@@ -6,9 +6,9 @@ namespace Main.View
 {
     /// <summary>
     /// ビュー
-    /// ゲームオーバー画面
+    /// コングラチュレーション画面
     /// </summary>
-    public class GameOverView : AbstractGameView
+    public class CongratulationsView : AbstractGameView
     {
         protected override void OnEnable()
         {

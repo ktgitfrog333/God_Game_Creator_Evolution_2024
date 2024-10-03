@@ -136,6 +136,17 @@ MonoBehaviour:
     soulMoney: 500
   - level: 3
     soulMoney: 800
+  subSkillsSynergies:
+  - subSkillType: 1
+    subSkillTags: 01000000
+  - subSkillType: 3
+    subSkillTags: 00000000
+  - subSkillType: 4
+    subSkillTags: 00000000
+  - subSkillType: 5
+    subSkillTags: 00000000
+  - subSkillType: 9
+    subSkillTags: 02000000
 --- !u!1 &1827416082
 GameObject:
   m_ObjectHideFlags: 0
@@ -338,8 +349,14 @@ MonoBehaviour:
   levelBackgroundView: {fileID: 0}
   clearCountdownTimerGaugeView: {fileID: 0}
   gameOverView: {fileID: 0}
-  gameTitleButtonView: {fileID: 0}
-  gameTitleButtonModel: {fileID: 0}
+  gameTitleButtonViews:
+  - {fileID: 0}
+  - {fileID: 0}
+  gameTitleButtonModels:
+  - {fileID: 0}
+  - {fileID: 0}
+  congratulationsView: {fileID: 0}
+  countdownLogosView: {fileID: 0}
 --- !u!1 &1369696454729978949
 GameObject:
   m_ObjectHideFlags: 0
@@ -493,8 +510,10 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 95b60bf3b9758a74eb397c2cf5ffedf8, type: 3}
   - {fileID: 8300000, guid: 25c8b0e3c21921648bb688383733b759, type: 3}
   - {fileID: 8300000, guid: 98fe67f00b72e5d4c86feca14d3b82ef, type: 3}
-  - {fileID: 8300000, guid: 63b7253ed59972e4d87e6d153402a191, type: 3}
+  - {fileID: 8300000, guid: c26c6b3862e0138419d3214a84731746, type: 3}
   - {fileID: 8300000, guid: 3b1a3c2ac3b2e4245aaa28c0274d8e06, type: 3}
+  - {fileID: 8300000, guid: 8544f9897be364a40a1a6d2e83825095, type: 3}
+  - {fileID: 8300000, guid: c6fadb063c9675146b1842394e1d07fa, type: 3}
   sFXChannelPrefab: {fileID: 1821450510366777210, guid: 13aae3403db5d45428b59ad80eca3da0, type: 3}
   delaies:
   - 0.1
