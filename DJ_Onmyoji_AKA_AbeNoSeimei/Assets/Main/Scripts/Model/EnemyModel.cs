@@ -193,9 +193,12 @@ namespace Main.Model
                 var moveDirection = targetDirection.normalized;
                 // 指定された方向と速度に弾を移動させる
 
-                if(SubSkillType.Paralysis.Equals(damageSufferedZoneModel.badStatus))
+                if (SubSkillType.Paralysis.Equals(damageSufferedZoneModel.badStatus))
                     //麻痺中は移動しない
                     Transform.position += moveDirection * 0;
+                else if (SubSkillType.Knockback.Equals(damageSufferedZoneModel.badStatus))
+                    //ノックバック（逆方向への移動）
+                    Transform.position += moveDirection * _moveSpeed * Time.fixedDeltaTime * -10f;
                 else
                     Transform.position += moveDirection * _moveSpeed * Time.fixedDeltaTime;
             }
