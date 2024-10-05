@@ -11,6 +11,8 @@ namespace Main.Model
     /// </summary>
     public class DanceTurretModel : TurretModel
     {
+        private int criticalNum = 0;
+
         protected override OnmyoBulletConfig InitializeOnmyoBulletConfig()
         {
             return new OnmyoBulletConfig()
@@ -38,6 +40,19 @@ namespace Main.Model
 
         protected override bool ActionOfBullet(ObjectsPoolModel objectsPoolModel, OnmyoBulletConfig onmyoBulletConfig)
         {
+            //サブスキルが急所の場合、4回に1回の攻撃力、範囲を強化
+            if (SubSkillType.Critical.Equals(onmyoBulletConfig.subSkillType))
+            {
+                criticalNum += 1;
+                Debug.Log(criticalNum);
+
+                if (criticalNum >= 4)
+                {
+                    onmyoBulletConfig.attackPoint = (int)(_shikigamiUtility.GetMainSkillValueAddValueBuffMax(_shikigamiInfo, MainSkillType.AttackPoint) * onmyoBulletConfig.subSkillValue);
+                    onmyoBulletConfig.range = _shikigamiUtility.GetMainSkillValue(_shikigamiInfo, MainSkillType.Range) * onmyoBulletConfig.subSkillValue;
+                    criticalNum = 0;
+                }
+            }
             return _turretUtility.CallInitialize(objectsPoolModel.GetDanceHallModel(), RectTransform, onmyoBulletConfig);
         }
 

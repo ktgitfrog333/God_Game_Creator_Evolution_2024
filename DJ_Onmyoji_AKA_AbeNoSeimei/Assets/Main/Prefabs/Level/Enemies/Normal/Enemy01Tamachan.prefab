@@ -84,6 +84,7 @@ MonoBehaviour:
   - Bullet
   invincibleTimeSec: 0
   shikigamiType: 03000000000000000100000002000000
+  savedShikigamiType: 
   deadTags:
   - Player
 --- !u!1 &2602242521599880046
@@ -435,6 +436,7 @@ MonoBehaviour:
   tags: []
   invincibleTimeSec: 1
   shikigamiType: 00000000010000000200000003000000
+  savedShikigamiType: 
 --- !u!1 &7776762512387094233
 GameObject:
   m_ObjectHideFlags: 0
@@ -583,3 +585,4 @@ MonoBehaviour:
   hpSprite: {fileID: 7426510061701946214}
   hpSpriteGauge: {fileID: 4229109012671571934}
   fadeDuration: 3
+  auraSprite: {fileID: 0}
