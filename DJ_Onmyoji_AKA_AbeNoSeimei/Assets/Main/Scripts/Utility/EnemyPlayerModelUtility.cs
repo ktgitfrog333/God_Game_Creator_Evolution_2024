@@ -150,7 +150,7 @@ namespace Main.Utility
         public void SetDamageRate(SubSkillType badStatus)
         {
             if (SubSkillType.Curse.Equals(badStatus))
-                damageRate = 10000;
+                damageRate = 2;
             else
                 damageRate = 1;
         }
