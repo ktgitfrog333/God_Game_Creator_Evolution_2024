@@ -143,9 +143,7 @@ MonoBehaviour:
     subSkillTags: 00000000
   - subSkillType: 4
     subSkillTags: 00000000
-  - subSkillType: 5
-    subSkillTags: 00000000
-  - subSkillType: 9
+  - subSkillType: 2
     subSkillTags: 02000000
 --- !u!1 &1827416082
 GameObject:

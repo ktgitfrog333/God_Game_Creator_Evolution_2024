@@ -952,6 +952,11 @@ namespace Main.Utility
                                 newRewardContentProp.detailProp.afterShikigamiInfoProp.subSkills = subSkills.ToArray();
                             }
                         }
+                        else
+                        {
+                            // サブスキル＋メインスキルの場合のマージ（そのまま追加）
+                            newRewardContentProp.detailProp.afterShikigamiInfoProp.subSkills = rewardContentProp.detailProp.afterShikigamiInfoProp.subSkills;
+                        }
                     }
                 newRewardContentProps.Add(newRewardContentProp);
             }

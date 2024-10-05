@@ -88,6 +88,11 @@ namespace Main.View
                     type = SubSkillType.Spreading,
                     value = "拡散",
                 },
+                new ShikigamiInfoVisualMapOfSubSkillType()
+                {
+                    type = SubSkillType.Paralysis,
+                    value = "麻痺",
+                },
             },
         };
 
