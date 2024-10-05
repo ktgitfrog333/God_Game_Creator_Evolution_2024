@@ -13,6 +13,10 @@ namespace Main.Utility
     /// </summary>
     public class EnemyPlayerModelUtility : IEnemyPlayerModelUtility
     {
+
+        /// <summary>ダメージ倍率</summary>
+        private int damageRate = 1;
+
         public IEnumerator InstanceEnemiesOfBossEnemyModel(System.IObserver<bool> observer, ObjectsPoolModel objectsPoolModel, KingAoandonProp kingAoandonProp, Transform fromTransform)
         {
             observer.OnNext(true);
@@ -125,8 +129,8 @@ namespace Main.Utility
                     .Subscribe(x =>
                     {
                         if (x)
-                            if (state.Damage.Value < state.HP.Value)
-                                state.HP.Value -= state.Damage.Value;
+                            if (state.Damage.Value * damageRate < state.HP.Value)
+                                state.HP.Value -= state.Damage.Value * damageRate;
                             else
                             {
                                 state.HP.Value = 0;
@@ -141,6 +145,14 @@ namespace Main.Utility
                 Debug.LogError(e);
                 return false;
             }
+        }
+
+        public void SetDamageRate(SubSkillType badStatus)
+        {
+            if (SubSkillType.Curse.Equals(badStatus))
+                damageRate = 10000;
+            else
+                damageRate = 1;
         }
     }
 

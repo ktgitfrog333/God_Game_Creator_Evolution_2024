@@ -186,7 +186,10 @@ namespace Main.Model
             damageSufferedZoneModel.badStatus.ObserveEveryValueChanged(x => x.Value)
                 .Subscribe(_ =>
                 {
+                    //オーラの可視／不可視（暗闇で使用）
                     enemyView.SetAura(damageSufferedZoneModel.GetShikigamiTypes());
+                    //ダメージ倍率の設定（呪詛で使用）
+                    _utility.SetDamageRate(damageSufferedZoneModel.badStatus.Value);
                 });
 
             // 毒の場合に一定間隔でダメージ判定するための実装
@@ -230,6 +233,9 @@ namespace Main.Model
                 else if (SubSkillType.Knockback.Equals(damageSufferedZoneModel.badStatus))
                     //ノックバック（逆方向への移動）
                     Transform.position += moveDirection * _moveSpeed * Time.fixedDeltaTime * -10f;
+                else if (SubSkillType.Knockback.Equals(damageSufferedZoneModel.badStatus))
+                    //呪詛（移動速度半減）
+                    Transform.position += moveDirection * _moveSpeed * Time.fixedDeltaTime * 0.5f;
                 else
                     Transform.position += moveDirection * _moveSpeed * Time.fixedDeltaTime;
             }
