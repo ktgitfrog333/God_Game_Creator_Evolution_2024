@@ -44,7 +44,6 @@ namespace Main.Model
             if (SubSkillType.Critical.Equals(onmyoBulletConfig.subSkillType))
             {
                 criticalNum += 1;
-                Debug.Log(criticalNum);
 
                 if (criticalNum >= 4)
                 {
