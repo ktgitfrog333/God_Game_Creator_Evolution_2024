@@ -49,4 +49,6 @@ MonoBehaviour:
   unDeadTimeSec: 0.2
   sensibilityScratch: 5
   gameSelectButtonModel: {fileID: 0}
-  gameTitleButtonModel: {fileID: 0}
+  gameTitleButtonModels:
+  - {fileID: 0}
+  - {fileID: 0}

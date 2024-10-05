@@ -799,6 +799,10 @@
                             "rank": 0
                         },
                         {
+                            "type": 8,
+                            "rank": 0
+                        },
+                        {
                             "type": 2,
                             "rank": 0
                         }
@@ -844,6 +848,10 @@
                         },
                         {
                             "type": 3,
+                            "rank": 0
+                        },
+                        {
+                            "type": 8,
                             "rank": 0
                         },
                         {
@@ -1051,6 +1059,10 @@
                             "rank": 0
                         },
                         {
+                            "type": 8,
+                            "rank": 0
+                        },
+                        {
                             "type": 2,
                             "rank": 0
                         }
@@ -1096,6 +1108,10 @@
                         },
                         {
                             "type": 3,
+                            "rank": 0
+                        },
+                        {
+                            "type": 8,
                             "rank": 0
                         },
                         {
@@ -1335,6 +1351,198 @@
                     ]
                 },
                 "soulMoney": 0
+            },
+            {
+                "rewardType": 1,
+                "shikigamiInfo": {
+                    "characterID": 1,
+                    "genomeType": 0,
+                    "name": "六合",
+                    "type": 0,
+                    "slotId": 3,
+                    "level": 1,
+                    "mainSkills": [
+                        {
+                            "type": 1,
+                            "rank": 0
+                        },
+                        {
+                            "type": 3,
+                            "rank": 0
+                        },
+                        {
+                            "type": 8,
+                            "rank": 0
+                        },
+                        {
+                            "type": 2,
+                            "rank": 0
+                        }
+                    ],
+                    "subSkills": [
+                        {
+                            "type": 4,
+                            "rank": 0
+                        },
+                        {
+                            "type": 3,
+                            "rank": 0
+                        },
+                        {
+                            "type": 1,
+                            "rank": 0
+                        },
+                        {
+                            "type": 2,
+                            "rank": 0
+                        }
+                    ]
+                },
+                "soulMoney": 800
+            },
+            {
+                "rewardType": 1,
+                "shikigamiInfo": {
+                    "characterID": 2,
+                    "genomeType": 0,
+                    "name": "天后",
+                    "type": 0,
+                    "slotId": 3,
+                    "level": 1,
+                    "mainSkills": [
+                        {
+                            "type": 1,
+                            "rank": 0
+                        },
+                        {
+                            "type": 3,
+                            "rank": 0
+                        },
+                        {
+                            "type": 8,
+                            "rank": 0
+                        },
+                        {
+                            "type": 2,
+                            "rank": 0
+                        }
+                    ],
+                    "subSkills": [
+                        {
+                            "type": 4,
+                            "rank": 0
+                        },
+                        {
+                            "type": 3,
+                            "rank": 0
+                        },
+                        {
+                            "type": 1,
+                            "rank": 0
+                        },
+                        {
+                            "type": 2,
+                            "rank": 0
+                        }
+                    ]
+                },
+                "soulMoney": 800
+            },
+            {
+                "rewardType": 1,
+                "shikigamiInfo": {
+                    "characterID": 6,
+                    "genomeType": 0,
+                    "name": "騰蛇",
+                    "type": 0,
+                    "slotId": 3,
+                    "level": 1,
+                    "mainSkills": [
+                        {
+                            "type": 1,
+                            "rank": 0
+                        },
+                        {
+                            "type": 3,
+                            "rank": 0
+                        },
+                        {
+                            "type": 8,
+                            "rank": 0
+                        },
+                        {
+                            "type": 2,
+                            "rank": 0
+                        }
+                    ],
+                    "subSkills": [
+                        {
+                            "type": 4,
+                            "rank": 0
+                        },
+                        {
+                            "type": 3,
+                            "rank": 0
+                        },
+                        {
+                            "type": 1,
+                            "rank": 0
+                        },
+                        {
+                            "type": 2,
+                            "rank": 0
+                        }
+                    ]
+                },
+                "soulMoney": 800
+            },
+            {
+                "rewardType": 1,
+                "shikigamiInfo": {
+                    "characterID": 7,
+                    "genomeType": 0,
+                    "name": "太陰",
+                    "type": 0,
+                    "slotId": 3,
+                    "level": 1,
+                    "mainSkills": [
+                        {
+                            "type": 1,
+                            "rank": 0
+                        },
+                        {
+                            "type": 3,
+                            "rank": 0
+                        },
+                        {
+                            "type": 8,
+                            "rank": 0
+                        },
+                        {
+                            "type": 2,
+                            "rank": 0
+                        }
+                    ],
+                    "subSkills": [
+                        {
+                            "type": 4,
+                            "rank": 0
+                        },
+                        {
+                            "type": 3,
+                            "rank": 0
+                        },
+                        {
+                            "type": 1,
+                            "rank": 0
+                        },
+                        {
+                            "type": 2,
+                            "rank": 0
+                        }
+                    ]
+                },
+                "soulMoney": 800
             }
         ]
                           },

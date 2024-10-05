@@ -152,4 +152,21 @@ namespace Main.Common
         /// <summary>呪詛（グラフ）</summary>
         Curse = 12,
     }
+
+    /// <summary>
+    /// サブスキルタグ
+    /// </summary>
+    public enum SubSkillTag
+    {
+        ST0000,
+        ST0001,
+        ST0002,
+        ST0003,
+        ST0004,
+        ST0005,
+        ST0006,
+        ST0007,
+        ST0008,
+        ST0009,
+    }
 }

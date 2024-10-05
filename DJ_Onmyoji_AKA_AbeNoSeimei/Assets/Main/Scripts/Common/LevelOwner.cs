@@ -53,6 +53,49 @@ namespace Main.Common
                 soulMoney = 800
             },
         };
+        /// <summary>
+        /// サブスキルシナジー
+        /// </summary>
+        /// <remarks>
+        /// 一つのサブスキルに複数のタグを指定する
+        /// サブスキルの複数定義は禁止
+        /// </remarks>
+        [SerializeField]
+        private SubSkillsSynergy[] subSkillsSynergies = new SubSkillsSynergy[]
+        {
+            new SubSkillsSynergy()
+            {
+                subSkillType = SubSkillType.Explosion,
+                subSkillTags = new SubSkillTag[]
+                {
+                    SubSkillTag.ST0001,
+                },
+            },
+            new SubSkillsSynergy()
+            {
+                subSkillType = SubSkillType.Penetrating,
+                subSkillTags = new SubSkillTag[]
+                {
+                    SubSkillTag.ST0000,
+                },
+            },
+            new SubSkillsSynergy()
+            {
+                subSkillType = SubSkillType.Spreading,
+                subSkillTags = new SubSkillTag[]
+                {
+                    SubSkillTag.ST0000,
+                },
+            },
+            new SubSkillsSynergy()
+            {
+                subSkillType = SubSkillType.Paralysis,
+                subSkillTags = new SubSkillTag[]
+                {
+                    SubSkillTag.ST0002,
+                },
+            },
+        };
 
         private void Reset()
         {
@@ -86,7 +129,7 @@ namespace Main.Common
             try
             {
                 var utility = new MainRewardsUtility();
-                _rewardContentProps = utility.InstanceRewardTablesAndGetRewards(shikigamiInfoSplitesProps, enhanceProps);
+                _rewardContentProps = utility.InstanceRewardTablesAndGetRewards(shikigamiInfoSplitesProps, enhanceProps, subSkillsSynergies);
                 if (_rewardContentProps == null)
                     throw new System.Exception("InstanceRewardTablesAndGetRewards");
 
@@ -248,5 +291,17 @@ namespace Main.Common
         public EnhanceLevel level;
         /// <summary>魂の経験値</summary>
         public int soulMoney;
+    }
+
+    /// <summary>
+    /// サブスキルシナジー
+    /// </summary>
+    [System.Serializable]
+    public struct SubSkillsSynergy
+    {
+        /// <summary>サブスキルタイプ</summary>
+        public SubSkillType subSkillType;
+        /// <summary>サブスキルタグ</summary>
+        public SubSkillTag[] subSkillTags;
     }
 }

@@ -634,8 +634,8 @@ MonoBehaviour:
       value: "\u8CAB\u901A"
     - type: 4
       value: "\u62E1\u6563"
-    - type: 5
-      value: "\u9023\u5C04"
+    - type: 2
+      value: "\u9EBB\u75FA"
 --- !u!1 &2998410079285951322
 GameObject:
   m_ObjectHideFlags: 0
@@ -910,8 +910,8 @@ MonoBehaviour:
       value: "\u8CAB\u901A"
     - type: 4
       value: "\u62E1\u6563"
-    - type: 5
-      value: "\u9023\u5C04"
+    - type: 2
+      value: "\u9EBB\u75FA"
 --- !u!1 &3801669766917241920
 GameObject:
   m_ObjectHideFlags: 0

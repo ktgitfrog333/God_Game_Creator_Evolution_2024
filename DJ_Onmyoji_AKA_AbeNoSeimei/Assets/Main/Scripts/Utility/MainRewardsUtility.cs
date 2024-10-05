@@ -101,7 +101,7 @@ namespace Main.Utility
             };
         }
 
-        public Common.RewardContentProp[] InstanceRewardTablesAndGetRewards(ShikigamiInfoSplitesProp[] shikigamiInfoSplitesProps, EnhanceProp[] enhanceProps)
+        public Common.RewardContentProp[] InstanceRewardTablesAndGetRewards(ShikigamiInfoSplitesProp[] shikigamiInfoSplitesProps, EnhanceProp[] enhanceProps, SubSkillsSynergy[] subSkillsSynergies)
         {
             try
             {
@@ -111,7 +111,7 @@ namespace Main.Utility
                     q.rewardType == (int)ClearRewardType.AddShikigami)
                     .ToList();
                 // 強化の場合はランク+1でレコード作成
-                rewardContentProps.AddRange(GetEnhanceRecord(slots, enhanceProps));
+                rewardContentProps.AddRange(GetEnhanceRecord(slots, enhanceProps, subSkillsSynergies));
                 List<Universal.Bean.RewardContentProp> rewardContentPropsDiced = new List<Universal.Bean.RewardContentProp>();
                 // ラップダイスして、1件抽出
                 // ダンスダイスして、1件抽出
@@ -150,15 +150,32 @@ namespace Main.Utility
                            d.shikigamiInfo.type == randomOne.shikigamiInfo.type &&  // 式神タイプが同じ
                            d.shikigamiInfo.slotId == randomOne.shikigamiInfo.slotId &&  // スロットIDが同じ
 
-                           // メインスキルのタイプとランクが重複
-                            d.shikigamiInfo.mainSkills.Where(q => 0 < q.addRankCnt)
-                                .Any(oms => randomOne.shikigamiInfo.mainSkills.Where(q => 0 < q.addRankCnt).Any(mms => mms.type == oms.type))
-                           )); // メインスキルのタイプとランクがすべて一致
+                           // メインスキルのタイプとランクが重複あり
+                           (d.shikigamiInfo.mainSkills.Where(q => 0 < q.addRankCnt)
+                                .Any(oms => randomOne.shikigamiInfo.mainSkills.Where(q => 0 < q.addRankCnt).Any(mms => mms.type == oms.type)) ||
+                            // サブスキルのタイプとランクの判定
+                            (d.shikigamiInfo.subSkills != null &&
+                                0 < d.shikigamiInfo.subSkills.Length &&
+                                randomOne.shikigamiInfo.subSkills != null &&
+                                0 < randomOne.shikigamiInfo.subSkills.Length &&
+                                // 強化は重複あり（シナジーは前の処理で考慮されているため判定不要）
+                                (d.shikigamiInfo.subSkills.Where(q => 0 < q.addRankCnt)
+                                    .Any(oms => randomOne.shikigamiInfo.subSkills.Where(q => 0 < q.addRankCnt).Any(mms => mms.type == oms.type)) ||
+                                // 追加は重複あり　または　シナジーに含まれない　または　取得上限を超えている
+                                IsEqualsOfTypeOnLeft(d.shikigamiInfo.subSkills.Where(q => 0 == q.addRankCnt).ToArray(), randomOne.shikigamiInfo.subSkills.Where(q => 0 == q.addRankCnt).ToArray()) ||
+                                !IsFoundSubSkillsSynergies(subSkillsSynergies, d.shikigamiInfo.subSkills, randomOne.shikigamiInfo.subSkills) ||
+                                IsOverLimitOfSubSkillsCount(d.shikigamiInfo.subSkills, randomOne.shikigamiInfo.subSkills))))
+                           )); // スキルのタイプとランクがすべて一致
 
                     // 新しい内容が選ばれた場合は追加 ChatGPT 4o
-                    if (randomOne != null)
+                    if (randomOne != null &&
+                        loopCnt < loopCntMax)
                     {
                         rewardContentPropsDiced.Add(randomOne);
+                    }
+                    else
+                    {
+                        Debug.LogWarning($"再シャッフル回数限界に到達: [{loopCnt}] / [{loopCntMax}]");
                     }
                 }
 
@@ -198,8 +215,9 @@ namespace Main.Utility
         /// </summary>
         /// <param name="slots">スロット情報</param>
         /// <param name="enhanceProps">強化プロパティ</param>
+        /// <param name="subSkillsSynergies">サブスキルシナジー</param>
         /// <returns>強化用の報酬テーブルレコード</returns>
-        private Universal.Bean.RewardContentProp[] GetEnhanceRecord(Universal.Bean.UserBean.PentagramTurnTableInfo.Slot[] slots, EnhanceProp[] enhanceProps)
+        private Universal.Bean.RewardContentProp[] GetEnhanceRecord(Universal.Bean.UserBean.PentagramTurnTableInfo.Slot[] slots, EnhanceProp[] enhanceProps, SubSkillsSynergy[] subSkillsSynergies)
         {
             // スロットから式神情報を1件取り出す
             List<Universal.Bean.RewardContentProp> createdRewardContentProps = new List<Universal.Bean.RewardContentProp>();
@@ -257,88 +275,8 @@ namespace Main.Utility
                         default:
                             break;
                     }
-                    switch ((ClearRewardType)createdRewardContentProp.rewardType)
-                    {
-                        case ClearRewardType.EnhanceShikigami:
-                            // サブスキルがあれば、その数ごとにランク+1の式神情報を作成
-                            if (createdRewardContentProp.shikigamiInfo.subSkills != null &&
-                                0 < createdRewardContentProp.shikigamiInfo.subSkills.Length)
-                            {
-                                foreach (var subSkill in createdRewardContentProp.shikigamiInfo.subSkills.Select((p, i) => new { Content = p, Index = i }))
-                                {
-                                    // （slotId、subSkill.type、subSkill.rank+1）でcreatedRewardContentPropsにランク+1登録済みかどうかを判定する
-                                    var length = createdRewardContentProps.Where(q => q.shikigamiInfo.slotId == createdRewardContentProp.shikigamiInfo.slotId &&
-                                            q.shikigamiInfo.subSkills != null &&
-                                            0 < q.shikigamiInfo.subSkills.Length &&
-                                            q.shikigamiInfo.subSkills.Any(ms => ms.type == subSkill.Content.type &&
-                                            subSkill.Content.rank < ms.rank))
-                                        .ToArray()
-                                        .Length;
-                                    if (length < 1)
-                                    {
-                                        // 存在しない場合はスキルランク+1を格納する
-                                        var clone = new Universal.Bean.RewardContentProp(createdRewardContentProp);
-                                        clone.shikigamiInfo.subSkills[subSkill.Index].rank++;
-                                        createdRewardContentProps.Add(clone);
-                                    }
-                                }
-                            }
-                            // ラップ、ダンス、グラフィティの場合はさらに、報酬テーブルから未取得のサブスキルを取得して、サブスキル追加の式神情報を作成
-                            var addSubSkills = _commonUtility.AdminDataSingleton.AdminBean.levelDesign.rewardContentProps.Where(q => q.rewardType == (int)ClearRewardType.EnhanceShikigami &&
-                                q.shikigamiInfo.characterID == createdRewardContentProp.shikigamiInfo.characterID &&
-                                q.shikigamiInfo.genomeType == createdRewardContentProp.shikigamiInfo.genomeType &&
-                                q.shikigamiInfo.subSkills != null &&
-                                0 < q.shikigamiInfo.subSkills.Length)
-                                .ToArray();
-
-                            if (0 < addSubSkills.Length)
-                            {
-                                if (createdRewardContentProp.shikigamiInfo.subSkills != null &&
-                                    0 < createdRewardContentProp.shikigamiInfo.subSkills.Length)
-                                {
-                                    var skillsToRemove = new List<Universal.Bean.UserBean.ShikigamiInfo.SubSkill>();
-                                    foreach (var addSubSkill in addSubSkills[0].shikigamiInfo.subSkills)
-                                    {
-                                        foreach (var gotSubSkill in createdRewardContentProp.shikigamiInfo.subSkills)
-                                        {
-                                            if (gotSubSkill.type == addSubSkill.type)
-                                            {
-                                                skillsToRemove.Add(gotSubSkill);
-                                            }
-                                        }
-                                    }
-                                    foreach (var item in skillsToRemove)
-                                    {
-                                        var list = addSubSkills[0].shikigamiInfo.subSkills.ToList();
-                                        list.Remove(item);
-                                        addSubSkills[0].shikigamiInfo.subSkills = list.ToArray();
-                                    }
-                                }
-                                if (addSubSkills[0].shikigamiInfo.subSkills != null &&
-                                    0 < addSubSkills[0].shikigamiInfo.subSkills.Length)
-                                {
-                                    foreach (var addSubSkill in addSubSkills[0].shikigamiInfo.subSkills)
-                                    {
-                                        // 存在しない場合はスキルランク+1を格納する
-                                        var clone = new Universal.Bean.RewardContentProp();
-                                        clone = createdRewardContentProp;
-                                        var list = clone.shikigamiInfo.subSkills.ToList();
-                                        list.Add(addSubSkill);
-                                        clone.shikigamiInfo.subSkills = list.ToArray();
-                                        createdRewardContentProps.Add(clone);
-                                    }
-                                }
-                            }
-
-                            break;
-                        case ClearRewardType.EnhancePlayer:
-                            // プレイヤー強化にサブスキルは無関係
-
-                            break;
-                        default:
-                            throw new System.ArgumentOutOfRangeException($"対象外のタイトル用クリア報酬タイプ種別: [{(ClearRewardType)createdRewardContentProp.rewardType}]");
-                    }
                 }
+                createdRewardContentProps = GetEnhanceSubSkills(slot, createdRewardContentProps, enhanceProps, subSkillsSynergies);
             }
 
             return createdRewardContentProps.ToArray();
@@ -487,6 +425,244 @@ namespace Main.Utility
             }
 
             return createdRewardContentProps;
+        }
+
+        /// <summary>
+        /// 強化用の報酬レコード（サブスキル）を取得
+        /// </summary>
+        /// <param name="slot">スロット情報</param>
+        /// <param name="rewardContentProps">強化用の報酬テーブルレコード</param>
+        /// <param name="enhanceProps">強化プロパティ</param>
+        /// <param name="subSkillsSynergies">サブスキルシナジー</param>
+        /// <returns>強化用の報酬テーブルレコード</returns>
+        private List<Universal.Bean.RewardContentProp> GetEnhanceSubSkills(Universal.Bean.UserBean.PentagramTurnTableInfo.Slot slot, List<Universal.Bean.RewardContentProp> createdRewardContentProps, EnhanceProp[] enhanceProps, SubSkillsSynergy[] subSkillsSynergies)
+        {
+            var createdRewardContentProp = new Universal.Bean.RewardContentProp()
+            {
+                rewardType = (ShikigamiType)slot.shikigamiInfo.type switch
+                {
+                    ShikigamiType.OnmyoTurret => (int)ClearRewardType.EnhancePlayer,
+                    _ => (int)ClearRewardType.EnhanceShikigami,
+                },
+                shikigamiInfo = slot.shikigamiInfo,
+            };
+            switch ((ClearRewardType)createdRewardContentProp.rewardType)
+            {
+                case ClearRewardType.EnhanceShikigami:
+                    // サブスキルがあれば、その数ごとにランク+1の式神情報を作成
+                    if (createdRewardContentProp.shikigamiInfo.subSkills != null &&
+                        0 < createdRewardContentProp.shikigamiInfo.subSkills.Length)
+                    {
+                        foreach (var subSkill in createdRewardContentProp.shikigamiInfo.subSkills.Select((p, i) => new { Content = p, Index = i }))
+                        {
+                            // （slotId、subSkill.type、subSkill.rank+1）でcreatedRewardContentPropsにランク+1登録済みかどうかを判定する
+                            var length = createdRewardContentProps.Where(q => q.shikigamiInfo.slotId == createdRewardContentProp.shikigamiInfo.slotId &&
+                                    q.shikigamiInfo.subSkills != null &&
+                                    0 < q.shikigamiInfo.subSkills.Length &&
+                                    q.shikigamiInfo.subSkills.Any(ms => ms.type == subSkill.Content.type &&
+                                    subSkill.Content.rank < ms.rank))
+                                .ToArray()
+                                .Length;
+                            if (length < 1 &&
+                                subSkill.Content.rank + 1 <= (int)SkillRank.S)
+                            {
+                                // 存在しない場合はスキルランク+1を格納する
+                                var clone = new Universal.Bean.RewardContentProp(createdRewardContentProp);
+                                clone.shikigamiInfo.subSkills[subSkill.Index].rank++;
+                                clone.shikigamiInfo.subSkills[subSkill.Index].addRankCnt = 1;
+                                clone.rareType = (int)RareType.Rare;
+                                // TODO: サブスキルのレア判定を決める
+                                foreach (var enhanceProp in enhanceProps)
+                                {
+                                    switch (enhanceProp.level)
+                                    {
+                                        case EnhanceLevel.Mode1:
+                                            break;
+                                        case EnhanceLevel.Mode2:
+                                            clone.soulMoney = enhanceProp.soulMoney;
+
+                                            break;
+                                        case EnhanceLevel.Mode3:
+                                            break;
+                                        default:
+                                            break;
+                                    }
+                                }
+                                createdRewardContentProps.Add(clone);
+                            }
+                        }
+                    }
+                    if (createdRewardContentProp.shikigamiInfo.subSkills != null &&
+                        2 < slot.shikigamiInfo.subSkills.Length)
+                        // スロットにセットされた式神のサブスキルが最大取得数を超えていた場合は取得せずに返却
+                        return createdRewardContentProps;
+
+                    // ラップ、ダンス、グラフィティの場合はさらに、報酬テーブルから未取得のサブスキルを取得して、サブスキル追加の式神情報を作成
+                    createdRewardContentProp = new Universal.Bean.RewardContentProp()
+                    {
+                        rewardType = (ShikigamiType)slot.shikigamiInfo.type switch
+                        {
+                            ShikigamiType.OnmyoTurret => (int)ClearRewardType.EnhancePlayer,
+                            _ => (int)ClearRewardType.EnhanceShikigami,
+                        },
+                        shikigamiInfo = slot.shikigamiInfo,
+                    };
+                    var addSubSkills = _commonUtility.AdminDataSingleton.AdminBean.levelDesign.rewardContentProps.Where(q => q.rewardType == (int)ClearRewardType.EnhanceShikigami &&
+                        q.shikigamiInfo.characterID == createdRewardContentProp.shikigamiInfo.characterID &&
+                        q.shikigamiInfo.genomeType == createdRewardContentProp.shikigamiInfo.genomeType &&
+                        q.shikigamiInfo.subSkills != null &&
+                        0 < q.shikigamiInfo.subSkills.Length)
+                        .ToArray();
+                    if (createdRewardContentProp.shikigamiInfo.subSkills != null &&
+                        0 < createdRewardContentProp.shikigamiInfo.subSkills.Length)
+                    {
+                        // シナジーを元に有効な組み合わせのみ抽出する
+                        var targetSubSkills = GetTargetSubSkills(subSkillsSynergies, createdRewardContentProp.shikigamiInfo.subSkills);
+
+                        // ChatGPT 4o
+                        foreach (var skill in addSubSkills)
+                        {
+                            skill.shikigamiInfo.subSkills = skill.shikigamiInfo.subSkills
+                                .Where(qss => targetSubSkills.Any(t => (int)t == qss.type))
+                                .ToArray();
+                        }
+
+                    }
+                    if (0 < addSubSkills.Length)
+                    {
+                        if (createdRewardContentProp.shikigamiInfo.subSkills != null &&
+                            0 < createdRewardContentProp.shikigamiInfo.subSkills.Length)
+                        {
+                            var skillsToRemove = new List<Universal.Bean.UserBean.ShikigamiInfo.SubSkill>();
+                            foreach (var addSubSkill in addSubSkills[0].shikigamiInfo.subSkills)
+                            {
+                                foreach (var gotSubSkill in createdRewardContentProp.shikigamiInfo.subSkills)
+                                {
+                                    if (gotSubSkill.type == addSubSkill.type)
+                                    {
+                                        skillsToRemove.Add(gotSubSkill);
+                                    }
+                                }
+                            }
+                            foreach (var item in skillsToRemove)
+                            {
+                                var list = addSubSkills[0].shikigamiInfo.subSkills.ToList();
+                                list.RemoveAll(x => x.type == item.type);
+                                addSubSkills[0].shikigamiInfo.subSkills = list.ToArray();
+                            }
+                        }
+                        if (addSubSkills[0].shikigamiInfo.subSkills != null &&
+                            0 < addSubSkills[0].shikigamiInfo.subSkills.Length)
+                        {
+                            foreach (var addSubSkill in addSubSkills[0].shikigamiInfo.subSkills)
+                            {
+                                // 存在しない場合はスキルを格納する
+                                var clone = new Universal.Bean.RewardContentProp(createdRewardContentProp);
+                                var list = clone.shikigamiInfo.subSkills.ToList();
+                                list.Add(addSubSkill);
+                                clone.shikigamiInfo.subSkills = list.ToArray();
+                                clone.rareType = (int)RareType.SRare;
+                                clone.soulMoney = addSubSkills[0].soulMoney;
+                                createdRewardContentProps.Add(clone);
+                            }
+                        }
+                    }
+
+                    break;
+                case ClearRewardType.EnhancePlayer:
+                    // プレイヤー強化にサブスキルは無関係
+
+                    break;
+                default:
+                    throw new System.ArgumentOutOfRangeException($"対象外のタイトル用クリア報酬タイプ種別: [{(ClearRewardType)createdRewardContentProp.rewardType}]");
+            }
+
+            return createdRewardContentProps;
+        }
+
+        /// <summary>
+        /// 左側にセットしたスキルタイプに対して一致しているか
+        /// </summary>
+        /// <param name="originSubSkills">比較元のサブスキル</param>
+        /// <param name="addSubSkills">追加対象のサブスキル</param>
+        /// <returns>左側にセットしたスキルタイプに対して一致しているか</returns>
+        private bool IsEqualsOfTypeOnLeft(UserBean.ShikigamiInfo.SubSkill[] originSubSkills, UserBean.ShikigamiInfo.SubSkill[] addSubSkills)
+        {
+            var leftCount = originSubSkills.Length;
+            var foundCount = 0;
+            foreach (var leftType in originSubSkills.Select(q => q.type))
+            {
+                if (0 < addSubSkills.Where(q => q.type == leftType)
+                    .ToArray()
+                    .Length)
+                {
+                    foundCount++;
+                }
+            }
+
+            return leftCount == foundCount;
+        }
+
+        /// <summary>
+        /// サブスキルシナジーが見つかるか
+        /// </summary>
+        /// <param name="subSkillsSynergies">サブスキルシナジー</param>
+        /// <param name="originSubSkills">比較元のサブスキル</param>
+        /// <param name="searchSubSkills">検索対象のサブスキル</param>
+        /// <returns>サブスキルシナジーが見つかるか</returns>
+        private bool IsFoundSubSkillsSynergies(SubSkillsSynergy[] subSkillsSynergies, UserBean.ShikigamiInfo.SubSkill[] originSubSkills, UserBean.ShikigamiInfo.SubSkill[] searchSubSkills)
+        {
+            var targetSubSkills = GetTargetSubSkills(subSkillsSynergies, originSubSkills);
+
+            return 0 < searchSubSkills.Where(q => targetSubSkills.Any(t => (int)t == q.type))
+                .ToArray()
+                .Length;
+        }
+
+        /// <summary>
+        /// サブスキルの所持上限を超えているか
+        /// </summary>
+        /// <param name="originSubSkills">比較元のサブスキル</param>
+        /// <param name="addSubSkills">追加対象のサブスキル</param>
+        /// <returns>サブスキルの所持上限を超えているか</returns>
+        private bool IsOverLimitOfSubSkillsCount(UserBean.ShikigamiInfo.SubSkill[] originSubSkills, UserBean.ShikigamiInfo.SubSkill[] addSubSkills)
+        {
+            var duplicateSkills = originSubSkills
+                .Where(ds => addSubSkills.Any(ts => ts.type == ds.type))
+                .ToArray();
+
+            // ChatGPT 4o
+            // 元のサブスキルリストから、targetSubSkillsに含まれるタイプを除外
+            var filteredDSkills = originSubSkills
+                .Where(ds => !addSubSkills.Any(ts => ts.type == ds.type))
+                .ToArray();
+            // randomOneのサブスキルリストから、targetSubSkillsに含まれるタイプを除外
+            var filteredRandomOneSkills = addSubSkills
+                .Where(rs => !originSubSkills.Any(ts => ts.type == rs.type))
+                .ToArray();
+
+            // 除外後のリストの長さを合計し、3より大きいかどうかをチェック
+            return 3 < duplicateSkills.Length + filteredDSkills.Length + filteredRandomOneSkills.Length;
+        }
+
+        /// <summary>
+        /// サブスキルシナジーを元にシナジー対象のサブスキルを取得
+        /// </summary>
+        /// <param name="subSkillsSynergies">サブスキルシナジー</param>
+        /// <param name="subSkills">サブスキル</param>
+        /// <returns>シナジー対象のサブスキル</returns>
+        private SubSkillType[] GetTargetSubSkills(SubSkillsSynergy[] subSkillsSynergies, UserBean.ShikigamiInfo.SubSkill[] subSkills)
+        {
+            var targetTags = subSkillsSynergies.Where(q => subSkills.Any(ss => ss.type == (int)q.subSkillType))
+                .SelectMany(q => q.subSkillTags)
+                .Distinct()
+                .ToArray();
+            var targetSubSkills = subSkillsSynergies.Where(q => q.subSkillTags.Any(qs => targetTags.Any(t => t.Equals(qs))))
+                .Select(q => q.subSkillType)
+                .Distinct()
+                .ToArray();
+
+            return targetSubSkills;
         }
 
         /// <summary>
@@ -754,6 +930,33 @@ namespace Main.Utility
                         for (var i = 0; i < newRewardContentProp.detailProp.afterShikigamiInfoProp.mainSkills.Length; i++)
                             if (newRewardContentProp.detailProp.afterShikigamiInfoProp.mainSkills[i].rank < rewardContentProp.detailProp.afterShikigamiInfoProp.mainSkills[i].rank)
                                 newRewardContentProp.detailProp.afterShikigamiInfoProp.mainSkills[i].rank = rewardContentProp.detailProp.afterShikigamiInfoProp.mainSkills[i].rank;
+                        if (newRewardContentProp.detailProp.afterShikigamiInfoProp.subSkills != null &&
+                            0 < newRewardContentProp.detailProp.afterShikigamiInfoProp.subSkills.Length)
+                        {
+                            // 同じタイプを持つ場合はランクを比較して高い方を反映
+                            var foundSkills = rewardContentProp.detailProp.afterShikigamiInfoProp.subSkills
+                                .Where(q => newRewardContentProp.detailProp.afterShikigamiInfoProp.subSkills.Any(ns => q.type.Equals(ns.type)))
+                                .ToArray();
+                            if (0 < foundSkills.Length)
+                                for (var i = 0; i < newRewardContentProp.detailProp.afterShikigamiInfoProp.subSkills.Length; i++)
+                                    if (newRewardContentProp.detailProp.afterShikigamiInfoProp.subSkills[i].rank < foundSkills[i].rank)
+                                        newRewardContentProp.detailProp.afterShikigamiInfoProp.subSkills[i].rank = foundSkills[i].rank;
+                            // 異なるタイプをお互い比較して足りない場合は追加
+                            var notFoundSkills = rewardContentProp.detailProp.afterShikigamiInfoProp.subSkills
+                                .Where(q => !newRewardContentProp.detailProp.afterShikigamiInfoProp.subSkills.Any(ns => q.type.Equals(ns.type)))
+                                .ToArray();
+                            if (0 < notFoundSkills.Length)
+                            {
+                                var subSkills = newRewardContentProp.detailProp.afterShikigamiInfoProp.subSkills.ToList();
+                                subSkills.AddRange(notFoundSkills);
+                                newRewardContentProp.detailProp.afterShikigamiInfoProp.subSkills = subSkills.ToArray();
+                            }
+                        }
+                        else
+                        {
+                            // サブスキル＋メインスキルの場合のマージ（そのまま追加）
+                            newRewardContentProp.detailProp.afterShikigamiInfoProp.subSkills = rewardContentProp.detailProp.afterShikigamiInfoProp.subSkills;
+                        }
                     }
                 newRewardContentProps.Add(newRewardContentProp);
             }
@@ -827,8 +1030,9 @@ namespace Main.Utility
         /// </summary>
         /// <param name="shikigamiInfoSplitesProps">式神と画像を連携する情報</param>
         /// <param name="enhanceProps">強化プロパティ</param>
+        /// <param name="subSkillsSynergies">サブスキルシナジー</param>
         /// <returns>クリア報酬のコンテンツプロパティ</returns>
-        public Common.RewardContentProp[] InstanceRewardTablesAndGetRewards(ShikigamiInfoSplitesProp[] shikigamiInfoSplitesProps, EnhanceProp[] enhanceProps);
+        public Common.RewardContentProp[] InstanceRewardTablesAndGetRewards(ShikigamiInfoSplitesProp[] shikigamiInfoSplitesProps, EnhanceProp[] enhanceProps, SubSkillsSynergy[] subSkillsSynergies);
         /// <summary>
         /// クリア報酬のコンテンツプロパティのマージ
         /// 式神1体に対して複数の報酬の効果を適用する
