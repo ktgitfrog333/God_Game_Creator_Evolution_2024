@@ -488,6 +488,96 @@
     "subSkillLists": [
       {
         "shikigamiType": 0,
+        "subSkillType": 1,
+        "skillRank": 0,
+        "value": 2.0
+      },
+      {
+        "shikigamiType": 0,
+        "subSkillType": 1,
+        "skillRank": 1,
+        "value": 3.0
+      },
+      {
+        "shikigamiType": 0,
+        "subSkillType": 1,
+        "skillRank": 2,
+        "value": 4.0
+      },
+      {
+        "shikigamiType": 0,
+        "subSkillType": 1,
+        "skillRank": 3,
+        "value": 5.0
+      },
+      {
+        "shikigamiType": 0,
+        "subSkillType": 1,
+        "skillRank": 4,
+        "value": 6.0
+      },
+      {
+        "shikigamiType": 0,
+        "subSkillType": 2,
+        "skillRank": 0,
+        "value": 1.0
+      },
+      {
+        "shikigamiType": 0,
+        "subSkillType": 2,
+        "skillRank": 1,
+        "value": 1.5
+      },
+      {
+        "shikigamiType": 0,
+        "subSkillType": 2,
+        "skillRank": 2,
+        "value": 2.0
+      },
+      {
+        "shikigamiType": 0,
+        "subSkillType": 2,
+        "skillRank": 3,
+        "value": 2.5
+      },
+      {
+        "shikigamiType": 0,
+        "subSkillType": 2,
+        "skillRank": 4,
+        "value": 3.0
+      },
+      {
+        "shikigamiType": 0,
+        "subSkillType": 3,
+        "skillRank": 0,
+        "value": 2.0
+      },
+      {
+        "shikigamiType": 0,
+        "subSkillType": 3,
+        "skillRank": 1,
+        "value": 3.0
+      },
+      {
+        "shikigamiType": 0,
+        "subSkillType": 3,
+        "skillRank": 2,
+        "value": 4.0
+      },
+      {
+        "shikigamiType": 0,
+        "subSkillType": 3,
+        "skillRank": 3,
+        "value": 5.0
+      },
+      {
+        "shikigamiType": 0,
+        "subSkillType": 3,
+        "skillRank": 4,
+        "value": 6.0
+      },
+      {
+        "shikigamiType": 0,
         "subSkillType": 4,
         "skillRank": 0,
         "value": 1.0
@@ -1183,11 +1273,7 @@
                             "rank": 0
                         },
                         {
-                            "type": 5,
-                            "rank": 0
-                        },
-                        {
-                            "type": 9,
+                            "type": 2,
                             "rank": 0
                         }
                     ]
@@ -1235,11 +1321,7 @@
                             "rank": 0
                         },
                         {
-                            "type": 5,
-                            "rank": 0
-                        },
-                        {
-                            "type": 9,
+                            "type": 2,
                             "rank": 0
                         }
                     ]
@@ -1287,11 +1369,7 @@
                             "rank": 0
                         },
                         {
-                            "type": 5,
-                            "rank": 0
-                        },
-                        {
-                            "type": 9,
+                            "type": 2,
                             "rank": 0
                         }
                     ]
@@ -1339,11 +1417,7 @@
                             "rank": 0
                         },
                         {
-                            "type": 5,
-                            "rank": 0
-                        },
-                        {
-                            "type": 9,
+                            "type": 2,
                             "rank": 0
                         }
                     ]

@@ -16,18 +16,21 @@ namespace Main.Model
         /// <summary>円形コライダー2D</summary>
         [SerializeField] private CircleCollider2D circleCollider2D;
 
+        private bool isEndHoming;
+
         private void Reset()
         {
             tags = new string[1];
             tags[0] = ConstTagNames.TAG_NAME_ENEMY;
             circleCollider2D = GetComponent<CircleCollider2D>();
+            isEndHoming = false;
         }
 
         protected override void Start() { }
 
         protected override void OnTriggerEnter2D(Collider2D other)
         {
-            if (_utility.IsCompareTagAndUpdateReactiveFlag(other, tags, IsHit))
+            if (_utility.IsCompareTagAndUpdateReactiveFlag(other, tags, IsHit) && !isEndHoming)
             {
                 Target = other.transform;
             }
@@ -37,6 +40,12 @@ namespace Main.Model
         {
             Target = null;
             base.OnDisable();
+        }
+
+        public void EndHoming()
+        {
+            isEndHoming = true;
+            Target = null;
         }
 
         public bool SetRadiosOfCircleCollier2D(float radios)

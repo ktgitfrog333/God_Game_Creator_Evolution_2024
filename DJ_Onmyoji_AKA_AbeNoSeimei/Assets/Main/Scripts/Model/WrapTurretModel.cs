@@ -29,6 +29,9 @@ namespace Main.Model
                 attackPoint = (int)_shikigamiUtility.GetMainSkillValue(_shikigamiInfo, MainSkillType.AttackPoint),
                 bulletLifeTime = _shikigamiUtility.GetMainSkillValue(_shikigamiInfo, MainSkillType.BulletLifeTime),
                 homing = _shikigamiUtility.GetMainSkillValue(_shikigamiInfo, MainSkillType.Homing),
+                subSkillType = _shikigamiUtility.GetSubSkillType(_shikigamiInfo),
+                subSkillRank = _shikigamiUtility.GetSubSkillRank(_shikigamiInfo),
+                subSkillValue = _shikigamiUtility.GetSubSkillValue(_shikigamiInfo),
             };
         }
 
@@ -43,7 +46,6 @@ namespace Main.Model
         protected override bool ActionOfBullet(ObjectsPoolModel objectsPoolModel, OnmyoBulletConfig onmyoBulletConfig)
         {
             bool result = false;
-            Debug.Log(_shikigamiUtility.GetSubSkillValue(_shikigamiInfo, SubSkillType.Spreading));
 
             if(!ActionOfBulletSpread(objectsPoolModel, onmyoBulletConfig, 0.0f))
                 return false;

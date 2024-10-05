@@ -183,13 +183,13 @@ namespace Main.Utility
         {
             var skills = shikigamiInfo.prop.subSkills;
             if (skills.Length < 1)
-                throw new System.Exception($"{skills.Length}つのサブスキルプロパティから取得できない");
+                return SkillRank.D;
 
             var array = skills.Where(q => q.type.Equals(subSkillType))
                 .Select(q => q.rank)
                 .ToArray();
             if (array.Length < 1)
-                throw new System.Exception($"{skills.Length}つのサブスキルプロパティから取得できない[{subSkillType}]");
+                return SkillRank.D;
 
             return array[0];
         }
@@ -297,6 +297,51 @@ namespace Main.Utility
                     rank = (SkillRank)item.rank,
                 });
             return skills.ToArray();
+        }
+
+        /// <summary>
+        /// サブスキルタイプを取得
+        /// </summary>
+        /// <param name="shikigamiInfo">式神情報</param>
+        /// <returns>取得したサブスキルタイプ</returns>
+        /// <exception cref="System.Exception">引数データが存在しない場合に例外をスロー</exception>
+        public SubSkillType GetSubSkillType(ShikigamiInfo shikigamiInfo)
+        {
+            var skills = shikigamiInfo.prop.subSkills;
+            if (skills.Length < 1)
+                return SubSkillType.None;
+
+            return skills[0].type;
+        }
+
+        /// <summary>
+        /// サブスキルランクを取得
+        /// </summary>
+        /// <param name="shikigamiInfo">式神情報</param>
+        /// <returns>取得したサブスキルランク</returns>
+        /// <exception cref="System.Exception">引数データが存在しない場合に例外をスロー</exception>
+        public SkillRank GetSubSkillRank(ShikigamiInfo shikigamiInfo)
+        {
+            var skills = shikigamiInfo.prop.subSkills;
+            if (skills.Length < 1)
+                return SkillRank.D;
+
+            return skills[0].rank;
+        }
+
+        /// <summary>
+        /// サブスキルランクを取得
+        /// </summary>
+        /// <param name="shikigamiInfo">式神情報</param>
+        /// <returns>取得したサブスキルランク</returns>
+        /// <exception cref="System.Exception">引数データが存在しない場合に例外をスロー</exception>
+        public float GetSubSkillValue(ShikigamiInfo shikigamiInfo)
+        {
+            var skills = shikigamiInfo.prop.subSkills;
+            if (skills.Length < 1)
+                return 0f;
+
+            return GetSubSkillValue(shikigamiInfo, skills[0].type);
         }
     }
 

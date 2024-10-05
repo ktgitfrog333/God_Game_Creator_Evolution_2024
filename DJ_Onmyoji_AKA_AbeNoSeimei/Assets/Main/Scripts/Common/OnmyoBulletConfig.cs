@@ -30,5 +30,11 @@ namespace Main.Common
         public RectTransform trackingOfAny;
         /// <summary>デバフ効果時間</summary>
         public float debuffEffectLifeTime;
+        /// <summary>サブスキルタイプ</summary>
+        public SubSkillType subSkillType;
+        /// <summary>サブスキルランク</summary>
+        public SkillRank subSkillRank;
+        /// <summary>サブスキルランク</summary>
+        public float subSkillValue;
     }
 }

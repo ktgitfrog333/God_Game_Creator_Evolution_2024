@@ -89,14 +89,6 @@ namespace Main.Common
             },
             new SubSkillsSynergy()
             {
-                subSkillType = SubSkillType.ContinuousFire,
-                subSkillTags = new SubSkillTag[]
-                {
-                    SubSkillTag.ST0000,
-                },
-            },
-            new SubSkillsSynergy()
-            {
                 subSkillType = SubSkillType.Paralysis,
                 subSkillTags = new SubSkillTag[]
                 {

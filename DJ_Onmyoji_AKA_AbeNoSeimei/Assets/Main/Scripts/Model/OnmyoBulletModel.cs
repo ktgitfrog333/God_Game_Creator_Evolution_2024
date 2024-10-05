@@ -35,11 +35,15 @@ namespace Main.Model
             try
             {
                 // 陰陽玉／ラップ
-                //  ●威力、レート、持続
+                //  ●威力、レート、持続、サブスキルタイプ
                 _moveDirection = Quaternion.Euler(eulerAngles) * (!updateConf.moveDirection.Equals(Vector2.zero) ?
                     updateConf.moveDirection : onmyoBulletConfig.moveDirection);
                 _moveSpeed = updateConf.moveSpeed != null ? updateConf.moveSpeed.Value : onmyoBulletConfig.moveSpeed.Value;
                 _disableTimeSec = updateConf.bulletLifeTime;
+                onmyoBulletConfig.subSkillType = updateConf.subSkillType;
+                onmyoBulletConfig.subSkillRank = updateConf.subSkillRank;
+                onmyoBulletConfig.subSkillValue = updateConf.subSkillValue;
+
                 Transform.position = position;
                 if (!attackColliderOfOnmyoBullet.SetAttackPoint(updateConf.attackPoint))
                     throw new System.Exception("SetAttackPoint");

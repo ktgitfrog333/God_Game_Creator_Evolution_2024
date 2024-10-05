@@ -90,8 +90,8 @@ namespace Main.View
                 },
                 new ShikigamiInfoVisualMapOfSubSkillType()
                 {
-                    type = SubSkillType.ContinuousFire,
-                    value = "連射",
+                    type = SubSkillType.Paralysis,
+                    value = "麻痺",
                 },
             },
         };
