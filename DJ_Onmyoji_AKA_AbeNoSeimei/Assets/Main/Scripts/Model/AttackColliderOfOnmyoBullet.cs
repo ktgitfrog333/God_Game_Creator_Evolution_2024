@@ -84,7 +84,7 @@ namespace Main.Model
                 //爆発ダメージを与えて、弾は消滅（直撃の相手には直撃ダメ＋爆風ダメが入るので、2倍ダメージ入る）
                 base.OnTriggerEnter2D(other);
             }
-            else if (SubSkillType.Paralysis.Equals(subSkillType) || SubSkillType.Knockback.Equals(subSkillType) || SubSkillType.Poison.Equals(subSkillType) || SubSkillType.Fire.Equals(subSkillType))
+            else if (SubSkillType.Paralysis.Equals(subSkillType) || SubSkillType.Knockback.Equals(subSkillType) || SubSkillType.Poison.Equals(subSkillType) || SubSkillType.Fire.Equals(subSkillType) || SubSkillType.Darkness.Equals(subSkillType))
             {
                 //麻痺、突風（ノックバック）、毒、炎上
                 DamageSufferedZoneOfEnemyModel damageSufferedZoneOfEnemyModel = other.GetComponent<DamageSufferedZoneOfEnemyModel>();

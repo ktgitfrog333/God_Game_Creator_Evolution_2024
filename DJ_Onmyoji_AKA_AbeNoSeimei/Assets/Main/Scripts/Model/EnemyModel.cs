@@ -183,6 +183,11 @@ namespace Main.Model
                     enemiesProp.soulMoneyPoint = 0;
                     State.IsDead.Value = true;
                 });
+            damageSufferedZoneModel.badStatus.ObserveEveryValueChanged(x => x.Value)
+                .Subscribe(_ =>
+                {
+                    enemyView.SetAura(damageSufferedZoneModel.GetShikigamiTypes());
+                });
 
             // 毒の場合に一定間隔でダメージ判定するための実装
             Observable.Interval(System.TimeSpan.FromSeconds(1))

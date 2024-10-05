@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using UniRx;
 using UniRx.Triggers;
 using UnityEngine;
+using Main.Common;
 
 namespace Main.View
 {
@@ -44,6 +45,8 @@ namespace Main.View
         private Coroutine currentCoroutine;
         /// <summary>スプライトカラー</summary>
         private Color spriteColor;
+        /// <summary>オーラスプライト</summary>
+        [SerializeField] private SpriteRenderer auraSprite;
 
         private void Reset()
         {
@@ -184,6 +187,15 @@ namespace Main.View
             // 完全に透明にする
             spriteColor.a = 0;
             hpSprite.color = spriteColor;
+        }
+
+        public void SetAura(ShikigamiType[] shikigamiType)
+        {
+            if (shikigamiType.Length == 1 && auraSprite != null)
+                auraSprite.enabled = true;
+
+            if (shikigamiType.Length == 4 && auraSprite != null)
+                auraSprite.enabled = false;
         }
     }
 

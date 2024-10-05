@@ -84,6 +84,7 @@ MonoBehaviour:
   - Bullet
   invincibleTimeSec: 0
   shikigamiType: 00000000
+  savedShikigamiType: 
   deadTags:
   - Player
 --- !u!1 &3244115084979143052
@@ -351,6 +352,7 @@ MonoBehaviour:
   tags: []
   invincibleTimeSec: 1
   shikigamiType: 00000000010000000200000003000000
+  savedShikigamiType: 
 --- !u!1 &5874783128574599957
 GameObject:
   m_ObjectHideFlags: 0
@@ -554,7 +556,7 @@ MonoBehaviour:
   damageSufferedZoneModel: {fileID: 4771599399997114491}
   prop:
     moveSpeed: 0.25
-    hpMax: 2
+    hpMax: 5
   attackColliderOfEnemy: {fileID: 6154129831138059817}
   enemiesID: 15
   enemiesProp:
@@ -584,6 +586,7 @@ MonoBehaviour:
   hpSprite: {fileID: 1639390705291329007}
   hpSpriteGauge: {fileID: 3888852090528602431}
   fadeDuration: 2
+  auraSprite: {fileID: 9201393543436216246}
 --- !u!1 &8766729968008550134
 GameObject:
   m_ObjectHideFlags: 0

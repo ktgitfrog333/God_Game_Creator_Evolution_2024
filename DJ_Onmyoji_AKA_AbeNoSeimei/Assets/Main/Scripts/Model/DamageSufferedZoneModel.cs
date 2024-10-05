@@ -24,7 +24,10 @@ namespace Main.Model
         /// <summary>無敵時間（秒）</summary>
         [Tooltip("無敵時間（秒）")]
         [SerializeField] protected float invincibleTimeSec = 1f;
+        /// <summary>攻撃を受ける式神タイプ</summary>
         [SerializeField] protected ShikigamiType[] shikigamiType;
+        /// <summary>暗闇（状態異常）用に式神タイプの保存</summary>
+        [SerializeField] protected ShikigamiType[] savedShikigamiType;
         /// <summary>ユーティリティ</summary>
         protected EnemyPlayerModelUtility _utility = new EnemyPlayerModelUtility();
         /// <summary>2Dコライダー</summary>
@@ -136,6 +139,11 @@ namespace Main.Model
                 Debug.LogError(e);
                 return false;
             }
+        }
+
+        public ShikigamiType[] GetShikigamiTypes()
+        {
+            return shikigamiType;
         }
     }
 
