@@ -87,7 +87,7 @@ namespace Main.Model
                     {
                         var circleCollider2D = obj.GetComponent<CircleCollider2D>();
                         var damageSufferedZoneOfEnemyModel = obj.GetComponent<DamageSufferedZoneOfEnemyModel>();
-                        damageSufferedZoneOfEnemyModel.OnTriggerEnter2DGraff(circleCollider2D);
+                        damageSufferedZoneOfEnemyModel.OnTriggerEnter2DGraff(circleCollider2D, onmyoBulletConfig);
                     }
                 }).AddTo(this);
 

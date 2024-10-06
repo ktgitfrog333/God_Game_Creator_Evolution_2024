@@ -74,11 +74,11 @@ namespace Main.Model
             }
         }
 
-        public void OnTriggerEnter2DGraff(Collider2D other)
+        public void OnTriggerEnter2DGraff(Collider2D other, float damage)
         {
             if (_utility.IsCompareTagAndUpdateReactiveFlagPublic(other, tags, IsHit, shikigamiType))
             {
-                Damage.Value = 1;
+                Damage.Value = (int)damage;
                 IsHit.Value = true;
             }
         }

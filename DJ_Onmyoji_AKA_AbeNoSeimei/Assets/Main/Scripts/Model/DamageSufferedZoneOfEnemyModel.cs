@@ -57,9 +57,12 @@ namespace Main.Model
             }
         }
 
-        public void OnTriggerEnter2DGraff(Collider2D other)
+        public void OnTriggerEnter2DGraff(Collider2D other, OnmyoBulletConfig onmyoBulletConfig)
         {
-            base.OnTriggerEnter2DGraff(other);
+            if(SubSkillType.Thunder.Equals(onmyoBulletConfig.subSkillType))
+                base.OnTriggerEnter2DGraff(other, onmyoBulletConfig.subSkillValue);
+            else
+                base.OnTriggerEnter2DGraff(other, 1.0f);
         }
 
         protected override void OnDisable()
