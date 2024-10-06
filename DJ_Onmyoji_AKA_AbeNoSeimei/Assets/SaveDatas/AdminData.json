@@ -637,13 +637,13 @@
         "value": 0.5
       },
       {
-        "shikigamiType": 0,
+        "shikigamiType": 1,
         "subSkillType": 6,
         "skillRank": 0,
         "value": 0.5
       },
       {
-        "shikigamiType": 0,
+        "shikigamiType": 1,
         "subSkillType": 6,
         "skillRank": 1,
         "value": 1.0
@@ -655,43 +655,43 @@
         "value": 1.5
       },
       {
-        "shikigamiType": 0,
+        "shikigamiType": 1,
         "subSkillType": 6,
         "skillRank": 3,
         "value": 2.0
       },
       {
-        "shikigamiType": 0,
+        "shikigamiType": 1,
         "subSkillType": 6,
         "skillRank": 4,
         "value": 2.5
       },
       {
-        "shikigamiType": 0,
+        "shikigamiType": 1,
         "subSkillType": 7,
         "skillRank": 0,
         "value": 0.1
       },
       {
-        "shikigamiType": 0,
+        "shikigamiType": 1,
         "subSkillType": 7,
         "skillRank": 1,
         "value": 0.2
       },
       {
-        "shikigamiType": 0,
+        "shikigamiType": 1,
         "subSkillType": 7,
         "skillRank": 2,
         "value": 0.3
       },
       {
-        "shikigamiType": 0,
+        "shikigamiType": 1,
         "subSkillType": 7,
         "skillRank": 3,
         "value": 0.4
       },
       {
-        "shikigamiType": 0,
+        "shikigamiType": 1,
         "subSkillType": 7,
         "skillRank": 4,
         "value": 0.5
@@ -727,61 +727,61 @@
         "value": 4.0
       },
       {
-        "shikigamiType": 0,
+        "shikigamiType": 2,
         "subSkillType": 9,
         "skillRank": 0,
         "value": 2
       },
       {
-        "shikigamiType": 0,
+        "shikigamiType": 2,
         "subSkillType": 9,
         "skillRank": 1,
         "value": 4
       },
       {
-        "shikigamiType": 0,
+        "shikigamiType": 2,
         "subSkillType": 9,
         "skillRank": 2,
         "value": 6
       },
       {
-        "shikigamiType": 0,
+        "shikigamiType": 2,
         "subSkillType": 9,
         "skillRank": 3,
         "value": 8
       },
       {
-        "shikigamiType": 0,
+        "shikigamiType": 2,
         "subSkillType": 9,
         "skillRank": 4,
         "value": 10
       },
       {
-        "shikigamiType": 0,
+        "shikigamiType": 2,
         "subSkillType": 10,
         "skillRank": 0,
         "value": 1.0
       },
       {
-        "shikigamiType": 0,
+        "shikigamiType": 2,
         "subSkillType": 10,
         "skillRank": 1,
         "value": 2.0
       },
       {
-        "shikigamiType": 0,
+        "shikigamiType": 2,
         "subSkillType": 10,
         "skillRank": 2,
         "value": 3.0
       },
       {
-        "shikigamiType": 0,
+        "shikigamiType": 2,
         "subSkillType": 10,
         "skillRank": 3,
         "value": 4.0
       },
       {
-        "shikigamiType": 0,
+        "shikigamiType": 2,
         "subSkillType": 10,
         "skillRank": 4,
         "value": 5.0
@@ -817,31 +817,31 @@
         "value": 6.0
       },
       {
-        "shikigamiType": 0,
+        "shikigamiType": 2,
         "subSkillType": 12,
         "skillRank": 0,
         "value": 1.0
       },
       {
-        "shikigamiType": 0,
+        "shikigamiType": 2,
         "subSkillType": 12,
         "skillRank": 1,
         "value": 2.0
       },
       {
-        "shikigamiType": 0,
+        "shikigamiType": 2,
         "subSkillType": 12,
         "skillRank": 2,
         "value": 3.0
       },
       {
-        "shikigamiType": 0,
+        "shikigamiType": 2,
         "subSkillType": 12,
         "skillRank": 3,
         "value": 4.0
       },
       {
-        "shikigamiType": 0,
+        "shikigamiType": 2,
         "subSkillType": 12,
         "skillRank": 4,
         "value": 5.0
