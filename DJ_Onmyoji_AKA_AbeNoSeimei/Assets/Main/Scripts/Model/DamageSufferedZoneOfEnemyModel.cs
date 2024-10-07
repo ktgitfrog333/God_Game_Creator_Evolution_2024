@@ -19,7 +19,7 @@ namespace Main.Model
         /// <summary>接触を無視する弾（接触済み）のリスト</summary>
         protected List<Collider2D> ignoredCollider2DList = new List<Collider2D>();
         /// <summary>状態異常ステータス</summary>
-        public SubSkillType badStatus { get; private set; }
+        public IReactiveProperty<SubSkillType> badStatus { get; private set; } = new ReactiveProperty<SubSkillType>(SubSkillType.None);
         /// <summary>状態異常ステータス継続時間</summary>
         public float badStatusSec { get; private set; }
         /// <summary>状態異常コルーチン</summary>
@@ -57,9 +57,12 @@ namespace Main.Model
             }
         }
 
-        public void OnTriggerEnter2DGraff(Collider2D other)
+        public void OnTriggerEnter2DGraff(Collider2D other, OnmyoBulletConfig onmyoBulletConfig)
         {
-            base.OnTriggerEnter2DGraff(other);
+            if(SubSkillType.Thunder.Equals(onmyoBulletConfig.subSkillType))
+                base.OnTriggerEnter2DGraff(other, onmyoBulletConfig.subSkillValue);
+            else
+                base.OnTriggerEnter2DGraff(other, 1.0f);
         }
 
         protected override void OnDisable()
@@ -75,14 +78,26 @@ namespace Main.Model
                 StopCoroutine(badStatusCoroutine);
             }
 
-            badStatus = inputBadStatus;
+            if (SubSkillType.Darkness.Equals(inputBadStatus) && savedShikigamiType.Length == 0)
+            {
+                savedShikigamiType = shikigamiType;
+                shikigamiType = new ShikigamiType[] { ShikigamiType.Wrap, ShikigamiType.Dance, ShikigamiType.Graffiti, ShikigamiType.OnmyoTurret };
+            }
+
+            badStatus.Value = inputBadStatus;
             badStatusCoroutine = StartCoroutine(ResetBadStatusCoroutine(inputBadStatusSec));
         }
 
         IEnumerator ResetBadStatusCoroutine(float inputBadStatusSec)
         {
             yield return new WaitForSeconds(inputBadStatusSec);
-            badStatus = SubSkillType.None;
+            badStatus.Value = SubSkillType.None;
+
+            if (savedShikigamiType.Length != 0)
+            {
+                shikigamiType = savedShikigamiType;
+                savedShikigamiType = new ShikigamiType[0];
+            }
         }
     }
 }

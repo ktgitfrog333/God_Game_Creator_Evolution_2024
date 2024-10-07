@@ -124,6 +124,11 @@ namespace Main.Model
                 return false;
             }
         }
+
+        public void HealResource(float healValue)
+        {
+            candleInfo.CandleResource.Value += healValue;
+        }
     }
 
     /// <summary>

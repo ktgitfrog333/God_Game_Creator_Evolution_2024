@@ -17,6 +17,8 @@ namespace Main.Model
         [SerializeField] private GraffitiBulletModel graffitiBulletModel;
         /// <summary>ラップ弾Model</summary>
         [SerializeField] private WrapBulletModel wrapBulletModel;
+        /// <summary>式神スキル管理システムの情報</summary>
+        private ShikigamiSkillSystemModel shikigamiSkillSystemModel;
         /// <summary>敵が攻撃範囲へ侵入した判定のトリガー</summary>
         [Tooltip("敵が攻撃範囲へ侵入した判定のトリガー")]
         [SerializeField] protected SearchRangeOfEnemyCollider searchRangeOfEnemyCollider;
@@ -41,6 +43,7 @@ namespace Main.Model
         {
             graffitiBulletModel = this.transform.parent.GetComponent<GraffitiBulletModel>();
             wrapBulletModel = this.transform.parent.GetComponent<WrapBulletModel>();
+            shikigamiSkillSystemModel = FindObjectOfType<ShikigamiSkillSystemModel>();
         }
 
         protected override void OnTriggerEnter2D(Collider2D other)
@@ -81,15 +84,22 @@ namespace Main.Model
                 //爆発ダメージを与えて、弾は消滅（直撃の相手には直撃ダメ＋爆風ダメが入るので、2倍ダメージ入る）
                 base.OnTriggerEnter2D(other);
             }
-            else if (ShikigamiType.Wrap.Equals(shikigamiType[0]) && SubSkillType.Paralysis.Equals(subSkillType))
+            else if (SubSkillType.Paralysis.Equals(subSkillType) || SubSkillType.Knockback.Equals(subSkillType) || SubSkillType.Poison.Equals(subSkillType) || SubSkillType.Fire.Equals(subSkillType) || SubSkillType.Darkness.Equals(subSkillType) || SubSkillType.Curse.Equals(subSkillType))
             {
-                //麻痺
+                //麻痺、突風（ノックバック）、毒、炎上、暗闇、呪詛
                 DamageSufferedZoneOfEnemyModel damageSufferedZoneOfEnemyModel = other.GetComponent<DamageSufferedZoneOfEnemyModel>();
 
                 if(damageSufferedZoneOfEnemyModel != null)
-                    damageSufferedZoneOfEnemyModel.SetBadStatus(SubSkillType.Paralysis, subSkillValue);
+                    damageSufferedZoneOfEnemyModel.SetBadStatus(subSkillType, subSkillValue);
 
                 base.OnTriggerEnter2D(other);
+            }
+            else if (SubSkillType.Heal.Equals(subSkillType))
+            {
+                DamageSufferedZoneOfEnemyModel damageSufferedZoneOfEnemyModel = other.GetComponent<DamageSufferedZoneOfEnemyModel>();
+                //敵に当たった時だけ回復
+                if (damageSufferedZoneOfEnemyModel != null)
+                    shikigamiSkillSystemModel.HealResource(subSkillValue);
             }
             else
                 base.OnTriggerEnter2D(other);

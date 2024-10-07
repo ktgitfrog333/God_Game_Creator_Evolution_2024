@@ -82,7 +82,7 @@ namespace Main.Model
             {
                 var circleCollider2D = obj.GetComponent<CircleCollider2D>();
                 var damageSufferedZoneOfEnemyModel = obj.GetComponent<DamageSufferedZoneOfEnemyModel>();
-                damageSufferedZoneOfEnemyModel.OnTriggerEnter2DGraff(circleCollider2D);
+                damageSufferedZoneOfEnemyModel.OnTriggerEnter2DGraff(circleCollider2D, 1.0f);
 
                 //爆発判定
                 if (wrapBulletView != null)
