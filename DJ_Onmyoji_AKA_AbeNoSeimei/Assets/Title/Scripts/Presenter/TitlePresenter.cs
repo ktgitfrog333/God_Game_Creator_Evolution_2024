@@ -11,6 +11,7 @@ using Universal.Template;
 using System.Linq;
 using Universal.Bean;
 using Universal.Common;
+using Main.Utility;
 
 namespace Title.Presenter
 {
@@ -44,6 +45,14 @@ namespace Title.Presenter
         [SerializeField] private GameExitConfirmNoLogoView gameExitConfirmNoLogoView;
         /// <summary>GameExitConfirmNoLogoのモデル</summary>
         [SerializeField] private GameExitConfirmNoLogoModel gameExitConfirmNoLogoModel;
+        /// <summary>GameStartConfirmYesLogoのビュー</summary>
+        [SerializeField] private GameStartConfirmYesLogoView gameStartConfirmYesLogoView;
+        /// <summary>GameStartConfirmYesLogoのモデル</summary>
+        [SerializeField] private GameStartConfirmYesLogoModel gameStartConfirmYesLogoModel;
+        /// <summary>GameStartConfirmNoLogoのビュー</summary>
+        [SerializeField] private GameStartConfirmNoLogoView gameStartConfirmNoLogoView;
+        /// <summary>GameStartConfirmNoLogoのモデル</summary>
+        [SerializeField] private GameStartConfirmNoLogoModel gameStartConfirmNoLogoModel;
         /// <summary>CursorIconのビュー</summary>
         [SerializeField] private CursorIconView cursorIconView;
         /// <summary>CursorIconのモデル</summary>
@@ -129,6 +138,10 @@ namespace Title.Presenter
             gameExitConfirmYesLogoModel = GameObject.Find("GameExitConfirmYesLogo").GetComponent<GameExitConfirmYesLogoModel>();
             gameExitConfirmNoLogoView = GameObject.Find("GameExitConfirmNoLogo").GetComponent<GameExitConfirmNoLogoView>();
             gameExitConfirmNoLogoModel = GameObject.Find("GameExitConfirmNoLogo").GetComponent<GameExitConfirmNoLogoModel>();
+            gameStartConfirmYesLogoView = GameObject.Find("GameStartConfirmYesLogo").GetComponent<GameStartConfirmYesLogoView>();
+            gameStartConfirmYesLogoModel = GameObject.Find("GameStartConfirmYesLogo").GetComponent<GameStartConfirmYesLogoModel>();
+            gameStartConfirmNoLogoView = GameObject.Find("GameStartConfirmNoLogo").GetComponent<GameStartConfirmNoLogoView>();
+            gameStartConfirmNoLogoModel = GameObject.Find("GameStartConfirmNoLogo").GetComponent<GameStartConfirmNoLogoModel>();
             cursorIconView = GameObject.Find("CursorIcon").GetComponent<CursorIconView>();
             cursorIconModel = GameObject.Find("CursorIcon").GetComponent<CursorIconModel>();
             fadeImageView = GameObject.Find("FadeImage").GetComponent<FadeImageView>();
@@ -177,6 +190,7 @@ namespace Title.Presenter
             var pushGameStart = pushGameStartLogoView.transform.parent.gameObject;
             var gameStartOrExit = gameStartLogoView.transform.parent.gameObject;
             var gameExitConfirm = gameExitConfirmYesLogoView.transform.parent.gameObject;
+            var gameStartConfirm = gameStartConfirmYesLogoView.transform.parent.gameObject;
             var cursorIcon = cursorIconView.gameObject;
             var fadeImage = fadeImageView.transform.parent.gameObject;
             var option = bgmView.transform.parent.parent.parent.gameObject;
@@ -184,9 +198,15 @@ namespace Title.Presenter
             pushGameStart.SetActive(false);
             gameStartOrExit.SetActive(false);
             gameExitConfirm.SetActive(false);
+            gameStartConfirm.SetActive(false);
             cursorIcon.SetActive(false);
             fadeImage.SetActive(true);
             option.SetActive(false);
+            // 中断データ更新用
+            var utility = new MainCommonUtility();
+            var userDataSingleton = utility.UserDataSingleton;
+            float soulMoneyNum = userDataSingleton.UserBean.soulMoney;
+            float sceneId = userDataSingleton.UserBean.sceneId;
             // BGMを再生
             TitleGameManager.Instance.AudioOwner.PlayBGM(ClipToPlayBGM.bgm_title);
             // シーン読み込み時のアニメーション
@@ -253,6 +273,10 @@ namespace Title.Presenter
                         gameExitConfirmYesLogoModel.SetButtonEnabled(false);
                         gameExitConfirmYesLogoModel.SetEventTriggerEnabled(false);
                         gameExitConfirmNoLogoModel.SetButtonEnabled(false);
+                        gameStartLogoModel.SetButtonEnabled(false);
+                        gameStartConfirmYesLogoModel.SetButtonEnabled(false);
+                        gameStartConfirmYesLogoModel.SetEventTriggerEnabled(false);
+                        gameStartConfirmNoLogoModel.SetButtonEnabled(false);
                     }
                     else
                     {
@@ -265,6 +289,10 @@ namespace Title.Presenter
                         gameExitConfirmYesLogoModel.SetButtonEnabled(true);
                         gameExitConfirmYesLogoModel.SetEventTriggerEnabled(true);
                         gameExitConfirmNoLogoModel.SetButtonEnabled(true);
+                        gameStartLogoModel.SetButtonEnabled(true);
+                        gameStartConfirmYesLogoModel.SetButtonEnabled(true);
+                        gameStartConfirmYesLogoModel.SetEventTriggerEnabled(true);
+                        gameStartConfirmNoLogoModel.SetButtonEnabled(true);
                     }
                 });
             // ゲームを開始
@@ -294,14 +322,29 @@ namespace Title.Presenter
                             TitleGameManager.Instance.AudioOwner.PlaySFX(ClipToPlay.se_cancel);
                             break;
                         case EnumEventCommand.Submited:
-                            gameStartLogoModel.SetButtonEnabled(false);
-                            gameStartLogoModel.SetEventTriggerEnabled(false);
-                            // 決定SEを再生
-                            TitleGameManager.Instance.AudioOwner.PlaySFX(ClipToPlay.se_decided);
-                            // ステージセレクトへの遷移を実装
-                            Observable.FromCoroutine<bool>(observer => fadeImageView.PlayFadeAnimation(observer, EnumFadeState.Close))
-                                .Subscribe(_ => TitleGameManager.Instance.SceneOwner.LoadNextScene())
-                                .AddTo(gameObject);
+
+                            //魂が1以上、あるいは１ステージ以上クリア済みなら中断データからの再開確認
+                            if (soulMoneyNum >= 1 || sceneId >= 2)
+                            {
+                                gameStartOrExit.SetActive(false);
+                                gameStartConfirm.SetActive(true);
+
+                                if (!cursorIconView.SetSelect(gameStartConfirmYesLogoView.transform.position))
+                                    Debug.LogError("カーソル選択位置変更処理呼び出しの失敗");
+                                // 決定SEを再生
+                                TitleGameManager.Instance.AudioOwner.PlaySFX(ClipToPlay.se_decided);
+                            }
+                            else
+                            {
+                                gameStartLogoModel.SetButtonEnabled(false);
+                                gameStartLogoModel.SetEventTriggerEnabled(false);
+                                // 決定SEを再生
+                                TitleGameManager.Instance.AudioOwner.PlaySFX(ClipToPlay.se_decided);
+                                // ステージセレクトへの遷移を実装
+                                Observable.FromCoroutine<bool>(observer => fadeImageView.PlayFadeAnimation(observer, EnumFadeState.Close))
+                                    .Subscribe(_ => TitleGameManager.Instance.SceneOwner.LoadNextScene())
+                                    .AddTo(gameObject);
+                            }
                             break;
                         default:
                             Debug.LogWarning("例外ケース");
@@ -459,6 +502,103 @@ namespace Title.Presenter
                                 Debug.LogError("カーソル選択位置変更処理呼び出しの失敗");
                             // キャンセルSEを再生
                             TitleGameManager.Instance.AudioOwner.PlaySFX(ClipToPlay.se_cancel);
+                            break;
+                        default:
+                            Debug.LogWarning("例外ケース");
+                            break;
+                    }
+                });
+            // 前回の続きからゲームを再開しますか？　＞　はい
+            gameStartConfirmYesLogoModel.EventState.ObserveEveryValueChanged(x => x.Value)
+                .Subscribe(x =>
+                {
+                    switch ((EnumEventCommand)x)
+                    {
+                        case EnumEventCommand.Default:
+                            // 処理無し
+                            break;
+                        case EnumEventCommand.Selected:
+                            if (!cursorIconView.PlaySelectAnimation(gameStartConfirmYesLogoView.transform.position))
+                                Debug.LogError("カーソル選択アニメーション呼び出しの失敗");
+                            // 選択SEを再生
+                            TitleGameManager.Instance.AudioOwner.PlaySFX(ClipToPlay.se_select);
+                            break;
+                        case EnumEventCommand.DeSelected:
+                            // 処理無し
+                            break;
+                        case EnumEventCommand.Canceled:
+                            gameStartConfirm.SetActive(false);
+                            gameStartOrExit.SetActive(true);
+                            if (!cursorIconView.SetSelect(gameStartLogoView.transform.position))
+                                Debug.LogError("カーソル選択位置変更処理呼び出しの失敗");
+                            // キャンセルSEを再生
+                            TitleGameManager.Instance.AudioOwner.PlaySFX(ClipToPlay.se_cancel);
+                            break;
+                        case EnumEventCommand.Submited:
+                            // 前回の続きからゲームを再開
+                            gameStartLogoModel.SetButtonEnabled(false);
+                            gameStartLogoModel.SetEventTriggerEnabled(false);
+                            gameStartConfirm.SetActive(false);
+                            // 決定SEを再生
+                            TitleGameManager.Instance.AudioOwner.PlaySFX(ClipToPlay.se_decided);
+                            // ステージセレクトへの遷移を実装
+                            Observable.FromCoroutine<bool>(observer => fadeImageView.PlayFadeAnimation(observer, EnumFadeState.Close))
+                                .Subscribe(_ => TitleGameManager.Instance.SceneOwner.LoadNextScene())
+                                .AddTo(gameObject);
+                            break;
+                        default:
+                            Debug.LogWarning("例外ケース");
+                            break;
+                    }
+                });
+            // 前回の続きからゲームを再開しますか？　＞　いいえ
+            gameStartConfirmNoLogoModel.EventState.ObserveEveryValueChanged(x => x.Value)
+                .Subscribe(x =>
+                {
+                    switch ((EnumEventCommand)x)
+                    {
+                        case EnumEventCommand.Default:
+                            // 処理無し
+                            break;
+                        case EnumEventCommand.Selected:
+                            if (!cursorIconView.PlaySelectAnimation(gameStartConfirmNoLogoView.transform.position))
+                                Debug.LogError("カーソル選択アニメーション呼び出しの失敗");
+                            // 選択SEを再生
+                            TitleGameManager.Instance.AudioOwner.PlaySFX(ClipToPlay.se_select);
+                            break;
+                        case EnumEventCommand.DeSelected:
+                            // 処理無し
+                            break;
+                        case EnumEventCommand.Canceled:
+                            gameStartConfirm.SetActive(false);
+                            gameStartOrExit.SetActive(true);
+                            if (!cursorIconView.SetSelect(gameStartLogoView.transform.position))
+                                Debug.LogError("カーソル選択位置変更処理呼び出しの失敗");
+                            // キャンセルSEを再生
+                            TitleGameManager.Instance.AudioOwner.PlaySFX(ClipToPlay.se_cancel);
+                            break;
+                        case EnumEventCommand.Submited:
+
+                            // 前回データを破棄してゲームを開始
+                            var temp = new TemplateResourcesAccessory();
+                            var userBean = temp.LoadSaveDatasJsonOfUserBean(ConstResorcesNames.USER_DATA);
+                            var beanDefault = temp.LoadSaveDatasJsonOfUserBean(ConstResorcesNames.USER_DATA, EnumLoadMode.Default);
+                            var beanUpdate = temp.UpdateSceneStates(userBean, beanDefault);
+                            if (beanUpdate == null)
+                                throw new System.Exception("シーン更新の失敗");
+                            if (!temp.SaveDatasJsonOfUserBean(ConstResorcesNames.USER_DATA, beanUpdate))
+                                throw new System.Exception("Json保存呼び出しの失敗");
+
+                            // 遷移処理
+                            gameStartLogoModel.SetButtonEnabled(false);
+                            gameStartLogoModel.SetEventTriggerEnabled(false);
+                            gameStartConfirm.SetActive(false);
+                            // 決定SEを再生
+                            TitleGameManager.Instance.AudioOwner.PlaySFX(ClipToPlay.se_decided);
+                            // ステージセレクトへの遷移を実装
+                            Observable.FromCoroutine<bool>(observer => fadeImageView.PlayFadeAnimation(observer, EnumFadeState.Close))
+                                .Subscribe(_ => TitleGameManager.Instance.SceneOwner.LoadNextScene())
+                                .AddTo(gameObject);
                             break;
                         default:
                             Debug.LogWarning("例外ケース");
