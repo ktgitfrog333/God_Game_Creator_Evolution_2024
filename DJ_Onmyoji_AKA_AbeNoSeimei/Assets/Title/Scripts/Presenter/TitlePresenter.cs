@@ -202,10 +202,11 @@ namespace Title.Presenter
             cursorIcon.SetActive(false);
             fadeImage.SetActive(true);
             option.SetActive(false);
-            // 
+            // 中断データ更新用
             var utility = new MainCommonUtility();
             var userDataSingleton = utility.UserDataSingleton;
             float soulMoneyNum = userDataSingleton.UserBean.soulMoney;
+            float sceneId = userDataSingleton.UserBean.sceneId;
             // BGMを再生
             TitleGameManager.Instance.AudioOwner.PlayBGM(ClipToPlayBGM.bgm_title);
             // シーン読み込み時のアニメーション
@@ -322,7 +323,8 @@ namespace Title.Presenter
                             break;
                         case EnumEventCommand.Submited:
 
-                            if (soulMoneyNum >= 1)
+                            //魂が1以上、あるいは１ステージ以上クリア済みなら中断データからの再開確認
+                            if (soulMoneyNum >= 1 || sceneId >= 2)
                             {
                                 gameStartOrExit.SetActive(false);
                                 gameStartConfirm.SetActive(true);
@@ -580,15 +582,10 @@ namespace Title.Presenter
                             // 前回データを破棄してゲームを開始
                             var temp = new TemplateResourcesAccessory();
                             var userBean = temp.LoadSaveDatasJsonOfUserBean(ConstResorcesNames.USER_DATA);
-
-                            // ステージの進行と魂をリセット
                             var beanDefault = temp.LoadSaveDatasJsonOfUserBean(ConstResorcesNames.USER_DATA, EnumLoadMode.Default);
                             var beanUpdate = temp.UpdateSceneStates(userBean, beanDefault);
                             if (beanUpdate == null)
                                 throw new System.Exception("シーン更新の失敗");
-
-                            beanUpdate.soulMoney = 0;
-
                             if (!temp.SaveDatasJsonOfUserBean(ConstResorcesNames.USER_DATA, beanUpdate))
                                 throw new System.Exception("Json保存呼び出しの失敗");
 
