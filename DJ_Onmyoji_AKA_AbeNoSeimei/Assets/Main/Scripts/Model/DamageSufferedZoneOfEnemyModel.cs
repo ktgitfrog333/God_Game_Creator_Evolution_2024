@@ -49,12 +49,18 @@ namespace Main.Model
             if (ignoredCollider2DList.Contains(other))
                 return;
 
-            ignoredCollider2DList.Add(other);
+            var attackColliderOfOnmyoBullet = other.GetComponent<AttackColliderOfOnmyoBullet>();
+            if(attackColliderOfOnmyoBullet != null)
+                if (SubSkillType.Penetrating.Equals(attackColliderOfOnmyoBullet.subSkillType))
+                {
+                    ignoredCollider2DList.Add(other);
+                    StartCoroutine(RemoveColliderFromListAfterDelay(other, 2.0f));
+                }
+
             base.OnTriggerEnter2D(other);
+
             if (_utility.IsCompareTagAndUpdateReactiveFlag(other, deadTags, IsHit))
-            {
                 IsHitPlayer.Value = true;
-            }
         }
 
         public void OnTriggerEnter2DGraff(Collider2D other, OnmyoBulletConfig onmyoBulletConfig)
@@ -69,6 +75,7 @@ namespace Main.Model
         {
             base.OnDisable();
             IsHitPlayer.Value = false;
+            ignoredCollider2DList.Clear();
         }
 
         public void SetBadStatus(SubSkillType inputBadStatus, float inputBadStatusSec)
@@ -98,6 +105,17 @@ namespace Main.Model
                 shikigamiType = savedShikigamiType;
                 savedShikigamiType = new ShikigamiType[0];
             }
+        }
+        
+        // 指定した時間後に無視リストから除外（貫通弾）
+        IEnumerator RemoveColliderFromListAfterDelay(Collider2D other, float delay)
+        {
+            // 指定した時間（秒数）を待つ
+            yield return new WaitForSeconds(delay);
+
+            // リストにotherがまだ含まれていれば削除
+            if (ignoredCollider2DList.Contains(other))
+                ignoredCollider2DList.Remove(other);
         }
     }
 }
