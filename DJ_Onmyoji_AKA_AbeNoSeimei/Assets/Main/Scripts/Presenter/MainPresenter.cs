@@ -302,10 +302,13 @@ namespace Main.Presenter
                     if (x)
                     {
                         // クリア済みデータの更新
-                        datas.state[datas.sceneId - 1] = 2;
-                        if (datas.sceneId < datas.state.Length - 1 &&
-                            datas.state[(datas.sceneId)] < 1)
-                            datas.state[(datas.sceneId)] = 1;
+                        if (0 < datas.sceneId)
+                        {
+                            datas.state[datas.sceneId - 1] = 2;
+                            if (datas.sceneId < datas.state.Length - 1 &&
+                                datas.state[(datas.sceneId)] < 1)
+                                datas.state[(datas.sceneId)] = 1;
+                        }
                         MainGameManager.Instance.AudioOwner.PlaySFX(ClipToPlay.me_game_clear);
                         // 初回のみ最初から拡大表示
                         if (!common.IsFinalLevel(datas))
@@ -670,6 +673,20 @@ namespace Main.Presenter
                            .AddTo(gameObject); // UniRxのAddToを使用して、このGameObjectが破棄されたときに購読を自動的に解除
                         if (!soulWalletModel.SetIsUnLockUpdateOfSoulMoney(x))
                             Debug.LogError("SetIsUnLockUpdateOfSoulMoney");
+                        levelOwner.SelectedRewardIDs.ObserveAdd()
+                            .Subscribe(x =>
+                            {
+                                if (!gameSelectButtonModel.CheckSelectedIDAndSetUIControllEnabled(levelOwner.SelectedRewardIDs))
+                                    Debug.LogError("CheckSelectedIDAndSetUIControllEnabled");
+                            })
+                            .AddTo(gameObject);
+                        levelOwner.SelectedRewardIDs.ObserveRemove()
+                            .Subscribe(x =>
+                            {
+                                if (!gameSelectButtonModel.CheckSelectedIDAndSetUIControllEnabled(levelOwner.SelectedRewardIDs))
+                                    Debug.LogError("CheckSelectedIDAndSetUIControllEnabled");
+                            })
+                            .AddTo(gameObject);
                     }
                 });
             BgmConfDetails bgmConfDetails = new BgmConfDetails();

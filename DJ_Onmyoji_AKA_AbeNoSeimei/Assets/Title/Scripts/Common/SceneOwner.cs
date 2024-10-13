@@ -5,6 +5,7 @@ using Universal.Common;
 using Universal.Bean;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using Title.Utility;
 
 namespace Title.Common
 {
@@ -15,6 +16,8 @@ namespace Title.Common
     {
         /// <summary>次のシーン名</summary>
         [SerializeField] private string nextSceneName = "SelectScene";
+        /// <summary>次のシーン名（メイン）</summary>
+        [SerializeField] private string nextMainSceneName = "MainScene";
 
         public void OnStart()
         {
@@ -78,7 +81,14 @@ namespace Title.Common
         /// </summary>
         public void LoadNextScene()
         {
-            SceneManager.LoadScene(nextSceneName);
+            // ユーザデータ取得
+            var utility = new TitleCommonUtility();
+            var currentSceneId = utility.UserDataSingleton.UserBean.sceneId;
+            // シーンIDが0ならメインシーンをロードする
+            if (currentSceneId == 0)
+                SceneManager.LoadScene(nextMainSceneName);
+            else
+                SceneManager.LoadScene(nextSceneName);
         }
     }
 }

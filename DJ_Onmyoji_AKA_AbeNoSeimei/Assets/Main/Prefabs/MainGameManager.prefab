@@ -94,7 +94,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   level: {fileID: 0}
   levelPrefabs:
-  - {fileID: 0}
+  - {fileID: 8883989128186643200, guid: 3cbd93d3521341f4bb5636b845c2166d, type: 3}
   - {fileID: 360757283206218720, guid: ec87aefe31b033b47a13302e0613860c, type: 3}
   - {fileID: 360757283206218720, guid: 754dd4cd0c790564aabf883cc21fc722, type: 3}
   - {fileID: 360757283206218720, guid: 6fa9ab8bab783ff448f9c62ec0ce68c2, type: 3}
@@ -774,6 +774,9 @@ MonoBehaviour:
   - sceneId: 7
     clipToPlayBGMDay: 6
     clipToPlayBGMNight: 13
+  - sceneId: 0
+    clipToPlayBGMDay: 0
+    clipToPlayBGMNight: 7
 --- !u!1 &1369696455348085395
 GameObject:
   m_ObjectHideFlags: 0

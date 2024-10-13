@@ -82,6 +82,9 @@ namespace Main.Model
                                     null))
                                     Debug.LogError("SetNavigation");
                             }
+
+                            // あまり良い方法ではないが、オブジェクトの有効無効ではなく、リワード情報がNullかで判断しているため、強制的にブレークさせる
+                            break;
                         }
                     }
                     _isCompleted.Value = true;

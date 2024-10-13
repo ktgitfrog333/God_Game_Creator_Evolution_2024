@@ -16,7 +16,7 @@ namespace Universal.Bean
         /// <summary>
         /// デフォルトのシーンID
         /// </summary>
-        private static readonly int SCENEID_DEFAULT = 1;
+        private static readonly int SCENEID_DEFAULT = 0;
         
         /// <summary>
         /// 全てのシーンID
@@ -70,43 +70,6 @@ namespace Universal.Bean
             {
                 new PentagramTurnTableInfo.Slot()
                 {
-                    slotId = 0,
-                    shikigamiInfo = new ShikigamiInfo()
-                    {
-                        characterID = 3,
-                        genomeType = 0,
-                        name = "朱雀",
-                        type = 1,
-                        slotId = 0,
-                        level = 1,
-                        mainSkills = new ShikigamiInfo.MainSkill[]
-                        {
-                            new ShikigamiInfo.MainSkill()
-                            {
-                                type = 1,
-                                rank = 0,
-                            },
-                            new ShikigamiInfo.MainSkill()
-                            {
-                                type = 3,
-                                rank = 0,
-                            },
-                            new ShikigamiInfo.MainSkill()
-                            {
-                                type = 6,
-                                rank = 0,
-                            },
-                            new ShikigamiInfo.MainSkill()
-                            {
-                                type = 2,
-                                rank = 0,
-                            },
-                        },
-                        subSkills = new ShikigamiInfo.SubSkill[0],
-                    }
-                },
-                new PentagramTurnTableInfo.Slot()
-                {
                     slotId = 1,
                     shikigamiInfo = new ShikigamiInfo()
                     {
@@ -126,80 +89,6 @@ namespace Universal.Bean
                             new ShikigamiInfo.MainSkill()
                             {
                                 type = 3,
-                                rank = 0,
-                            },
-                            new ShikigamiInfo.MainSkill()
-                            {
-                                type = 2,
-                                rank = 0,
-                            },
-                        },
-                        subSkills = new ShikigamiInfo.SubSkill[0],
-                    }
-                },
-                new PentagramTurnTableInfo.Slot()
-                {
-                    slotId = 2,
-                    shikigamiInfo = new ShikigamiInfo()
-                    {
-                        characterID = 0,
-                        genomeType = 0,
-                        name = "勾陳",
-                        type = 2,
-                        slotId = 2,
-                        level = 1,
-                        mainSkills = new ShikigamiInfo.MainSkill[]
-                        {
-                            new ShikigamiInfo.MainSkill()
-                            {
-                                type = 1,
-                                rank = 0,
-                            },
-                            new ShikigamiInfo.MainSkill()
-                            {
-                                type = 6,
-                                rank = 0,
-                            },
-                            new ShikigamiInfo.MainSkill()
-                            {
-                                type = 7,
-                                rank = 0,
-                            },
-                            new ShikigamiInfo.MainSkill()
-                            {
-                                type = 2,
-                                rank = 0,
-                            },
-                        },
-                        subSkills = new ShikigamiInfo.SubSkill[0],
-                    }
-                },
-                new PentagramTurnTableInfo.Slot()
-                {
-                    slotId = 3,
-                    shikigamiInfo = new ShikigamiInfo()
-                    {
-                        characterID = 1,
-                        genomeType = 0,
-                        name = "六合",
-                        type = 0,
-                        slotId = 3,
-                        level = 1,
-                        mainSkills = new ShikigamiInfo.MainSkill[]
-                        {
-                            new ShikigamiInfo.MainSkill()
-                            {
-                                type = 1,
-                                rank = 0,
-                            },
-                            new ShikigamiInfo.MainSkill()
-                            {
-                                type = 3,
-                                rank = 0,
-                            },
-                            new ShikigamiInfo.MainSkill()
-                            {
-                                type = 8,
                                 rank = 0,
                             },
                             new ShikigamiInfo.MainSkill()

@@ -48,7 +48,7 @@ namespace Main.View
         {
             try
             {
-                if (rewardContentProps == null || rewardContentProps.Length < 4)
+                if (rewardContentProps == null || rewardContentProps.Length < 3)
                     throw new System.ArgumentNullException("クリア報酬は3つ以上セットする必要があります");
                 if (rewardContents.Length < rewardContentProps.Length)
                     throw new System.ArgumentOutOfRangeException($"表示コンテンツ超過 rewardContents:[{rewardContents.Length}] rewardIDs:[{rewardContentProps.Length}]");

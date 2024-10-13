@@ -1329,7 +1329,7 @@ MonoBehaviour:
     m_HighlightedColor: {r: 1, g: 1, b: 1, a: 1}
     m_PressedColor: {r: 1, g: 1, b: 1, a: 1}
     m_SelectedColor: {r: 1, g: 1, b: 1, a: 1}
-    m_DisabledColor: {r: 1, g: 1, b: 1, a: 1}
+    m_DisabledColor: {r: 0.37254903, g: 0.37254903, b: 0.37254903, a: 1}
     m_ColorMultiplier: 1
     m_FadeDuration: 0.1
   m_SpriteState:
@@ -1375,6 +1375,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   gameContentsConfig: {fileID: 7597996915477195239}
+  textTMPView: {fileID: 9183593545271980763}
 --- !u!114 &4455790507446570926
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1571,6 +1572,7 @@ GameObject:
   - component: {fileID: 7014715165629563774}
   - component: {fileID: 6432298150079883957}
   - component: {fileID: 6893305762038331177}
+  - component: {fileID: 9183593545271980763}
   m_Layer: 5
   m_Name: Text (TMP)
   m_TagString: Untagged
@@ -1694,6 +1696,25 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+--- !u!114 &9183593545271980763
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4625980480056185959}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6d63d7eeec0701943a4d15299ce3de75, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  textMeshProUGUI: {fileID: 6893305762038331177}
+  enabledColor:
+    serializedVersion: 2
+    rgba: 4294967295
+  disabledColor:
+    serializedVersion: 2
+    rgba: 4284440415
 --- !u!1 &6214601107349914751
 GameObject:
   m_ObjectHideFlags: 0
