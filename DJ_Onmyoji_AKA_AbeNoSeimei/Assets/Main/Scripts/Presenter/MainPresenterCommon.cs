@@ -25,7 +25,8 @@ namespace Main.Common
                     new GameObject(Universal.Common.ConstGameObjectNames.GAMEOBJECT_NAME_ADMINDATA_SINGLETON).AddComponent<AdminDataSingleton>()
                         .GetComponent<AdminDataSingleton>();
 
-                return adminDataSingleton.AdminBean.finalStages[userBean.sceneId - 1] == 1;
+                return 0 < userBean.sceneId &&
+                    adminDataSingleton.AdminBean.finalStages[userBean.sceneId - 1] == 1;
             }
             catch (System.Exception e)
             {

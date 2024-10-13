@@ -39,7 +39,11 @@ namespace Main.Model
             var temp = new TemplateResourcesAccessory();
             var user = temp.LoadSaveDatasJsonOfUserBean(ConstResorcesNames.USER_DATA);
             var admin = temp.LoadSaveDatasJsonOfAdminBean(ConstResorcesNames.ADMIN_DATA);
-            _limitTimeSecMax = admin.clearCountdownTimer[user.sceneId - 1];
+            // ステージ0の場合は0秒を返す
+            if (user.sceneId == 0)
+                _limitTimeSecMax = 0;
+            else
+                _limitTimeSecMax = admin.clearCountdownTimer[user.sceneId - 1];
             TimeSec.Value = _limitTimeSecMax;
             IsTimeOut.ObserveEveryValueChanged(x => x.Value)
                 .Subscribe(x =>

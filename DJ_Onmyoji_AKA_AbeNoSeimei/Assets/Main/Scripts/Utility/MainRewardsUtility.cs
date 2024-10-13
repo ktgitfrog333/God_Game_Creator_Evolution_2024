@@ -105,7 +105,8 @@ namespace Main.Utility
         {
             try
             {
-                var slots = _commonUtility.UserDataSingleton.UserBean.pentagramTurnTableInfo.slots;
+                var userBean = _commonUtility.UserDataSingleton.UserBean;
+                var slots = userBean.pentagramTurnTableInfo.slots;
                 // 取得済みの式神タイプは強化、未取得なら召喚で抽出
                 var rewardContentProps = _commonUtility.AdminDataSingleton.AdminBean.levelDesign.rewardContentProps.Where(q => !slots.Any(slot => slot.shikigamiInfo.type == q.shikigamiInfo.type) &&
                     q.rewardType == (int)ClearRewardType.AddShikigami)
@@ -132,7 +133,8 @@ namespace Main.Utility
                     }
                 }
                 // ランダム枠。異なるものをランダムに抽出して5枚になるまで追加
-                var diceCountMax = 5 - rewardContentPropsDiced.Count;
+                var sceneId = userBean.sceneId;
+                var diceCountMax = 0 < sceneId ? 5 - rewardContentPropsDiced.Count : 0;
                 for (var i = 0; i < diceCountMax; i++)
                 {
                     Universal.Bean.RewardContentProp randomOne = null;

@@ -86,13 +86,16 @@ namespace Main.Model
             }
             // できるだけStartのタイミングでキャッシュさせる
             _onmyoTurretModels = GetComponentsInChildren<OnmyoTurretModel>();
-            foreach (var item in _onmyoTurretModels)
-                if (!item.InitializeBulletCompass(Transform.position, (DanceTurretModel.transform.position - Transform.position).normalized))
+            if (DanceTurretModel != null)
+            {
+                foreach (var item in _onmyoTurretModels)
+                    if (!item.InitializeBulletCompass(Transform.position, (DanceTurretModel.transform.position - Transform.position).normalized))
+                        Debug.LogError("InitializeBulletCompass");
+                if (!WrapTurretModel.InitializeBulletCompass(Transform.position, (DanceTurretModel.transform.position - Transform.position).normalized))
                     Debug.LogError("InitializeBulletCompass");
-            if (!WrapTurretModel.InitializeBulletCompass(Transform.position, (DanceTurretModel.transform.position - Transform.position).normalized))
-                Debug.LogError("InitializeBulletCompass");
-            if (!GraffitiTurretModel.InitializeBulletCompass(Transform.position, (DanceTurretModel.transform.position - Transform.position).normalized))
-                Debug.LogError("InitializeBulletCompass");
+                if (!GraffitiTurretModel.InitializeBulletCompass(Transform.position, (DanceTurretModel.transform.position - Transform.position).normalized))
+                    Debug.LogError("InitializeBulletCompass");
+            }
         }
 
         /// <summary>
@@ -233,10 +236,12 @@ namespace Main.Model
                 foreach (var item in _onmyoTurretModels)
                     if (!item.SetBulletCompassType(bulletCompassType))
                         throw new System.Exception("SetBulletCompassType");
-                if (!WrapTurretModel.SetBulletCompassType(bulletCompassType))
-                    throw new System.Exception("SetBulletCompassType");
-                if (!GraffitiTurretModel.SetBulletCompassType(bulletCompassType))
-                    throw new System.Exception("SetBulletCompassType");
+                if (WrapTurretModel != null)
+                    if (!WrapTurretModel.SetBulletCompassType(bulletCompassType))
+                        throw new System.Exception("SetBulletCompassType");
+                if (GraffitiTurretModel != null)
+                    if (!GraffitiTurretModel.SetBulletCompassType(bulletCompassType))
+                        throw new System.Exception("SetBulletCompassType");
 
                 return true;
             }

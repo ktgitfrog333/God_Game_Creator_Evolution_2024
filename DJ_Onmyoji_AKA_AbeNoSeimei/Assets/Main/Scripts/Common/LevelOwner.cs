@@ -30,7 +30,9 @@ namespace Main.Common
         /// <summary>式神と画像を連携する情報</summary>
         [SerializeField] private ShikigamiInfoSplitesProp[] shikigamiInfoSplitesProps;
         /// <summary>選択したリワードID</summary>
-        private List<RewardID> _selectedRewardIDs = new List<RewardID>();
+        private ReactiveCollection<RewardID> _selectedRewardIDs = new ReactiveCollection<RewardID>();
+        /// <summary>選択したリワードID</summary>
+        public ReactiveCollection<RewardID> SelectedRewardIDs => _selectedRewardIDs;
         /// <summary>クリア報酬のコンテンツプロパティ</summary>
         private RewardContentProp[] _rewardContentProps;
         /// <summary>クリア報酬の強化プロパティ</summary>
