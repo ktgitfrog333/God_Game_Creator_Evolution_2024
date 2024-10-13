@@ -636,6 +636,22 @@ MonoBehaviour:
       value: "\u62E1\u6563"
     - type: 2
       value: "\u9EBB\u75FA"
+    - type: 5
+      value: "\u6D3B\u529B"
+    - type: 6
+      value: "\u708E\u4E0A"
+    - type: 7
+      value: "\u7A81\u98A8"
+    - type: 8
+      value: "\u6025\u6240"
+    - type: 9
+      value: "\u6BD2"
+    - type: 10
+      value: "\u6697\u95C7"
+    - type: 11
+      value: "\u96F7\u6483"
+    - type: 12
+      value: "\u546A\u8A5B"
 --- !u!1 &2998410079285951322
 GameObject:
   m_ObjectHideFlags: 0
@@ -912,6 +928,22 @@ MonoBehaviour:
       value: "\u62E1\u6563"
     - type: 2
       value: "\u9EBB\u75FA"
+    - type: 5
+      value: "\u6D3B\u529B"
+    - type: 6
+      value: "\u708E\u4E0A"
+    - type: 7
+      value: "\u7A81\u98A8"
+    - type: 8
+      value: "\u6025\u6240"
+    - type: 9
+      value: "\u6BD2"
+    - type: 10
+      value: "\u6697\u95C7"
+    - type: 11
+      value: "\u96F7\u6483"
+    - type: 12
+      value: "\u546A\u8A5B"
 --- !u!1 &3801669766917241920
 GameObject:
   m_ObjectHideFlags: 0
