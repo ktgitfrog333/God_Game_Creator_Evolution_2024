@@ -65,8 +65,17 @@ namespace Main.Model
 
         public void OnTriggerEnter2DGraff(Collider2D other, OnmyoBulletConfig onmyoBulletConfig)
         {
-            if(SubSkillType.Thunder.Equals(onmyoBulletConfig.subSkillType))
+            if (SubSkillType.Thunder.Equals(onmyoBulletConfig.subSkillType))
                 base.OnTriggerEnter2DGraff(other, onmyoBulletConfig.subSkillValue);
+            else if (SubSkillType.Poison.Equals(onmyoBulletConfig.subSkillType) ||
+                SubSkillType.Darkness.Equals(onmyoBulletConfig.subSkillType) ||
+                SubSkillType.Curse.Equals(onmyoBulletConfig.subSkillType))
+            {
+                if (_utility.IsCompareTagAndUpdateReactiveFlagPublic(other, tags, IsHit, shikigamiType))
+                    SetBadStatus(onmyoBulletConfig.subSkillType, onmyoBulletConfig.subSkillValue);
+
+                base.OnTriggerEnter2DGraff(other, 1.0f);
+            }
             else
                 base.OnTriggerEnter2DGraff(other, 1.0f);
         }
