@@ -5,6 +5,7 @@ using Main.Utility;
 using UniRx;
 using UnityEngine;
 using Universal.Utility;
+using DG.Tweening;
 
 namespace Main.View
 {
@@ -28,10 +29,8 @@ namespace Main.View
         private EnemiesProp _enemiesProp;
         /// <summary>敵のプロパティ</summary>
         public EnemiesProp EnemiesProp => _enemiesProp;
-        /// <summary>プレイヤーのTransform</summary>
-        private Transform _player;
-        /// <summary>移動速度</summary>
-        public float speed = 5f;
+        /// <summary>TargetのPosition</summary>
+        [SerializeField] private Vector3 _targetPosition;
         /// <summary>魂の財布、獲得したソウルの管理のモデル</summary>
         private SoulWalletModel soulWalletModel;
 
@@ -43,35 +42,28 @@ namespace Main.View
         private void OnEnable()
         {
             IsGeted.Value = false;
-            StartCoroutine(MoveToPlayer());
+            Vector3 newPosition = Transform.position + Random.onUnitSphere * 1.5f;
+            transform.DOMove(newPosition, 0.5f).SetEase(Ease.OutQuint).OnComplete(FirstMoveComplete);
         }
 
-        private IEnumerator MoveToPlayer()
+        private void FirstMoveComplete()
         {
-            if (_player != null) { 
-            while (Vector3.Distance(transform.position, _player.position) > 0.1f)
-            {
-                Vector3 direction = (_player.position - transform.position).normalized;
-                transform.position += direction * speed * Time.deltaTime;
+            transform.DOMove(_targetPosition, 2f).SetEase(Ease.InQuad).OnComplete(MoveComplete);
+        }
 
-                yield return null; // 次のフレームまで待機
-            }
-
+        private void MoveComplete()
+        {
             // 到着後の処理
             IsGeted.Value = true;
             gameObject.SetActive(false);
-                
+
             soulWalletModel.AddSoulMoney(_enemiesProp.soulMoneyPoint);
-            }
         }
 
         private void Start()
         {
             gameObject.SetActive(false);
             soulWalletModel = GameObject.Find("SoulWallet").GetComponent<SoulWalletModel>();
-            Observable.FromCoroutine<Transform>(observer => WaitForTarget(observer))
-                .Subscribe(x => _player = x)
-                .AddTo(gameObject);
         }
 
         public bool SetEnemiesProp(EnemiesProp enemiesProp)
@@ -87,24 +79,6 @@ namespace Main.View
                 Debug.LogError(e);
                 return false;
             }
-        }
-
-        /// <summary>
-        /// ターゲットが生成されるまで待機
-        /// </summary>
-        /// <param name="observer">トランスフォーム</param>
-        /// <returns>コルーチン</returns>
-        private IEnumerator WaitForTarget(System.IObserver<Transform> observer)
-        {
-            Transform target = null;
-            while (target == null)
-            {
-                var obj = GameObject.FindGameObjectWithTag("Player");
-                if (obj != null)
-                    target = obj.transform;
-                yield return null;
-            }
-            observer.OnNext(target);
         }
     }
 
