@@ -47,7 +47,7 @@ MonoBehaviour:
   gamePauseModel: {fileID: 0}
   rewardSelectModel: {fileID: 0}
   unDeadTimeSec: 0.2
-  sensibilityScratch: 5
+  sensibilityScratch: 40
   gameSelectButtonModel: {fileID: 0}
   gameTitleButtonModels:
   - {fileID: 0}

@@ -45,7 +45,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   unDeadTimeSec: 0.2
-  sensibilityScratch: 5
+  sensibilityScratch: 40
   stageSelectModel: {fileID: 0}
   tutorialViewPageModels:
   - {fileID: 0}
