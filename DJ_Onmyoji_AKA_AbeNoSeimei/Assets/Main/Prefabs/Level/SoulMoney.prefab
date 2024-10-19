@@ -147,4 +147,4 @@ MonoBehaviour:
   - 1.5
   - 1.5
   bodySpriteView: {fileID: 6805444323177505484}
-  speed: 10
+  _targetPosition: {x: 8.3, y: 6.2, z: 0}

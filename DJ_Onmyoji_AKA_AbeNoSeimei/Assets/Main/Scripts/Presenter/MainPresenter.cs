@@ -656,8 +656,12 @@ namespace Main.Presenter
                             });
                         enemyEventSystemModel.OnEnemyDead.Subscribe(enemyModel =>
                         {
-                            if (!spawnSoulMoneyModel.InstanceCloneObjects(enemyModel.transform.position, enemyModel.EnemiesProp))
-                                Debug.LogError("InstanceCloneObjects");
+                            for (int i = 0; i < enemyModel.EnemiesProp.soulMoneyPoint; i++)
+                            {
+                                if (!spawnSoulMoneyModel.InstanceCloneObjects(enemyModel.transform.position, enemyModel.EnemiesProp))
+                                    Debug.LogError("InstanceCloneObjects");
+                            }
+                            
                         });
                         spawnSoulMoneyModel.OnSoulMoneyGeted
                            .Subscribe(soulMoney =>

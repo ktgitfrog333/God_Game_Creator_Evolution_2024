@@ -33,6 +33,7 @@ namespace Main.Model
             {
                 var soulMoney = PoolModel.GetSoulMoneyView();
                 soulMoney.transform.position = position;
+                enemiesProp.soulMoneyPoint = 1;
                 soulMoney.SetEnemiesProp(enemiesProp);
                 soulMoney.IsGeted.ObserveEveryValueChanged(x => x.Value)
                     .Subscribe(x =>
