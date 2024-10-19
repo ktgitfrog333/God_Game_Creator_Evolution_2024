@@ -25,7 +25,7 @@ namespace Main.Model
         /// <summary>入力無視の時間（秒）</summary>
         [SerializeField] private float unDeadTimeSec = .2f;
         /// <summary>スクラッチ入力の調整値</summary>
-        [SerializeField] private float sensibilityScratch = 5f;
+        [SerializeField] private float sensibilityScratch = 40f;
         /// <summary>ステージ選択へ戻るのモデル</summary>
         [SerializeField] private GameSelectButtonModel gameSelectButtonModel;
         /// <summary>タイトルへ戻るボタン</summary>
