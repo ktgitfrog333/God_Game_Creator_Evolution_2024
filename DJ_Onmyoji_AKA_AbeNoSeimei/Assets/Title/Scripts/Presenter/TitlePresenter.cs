@@ -242,8 +242,6 @@ namespace Title.Presenter
                                 cursorIcon.SetActive(true);
                             if (!cursorIconView.SetSelect(gameStartLogoView.transform.position))
                                 Debug.LogError("カーソル選択位置変更処理呼び出しの失敗");
-                            gameStartLogoModel.SetButtonEnabled(false);
-                            gameStartLogoModel.SetEventTriggerEnabled(false);
                             // ゲームスタートSEを再生
                             TitleGameManager.Instance.AudioOwner.PlaySFX(ClipToPlay.se_game_start);
                             break;
