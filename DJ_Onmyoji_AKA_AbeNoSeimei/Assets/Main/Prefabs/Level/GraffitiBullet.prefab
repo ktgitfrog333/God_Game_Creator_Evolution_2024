@@ -252,11 +252,15 @@ MonoBehaviour:
   onmyoBulletConfig:
     moveDirection: {x: 0, y: 0}
     actionRate: 0
+    homing: 0
     bulletLifeTime: 0
     attackPoint: 0
     range: 0
     trackingOfAny: {fileID: 0}
     debuffEffectLifeTime: 0
+    subSkillType: 0
+    subSkillRank: 0
+    subSkillValue: 0
   searchRangeOfEnemyCollider: {fileID: 3799551887007710427}
   attackColliderOfOnmyoBullet: {fileID: 758604267486829382}
   graffSprite: {fileID: 4320291213514542600}

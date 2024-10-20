@@ -1,5 +1,5 @@
 ﻿{
-	"sceneId": 1,
+	"sceneId": 0,
 	"state": [
 		1,
 		0,
@@ -16,36 +16,6 @@
 	"pentagramTurnTableInfo": {
 		"slots": [
 			{
-				"slotId": 0,
-				"shikigamiInfo": {
-					"characterID": 3,
-					"genomeType": 0,
-					"name": "朱雀",
-					"type": 1,
-					"slotId": 0,
-					"level": 1,
-					"mainSkills": [
-						{
-							"type": 1,
-							"rank": 0
-						},
-						{
-							"type": 3,
-							"rank": 0
-						},
-						{
-							"type": 6,
-							"rank": 0
-						},
-						{
-							"type": 2,
-							"rank": 0
-						}
-					],
-					"subSkills": []
-				}
-			},
-			{
 				"slotId": 1,
 				"shikigamiInfo": {
 					"characterID": 12,
@@ -57,71 +27,18 @@
 					"mainSkills": [
 						{
 							"type": 1,
-							"rank": 0
+							"rank": 0,
+							"addRankCnt": 0
 						},
 						{
 							"type": 3,
-							"rank": 0
+							"rank": 0,
+							"addRankCnt": 0
 						},
 						{
 							"type": 2,
-							"rank": 0
-						}
-					],
-					"subSkills": []
-				}
-			},
-			{
-				"slotId": 2,
-				"shikigamiInfo": {
-					"characterID": 0,
-					"genomeType": 0,
-					"name": "勾陳",
-					"type": 2,
-					"slotId": 2,
-					"level": 1,
-					"mainSkills": [
-						{
-							"type": 1,
-							"rank": 0
-						},
-						{
-							"type": 6,
-							"rank": 0
-						},
-						{
-							"type": 7,
-							"rank": 0
-						},
-						{
-							"type": 2,
-							"rank": 0
-						}
-					],
-					"subSkills": []
-				}
-			},
-			{
-				"slotId": 3,
-				"shikigamiInfo": {
-					"characterID": 1,
-					"genomeType": 0,
-					"name": "六合",
-					"type": 0,
-					"slotId": 3,
-					"level": 1,
-					"mainSkills": [
-						{
-							"type": 1,
-							"rank": 0
-						},
-						{
-							"type": 3,
-							"rank": 0
-						},
-						{
-							"type": 2,
-							"rank": 0
+							"rank": 0,
+							"addRankCnt": 0
 						}
 					],
 					"subSkills": []
@@ -139,15 +56,18 @@
 					"mainSkills": [
 						{
 							"type": 1,
-							"rank": 0
+							"rank": 0,
+							"addRankCnt": 0
 						},
 						{
 							"type": 3,
-							"rank": 0
+							"rank": 0,
+							"addRankCnt": 0
 						},
 						{
 							"type": 2,
-							"rank": 0
+							"rank": 0,
+							"addRankCnt": 0
 						}
 					],
 					"subSkills": []

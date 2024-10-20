@@ -45,6 +45,95 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1124969189845735122}
   m_CullTransparentMesh: 1
+--- !u!1 &1652866094128568156
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2544808797058222026}
+  - component: {fileID: 2761267907281839593}
+  - component: {fileID: 224312579377111844}
+  - component: {fileID: 8335090720477850673}
+  m_Layer: 5
+  m_Name: Rare
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &2544808797058222026
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1652866094128568156}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1942226308713648163}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: 0}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!222 &2761267907281839593
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1652866094128568156}
+  m_CullTransparentMesh: 1
+--- !u!114 &224312579377111844
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1652866094128568156}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_Sprite: {fileID: 21300000, guid: 90c6b8a38d7906f44ace84de869a6486, type: 3}
+  m_Type: 0
+  m_PreserveAspect: 0
+  m_FillCenter: 1
+  m_FillMethod: 4
+  m_FillAmount: 1
+  m_FillClockwise: 1
+  m_FillOrigin: 0
+  m_UseSpriteMesh: 0
+  m_PixelsPerUnitMultiplier: 1
+--- !u!114 &8335090720477850673
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1652866094128568156}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 59d90ddfbd3873742b3ac97a16dd84d6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  image: {fileID: 224312579377111844}
 --- !u!1 &1906656341710826164
 GameObject:
   m_ObjectHideFlags: 0
@@ -151,7 +240,8 @@ RectTransform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 2544808797058222026}
   m_Father: {fileID: 5015071924761297247}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
@@ -390,6 +480,7 @@ MonoBehaviour:
     message: "\u30BF\u30A4\u30D7\uFF1A\u30E9\u30C3\u30D7\n\u653B\u6483\u3000\uFF1A\uFF21\n\u9023\u5C04\u3000\uFF1A\uFF22\n\u6301\u7D9A\u3000\uFF1A\uFF23\n\u30B5\u30D6\uFF21\uFF1A\u8FFD\u5C3E\uFF21\n\u30B5\u30D6\uFF22\uFF1A\u30FC\n\u30B5\u30D6\uFF23\uFF1A\u30FC"
   - clearRewardType: 2
     message: "\u6700\u5927\u4F53\u529B\u3000\u3000\u3000\uFF1A100\n\u9670\u967D\u7389\uFF21\u653B\u6483\u3000\uFF1A\uFF21\n\u9670\u967D\u7389\uFF21\u9023\u5C04\u3000\uFF1A\uFF22\n\u9670\u967D\u7389\uFF21\u6301\u7D9A\u3000\uFF1A\uFF23\n\u9670\u967D\u7389\uFF22\u653B\u6483\u3000\uFF1A\uFF21\n\u9670\u967D\u7389\uFF22\u9023\u5C04\u3000\uFF1A\uFF22\n\u9670\u967D\u7389\uFF22\u6301\u7D9A\u3000\uFF1A\uFF23\n"
+  clearRewardVisualMapsView: {fileID: 0}
 --- !u!1 &5212702285050237545
 GameObject:
   m_ObjectHideFlags: 0
@@ -549,6 +640,7 @@ MonoBehaviour:
   clearRewardTextContents: {fileID: 236858398932732761}
   clearRewardImageContents:
   - {fileID: 4140646755196589678}
+  - {fileID: 8335090720477850673}
   - {fileID: 8758066811896433458}
   - {fileID: 3774168063758337391}
   clearRewardTMPContents: {fileID: 5956717525548198797}
@@ -562,6 +654,10 @@ MonoBehaviour:
   - {fileID: 21300000, guid: 875f5889c32f00549bbc12e283186ae2, type: 3}
   - {fileID: 21300000, guid: dd84dc418ce21744b82f0385b33816ac, type: 3}
   - {fileID: 21300000, guid: c1cf2a9b86281a841ae7b26710872c38, type: 3}
+  rareImages:
+  - {fileID: 21300000, guid: 90c6b8a38d7906f44ace84de869a6486, type: 3}
+  - {fileID: 21300000, guid: edd8fcaf24956de4f8502ac7ddb9cc65, type: 3}
+  - {fileID: 21300000, guid: dd5cae8f98122cb49a0d698cd0deca61, type: 3}
   typeIcons:
   - {fileID: 21300000, guid: 875146090b498c74eb5e6e5eea0321b1, type: 3}
   - {fileID: 21300000, guid: 236bdf7c3b9fee1499987c072819cfdd, type: 3}
@@ -1270,6 +1366,7 @@ MonoBehaviour:
   - clearRewardType: 2
     message: "\u6700\u5927\u4F53\u529B\u3000\u3000\u3000\uFF1A<color=#ff0000>150</color>\n\u9670\u967D\u7389\uFF21\u653B\u6483\u3000\uFF1A\uFF21\n\u9670\u967D\u7389\uFF21\u9023\u5C04\u3000\uFF1A\uFF22\n\u9670\u967D\u7389\uFF21\u6301\u7D9A\u3000\uFF1A\uFF23\n\u9670\u967D\u7389\uFF22\u653B\u6483\u3000\uFF1A\uFF21\n\u9670\u967D\u7389\uFF22\u9023\u5C04\u3000\uFF1A\uFF22\n\u9670\u967D\u7389\uFF22\u6301\u7D9A\u3000\uFF1A\uFF23\n"
   isLockValuePpdates: 0
+  clearRewardVisualMapsView: {fileID: 0}
 --- !u!224 &3561451914431455106 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 3087159427157808276, guid: 9513c329998eaef48b881adba619ca4d, type: 3}

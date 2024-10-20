@@ -102,7 +102,7 @@ namespace Main.Model
         /// <summary>
         /// 確定時に発火するイベント
         /// </summary>
-        public void Submited()
+        public virtual void Submited()
         {
             _eventState.Value = (int)EnumEventCommand.Submited;
         }

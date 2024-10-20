@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using UniRx;
 using UniRx.Triggers;
 using UnityEngine;
+using Main.Common;
 
 namespace Main.View
 {
@@ -34,6 +35,18 @@ namespace Main.View
         private Transform _hitEffect;
         /// <summary>敵がやられた時のエフェクト</summary>
         private Transform _enemyDownEffect;
+        /// <summary>HPバースプライト</summary>
+        [SerializeField] private SpriteRenderer hpSprite;
+        /// <summary>HPバーゲージスプライト</summary>
+        [SerializeField] private SpriteRenderer hpSpriteGauge;
+        /// <summary>フェードアウト時間</summary>
+        [SerializeField] private float fadeDuration = 2.0f;
+        /// <summary>フェードアウト用コルーチン</summary>
+        private Coroutine currentCoroutine;
+        /// <summary>スプライトカラー</summary>
+        private Color spriteColor;
+        /// <summary>オーラスプライト</summary>
+        [SerializeField] private SpriteRenderer auraSprite;
 
         private void Reset()
         {
@@ -47,6 +60,16 @@ namespace Main.View
             if (bodySpriteView != null)
                 if (!bodySpriteView.PlayScalingLoopAnimation(durations, scales))
                     Debug.LogError("PlayScalingLoopAnimation");
+
+            if (hpSprite != null && hpSpriteGauge != null)
+            {
+                hpSprite.transform.localScale = new Vector3(0.2f, 0.2f, 1.0f);
+                hpSprite.transform.localPosition = new Vector3(0f, -0.5f, 0f);
+                spriteColor = hpSprite.color;
+                spriteColor.a = 0f;
+                hpSprite.color = spriteColor;
+                hpSpriteGauge.color = spriteColor;
+            }
         }
 
         private void Start()
@@ -115,6 +138,64 @@ namespace Main.View
                 Debug.LogError(e);
                 return false;
             }
+        }
+
+        public void SetHpBar(float hp, float maxHp)
+        {
+            float hpBar = hp / maxHp * 0.2f;
+
+            if (hpSprite != null && hpSpriteGauge != null)
+            {
+                float originalWidth = hpSprite.bounds.size.x;
+                hpSprite.transform.localScale = new Vector3(hpBar, 0.2f, 1.0f);
+                float newWidth = hpSprite.bounds.size.x;
+                float widthDifference = originalWidth - newWidth;
+                hpSprite.transform.position -= new Vector3(widthDifference / 2, 0, 0);
+
+                spriteColor = hpSprite.color;
+                spriteColor.a = 1.0f;
+                hpSprite.color = spriteColor;
+                hpSpriteGauge.color = spriteColor;
+
+                // すでにコルーチンが実行中なら停止
+                if (currentCoroutine != null)
+                    StopCoroutine(currentCoroutine);
+
+                currentCoroutine = StartCoroutine(FadeOut());
+            }
+        }
+
+        private IEnumerator FadeOut()
+        {
+            // 現在の色を取得
+            spriteColor = hpSprite.color;
+
+            // フェードアウトにかける時間に基づいて1秒あたりどれくらいアルファ値を減らすかを計算
+            float fadeAmountPerFrame = Time.deltaTime / fadeDuration;
+
+            while (spriteColor.a > 0)
+            {
+                // アルファ値を徐々に減らす
+                spriteColor.a -= fadeAmountPerFrame;
+                hpSprite.color = spriteColor;
+                hpSpriteGauge.color = spriteColor;
+
+                // 次のフレームまで待機
+                yield return null;
+            }
+
+            // 完全に透明にする
+            spriteColor.a = 0;
+            hpSprite.color = spriteColor;
+        }
+
+        public void SetAura(ShikigamiType[] shikigamiType)
+        {
+            if (shikigamiType.Length == 1 && auraSprite != null)
+                auraSprite.enabled = true;
+
+            if (shikigamiType.Length == 4 && auraSprite != null)
+                auraSprite.enabled = false;
         }
     }
 

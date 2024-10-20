@@ -30,9 +30,74 @@ namespace Main.Common
         /// <summary>式神と画像を連携する情報</summary>
         [SerializeField] private ShikigamiInfoSplitesProp[] shikigamiInfoSplitesProps;
         /// <summary>選択したリワードID</summary>
-        private List<RewardID> _selectedRewardIDs = new List<RewardID>();
+        private ReactiveCollection<RewardID> _selectedRewardIDs = new ReactiveCollection<RewardID>();
+        /// <summary>選択したリワードID</summary>
+        public ReactiveCollection<RewardID> SelectedRewardIDs => _selectedRewardIDs;
         /// <summary>クリア報酬のコンテンツプロパティ</summary>
         private RewardContentProp[] _rewardContentProps;
+        /// <summary>クリア報酬の強化プロパティ</summary>
+        [SerializeField]
+        private EnhanceProp[] enhanceProps = new EnhanceProp[]
+        {
+            new EnhanceProp()
+            {
+                level = EnhanceLevel.Mode1,
+                soulMoney = 300
+            },
+            new EnhanceProp()
+            {
+                level = EnhanceLevel.Mode2,
+                soulMoney = 500
+            },
+            new EnhanceProp()
+            {
+                level = EnhanceLevel.Mode3,
+                soulMoney = 800
+            },
+        };
+        /// <summary>
+        /// サブスキルシナジー
+        /// </summary>
+        /// <remarks>
+        /// 一つのサブスキルに複数のタグを指定する
+        /// サブスキルの複数定義は禁止
+        /// </remarks>
+        [SerializeField]
+        private SubSkillsSynergy[] subSkillsSynergies = new SubSkillsSynergy[]
+        {
+            new SubSkillsSynergy()
+            {
+                subSkillType = SubSkillType.Explosion,
+                subSkillTags = new SubSkillTag[]
+                {
+                    SubSkillTag.ST0001,
+                },
+            },
+            new SubSkillsSynergy()
+            {
+                subSkillType = SubSkillType.Penetrating,
+                subSkillTags = new SubSkillTag[]
+                {
+                    SubSkillTag.ST0000,
+                },
+            },
+            new SubSkillsSynergy()
+            {
+                subSkillType = SubSkillType.Spreading,
+                subSkillTags = new SubSkillTag[]
+                {
+                    SubSkillTag.ST0000,
+                },
+            },
+            new SubSkillsSynergy()
+            {
+                subSkillType = SubSkillType.Paralysis,
+                subSkillTags = new SubSkillTag[]
+                {
+                    SubSkillTag.ST0002,
+                },
+            },
+        };
 
         private void Reset()
         {
@@ -66,7 +131,7 @@ namespace Main.Common
             try
             {
                 var utility = new MainRewardsUtility();
-                _rewardContentProps = utility.InstanceRewardTablesAndGetRewards(shikigamiInfoSplitesProps);
+                _rewardContentProps = utility.InstanceRewardTablesAndGetRewards(shikigamiInfoSplitesProps, enhanceProps, subSkillsSynergies);
                 if (_rewardContentProps == null)
                     throw new System.Exception("InstanceRewardTablesAndGetRewards");
 
@@ -118,7 +183,7 @@ namespace Main.Common
                 var slots = userData.pentagramTurnTableInfo.slots.ToList();
                 List<UserBean.PentagramTurnTableInfo.Slot> slotsAdd = new List<UserBean.PentagramTurnTableInfo.Slot> ();
                 var rewardsUtility = new MainRewardsUtility();
-                foreach (var rewardContentProp in _rewardContentProps.Where(q => _selectedRewardIDs.Any(selectId => selectId.Equals(q.rewardID))))
+                foreach (var rewardContentProp in rewardsUtility.MergeRewards(_rewardContentProps.Where(q => _selectedRewardIDs.Any(selectId => selectId.Equals(q.rewardID))).ToArray()))
                 {
                     switch (rewardContentProp.rewardType)
                     {
@@ -203,5 +268,42 @@ namespace Main.Common
         public ShikigamiCharacterID shikigamiCharacterID;
         /// <summary>イメージ</summary>
         public Sprite image;
+    }
+
+    /// <summary>
+    /// 強化モード
+    /// </summary>
+    public enum EnhanceLevel
+    {
+        /// <summary>ノーマル相当</summary>
+        Mode1 = 1,
+        /// <summary>レア相当</summary>
+        Mode2 = 2,
+        /// <summary>Sレア相当</summary>
+        Mode3 = 3,
+    }
+
+    [System.Serializable]
+    /// <summary>
+    /// 強化プロパティ
+    /// </summary>
+    public struct EnhanceProp
+    {
+        /// <summary>強化モード</summary>
+        public EnhanceLevel level;
+        /// <summary>魂の経験値</summary>
+        public int soulMoney;
+    }
+
+    /// <summary>
+    /// サブスキルシナジー
+    /// </summary>
+    [System.Serializable]
+    public struct SubSkillsSynergy
+    {
+        /// <summary>サブスキルタイプ</summary>
+        public SubSkillType subSkillType;
+        /// <summary>サブスキルタグ</summary>
+        public SubSkillTag[] subSkillTags;
     }
 }

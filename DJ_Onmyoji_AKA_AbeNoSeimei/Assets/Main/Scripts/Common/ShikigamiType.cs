@@ -63,6 +63,19 @@ namespace Main.Common
     }
 
     /// <summary>
+    /// レア度
+    /// </summary>
+    public enum RareType
+    {
+        /// <summary>ノーマル</summary>
+        Normal,
+        /// <summary>レア</summary>
+        Rare,
+        /// <summary>Sレア</summary>
+        SRare,
+    }
+
+    /// <summary>
     /// スキルランク
     /// D < C < B < A < S
     /// </summary>
@@ -103,6 +116,8 @@ namespace Main.Common
         Range = 6,
         /// <summary>デバフ効果時間</summary>
         DebuffEffectLifeTime = 7,
+        /// <summary>ホーミング性能</summary>
+        Homing = 8,
     }
 
     /// <summary>
@@ -110,15 +125,48 @@ namespace Main.Common
     /// </summary>
     public enum SubSkillType
     {
-        /// <summary>追尾性能</summary>
-        Homing = 2,
-        /// <summary>爆発</summary>
+        /// <summary>サブスキルなし</summary>
+        None = 0,
+        /// <summary>爆発（ラップ）</summary>
         Explosion = 1,
-        /// <summary>貫通</summary>
+        /// <summary>麻痺（ラップ）</summary>
+        Paralysis = 2,
+        /// <summary>貫通（ラップ）</summary>
         Penetrating = 3,
-        /// <summary>拡散</summary>
+        /// <summary>拡散（ラップ）</summary>
         Spreading = 4,
-        /// <summary>連射</summary>
-        ContinuousFire = 5,
+        /// <summary>活力（ダンス）</summary>
+        Heal = 5,
+        /// <summary>炎上（ダンス）</summary>
+        Fire = 6,
+        /// <summary>突風（ダンス）</summary>
+        Knockback = 7,
+        /// <summary>急所（ダンス）</summary>
+        Critical = 8,
+        /// <summary>毒（グラフ）</summary>
+        Poison = 9,
+        /// <summary>暗闇（グラフ）</summary>
+        Darkness = 10,
+        /// <summary>雷撃（グラフ）</summary>
+        Thunder = 11,
+        /// <summary>呪詛（グラフ）</summary>
+        Curse = 12,
+    }
+
+    /// <summary>
+    /// サブスキルタグ
+    /// </summary>
+    public enum SubSkillTag
+    {
+        ST0000,
+        ST0001,
+        ST0002,
+        ST0003,
+        ST0004,
+        ST0005,
+        ST0006,
+        ST0007,
+        ST0008,
+        ST0009,
     }
 }

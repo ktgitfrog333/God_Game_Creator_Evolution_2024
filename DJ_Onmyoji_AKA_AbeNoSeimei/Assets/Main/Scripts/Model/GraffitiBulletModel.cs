@@ -42,6 +42,9 @@ namespace Main.Model
                     updateConf.moveDirection : onmyoBulletConfig.moveDirection);
                 _moveSpeed = updateConf.moveSpeed != null ? updateConf.moveSpeed.Value : onmyoBulletConfig.moveSpeed.Value;
                 _disableTimeSec = updateConf.bulletLifeTime;
+                onmyoBulletConfig.subSkillType = updateConf.subSkillType;
+                onmyoBulletConfig.subSkillRank = updateConf.subSkillRank;
+                onmyoBulletConfig.subSkillValue = updateConf.subSkillValue;
                 Transform.position = position;
                 if (0f < updateConf.range)
                     _rangeMax = updateConf.range;
@@ -84,7 +87,7 @@ namespace Main.Model
                     {
                         var circleCollider2D = obj.GetComponent<CircleCollider2D>();
                         var damageSufferedZoneOfEnemyModel = obj.GetComponent<DamageSufferedZoneOfEnemyModel>();
-                        damageSufferedZoneOfEnemyModel.OnTriggerEnter2DGraff(circleCollider2D);
+                        damageSufferedZoneOfEnemyModel.OnTriggerEnter2DGraff(circleCollider2D, onmyoBulletConfig);
                     }
                 }).AddTo(this);
 

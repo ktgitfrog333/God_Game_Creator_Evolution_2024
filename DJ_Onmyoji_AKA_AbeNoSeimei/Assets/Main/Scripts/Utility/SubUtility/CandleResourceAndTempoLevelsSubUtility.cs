@@ -155,11 +155,17 @@ namespace Main.Utility
                         });
                     Observable.FromCoroutine<InputSystemsOwner>(observer => _inputSystemUtility.UpdateAsObservableOfInputSystemsOwner(observer, model))
                         // レベルリバートは別ロジックで行い、ここでは可変をロックする
-                        .Where(x => shikigamiInfos.Where(q => q.prop.type.Equals(ShikigamiType.Dance) &&
-                            x != null &&
-                            x.CurrentInputMode != null)
-                        .Select(q => q)
-                        .ToArray()[0].state.tempoLevelRevertState.Value == (int)RapidRecoveryType.None)
+                        // ChatGPT-4o
+                        .Where(x =>
+                        {
+                            var selected = shikigamiInfos
+                                .Where(q => q.prop.type.Equals(ShikigamiType.Dance) &&
+                                            x != null &&
+                                            x.CurrentInputMode != null)
+                                .ToArray();
+                            return selected.Length > 0 && selected[0].state.tempoLevelRevertState.Value == (int)RapidRecoveryType.None;
+                        })
+
                         .Subscribe(x =>
                         {
                             switch ((InputMode)x.CurrentInputMode.Value)

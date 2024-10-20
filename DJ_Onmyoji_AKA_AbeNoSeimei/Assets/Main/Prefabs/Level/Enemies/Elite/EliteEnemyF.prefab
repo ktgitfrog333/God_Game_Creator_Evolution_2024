@@ -74,7 +74,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3678280287336115840, guid: 5d7044c8d42de1540a3954615dee3f19, type: 3}
       propertyPath: enemiesProp.soulMoneyPoint
-      value: 2
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 7776762512387094233, guid: 5d7044c8d42de1540a3954615dee3f19, type: 3}
       propertyPath: m_Name

@@ -45,7 +45,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   unDeadTimeSec: 0.2
-  sensibilityScratch: 5
+  sensibilityScratch: 40
+  pushGameStartLogoModel: {fileID: 0}
   gameStartLogoModel: {fileID: 0}
   optionLogoModel: {fileID: 0}
   gameExitLogoModel: {fileID: 0}

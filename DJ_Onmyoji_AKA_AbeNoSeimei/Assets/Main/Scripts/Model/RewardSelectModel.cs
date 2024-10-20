@@ -33,7 +33,7 @@ namespace Main.Model
         {
             rewardContentModels = GetComponentsInChildren<RewardContentModel>();
             rewardsModel = GetComponent<RewardsModel>();
-            lastContent = GameObject.Find("GameRetryButton").GetComponent<Button>();
+            lastContent = GameObject.Find("GameSelectButton").GetComponent<Button>();
         }
 
         private void Start()
@@ -42,17 +42,50 @@ namespace Main.Model
                 .Where(x => x)
                 .Subscribe(_ =>
                 {
-                    var models = rewardContentModels.Select((p, i) => new { Content = p, Index = i })
-                        .Where(q => q.Content.isActiveAndEnabled);
+                    // アクティブを条件にしているようだがあまり機能していない
+                    var models = rewardContentModels.Where(q => q.isActiveAndEnabled)
+                        .Select((p, i) => new { Content = p, Index = i });
                     foreach (var item in models)
                     {
                         // インデックス0の場合は前のボタンはnull
-                        if (!item.Content.SetNavigationOfButton(0 < item.Index ? models.ToArray()[item.Index - 1].Content.Button : null,
-                            // インデックスがmaxの場合は次のボタンはnull
+                        if (!item.Content.SetNavigation(0 < item.Index ? models.ToArray()[item.Index - 1].Content.Button : null,
+                            // インデックスがmaxの場合は次のボタンは「確定」
                             item.Index < (models.ToArray().Length - 1) ? models.ToArray()[item.Index + 1].Content.Button : lastContent))
                             Debug.LogError("SetNavigationOfButton");
-                        if (!item.Content.SetRewardContentProp(rewardsModel.GetRewardContentProp(item.Index)))
-                            Debug.LogError("SetRewardContentProp");
+                        var rewardContentProp = rewardsModel.GetRewardContentProp(item.Index);
+                        if (rewardContentProp != null)
+                        {
+                            if (!item.Content.SetRewardContentProp(rewardContentProp))
+                                Debug.LogError("SetRewardContentProp");
+                        }
+                        else
+                        {
+                            // カードは少なくとも1枚は残る前提
+                            // リワード情報が取得できなかったカードは非表示となるため、一つ前のカードに対してボタンナビゲーション設定を行う。
+                            if (1 < item.Index)
+                            {
+                                if (!models.ToArray()[item.Index - 1].Content.SetNavigation(models.ToArray()[item.Index - 2].Content.Button,
+                                    // インデックスがmaxの場合は次のボタンは「確定」
+                                    lastContent))
+                                    Debug.LogError("SetNavigation");
+                                if (!lastContent.GetComponent<GameSelectButtonModel>().SetNavigation(models.ToArray()[item.Index - 1].Content.Button,
+                                    null))
+                                    Debug.LogError("SetNavigation");
+                            }
+                            else
+                            {
+                                if (!models.ToArray()[0].Content.SetNavigation(null,
+                                    // インデックスがmaxの場合は次のボタンは「確定」
+                                    lastContent))
+                                    Debug.LogError("SetNavigationOf");
+                                if (!lastContent.GetComponent<GameSelectButtonModel>().SetNavigation(models.ToArray()[0].Content.Button,
+                                    null))
+                                    Debug.LogError("SetNavigation");
+                            }
+
+                            // あまり良い方法ではないが、オブジェクトの有効無効ではなく、リワード情報がNullかで判断しているため、強制的にブレークさせる
+                            break;
+                        }
                     }
                     _isCompleted.Value = true;
                 });

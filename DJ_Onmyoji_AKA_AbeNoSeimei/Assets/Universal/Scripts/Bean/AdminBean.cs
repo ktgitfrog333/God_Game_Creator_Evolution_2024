@@ -290,6 +290,7 @@ namespace Universal.Bean
     public class LevelDesign
     {
         public MainSkillList[] mainSkillLists;
+        public SubSkillList[] subSkillLists;
         public RewardContentProp[] rewardContentProps;
     }
 
@@ -304,11 +305,21 @@ namespace Universal.Bean
     }
 
     [System.Serializable]
+    public class SubSkillList
+    {
+        public int shikigamiType;
+        public int subSkillType;
+        public int skillRank;
+        public float value;
+    }
+
+    [System.Serializable]
     public class RewardContentProp
     {
         public int rewardType;
         public UserBean.ShikigamiInfo shikigamiInfo;
         public int soulMoney;
+        public int rareType;
 
         public RewardContentProp()
         {

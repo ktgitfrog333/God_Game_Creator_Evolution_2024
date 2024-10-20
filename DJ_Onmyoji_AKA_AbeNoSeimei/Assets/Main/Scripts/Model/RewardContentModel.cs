@@ -45,24 +45,9 @@ namespace Main.Model
             return _mainUGUIsModelUtility.SetEventTriggerEnabledOfEventTrigger(enabled, eventTrigger);
         }
 
-        public bool SetNavigationOfButton(Button prevButton, Button nextButton)
+        public bool SetNavigation(Button prevButton, Button nextButton)
         {
-            try
-            {
-                Navigation navigation = button.navigation;
-                if (prevButton != null)
-                    navigation.selectOnLeft = prevButton;
-                if (nextButton != null)
-                    navigation.selectOnRight = nextButton;
-                button.navigation = navigation;
-
-                return true;
-            }
-            catch (System.Exception e)
-            {
-                Debug.LogError(e);
-                return false;
-            }
+            return _mainUGUIsModelUtility.SetNavigationOfButton(prevButton, nextButton, button);
         }
 
         public bool SetRewardContentProp(RewardContentProp rewardContentProp)
@@ -130,15 +115,8 @@ namespace Main.Model
     /// モデル
     /// インターフェース
     /// </summary>
-    public interface IRewardContentModel
+    public interface IRewardContentModel : IButtonCommon
     {
-        /// <summary>
-        /// ボタンのナビゲーションをセット
-        /// </summary>
-        /// <param name="prevButton">前のボタン</param>
-        /// <param name="nextButton">次のボタン</param>
-        /// <returns>成功／失敗</returns>
-        public bool SetNavigationOfButton(Button prevButton, Button nextButton);
         /// <summary>
         /// クリア報酬のコンテンツのプロパティをセット
         /// </summary>

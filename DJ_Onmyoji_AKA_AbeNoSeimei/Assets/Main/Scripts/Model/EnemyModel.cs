@@ -4,6 +4,7 @@ using System.Data;
 using DG.Tweening;
 using Main.Utility;
 using Main.View;
+using Main.Common;
 using UniRx;
 using UniRx.Triggers;
 using UnityEngine;
@@ -135,6 +136,8 @@ namespace Main.Model
                 Transform.rotation = Quaternion.Euler(0, 180, 0);
             else
                 Transform.rotation = Quaternion.Euler(0, 0, 0);
+            // 状態異常のリセット
+            damageSufferedZoneModel.SetBadStatus(SubSkillType.None, 0f);
         }
 
         protected override void Start()
@@ -170,6 +173,8 @@ namespace Main.Model
                 {
                     if (!enemyView.PlayHitEffect())
                         Debug.LogError("PlayHitEffect");
+
+                    enemyView.SetHpBar(State.HP.Value, prop.hpMax);
                 });
             damageSufferedZoneModel.IsHitPlayer.ObserveEveryValueChanged(x => x.Value)
                 .Where(x => x)
@@ -178,6 +183,40 @@ namespace Main.Model
                     enemiesProp.soulMoneyPoint = 0;
                     State.IsDead.Value = true;
                 });
+            damageSufferedZoneModel.badStatus.ObserveEveryValueChanged(x => x.Value)
+                .Subscribe(_ =>
+                {
+                    //オーラの可視／不可視（暗闇で使用）
+                    enemyView.SetAura(damageSufferedZoneModel.GetShikigamiTypes());
+                    //ダメージ倍率の設定（呪詛で使用）
+                    _utility.SetDamageRate(damageSufferedZoneModel.badStatus.Value);
+                });
+
+            // 毒の場合に一定間隔でダメージ判定するための実装
+            Observable.Interval(System.TimeSpan.FromSeconds(1))
+                .Where(_ => SubSkillType.Poison.Equals(damageSufferedZoneModel.badStatus.Value) && !State.IsDead.Value)
+                .Subscribe(_ =>
+                {
+                    State.HP.Value -= Mathf.CeilToInt(prop.hpMax * 0.1f);
+                    if(State.HP.Value <= 0)
+                        State.IsDead.Value = true;
+
+                    if(enemyView != null)
+                        enemyView.SetHpBar(State.HP.Value, prop.hpMax);
+                }).AddTo(this);
+
+            // 炎上の場合に一定間隔でダメージ判定するための実装
+            Observable.Interval(System.TimeSpan.FromSeconds(0.1f))
+                .Where(_ => SubSkillType.Fire.Equals(damageSufferedZoneModel.badStatus.Value) && !State.IsDead.Value)
+                .Subscribe(_ =>
+                {
+                    State.HP.Value -= 1;
+                    if (State.HP.Value <= 0)
+                        State.IsDead.Value = true;
+
+                    if (enemyView != null)
+                        enemyView.SetHpBar(State.HP.Value, prop.hpMax);
+                }).AddTo(this);
         }
 
         private void FixedUpdate()
@@ -187,7 +226,18 @@ namespace Main.Model
                 var targetDirection = _target.position - Transform.position;
                 var moveDirection = targetDirection.normalized;
                 // 指定された方向と速度に弾を移動させる
-                Transform.position += moveDirection * _moveSpeed * Time.fixedDeltaTime;
+
+                if (SubSkillType.Paralysis.Equals(damageSufferedZoneModel.badStatus.Value))
+                    //麻痺中は移動しない
+                    Transform.position += moveDirection * 0;
+                else if (SubSkillType.Knockback.Equals(damageSufferedZoneModel.badStatus.Value))
+                    //ノックバック（逆方向への移動）
+                    Transform.position += moveDirection * _moveSpeed * Time.fixedDeltaTime * -10f;
+                else if (SubSkillType.Curse.Equals(damageSufferedZoneModel.badStatus.Value))
+                    //呪詛（移動速度半減）
+                    Transform.position += moveDirection * _moveSpeed * Time.fixedDeltaTime * 0.5f;
+                else
+                    Transform.position += moveDirection * _moveSpeed * Time.fixedDeltaTime;
             }
         }
 

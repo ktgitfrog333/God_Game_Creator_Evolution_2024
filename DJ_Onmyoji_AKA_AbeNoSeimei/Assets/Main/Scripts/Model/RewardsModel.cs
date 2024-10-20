@@ -47,10 +47,15 @@ namespace Main.Model
 
                 return rewardContentProps[index];
             }
+            catch (System.ArgumentOutOfRangeException aoe)
+            {
+                Debug.LogWarning(aoe);
+                return null;
+            }
             catch (System.Exception e)
             {
                 Debug.LogError(e);
-                return new RewardContentProp();
+                return null;
             }
         }
 

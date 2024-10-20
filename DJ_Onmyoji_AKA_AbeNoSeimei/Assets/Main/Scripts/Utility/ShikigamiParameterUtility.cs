@@ -32,6 +32,11 @@ namespace Main.Utility
             return GetMainSkills(shikigamiInfo, mainSkillType, q => q.value);
         }
 
+        public float GetSubSkillValue(ShikigamiInfo shikigamiInfo, SubSkillType subSkillType)
+        {
+            return GetSubSkills(shikigamiInfo, subSkillType, q => q.value);
+        }
+
         public float GetMainSkillValueAddValueBuffMax(ShikigamiInfo shikigamiInfo, MainSkillType mainSkillType)
         {
             var mainSkills = GetMainSkills(shikigamiInfo, mainSkillType, q => q.value);
@@ -122,6 +127,30 @@ namespace Main.Utility
         }
 
         /// <summary>
+        /// サブスキルのいずれかの値の取得
+        /// </summary>
+        /// <param name="shikigamiInfo">式神の情報</param>
+        /// <param name="subSkillType">スキルタイプ</param>
+        /// <returns>サブスキルのいずれかの値</returns>
+        /// <exception cref="System.Exception">サブスキルプロパティが1つもない場合、または指定したスキルタイプのサブスキルプロパティが1つもない場合にスローされます</exception>
+        private T GetSubSkills<T>(ShikigamiInfo shikigamiInfo, SubSkillType subSkillType, System.Func<SubSkillList, T> selector)
+        {
+            var skillLists = _common.AdminDataSingleton.AdminBean.levelDesign.subSkillLists;
+            if (skillLists.Length < 1)
+                throw new System.Exception($"{skillLists.Length}つのサブスキルプロパティから取得できない");
+
+            var array = skillLists.Where(q => ((ShikigamiType)q.shikigamiType).Equals(shikigamiInfo.prop.type) &&
+                ((SubSkillType)q.subSkillType).Equals(subSkillType) &&
+                ((SkillRank)q.skillRank).Equals(GetSubSkillRank(shikigamiInfo, subSkillType)))
+                .Select(selector)
+                .ToArray();
+            if (array.Length < 1)
+                throw new System.Exception($"{skillLists.Length}つのサブスキルプロパティから取得できない[{shikigamiInfo.prop.type}][{subSkillType}]");
+
+            return array[0];
+        }
+
+        /// <summary>
         /// スキルランクの取得
         /// </summary>
         /// <param name="shikigamiInfo">式神の情報</param>
@@ -139,6 +168,28 @@ namespace Main.Utility
                 .ToArray();
             if (array.Length < 1)
                 throw new System.Exception($"{skills.Length}つのメインスキルプロパティから取得できない[{mainSkillType}]");
+
+            return array[0];
+        }
+
+        /// <summary>
+        /// スキルランクの取得
+        /// </summary>
+        /// <param name="shikigamiInfo">式神の情報</param>
+        /// <param name="mainSkillType">スキルタイプ</param>
+        /// <returns>スキルランク</returns>
+        /// <exception cref="System.Exception">サブスキルプロパティが1つもない場合、または指定したスキルタイプのサブスキルプロパティが1つもない場合にスローされます</exception>
+        private SkillRank GetSubSkillRank(ShikigamiInfo shikigamiInfo, SubSkillType subSkillType)
+        {
+            var skills = shikigamiInfo.prop.subSkills;
+            if (skills.Length < 1)
+                return SkillRank.D;
+
+            var array = skills.Where(q => q.type.Equals(subSkillType))
+                .Select(q => q.rank)
+                .ToArray();
+            if (array.Length < 1)
+                return SkillRank.D;
 
             return array[0];
         }
@@ -246,6 +297,51 @@ namespace Main.Utility
                     rank = (SkillRank)item.rank,
                 });
             return skills.ToArray();
+        }
+
+        /// <summary>
+        /// サブスキルタイプを取得
+        /// </summary>
+        /// <param name="shikigamiInfo">式神情報</param>
+        /// <returns>取得したサブスキルタイプ</returns>
+        /// <exception cref="System.Exception">引数データが存在しない場合に例外をスロー</exception>
+        public SubSkillType GetSubSkillType(ShikigamiInfo shikigamiInfo)
+        {
+            var skills = shikigamiInfo.prop.subSkills;
+            if (skills.Length < 1)
+                return SubSkillType.None;
+
+            return skills[0].type;
+        }
+
+        /// <summary>
+        /// サブスキルランクを取得
+        /// </summary>
+        /// <param name="shikigamiInfo">式神情報</param>
+        /// <returns>取得したサブスキルランク</returns>
+        /// <exception cref="System.Exception">引数データが存在しない場合に例外をスロー</exception>
+        public SkillRank GetSubSkillRank(ShikigamiInfo shikigamiInfo)
+        {
+            var skills = shikigamiInfo.prop.subSkills;
+            if (skills.Length < 1)
+                return SkillRank.D;
+
+            return skills[0].rank;
+        }
+
+        /// <summary>
+        /// サブスキルランクを取得
+        /// </summary>
+        /// <param name="shikigamiInfo">式神情報</param>
+        /// <returns>取得したサブスキルランク</returns>
+        /// <exception cref="System.Exception">引数データが存在しない場合に例外をスロー</exception>
+        public float GetSubSkillValue(ShikigamiInfo shikigamiInfo)
+        {
+            var skills = shikigamiInfo.prop.subSkills;
+            if (skills.Length < 1)
+                return 0f;
+
+            return GetSubSkillValue(shikigamiInfo, skills[0].type);
         }
     }
 

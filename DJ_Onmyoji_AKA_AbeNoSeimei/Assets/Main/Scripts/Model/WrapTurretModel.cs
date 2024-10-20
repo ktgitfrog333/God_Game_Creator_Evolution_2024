@@ -12,6 +12,15 @@ namespace Main.Model
     /// </summary>
     public class WrapTurretModel : TurretModel, IWrapTurretModel
     {
+        private OnmyoBulletConfig newOnmyoBulletConfig;
+        private float spreadNum = 1.0f;
+
+        protected override void Start()
+        {
+            base.Start();
+            spreadNum = _shikigamiUtility.GetSubSkillValue(_shikigamiInfo, SubSkillType.Spreading);
+        }
+
         protected override OnmyoBulletConfig InitializeOnmyoBulletConfig()
         {
             return new OnmyoBulletConfig()
@@ -19,6 +28,10 @@ namespace Main.Model
                 actionRate = _shikigamiUtility.GetMainSkillValue(_shikigamiInfo, MainSkillType.ActionRate),
                 attackPoint = (int)_shikigamiUtility.GetMainSkillValue(_shikigamiInfo, MainSkillType.AttackPoint),
                 bulletLifeTime = _shikigamiUtility.GetMainSkillValue(_shikigamiInfo, MainSkillType.BulletLifeTime),
+                homing = _shikigamiUtility.GetMainSkillValue(_shikigamiInfo, MainSkillType.Homing),
+                subSkillType = _shikigamiUtility.GetSubSkillType(_shikigamiInfo),
+                subSkillRank = _shikigamiUtility.GetSubSkillRank(_shikigamiInfo),
+                subSkillValue = _shikigamiUtility.GetSubSkillValue(_shikigamiInfo),
             };
         }
 
@@ -32,7 +45,38 @@ namespace Main.Model
 
         protected override bool ActionOfBullet(ObjectsPoolModel objectsPoolModel, OnmyoBulletConfig onmyoBulletConfig)
         {
-            return _turretUtility.CallInitialize(objectsPoolModel.GetWrapBulletModel(), RectTransform, onmyoBulletConfig);
+            bool result = false;
+
+            if(!ActionOfBulletSpread(objectsPoolModel, onmyoBulletConfig, 0.0f))
+                return false;
+
+            if(spreadNum >= 2.0f)
+                if(!ActionOfBulletSpread(objectsPoolModel, onmyoBulletConfig, 10f))
+                    return false;
+
+            if (spreadNum >= 3.0f)
+                if (!ActionOfBulletSpread(objectsPoolModel, onmyoBulletConfig, -10f))
+                    return false;
+
+            if (spreadNum >= 4.0f)
+                if (!ActionOfBulletSpread(objectsPoolModel, onmyoBulletConfig, 20f))
+                    return false;
+
+            if (spreadNum >= 5.0f)
+                if (!ActionOfBulletSpread(objectsPoolModel, onmyoBulletConfig, -20f))
+                    return false;
+
+            return true;
+        }
+
+        private bool ActionOfBulletSpread(ObjectsPoolModel objectsPoolModel, OnmyoBulletConfig onmyoBulletConfig, float rotationValue)
+        {
+            newOnmyoBulletConfig = onmyoBulletConfig;
+            Quaternion rotation = Quaternion.Euler(0, 0, rotationValue);
+            Vector3 rotated = rotation * new Vector3(onmyoBulletConfig.moveDirection.x, onmyoBulletConfig.moveDirection.y, 0);
+            newOnmyoBulletConfig.moveDirection = new Vector2(rotated.x, rotated.y);
+
+            return _turretUtility.CallInitialize(objectsPoolModel.GetWrapBulletModel(), RectTransform, newOnmyoBulletConfig);
         }
 
         public override bool UpdateTempoLvValue(float tempoLevel, ShikigamiType shikigamiType)

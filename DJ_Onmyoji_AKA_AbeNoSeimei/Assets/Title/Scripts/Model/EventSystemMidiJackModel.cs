@@ -21,7 +21,7 @@ namespace Title.Model
         /// <summary>入力無視の時間（秒）</summary>
         [SerializeField] private float unDeadTimeSec = .2f;
         /// <summary>スクラッチ入力の調整値</summary>
-        [SerializeField] private float sensibilityScratch = 5f;
+        [SerializeField] private float sensibilityScratch = 40f;
         /// <summary>PushGameStartのモデル</summary>
         [SerializeField] private PushGameStartLogoModel pushGameStartLogoModel;
         /// <summary>GameStartLogoのモデル</summary>

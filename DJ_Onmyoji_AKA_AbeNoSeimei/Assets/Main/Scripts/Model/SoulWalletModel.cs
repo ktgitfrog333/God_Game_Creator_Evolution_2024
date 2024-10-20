@@ -22,6 +22,8 @@ namespace Main.Model
         private BoolReactiveProperty _isDeadOfPlayer;
         /// <summary>経験値を更新をロック</summary>
         public bool IsUnLockUpdateOfSoulMoney { get; private set; }
+        /// <summary>最終ステージをクリアしたか</summary>
+        private bool _isClearFinalStage;
 
         private void Start()
         {
@@ -38,12 +40,16 @@ namespace Main.Model
 
         private void OnDestroy()
         {
-            var temp = new TemplateResourcesAccessory();
-            var userBean = temp.LoadSaveDatasJsonOfUserBean(ConstResorcesNames.USER_DATA);
-            userBean.soulMoney = _isDeadOfPlayer != null && !_isDeadOfPlayer.Value ? SoulMoney.Value : 0;
-            var userBeanUpd = userBean;
-            if (!temp.SaveDatasJsonOfUserBean(ConstResorcesNames.USER_DATA, userBeanUpd))
-                throw new System.Exception("SaveDatasJsonOfUserBean");
+            // 最後のステージクリアの場合はセーブしない
+            if (!_isClearFinalStage)
+            {
+                var temp = new TemplateResourcesAccessory();
+                var userBean = temp.LoadSaveDatasJsonOfUserBean(ConstResorcesNames.USER_DATA);
+                userBean.soulMoney = _isDeadOfPlayer != null && !_isDeadOfPlayer.Value ? SoulMoney.Value : 0;
+                var userBeanUpd = userBean;
+                if (!temp.SaveDatasJsonOfUserBean(ConstResorcesNames.USER_DATA, userBeanUpd))
+                    throw new System.Exception("SaveDatasJsonOfUserBean");
+            }
         }
 
         public int AddSoulMoney(int soulMoney)
@@ -77,6 +83,21 @@ namespace Main.Model
                 return false;
             }
         }
+
+        public bool SetIsClearFinalStage(bool isClearFinalStage)
+        {
+            try
+            {
+                _isClearFinalStage = isClearFinalStage;
+
+                return true;
+            }
+            catch (System.Exception e)
+            {
+                Debug.LogError(e);
+                return false;
+            }
+        }
     }
 
     /// <summary>
@@ -98,5 +119,11 @@ namespace Main.Model
         /// <param name="IsUnLock">アンロック状態／無効</param>
         /// <returns>成功／失敗</returns>
         public bool SetIsUnLockUpdateOfSoulMoney(bool IsUnLock);
+        /// <summary>
+        /// 最終ステージをクリアしたかをセット
+        /// </summary>
+        /// <param name="isClearFinalStage">最終ステージをクリアしたか</param>
+        /// <returns>成功／失敗</returns>
+        public bool SetIsClearFinalStage(bool isClearFinalStage);
     }
 }

@@ -185,7 +185,7 @@ MonoBehaviour:
   - {fileID: 2737388676213699898}
   - {fileID: 4358895904515132334}
   rewardsModel: {fileID: 1468756092035247370}
-  lastContent: {fileID: 0}
+  lastContent: {fileID: 4455790507446570917}
 --- !u!114 &1468756092035247370
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -201,6 +201,7 @@ MonoBehaviour:
   rewardContentProps:
   - rewardID: 1
     shikigamiType: 0
+    rareType: 0
     rewardType: 0
     image: {fileID: 21300000, guid: 24fa103679e856642808deb517a794c5, type: 3}
     name: "\u516D\u5408"
@@ -238,6 +239,7 @@ MonoBehaviour:
         afterPlayerInfoProps: []
   - rewardID: 3
     shikigamiType: 1
+    rareType: 0
     rewardType: 1
     image: {fileID: 21300000, guid: c658e7d00a8d8cc439c8a47c2a0b8ccf, type: 3}
     name: "\u6731\u96C0"
@@ -275,6 +277,7 @@ MonoBehaviour:
         afterPlayerInfoProps: []
   - rewardID: 0
     shikigamiType: 2
+    rareType: 0
     rewardType: 0
     image: {fileID: 21300000, guid: c0b4996d937d9534480ffd51b427eb35, type: 3}
     name: "\u52FE\u9673"
@@ -312,6 +315,7 @@ MonoBehaviour:
         afterPlayerInfoProps: []
   - rewardID: 4
     shikigamiType: 3
+    rareType: 0
     rewardType: 2
     image: {fileID: 21300000, guid: bfa93a3222f4740469acb95016ea06e7, type: 3}
     name: "\u6674\u660E"
@@ -349,6 +353,7 @@ MonoBehaviour:
         afterPlayerInfoProps: []
   - rewardID: 2
     shikigamiType: 3
+    rareType: 0
     rewardType: 2
     image: {fileID: 21300000, guid: bfa93a3222f4740469acb95016ea06e7, type: 3}
     name: "\u6674\u660E"
@@ -620,17 +625,33 @@ MonoBehaviour:
       value: "\u653B\u6483\u7BC4\u56F2"
     - type: 7
       value: "\u5C55\u958B\u6642\u9593"
+    - type: 8
+      value: "\u30DB\u30FC\u30DF\u30F3\u30B0\u6027\u80FD"
     subSkillTypes:
     - type: 1
       value: "\u7206\u767A"
-    - type: 2
-      value: "\u8FFD\u5C3E\u6027\u80FD"
     - type: 3
       value: "\u8CAB\u901A"
     - type: 4
       value: "\u62E1\u6563"
+    - type: 2
+      value: "\u9EBB\u75FA"
     - type: 5
-      value: "\u9023\u5C04"
+      value: "\u6D3B\u529B"
+    - type: 6
+      value: "\u708E\u4E0A"
+    - type: 7
+      value: "\u7A81\u98A8"
+    - type: 8
+      value: "\u6025\u6240"
+    - type: 9
+      value: "\u6BD2"
+    - type: 10
+      value: "\u6697\u95C7"
+    - type: 11
+      value: "\u96F7\u6483"
+    - type: 12
+      value: "\u546A\u8A5B"
 --- !u!1 &2998410079285951322
 GameObject:
   m_ObjectHideFlags: 0
@@ -896,17 +917,33 @@ MonoBehaviour:
       value: "\u653B\u6483\u7BC4\u56F2"
     - type: 7
       value: "\u5C55\u958B\u6642\u9593"
+    - type: 8
+      value: "\u30DB\u30FC\u30DF\u30F3\u30B0\u6027\u80FD"
     subSkillTypes:
     - type: 1
       value: "\u7206\u767A"
-    - type: 2
-      value: "\u8FFD\u5C3E\u6027\u80FD"
     - type: 3
       value: "\u8CAB\u901A"
     - type: 4
       value: "\u62E1\u6563"
+    - type: 2
+      value: "\u9EBB\u75FA"
     - type: 5
-      value: "\u9023\u5C04"
+      value: "\u6D3B\u529B"
+    - type: 6
+      value: "\u708E\u4E0A"
+    - type: 7
+      value: "\u7A81\u98A8"
+    - type: 8
+      value: "\u6025\u6240"
+    - type: 9
+      value: "\u6BD2"
+    - type: 10
+      value: "\u6697\u95C7"
+    - type: 11
+      value: "\u96F7\u6483"
+    - type: 12
+      value: "\u546A\u8A5B"
 --- !u!1 &3801669766917241920
 GameObject:
   m_ObjectHideFlags: 0
@@ -1217,6 +1254,7 @@ MonoBehaviour:
   - {fileID: 7688040936246183182}
   - {fileID: 7528377189819036148}
   - {fileID: 4811906719832139707}
+  targetRectTransform: {fileID: 0}
 --- !u!1 &4455790507446570919
 GameObject:
   m_ObjectHideFlags: 0
@@ -1323,7 +1361,7 @@ MonoBehaviour:
     m_HighlightedColor: {r: 1, g: 1, b: 1, a: 1}
     m_PressedColor: {r: 1, g: 1, b: 1, a: 1}
     m_SelectedColor: {r: 1, g: 1, b: 1, a: 1}
-    m_DisabledColor: {r: 1, g: 1, b: 1, a: 1}
+    m_DisabledColor: {r: 0.37254903, g: 0.37254903, b: 0.37254903, a: 1}
     m_ColorMultiplier: 1
     m_FadeDuration: 0.1
   m_SpriteState:
@@ -1369,6 +1407,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   gameContentsConfig: {fileID: 7597996915477195239}
+  textTMPView: {fileID: 9183593545271980763}
 --- !u!114 &4455790507446570926
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1565,6 +1604,7 @@ GameObject:
   - component: {fileID: 7014715165629563774}
   - component: {fileID: 6432298150079883957}
   - component: {fileID: 6893305762038331177}
+  - component: {fileID: 9183593545271980763}
   m_Layer: 5
   m_Name: Text (TMP)
   m_TagString: Untagged
@@ -1688,6 +1728,25 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+--- !u!114 &9183593545271980763
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4625980480056185959}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6d63d7eeec0701943a4d15299ce3de75, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  textMeshProUGUI: {fileID: 6893305762038331177}
+  enabledColor:
+    serializedVersion: 2
+    rgba: 4294967295
+  disabledColor:
+    serializedVersion: 2
+    rgba: 4284440415
 --- !u!1 &6214601107349914751
 GameObject:
   m_ObjectHideFlags: 0
