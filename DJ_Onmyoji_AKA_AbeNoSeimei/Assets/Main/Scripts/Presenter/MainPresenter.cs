@@ -758,6 +758,8 @@ namespace Main.Presenter
                             }
                             if (!pentagramTurnTableModel.SetActionRateNormalOfOnmyoTurret(x))
                                 Debug.LogError("SetActionRateNormalOfOnmyoTurret");
+
+                            pentagramTurnTableView.SetLoopImage(x);
                         });
                 });
             this.UpdateAsObservable()
@@ -773,19 +775,31 @@ namespace Main.Presenter
                             {
                                 if (!pentagramTurnTableModel.SetMoveDirectionsToDanceOfOnmyoWrapGraffitiTurret())
                                     Debug.LogError("SetMoveDirectionsToDanceOfOnmyoWrapGraffitiTurret");
+                                if (!pentagramTurnTableModel.AttackOfOnmyoTurret())
+                                    Debug.LogError("AttackOfOnmyoTurret");
                                 Observable.FromCoroutine<bool>(observer => pentagramTurnTableView.MoveSpin(observer, pentagramSystemModel.InputSlipLoopState))
                                     .Subscribe(x =>
                                     {
                                         if (x)
                                         {
-                                            if (!pentagramTurnTableModel.AttackOfOnmyoTurret())
-                                                Debug.LogError("AttackOfOnmyoTurret");
                                             if (!shikigamiSkillSystemModel.UpdateCandleResourceOfAttackOnmyoTurret())
                                                 Debug.LogError("UpdateCandleResourceOfAttackOnmyoTurret");
                                         }
                                     })
                                     .AddTo(gameObject);
                             }
+                        });
+                });
+            this.UpdateAsObservable()
+                .Select(_ => pentagramSystemModel.InputSlipLoopState.beatLength)
+                .Where(x => x != null)
+                .Take(1)
+                .Subscribe(x =>
+                {
+                    x.ObserveEveryValueChanged(x => x.Value)
+                        .Subscribe(x =>
+                        {
+                            pentagramTurnTableView.SetLoopImageSize(x);
                         });
                 });
             this.UpdateAsObservable()
