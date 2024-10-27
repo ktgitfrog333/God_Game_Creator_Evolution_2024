@@ -6,6 +6,7 @@ using UniRx;
 using UniRx.Triggers;
 using Main.Common;
 using DG.Tweening;
+using UnityEngine.UI;
 
 namespace Main.View
 {
@@ -25,6 +26,21 @@ namespace Main.View
         [SerializeField] private float slipLoopAngle = 30f;
         /// <summary>スリップループ用の変更前角度</summary>
         private Vector3? _fromAngle;
+        /// <summary>ループエリア</summary>
+        [SerializeField] protected Image loopImage;
+        /// <summary>ループエリアのTransform</summary>
+        private RectTransform loopImageRectTransform;
+        /// <summary>ループする際にアタッチするオブジェクト</summary>
+        public Transform parentObjectLoopOn;
+        /// <summary>ループしない際にアタッチするオブジェクト</summary>
+        public Transform parentObjectLoopOff; // GUIにアタッチしないと表示されない
+
+        protected virtual void Start()
+        {
+            loopImage.enabled = false;
+            loopImageRectTransform = loopImage.GetComponent<RectTransform>();
+            base.Start();
+        }
 
         public bool MoveSpin(BgmConfDetails bgmConfDetails)
         {
@@ -197,6 +213,44 @@ namespace Main.View
                     }
                 default:
                     return true;
+            }
+        }
+
+        public void SetLoopImage(bool isLooping)
+        {
+            if (isLooping)
+            { 
+                loopImageRectTransform.SetParent(parentObjectLoopOff);
+                loopImageRectTransform.position = parentObjectLoopOn.TransformPoint(new Vector3(0, 7, 0));
+            }
+            else
+            {
+                loopImageRectTransform.SetParent(parentObjectLoopOn);
+                loopImageRectTransform.localPosition = new Vector3(0, 7, 0);
+                loopImageRectTransform.localRotation = Quaternion.identity;
+            }
+
+            loopImage.enabled = isLooping;
+        }
+
+        public void SetLoopImageSize(float beatLength)
+        {
+            switch (beatLength)
+            {
+                case 1:
+                    loopImageRectTransform.sizeDelta = new Vector2(9f, loopImageRectTransform.sizeDelta.y);
+                    break;
+                case 2:
+                    loopImageRectTransform.sizeDelta = new Vector2(7f, loopImageRectTransform.sizeDelta.y);
+                    break;
+                case 3:
+                    loopImageRectTransform.sizeDelta = new Vector2(5f, loopImageRectTransform.sizeDelta.y);
+                    break;
+                case 4:
+                    loopImageRectTransform.sizeDelta = new Vector2(3f, loopImageRectTransform.sizeDelta.y);
+                    break;
+                default:
+                    break;
             }
         }
     }
