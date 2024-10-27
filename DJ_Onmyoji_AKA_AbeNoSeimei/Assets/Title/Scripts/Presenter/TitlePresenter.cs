@@ -29,10 +29,6 @@ namespace Title.Presenter
         [SerializeField] private GameStartLogoView gameStartLogoView;
         /// <summary>GameStartLogoのモデル</summary>
         [SerializeField] private GameStartLogoModel gameStartLogoModel;
-        /// <summary>OptionLogoのビュー</summary>
-        [SerializeField] private OptionLogoView optionLogoView;
-        /// <summary>OptionLogoのモデル</summary>
-        [SerializeField] private OptionLogoModel optionLogoModel;
         /// <summary>GameExitLogoのビュー</summary>
         [SerializeField] private GameExitLogoView gameExitLogoView;
         /// <summary>GameExitLogoのモデル</summary>
@@ -123,6 +119,8 @@ namespace Title.Presenter
         [SerializeField] private OptionCursorView optionCursorView;
         /// <summary>ラベルのビュー</summary>
         [SerializeField] private LabelView[] labelViews;
+        /// <summary>チュートリアルのモデル</summary>
+        [SerializeField] private TutorialLogoModel tutorialLogoModel;
 
         private void Reset()
         {
@@ -130,8 +128,6 @@ namespace Title.Presenter
             pushGameStartLogoModel = GameObject.Find("PushGameStartLogo").GetComponent<PushGameStartLogoModel>();
             gameStartLogoView = GameObject.Find("GameStartLogo").GetComponent<GameStartLogoView>();
             gameStartLogoModel = GameObject.Find("GameStartLogo").GetComponent<GameStartLogoModel>();
-            optionLogoView = GameObject.Find("OptionLogo").GetComponent<OptionLogoView>();
-            optionLogoModel = GameObject.Find("OptionLogo").GetComponent<OptionLogoModel>();
             gameExitLogoView = GameObject.Find("GameExitLogo").GetComponent<GameExitLogoView>();
             gameExitLogoModel = GameObject.Find("GameExitLogo").GetComponent<GameExitLogoModel>();
             gameExitConfirmYesLogoView = GameObject.Find("GameExitConfirmYesLogo").GetComponent<GameExitConfirmYesLogoView>();
@@ -182,6 +178,12 @@ namespace Title.Presenter
             resetConfigMessageView = GameObject.Find("ResetConfigMsg").GetComponent<ResetConfigMessageView>();
             allLevelReleasedMessageView = GameObject.Find("AllLevelReleasedMsg").GetComponent<AllLevelReleasedMessageView>();
             optionCursorView = GameObject.Find("OptionCursor").GetComponent<OptionCursorView>();
+            // 下記のlabelViews、使用していないなら削除
+            labelViews = new LabelView[]
+            {
+                GameObject.Find("TitleBgm").GetComponent<LabelView>()
+            };
+            tutorialLogoModel = GameObject.Find("TutorialLogo").GetComponent<TutorialLogoModel>();
         }
 
         public void OnStart()
@@ -265,8 +267,8 @@ namespace Title.Presenter
                         // ボタン制御を無効
                         gameStartLogoModel.SetButtonEnabled(false);
                         gameStartLogoModel.SetEventTriggerEnabled(false);
-                        optionLogoModel.SetButtonEnabled(false);
-                        optionLogoModel.SetEventTriggerEnabled(false);
+                        tutorialLogoModel.SetButtonEnabled(false);
+                        tutorialLogoModel.SetEventTriggerEnabled(false);
                         gameExitLogoModel.SetButtonEnabled(false);
                         gameExitConfirmYesLogoModel.SetButtonEnabled(false);
                         gameExitConfirmYesLogoModel.SetEventTriggerEnabled(false);
@@ -281,8 +283,8 @@ namespace Title.Presenter
                         // ボタン制御を有効
                         gameStartLogoModel.SetButtonEnabled(true);
                         gameStartLogoModel.SetEventTriggerEnabled(true);
-                        optionLogoModel.SetButtonEnabled(true);
-                        optionLogoModel.SetEventTriggerEnabled(true);
+                        tutorialLogoModel.SetButtonEnabled(true);
+                        tutorialLogoModel.SetEventTriggerEnabled(true);
                         gameExitLogoModel.SetButtonEnabled(true);
                         gameExitConfirmYesLogoModel.SetButtonEnabled(true);
                         gameExitConfirmYesLogoModel.SetEventTriggerEnabled(true);
@@ -349,8 +351,8 @@ namespace Title.Presenter
                             break;
                     }
                 });
-            // オプションロゴ
-            optionLogoModel.EventState.ObserveEveryValueChanged(x => x.Value)
+            // チュートリアル
+            tutorialLogoModel.EventState.ObserveEveryValueChanged(x => x.Value)
                 .Subscribe(x =>
                 {
                     switch ((EnumEventCommand)x)
@@ -359,7 +361,7 @@ namespace Title.Presenter
                             // 処理無し
                             break;
                         case EnumEventCommand.Selected:
-                            if (!cursorIconView.PlaySelectAnimation(optionLogoModel.transform.position))
+                            if (!cursorIconView.PlaySelectAnimation(tutorialLogoModel.transform.position))
                                 Debug.LogError("カーソル選択アニメーション呼び出しの失敗");
                             // 選択SEを再生
                             TitleGameManager.Instance.AudioOwner.PlaySFX(ClipToPlay.se_select);
@@ -370,19 +372,22 @@ namespace Title.Presenter
                         case EnumEventCommand.Canceled:
                             cursorIcon.SetActive(false);
                             gameStartOrExit.SetActive(false);
+                            TitleGameManager.Instance.InputSystemsOwner.InputMidiJackDDJ200.DoResetAllKey();
                             pushGameStart.SetActive(true);
                             // キャンセルSEを再生
                             TitleGameManager.Instance.AudioOwner.PlaySFX(ClipToPlay.se_cancel);
                             break;
                         case EnumEventCommand.Submited:
+                            if (!TitleGameManager.Instance.SceneOwner.SaveSceneIdCurrentAndPrevious())
+                                Debug.LogError("SaveSceneIdCurrentAndPrevious");
+                            tutorialLogoModel.SetButtonEnabled(false);
+                            tutorialLogoModel.SetEventTriggerEnabled(false);
                             // 決定SEを再生
                             TitleGameManager.Instance.AudioOwner.PlaySFX(ClipToPlay.se_decided);
-                            gameStartOrExit.SetActive(false);
-                            cursorIcon.SetActive(false);
-                            option.SetActive(true);
-                            // BGMスライダーボリュームの設定値を選択する
-                            if (!sliderVolModelsBgms[sliderBgmModel.Index.Value].Select())
-                                Debug.LogError("選択する呼び出しの失敗");
+                            Observable.FromCoroutine<bool>(observer => fadeImageView.PlayFadeAnimation(observer, EnumFadeState.Close))
+                                .Subscribe(_ => TitleGameManager.Instance.SceneOwner.LoadNextScene())
+                                .AddTo(gameObject);
+
                             break;
                         default:
                             Debug.LogWarning("例外ケース");

@@ -38,7 +38,17 @@ namespace Universal.Bean
         /// シーンID
         /// </summary>
         public int sceneId = SCENEID_DEFAULT;
-        
+
+        /// <summary>
+        /// シーンID（遷移前）
+        /// </summary>
+        /// <remarks>
+        /// タイトル画面からチュートリアル遷移する場合にシーンIDを保持する必要がある。
+        /// 保持しないと、セレクト画面で選択されていた進行中のシーンIDが欠落する。
+        /// クリア済みシーンIDに紐づくステージは選択できない。
+        /// </remarks>
+        public int sceneIdPrevious = SCENEID_DEFAULT;
+
         /// <summary>
         /// クリアステータス
         /// </summary>
@@ -284,6 +294,7 @@ namespace Universal.Bean
                     break;
                 case EnumLoadMode.Default:
                     sceneId = SCENEID_DEFAULT;
+                    sceneIdPrevious = SCENEID_DEFAULT;
                     state = STATE_DEFAULT;
                     // TODO: デフォルトは結局どちらなのか
                     // PENTAGRAM_TURN_TABLE_INFO_DEFAULT / PENTAGRAM_TURN_TABLE_INFO_DEFAULT_2
@@ -292,7 +303,9 @@ namespace Universal.Bean
 
                     break;
                 case EnumLoadMode.All:
+                    // デッドロジック（ステージ全開放機能はない）
                     sceneId = SCENEID_ALL;
+                    sceneIdPrevious = SCENEID_DEFAULT;
                     state = STATE_ALL;
 
                     break;
@@ -429,6 +442,7 @@ namespace Universal.Bean
         public UserBean(UserBean userBean)
         {
             sceneId = userBean.sceneId;
+            sceneIdPrevious = userBean.sceneIdPrevious;
             state = userBean.state;
             audioVolumeIndex = userBean.audioVolumeIndex;
             bgmVolumeIndex = userBean.bgmVolumeIndex;
