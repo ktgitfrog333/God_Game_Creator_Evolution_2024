@@ -23,6 +23,12 @@ namespace Main.Model
         private float _onmyoState;
         /// <summary>敵のスポーンテーブル</summary>
         private EnemiesSpawnTable[] _enemiesSpawnTables = new EnemiesSpawnTable[2];
+        /// <summary>スポーン位置の固定化フラグ　TRUEの場合はスポーン位置を固定化する EnemiesSpawnClipから受け取る</summary>
+        private bool isSpawnPositionLock = false;
+        /// <summary>スポーン位置の固定化時の固定角度</summary>
+        private float baseAngle = 0f;
+        /// <summary>スポーン位置の固定化時の角度の変化量 EnemiesSpawnClipから受け取る</summary>
+        private float changeDegree = 0f;
 
         protected override void Start()
         {
@@ -78,7 +84,10 @@ namespace Main.Model
                                 objectsPoolModel,
                                 radiusMin,
                                 radiusMax,
-                                _onmyoState))
+                                _onmyoState,
+                                isSpawnPositionLock,
+                                baseAngle,
+                                changeDegree))
                                 Debug.LogError("ManageEnemiesSpawn");
                         }
                     });
@@ -115,6 +124,13 @@ namespace Main.Model
                 _enemiesSpawnTables[(int)SunMoonState.Daytime] = enemiesSpawnTable;
             if (enemiesSpawnTable.sunMoonState.Equals(SunMoonState.Night))
                 _enemiesSpawnTables[(int)SunMoonState.Night] = enemiesSpawnTable;
+        }
+
+        public void SetSpawnLock(bool inputIsSpawnPositionLock, float inputChangeDegree)
+        {
+            isSpawnPositionLock = inputIsSpawnPositionLock;
+            baseAngle = Random.Range(0, 2 * Mathf.PI);
+            changeDegree = inputChangeDegree;
         }
     }
 
