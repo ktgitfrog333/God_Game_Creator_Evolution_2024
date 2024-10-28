@@ -65,8 +65,7 @@ namespace Main.Model
                     if (!EnemiesSpawnModel.isActiveAndEnabled)
                     {
                         EnemiesSpawnModel.gameObject.SetActive(true);
-                        if (isSpawnPositionLock)
-                            EnemiesSpawnModel.SetSpawnLock(isSpawnPositionLock, spawnRadius);
+                        EnemiesSpawnModel.SetSpawnLock(isSpawnPositionLock, spawnRadius);
                     }
                 }
             });

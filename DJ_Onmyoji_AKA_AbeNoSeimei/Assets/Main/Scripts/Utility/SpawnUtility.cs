@@ -89,12 +89,16 @@ namespace Main.Utility
                                 var enemy = objectsPoolModel.GetEnemyModel(GetRandomEnemiesID(enemiesSpawnTable.enemiesIDs));
                                 if (enemy == null)
                                     throw new System.Exception("GetEnemyModel");
-                                if(isSpawnPositionLock)
+                                if (!isSpawnPositionLock)
+                                {
                                     if (!enemy.Initialize(GetPositionOfAroundThePlayer(target, radiusMin, radiusMax), target))
                                         throw new System.Exception("Initialize");
-                                    else
+                                }
+                                else
+                                {
                                     if (!enemy.Initialize(GetPositionOfAroundThePlayer(target, radiusMin, radiusMax, baseAngle, changeDegree), target))
                                         throw new System.Exception("Initialize");
+                                }
                                 if (!enemy.isActiveAndEnabled)
                                     enemy.gameObject.SetActive(true);
                                 elapsedTime = 0f;

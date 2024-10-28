@@ -128,8 +128,8 @@ namespace Main.Model
 
         public void SetSpawnLock(bool inputIsSpawnPositionLock, float inputChangeDegree)
         {
-            baseAngle = Random.Range(0, 2 * Mathf.PI);
             isSpawnPositionLock = inputIsSpawnPositionLock;
+            baseAngle = Random.Range(0, 2 * Mathf.PI);
             changeDegree = inputChangeDegree;
         }
     }
