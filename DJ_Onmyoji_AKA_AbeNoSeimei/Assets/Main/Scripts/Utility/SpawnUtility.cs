@@ -70,7 +70,7 @@ namespace Main.Utility
             }
         }
 
-        public bool ManageEnemiesSpawn(EnemiesSpawnTable[] enemiesSpawnTables, ref float elapsedTime, Transform target, ObjectsPoolModel objectsPoolModel, float radiusMin, float radiusMax, float onmyoState)
+        public bool ManageEnemiesSpawn(EnemiesSpawnTable[] enemiesSpawnTables, ref float elapsedTime, Transform target, ObjectsPoolModel objectsPoolModel, float radiusMin, float radiusMax, float onmyoState, bool isSpawnPositionLock, float baseAngle, float changeDegree)
         {
             try
             {
@@ -89,8 +89,12 @@ namespace Main.Utility
                                 var enemy = objectsPoolModel.GetEnemyModel(GetRandomEnemiesID(enemiesSpawnTable.enemiesIDs));
                                 if (enemy == null)
                                     throw new System.Exception("GetEnemyModel");
-                                if (!enemy.Initialize(GetPositionOfAroundThePlayer(target, radiusMin, radiusMax), target))
-                                    throw new System.Exception("Initialize");
+                                if(isSpawnPositionLock)
+                                    if (!enemy.Initialize(GetPositionOfAroundThePlayer(target, radiusMin, radiusMax), target))
+                                        throw new System.Exception("Initialize");
+                                    else
+                                    if (!enemy.Initialize(GetPositionOfAroundThePlayer(target, radiusMin, radiusMax, baseAngle, changeDegree), target))
+                                        throw new System.Exception("Initialize");
                                 if (!enemy.isActiveAndEnabled)
                                     enemy.gameObject.SetActive(true);
                                 elapsedTime = 0f;
@@ -177,6 +181,23 @@ namespace Main.Utility
             return position;
         }
 
+        /// <summary>
+        /// ターゲットの指定半径範囲内にランダムで位置情報を返す（角度指定）
+        /// </summary>
+        /// <param name="target">ターゲット</param>
+        /// <param name="radiusMin">最小半径</param>
+        /// <param name="radiusMax">最大半径</param>
+        /// <returns>位置情報</returns>
+        private Vector2 GetPositionOfAroundThePlayer(Transform target, float radiusMin, float radiusMax, float baseAngle, float changeDegree)
+        {
+            float distance = Random.Range(radiusMin, radiusMax);
+            float changeAngle = changeDegree * Mathf.Deg2Rad;
+            float randomAngle = Random.Range(-changeAngle, changeAngle);
+            float angle = baseAngle + randomAngle;
+            Vector2 position = new Vector2(target.position.x + distance * Mathf.Cos(angle), target.position.y + distance * Mathf.Sin(angle));
+            return position;
+        }
+
         public ObjectsPoolModel FindOrInstantiateForGetObjectsPoolModel(Transform objectsPoolPrefab)
         {
             var pool = GameObject.FindGameObjectWithTag(ConstTagNames.TAG_NAME_OBJECTS_POOL);
@@ -226,7 +247,7 @@ namespace Main.Utility
         /// <param name="radiusMax">最大半径</param>
         /// <param name="onmyoState">陰陽（昼夜）の状態</param>
         /// <returns>成功／失敗</returns>
-        public bool ManageEnemiesSpawn(EnemiesSpawnTable[] enemiesSpawnTables, ref float elapsedTime, Transform target, ObjectsPoolModel objectsPoolModel, float radiusMin, float radiusMax, float onmyoState);
+        public bool ManageEnemiesSpawn(EnemiesSpawnTable[] enemiesSpawnTables, ref float elapsedTime, Transform target, ObjectsPoolModel objectsPoolModel, float radiusMin, float radiusMax, float onmyoState, bool isSpawnPositionLock, float baseAngle, float changeDegree);
         /// <summary>
         /// オブジェクトプールモデルを取得するために
         /// 対象オブジェクトを検索または生成

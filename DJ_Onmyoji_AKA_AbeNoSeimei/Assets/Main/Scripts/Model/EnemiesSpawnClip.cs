@@ -21,6 +21,10 @@ namespace Main.Model
         ///     a.余りがあっても良いが末尾のシークエンス到達 ⇒ 次のシークエンス再生のタイミングで敵が生成されない時間が僅かに生まれる
         /// </summary>
         [SerializeField] private EnemiesSpawnTable enemiesSpawnTable;
+        /// <summary>スポーン位置の固定化フラグ　TRUEの場合はスポーン位置を固定化する</summary>
+        [SerializeField] private bool isSpawnPositionLock = false;
+        /// <summary>スポーン位置の固定化時の角度の変化量</summary>
+        [SerializeField] private float changeDegree = 0f;
 
         public override Playable CreatePlayable(PlayableGraph graph, GameObject owner)
         {
@@ -29,6 +33,8 @@ namespace Main.Model
             var model = enemiesSpawnInLevel.Resolve(graph.GetResolver()).GetComponent<EnemiesSpawnModel>();
             playable.GetBehaviour().EnemiesSpawnModel = model;
             playable.GetBehaviour().EnemiesSpawnTable = enemiesSpawnTable;
+            playable.GetBehaviour().isSpawnPositionLock = isSpawnPositionLock;
+            playable.GetBehaviour().spawnRadius = changeDegree;
 
             return playable;
         }
@@ -43,6 +49,10 @@ namespace Main.Model
         public EnemiesSpawnModel EnemiesSpawnModel { get; set; }
         /// <summary>敵のスポーンテーブル</summary>
         public EnemiesSpawnTable EnemiesSpawnTable { get; set; }
+        /// <summary>スポーン位置の固定化フラグ　TRUEの場合はスポーン位置を固定化する</summary>
+        public bool isSpawnPositionLock { get; set; }
+        /// <summary>スポーン位置の固定化時の角度の変化量</summary>
+        public float spawnRadius { get; set; }
 
         public override void PrepareFrame(Playable playable, FrameData info)
         {
@@ -53,7 +63,11 @@ namespace Main.Model
                 {
                     EnemiesSpawnModel.SetEnemiesSpawnTable(EnemiesSpawnTable);
                     if (!EnemiesSpawnModel.isActiveAndEnabled)
+                    {
                         EnemiesSpawnModel.gameObject.SetActive(true);
+                        if (isSpawnPositionLock)
+                            EnemiesSpawnModel.SetSpawnLock(isSpawnPositionLock, spawnRadius);
+                    }
                 }
             });
         }
