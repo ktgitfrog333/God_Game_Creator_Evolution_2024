@@ -175,6 +175,51 @@ namespace Main.Model
             }
         }
 
+        public bool AttackOfOnmyoTurretLoop(InputSlipLoopState inputSlipLoopState)
+        {
+            try
+            {
+                switch ((BeatLength)inputSlipLoopState.beatLength.Value)
+                {
+                    case BeatLength.TwoBeats:
+                        StartCoroutine(DelayedAttackOfOnmyoTurretLoop(0f));
+                        StartCoroutine(DelayedAttackOfOnmyoTurretLoop(0.1f));
+                        StartCoroutine(DelayedAttackOfOnmyoTurretLoop(0.2f));
+                        StartCoroutine(DelayedAttackOfOnmyoTurretLoop(0.3f));
+                        break;
+                    case BeatLength.OneBeat:
+                        StartCoroutine(DelayedAttackOfOnmyoTurretLoop(0f));
+                        StartCoroutine(DelayedAttackOfOnmyoTurretLoop(0.1f));
+                        StartCoroutine(DelayedAttackOfOnmyoTurretLoop(0.2f));
+                        break;
+                    case BeatLength.HalfBeat:
+                        StartCoroutine(DelayedAttackOfOnmyoTurretLoop(0f));
+                        StartCoroutine(DelayedAttackOfOnmyoTurretLoop(0.1f));
+                        break;
+                    case BeatLength.QuarterBeat:
+                        StartCoroutine(DelayedAttackOfOnmyoTurretLoop(0f));
+                        break;
+                    default:
+                        break;
+                }
+                return true;
+            }
+            catch (System.Exception e)
+            {
+                Debug.LogError(e);
+                return false;
+            }
+        }
+
+        IEnumerator DelayedAttackOfOnmyoTurretLoop(float delaySec)
+        {
+            yield return new WaitForSeconds(delaySec);
+
+            foreach (var item in OnmyoTurretModels)
+                if (!item.ActionOfBulletOfOnmyoTurretModel())
+                    throw new System.Exception("ActionOfBulletOfOnmyoTurretModel");
+        }
+
         public bool SetActionRateNormalOfOnmyoTurret(bool isUnLoopNormalActionRate)
         {
             try

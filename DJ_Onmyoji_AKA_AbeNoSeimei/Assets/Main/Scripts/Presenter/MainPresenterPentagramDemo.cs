@@ -119,7 +119,7 @@ namespace Main.Presenter
                                         {
                                             if (!pentagramTurnTableModel.AttackOfOnmyoTurret())
                                                 Debug.LogError("AttackOfOnmyoTurret");
-                                            if (!shikigamiSkillSystemModel.UpdateCandleResourceOfAttackOnmyoTurret())
+                                            if (!shikigamiSkillSystemModel.UpdateCandleResourceOfAttackOnmyoTurret(pentagramSystemModel.InputSlipLoopState))
                                                 Debug.LogError("UpdateCandleResourceOfAttackOnmyoTurret");
                                             if (!pentagramTurnTableModel.SetMoveDirectionsDefaultOfOnmyoWrapGraffitiTurret())
                                                 Debug.LogError("SetMoveDirectionsDefaultOfOnmyoWrapGraffitiTurret");
