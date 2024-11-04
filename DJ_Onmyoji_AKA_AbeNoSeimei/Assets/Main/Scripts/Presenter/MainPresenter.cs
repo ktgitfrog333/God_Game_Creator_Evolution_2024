@@ -775,14 +775,14 @@ namespace Main.Presenter
                             {
                                 if (!pentagramTurnTableModel.SetMoveDirectionsToDanceOfOnmyoWrapGraffitiTurret())
                                     Debug.LogError("SetMoveDirectionsToDanceOfOnmyoWrapGraffitiTurret");
-                                if (!pentagramTurnTableModel.AttackOfOnmyoTurret())
-                                    Debug.LogError("AttackOfOnmyoTurret");
                                 Observable.FromCoroutine<bool>(observer => pentagramTurnTableView.MoveSpin(observer, pentagramSystemModel.InputSlipLoopState))
                                     .Subscribe(x =>
                                     {
                                         if (x)
                                         {
-                                            if (!shikigamiSkillSystemModel.UpdateCandleResourceOfAttackOnmyoTurret())
+                                            if (!pentagramTurnTableModel.AttackOfOnmyoTurretLoop(pentagramSystemModel.InputSlipLoopState))
+                                                Debug.LogError("AttackOfOnmyoTurret");
+                                            if (!shikigamiSkillSystemModel.UpdateCandleResourceOfAttackOnmyoTurret(pentagramSystemModel.InputSlipLoopState))
                                                 Debug.LogError("UpdateCandleResourceOfAttackOnmyoTurret");
                                         }
                                     })

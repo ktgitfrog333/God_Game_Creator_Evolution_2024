@@ -391,9 +391,9 @@ namespace Main.Utility
         {
             try
             {
-                float costSum = 0f;
-                costSum = GetCalcCostSum(costSum, shikigamiInfos, candleInfo, onmyoSlipLoopRate);
-                if (!UpdateCandleResource(candleInfo, costSum * Time.deltaTime))
+                float costSum = onmyoSlipLoopRate;
+                //costSum = GetCalcCostSum(costSum, shikigamiInfos, candleInfo, onmyoSlipLoopRate);
+                if (!UpdateCandleResource(candleInfo, costSum * 0.01f))
                     throw new System.Exception("UpdateCandleResource");
 
                 return true;
