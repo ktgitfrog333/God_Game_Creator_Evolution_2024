@@ -272,7 +272,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   scratchLevel: 1
-  userActionTime: 0.2
+  userActionTime: 0.35
 --- !u!1 &1369696454595932813
 GameObject:
   m_ObjectHideFlags: 0
