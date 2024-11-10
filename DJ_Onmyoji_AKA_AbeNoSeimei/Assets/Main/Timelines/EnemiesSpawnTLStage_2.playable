@@ -20,6 +20,8 @@ MonoBehaviour:
     instanceCount: 2
     enemiesIDs: 00000000
     sunMoonState: 1
+  isSpawnPositionLock: 0
+  changeDegree: 0
 --- !u!114 &-8657985563365971008
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -40,6 +42,8 @@ MonoBehaviour:
     instanceCount: 3
     enemiesIDs: 17000000
     sunMoonState: 1
+  isSpawnPositionLock: 0
+  changeDegree: 0
 --- !u!114 &-8597429784874975564
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -578,9 +582,11 @@ MonoBehaviour:
     defaultValue: {fileID: 0}
   enemiesSpawnTable:
     instanceRateTimeSec: 1
-    instanceCount: 7
+    instanceCount: 5
     enemiesIDs: 00000000000000000000000000000000000000000000000000000000000000000000000010000000
     sunMoonState: 0
+  isSpawnPositionLock: 0
+  changeDegree: 0
 --- !u!114 &-7906063292433729865
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -601,6 +607,8 @@ MonoBehaviour:
     instanceCount: 15
     enemiesIDs: 00000000000000000000000000000000000000000000000000000000000000001000000002000000
     sunMoonState: 1
+  isSpawnPositionLock: 0
+  changeDegree: 0
 --- !u!114 &-7016245239179686218
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -618,9 +626,11 @@ MonoBehaviour:
     defaultValue: {fileID: 0}
   enemiesSpawnTable:
     instanceRateTimeSec: 1
-    instanceCount: 5
-    enemiesIDs: 00000000000000000000000000000000000000000000000001000000010000000100000002000000
+    instanceCount: 3
+    enemiesIDs: 00000000000000000000000000000000000000000000000000000000000000000100000001000000
     sunMoonState: 0
+  isSpawnPositionLock: 0
+  changeDegree: 0
 --- !u!114 &-6819457126607296407
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -641,6 +651,8 @@ MonoBehaviour:
     instanceCount: 100
     enemiesIDs: 0000000000000000000000000000000010000000
     sunMoonState: 1
+  isSpawnPositionLock: 0
+  changeDegree: 0
 --- !u!114 &-5982911045648852462
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -661,6 +673,8 @@ MonoBehaviour:
     instanceCount: 0
     enemiesIDs: 00000000
     sunMoonState: 0
+  isSpawnPositionLock: 0
+  changeDegree: 0
 --- !u!114 &-4885465728878054164
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -681,6 +695,8 @@ MonoBehaviour:
     instanceCount: 0
     enemiesIDs: 00000000
     sunMoonState: 0
+  isSpawnPositionLock: 0
+  changeDegree: 0
 --- !u!114 &-3808467701939536048
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -724,6 +740,8 @@ MonoBehaviour:
     instanceCount: 3
     enemiesIDs: 17000000
     sunMoonState: 1
+  isSpawnPositionLock: 0
+  changeDegree: 0
 --- !u!114 &-2817399612629933457
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -741,9 +759,11 @@ MonoBehaviour:
     defaultValue: {fileID: 0}
   enemiesSpawnTable:
     instanceRateTimeSec: 1
-    instanceCount: 5
+    instanceCount: 3
     enemiesIDs: 00000000000000000000000000000000000000000000000011000000110000000100000001000000
     sunMoonState: 0
+  isSpawnPositionLock: 0
+  changeDegree: 0
 --- !u!114 &-2714496104660116896
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1267,6 +1287,8 @@ MonoBehaviour:
     instanceCount: 0
     enemiesIDs: 00000000
     sunMoonState: 0
+  isSpawnPositionLock: 0
+  changeDegree: 0
 --- !u!114 &-986393071797826726
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1287,6 +1309,8 @@ MonoBehaviour:
     instanceCount: 2
     enemiesIDs: 00000000000000000000000000000000000000000000000010000000100000000100000001000000
     sunMoonState: 0
+  isSpawnPositionLock: 0
+  changeDegree: 0
 --- !u!114 &-957779244235706715
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1307,6 +1331,8 @@ MonoBehaviour:
     instanceCount: 1
     enemiesIDs: 17000000
     sunMoonState: 0
+  isSpawnPositionLock: 0
+  changeDegree: 0
 --- !u!114 &-786511468067372481
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1327,6 +1353,8 @@ MonoBehaviour:
     instanceCount: 2
     enemiesIDs: 00000000
     sunMoonState: 1
+  isSpawnPositionLock: 0
+  changeDegree: 0
 --- !u!114 &-547750674410692568
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1347,6 +1375,8 @@ MonoBehaviour:
     instanceCount: 4
     enemiesIDs: 00000000000000000000000000000000000000000000000010000000100000000200000002000000
     sunMoonState: 1
+  isSpawnPositionLock: 0
+  changeDegree: 0
 --- !u!114 &11400000
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1389,6 +1419,8 @@ MonoBehaviour:
     instanceCount: 1
     enemiesIDs: 00000000000000000000000000000000000000000000000000000000000000000100000001000000
     sunMoonState: 0
+  isSpawnPositionLock: 0
+  changeDegree: 0
 --- !u!114 &958823718556170624
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1407,8 +1439,10 @@ MonoBehaviour:
   enemiesSpawnTable:
     instanceRateTimeSec: 1
     instanceCount: 3
-    enemiesIDs: 00000000000000000000000000000000000000000000000001000000010000000100000002000000
+    enemiesIDs: 00000000000000000000000000000000000000000000000000000000000000000000000001000000
     sunMoonState: 0
+  isSpawnPositionLock: 0
+  changeDegree: 0
 --- !u!114 &1977403775818045142
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1427,8 +1461,10 @@ MonoBehaviour:
   enemiesSpawnTable:
     instanceRateTimeSec: 1
     instanceCount: 5
-    enemiesIDs: 00000000000000000000000000000000000000000000000001000000020000000200000002000000
+    enemiesIDs: 00000000000000000000000000000000000000000000000000000000000000000200000002000000
     sunMoonState: 1
+  isSpawnPositionLock: 0
+  changeDegree: 0
 --- !u!114 &2518412091417033862
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1449,6 +1485,8 @@ MonoBehaviour:
     instanceCount: 1
     enemiesIDs: 17000000
     sunMoonState: 0
+  isSpawnPositionLock: 0
+  changeDegree: 0
 --- !u!114 &3088718734277310555
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1469,6 +1507,8 @@ MonoBehaviour:
     instanceCount: 3
     enemiesIDs: 17000000
     sunMoonState: 1
+  isSpawnPositionLock: 0
+  changeDegree: 0
 --- !u!114 &5451821215052606864
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1489,6 +1529,8 @@ MonoBehaviour:
     instanceCount: 7
     enemiesIDs: 00000000000000000000000000000000000000001100000011000000110000000200000002000000
     sunMoonState: 1
+  isSpawnPositionLock: 0
+  changeDegree: 0
 --- !u!114 &6327054634501401633
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1506,9 +1548,11 @@ MonoBehaviour:
     defaultValue: {fileID: 0}
   enemiesSpawnTable:
     instanceRateTimeSec: 1
-    instanceCount: 100
+    instanceCount: 75
     enemiesIDs: 0000000000000000000000000000000010000000
     sunMoonState: 0
+  isSpawnPositionLock: 0
+  changeDegree: 0
 --- !u!114 &6890820415141416125
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1527,8 +1571,10 @@ MonoBehaviour:
   enemiesSpawnTable:
     instanceRateTimeSec: 1
     instanceCount: 7
-    enemiesIDs: 00000000000000000000000000000000000000000100000001000000020000000200000002000000
+    enemiesIDs: 00000000000000000000000000000000000000000000000000000000020000000200000002000000
     sunMoonState: 1
+  isSpawnPositionLock: 0
+  changeDegree: 0
 --- !u!114 &7270537418247115478
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1549,6 +1595,8 @@ MonoBehaviour:
     instanceCount: 1
     enemiesIDs: 17000000
     sunMoonState: 0
+  isSpawnPositionLock: 0
+  changeDegree: 0
 --- !u!114 &7778680643491133530
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1569,6 +1617,8 @@ MonoBehaviour:
     instanceCount: 3
     enemiesIDs: 00000000000000000000000000000000000000000000000000000000000000000200000002000000
     sunMoonState: 1
+  isSpawnPositionLock: 0
+  changeDegree: 0
 --- !u!114 &7804062749302992603
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1586,9 +1636,11 @@ MonoBehaviour:
     defaultValue: {fileID: 0}
   enemiesSpawnTable:
     instanceRateTimeSec: 1
-    instanceCount: 7
+    instanceCount: 5
     enemiesIDs: 00000000000000000000000000000000000000000000000000000000000000000000000001000000
     sunMoonState: 0
+  isSpawnPositionLock: 0
+  changeDegree: 0
 --- !u!114 &8235722894961256748
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1609,6 +1661,8 @@ MonoBehaviour:
     instanceCount: 12
     enemiesIDs: 00000000000000000000000000000000000000000000000000000000000000000000000010000000
     sunMoonState: 1
+  isSpawnPositionLock: 0
+  changeDegree: 0
 --- !u!114 &8493952104841590656
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1629,3 +1683,5 @@ MonoBehaviour:
     instanceCount: 100
     enemiesIDs: 000000000000000000000000000000000f000000
     sunMoonState: 1
+  isSpawnPositionLock: 0
+  changeDegree: 0
