@@ -555,7 +555,7 @@ MonoBehaviour:
   damageSufferedZoneModel: {fileID: 4771599399997114491}
   prop:
     moveSpeed: 0.25
-    hpMax: 3
+    hpMax: 300
   attackColliderOfEnemy: {fileID: 6154129831138059817}
   enemiesID: 0
   enemiesProp:

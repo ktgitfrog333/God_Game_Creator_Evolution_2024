@@ -74,10 +74,10 @@ namespace Main.Model
                 if (_utility.IsCompareTagAndUpdateReactiveFlagPublic(other, tags, IsHit, shikigamiType))
                     SetBadStatus(onmyoBulletConfig.subSkillType, onmyoBulletConfig.subSkillValue);
 
-                base.OnTriggerEnter2DGraff(other, 1.0f);
+                base.OnTriggerEnter2DGraff(other, 100.0f);
             }
             else
-                base.OnTriggerEnter2DGraff(other, 1.0f);
+                base.OnTriggerEnter2DGraff(other, 100.0f);
         }
 
         protected override void OnDisable()
