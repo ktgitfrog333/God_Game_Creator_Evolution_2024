@@ -123,6 +123,7 @@ namespace Main.Utility
         /// <param name="pentagramTurnTableModel">ペンダグラムターンテーブルのモデル</param>
         /// <param name="index">インデックス</param>
         /// <param name="tutorialComponentMaps">チュートリアルで扱うガイドIDとリソースの構造体</param>
+        /// <param name="componentState">コンポーネント、【有効、無効、一時停止】</param>
         /// <returns>成功／失敗</returns>
         private bool AddTutorialComponents(MainPresenterDemo.TutorialComponentMap tutorialComponentMap, PentagramTurnTableModel pentagramTurnTableModel, int index, MainPresenterDemo.TutorialComponentMap[] tutorialComponentMaps, MainPresenterDemo.ComponentState componentState=MainPresenterDemo.ComponentState.Pause)
         {
@@ -564,7 +565,62 @@ namespace Main.Utility
 
         public bool DoTutorialMissionContents(MissionID missionID, MainPresenterDemo.TutorialMissionContentsStuct tutorialMissionContentsStuct)
         {
-            throw new System.NotImplementedException();
+            try
+            {
+                var tutorialStuct = tutorialMissionContentsStuct;
+                switch (missionID)
+                {
+                    case MissionID.MI0000:
+                        // 監視の破棄は元モデルで実施
+
+                        break;
+                    case MissionID.MI0001:
+                        tutorialStuct.missionsSystemTutorialModel.CurrentMissionsSystemTutorialStruct.killedEnemyCount.ObserveEveryValueChanged(x => x.Value)
+                            .Subscribe(x =>
+                            {
+                                if (!tutorialStuct.guideMessageView.UpdateSentence(missionID, x, tutorialStuct.missionsSystemTutorialModel.CurrentMissionsSystemTutorialStruct.killedEnemyCountMax))
+                                    Debug.LogError("UpdateSentence");
+                            });
+                        tutorialStuct.missionsSystemTutorialModel.CurrentMissionsSystemTutorialStruct.isCompleted.ObserveEveryValueChanged(x => x.Value)
+                            .Where(x => x)
+                            .Subscribe(x =>
+                            {
+                                if (!tutorialStuct.guideMessageView.SetButtonEnabled(true))
+                                    Debug.LogError("SetButtonEnabled");
+                                MainGameManager.Instance.InputSystemsOwner.InputMidiJackDDJ200.AutoPushCue();
+                            });
+                        if (!tutorialStuct.enemiesSpawnTutorialModel.InstanceTamachans())
+                            Debug.LogError("InstanceTamachans");
+
+                        break;
+                    case MissionID.MI0002:
+                        tutorialStuct.missionsSystemTutorialModel.CurrentMissionsSystemTutorialStruct.killedEnemyCount.ObserveEveryValueChanged(x => x.Value)
+                            .Subscribe(x =>
+                            {
+                                if (!tutorialStuct.guideMessageView.UpdateSentence(missionID,x, tutorialStuct.missionsSystemTutorialModel.CurrentMissionsSystemTutorialStruct.killedEnemyCountMax))
+                                    Debug.LogError("UpdateSentence");
+                            });
+                        tutorialStuct.missionsSystemTutorialModel.CurrentMissionsSystemTutorialStruct.isCompleted.ObserveEveryValueChanged(x => x.Value)
+                            .Where(x => x)
+                            .Subscribe(x =>
+                            {
+                                if (!tutorialStuct.guideMessageView.SetButtonEnabled(true))
+                                    Debug.LogError("SetButtonEnabled");
+                                MainGameManager.Instance.InputSystemsOwner.InputMidiJackDDJ200.AutoPushCue();
+                            });
+                        if (!tutorialStuct.enemiesSpawnTutorialModel.InstanceAuraTamachans())
+                            Debug.LogError("InstanceAuraTamachans");
+
+                        break;
+                }
+
+                return true;
+            }
+            catch (System.Exception e)
+            {
+                Debug.LogError(e);
+                return false;
+            }
         }
     }
 

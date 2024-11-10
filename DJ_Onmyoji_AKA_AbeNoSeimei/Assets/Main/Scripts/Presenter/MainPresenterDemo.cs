@@ -1226,8 +1226,12 @@ namespace Main.Presenter
         [System.Serializable]
         public struct TutorialMissionContentsStuct
         {
-            /// <summary>対象のコンポーネント</summary>
-            public Component[] targetComponents;
+            /// <summary>チュートリアルの中のミッションを管理するモデル</summary>
+            public MissionsSystemTutorialModel missionsSystemTutorialModel;
+            /// <summary>FungusのSayDialogを管理ビュー</summary>
+            public GuideMessageView guideMessageView;
+            /// <summary>チュートリアル用の敵スポーン制御モデル</summary>
+            public EnemiesSpawnTutorialModel enemiesSpawnTutorialModel;
         }
         #endregion
 

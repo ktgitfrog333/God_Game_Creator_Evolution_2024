@@ -13,18 +13,18 @@ namespace Main.Model
     public class GuideMessageModel : MonoBehaviour
     {
         /// <summary>呼び出されたガイドメッセージID</summary>
-        public IReactiveProperty<GuideMessageID> CalledGuideMessageID => throw new System.NotImplementedException();
+        private readonly IReactiveProperty<GuideMessageID> _calledGuideMessageID = new ReactiveProperty<GuideMessageID>();
+        /// <summary>呼び出されたガイドメッセージID</summary>
+        public IReactiveProperty<GuideMessageID> CalledGuideMessageID => _calledGuideMessageID;
 
-        // Start is called before the first frame update
-        void Start()
+        private void Start()
         {
-
+            gameObject.SetActive(false);
         }
 
-        // Update is called once per frame
-        void Update()
+        public void CallGuideMessageID(GuideMessageID guideMessageID)
         {
-
+            _calledGuideMessageID.Value = guideMessageID;
         }
     }
 }

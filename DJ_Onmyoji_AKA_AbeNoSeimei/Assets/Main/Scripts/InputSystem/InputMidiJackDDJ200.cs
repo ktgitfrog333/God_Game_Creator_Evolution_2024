@@ -329,6 +329,21 @@ namespace Main.InputSystem
         }
 
         /// <summary>
+        /// 自動でCueを押下する
+        /// </summary>
+        /// <returns>コルーチン</returns>
+        /// <remarks>
+        /// チュートリアル等で敵を倒してCueを押下できるようにするのはいいのですが
+        /// Cue押下しないと進めないより、次の会話を表示させた方が優しいのではと思った次第
+        /// </remarks>
+        public IEnumerator AutoPushCue()
+        {
+            _cue = true;
+            yield return null;
+            _cue = false;
+        }
+
+        /// <summary>
         /// LayOUTがAutomat5のA～D,M
         /// </summary>
         private enum MidiChannelKnob

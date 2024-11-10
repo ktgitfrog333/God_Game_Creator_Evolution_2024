@@ -45,7 +45,24 @@ namespace Main.View
 
         private void Reset()
         {
-            // TODO: アタッチ
+            guideMessageView = GameObject.Find("SayDialog").GetComponent<GuideMessageView>();
+            guideUITheTurntableView = GetComponentInChildren<GuideUITheTurntableView>();
+            guideUITheEqualizerView = GetComponentInChildren<GuideUITheEqualizerView>();
+            guideUITheEqualizerGageView = GetComponentInChildren<GuideUITheEqualizerGageView>();
+            guideUITheDJEnergyView = GetComponentInChildren<GuideUITheDJEnergyView>();
+            guideUIThePlayerHPView = GetComponentInChildren<GuideUIThePlayerHPView>();
+            guideUITheClearCountdownTimerCircleView = GetComponentInChildren<GuideUITheClearCountdownTimerCircleView>();
+            guideUITheClearRewardTextContentsView = GetComponentInChildren<GuideUITheClearRewardTextContentsView>();
+        }
+
+        private void OnEnable()
+        {
+            guideMessageView.gameObject.SetActive(true);
+        }
+
+        private void OnDisable()
+        {
+            guideMessageView.gameObject.SetActive(false);
         }
     }
 }

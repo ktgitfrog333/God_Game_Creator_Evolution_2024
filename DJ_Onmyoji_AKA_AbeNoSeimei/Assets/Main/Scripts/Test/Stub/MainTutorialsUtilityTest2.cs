@@ -81,7 +81,74 @@ namespace Main.Test.Stub
                                 }
                             }
                         },
-                    }
+                    },
+                    componentState = MainPresenterDemo.ComponentState.Pause
+                },
+                new Input()
+                {
+                    caseId = 1,
+                    tutorialComponentMap = new MainPresenterDemo.TutorialComponentMap()
+                    {
+                        guideMessageID = GuideMessageID.GM0000,
+                        tutorialComponents = new MainPresenterDemo.TutorialComponent[]
+                        {
+                            new MainPresenterDemo.TutorialComponent()
+                            {
+                                component = null,
+                                componentState = MainPresenterDemo.ComponentState.Pause
+                            }
+                        }
+                    },
+                    index = 0,
+                    tutorialComponentMaps = new MainPresenterDemo.TutorialComponentMap[]
+                    {
+                        new MainPresenterDemo.TutorialComponentMap()
+                        {
+                            guideMessageID = GuideMessageID.GM0000,
+                            tutorialComponents = new MainPresenterDemo.TutorialComponent[]
+                            {
+                                new MainPresenterDemo.TutorialComponent()
+                                {
+                                    component = null,
+                                    componentState = MainPresenterDemo.ComponentState.Pause
+                                }
+                            }
+                        },
+                    },
+                    componentState = MainPresenterDemo.ComponentState.Enable
+                },
+                new Input()
+                {
+                    caseId = 2,
+                    tutorialComponentMap = new MainPresenterDemo.TutorialComponentMap()
+                    {
+                        guideMessageID = GuideMessageID.GM0000,
+                        tutorialComponents = new MainPresenterDemo.TutorialComponent[]
+                        {
+                            new MainPresenterDemo.TutorialComponent()
+                            {
+                                component = null,
+                                componentState = MainPresenterDemo.ComponentState.Pause
+                            }
+                        }
+                    },
+                    index = 0,
+                    tutorialComponentMaps = new MainPresenterDemo.TutorialComponentMap[]
+                    {
+                        new MainPresenterDemo.TutorialComponentMap()
+                        {
+                            guideMessageID = GuideMessageID.GM0000,
+                            tutorialComponents = new MainPresenterDemo.TutorialComponent[]
+                            {
+                                new MainPresenterDemo.TutorialComponent()
+                                {
+                                    component = null,
+                                    componentState = MainPresenterDemo.ComponentState.Pause
+                                }
+                            }
+                        },
+                    },
+                    componentState = MainPresenterDemo.ComponentState.Disable
                 },
             };
             foreach (var input in inputs.Select((p, i) => new { Content = p, Index = i }))
@@ -107,7 +174,7 @@ namespace Main.Test.Stub
                         input.Content.tutorialComponentMap.tutorialComponents[tutorialComponent.Index].component = obj.GetComponent<PentagramSystemModel>();
                     }
                 }
-                var pentagramTurnTableModelName = $"MainTutorialsUtilityTest2_InputObject_{input.Content.caseId:D4}_{input.Content.pentagramTurnTableModel.GetType().Name}";
+                var pentagramTurnTableModelName = $"MainTutorialsUtilityTest2_InputObject_{input.Content.caseId:D4}_pentagramTurnTableModel";
                 GameObject pentagramTurnTableModelObj = new GameObject(pentagramTurnTableModelName);
                 pentagramTurnTableModelObj.transform.parent = transform;
 
@@ -130,6 +197,46 @@ namespace Main.Test.Stub
                                 {
                                     component = null,
                                     componentState = MainPresenterDemo.ComponentState.Pause
+                                }
+                            }
+                        },
+                    }
+                },
+                new Output()
+                {
+                    caseId = 1,
+                    isSuccessed = true,
+                    tutorialComponentMaps = new MainPresenterDemo.TutorialComponentMap[]
+                    {
+                        new MainPresenterDemo.TutorialComponentMap()
+                        {
+                            guideMessageID = GuideMessageID.GM0000,
+                            tutorialComponents = new MainPresenterDemo.TutorialComponent[]
+                            {
+                                new MainPresenterDemo.TutorialComponent()
+                                {
+                                    component = null,
+                                    componentState = MainPresenterDemo.ComponentState.Enable
+                                }
+                            }
+                        },
+                    }
+                },
+                new Output()
+                {
+                    caseId = 2,
+                    isSuccessed = true,
+                    tutorialComponentMaps = new MainPresenterDemo.TutorialComponentMap[]
+                    {
+                        new MainPresenterDemo.TutorialComponentMap()
+                        {
+                            guideMessageID = GuideMessageID.GM0000,
+                            tutorialComponents = new MainPresenterDemo.TutorialComponent[]
+                            {
+                                new MainPresenterDemo.TutorialComponent()
+                                {
+                                    component = null,
+                                    componentState = MainPresenterDemo.ComponentState.Disable
                                 }
                             }
                         },
