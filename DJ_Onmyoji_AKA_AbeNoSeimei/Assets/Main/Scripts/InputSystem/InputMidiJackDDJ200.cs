@@ -31,7 +31,7 @@ namespace Main.InputSystem
                 .Subscribe(_ =>
                 {
                     _elapsedTime += Time.timeScale == 1f ? Time.deltaTime : fixDeltaTime;
-                    if (userActionTime < _elapsedTime)
+                    if ((Time.timeScale == 1f ? userActionTime : userActionTimeForUI) < _elapsedTime)
                         if (!ResetTime(ref _scratch, ref _elapsedTime))
                             Debug.LogError("ResetTime");
                 });
@@ -79,6 +79,8 @@ namespace Main.InputSystem
         [SerializeField] private float scratchLevel = 1f;
         /// <summary>ユーザの1入力を行う平均時間（0.2～0.5秒）</summary>
         [SerializeField] private float userActionTime = .2f;
+        /// <summary>ユーザの1入力を行う平均時間（0.2～0.5秒）</summary>
+        [SerializeField] private float userActionTimeForUI = .35f;
 
         /// <summary>
         /// Scratchのアクションに応じてフラグを更新

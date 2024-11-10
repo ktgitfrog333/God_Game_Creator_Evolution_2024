@@ -274,20 +274,15 @@ namespace Main.Utility
                     RapidRecoveryType.Done => candleInfo.rapidRecoveryRate,
                     _ => 1f,
                 };
-                // テンポレベルが0より下になった場合に回復を行うが、スリップループの最中は回復を行わない
-                // 何故なら、コスト合計が回復速度を下回った場合にスリップループが最強になってしまうため
-                if (tempoLv < 0f &&
-                    candleInfo.isStopRecovery.Value)
-                {
 
-                }
-                else
-                {
-                    //var cost = tempoLv * shikigamiLv * actionRate;
-                    var cost = tempoLv * shikigamiLv;
-                    costSum += cost * rapidRate * 0.75f;
-                }
+                var cost = tempoLv * shikigamiLv;
+                costSum += cost * rapidRate * 0.75f;
             }
+
+            // テンポレベルが0より下になった場合に回復を行うが、スリップループの最中は回復を行わない
+            // 何故なら、コスト合計が回復速度を下回った場合にスリップループが最強になってしまうため
+            if (costSum < 0f && candleInfo.isStopRecovery.Value)
+                costSum = 0f;
 
             return costSum;
         }
