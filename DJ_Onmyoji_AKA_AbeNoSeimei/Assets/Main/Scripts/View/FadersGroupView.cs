@@ -75,6 +75,16 @@ namespace Main.View
 
             yield return null;
         }
+
+        public IEnumerator PlayMoveAnchorsHeight(System.IObserver<bool> observer)
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public IEnumerator PlayMoveAnchorsBased(System.IObserver<bool> observer)
+        {
+            throw new System.NotImplementedException();
+        }
     }
 
     /// <summary>
@@ -90,5 +100,17 @@ namespace Main.View
         /// <param name="state">フェードステータス</param>
         /// <returns>コルーチン</returns>
         public IEnumerator PlayMoveAnchorsBasedOnHeight(System.IObserver<bool> observer, EnumFadeState state);
+        /// <summary>
+        /// 高さに応じてアンカーを設定（上のみ）
+        /// </summary>
+        /// <param name="observer">オブサーバー</param>
+        /// <returns>コルーチン</returns>
+        public IEnumerator PlayMoveAnchorsHeight(System.IObserver<bool> observer);
+        /// <summary>
+        /// 高さに応じてアンカーを設定（元に戻るのみ）
+        /// </summary>
+        /// <param name="observer">オブサーバー</param>
+        /// <returns>コルーチン</returns>
+        public IEnumerator PlayMoveAnchorsBased(System.IObserver<bool> observer);
     }
 }

@@ -119,6 +119,11 @@ namespace Main.Model
             }
         }
 
+        public bool SetAutoInstanceMode(bool isAutoInstanceMode)
+        {
+            throw new System.NotImplementedException();
+        }
+
         /// <summary>
         /// </summary>
         /// <param name="tempoLevel">入力値</param>
@@ -153,6 +158,12 @@ namespace Main.Model
         /// <param name="jockeyCommandType">ジョッキーコマンドタイプ</param>
         /// <returns>成功／失敗</returns>
         public bool SetJockeyCommandType(JockeyCommandType jockeyCommandType);
+        /// <summary>
+        /// 自動生成処理の実行、停止を切り替える
+        /// </summary>
+        /// <param name="isAutoInstanceMode">自動生成処理の実行、停止</param>
+        /// <returns>成功／失敗</returns>
+        public bool SetAutoInstanceMode(bool isAutoInstanceMode);
     }
 
     /// <summary>
