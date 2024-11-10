@@ -86,9 +86,8 @@ namespace Title.Common
             // ユーザデータ取得
             var utility = new TitleCommonUtility();
             var currentSceneId = utility.UserDataSingleton.UserBeanReloaded.sceneId;
-            // シーンIDが0または8ならメインシーンをロードする
-            if (currentSceneId == 0 ||
-                currentSceneId == 8)
+            // シーンIDが8ならメインシーンをロードする
+            if (currentSceneId == 8)
                 SceneManager.LoadScene(nextMainSceneName);
             else
                 SceneManager.LoadScene(nextSceneName);
