@@ -34,6 +34,8 @@ namespace Main.Audio
         /// </summary>
         /// <see cref="Assets/SaveDatas/AdminData.json"/>
         [SerializeField] private BGMDayOrNightMap[] bGMDayOrNightMaps;
+        /// <summary>BGM開始時の（秒）</summary>
+        private float startBGMTimeSec = 0f;
 
         private void Reset()
         {
@@ -49,6 +51,7 @@ namespace Main.Audio
         public void OnStartAndPlayBGM()
         {
             var utility = new MainCommonUtility();
+            startBGMTimeSec = Time.time;
             // clipToPlayBGMNight
             SwitchClip(bGMDayOrNightMaps.Where(q => q.sceneId == utility.UserDataSingleton.UserBean.sceneId)
                 .Select(q => q.clipToPlayBGMNight)
@@ -178,7 +181,7 @@ namespace Main.Audio
         {
             try
             {
-                float time = Time.time;
+                float time = Time.time - startBGMTimeSec;
                 if (time > audioSource.clip.length)
                 {
                     Debug.LogWarning($"BGMの再生時間の限界を超過: [{time}]");
