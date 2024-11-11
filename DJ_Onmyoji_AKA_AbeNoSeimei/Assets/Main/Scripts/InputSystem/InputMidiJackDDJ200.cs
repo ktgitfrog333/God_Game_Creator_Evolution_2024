@@ -78,7 +78,7 @@ namespace Main.InputSystem
         /// <summary>ユーザの1入力を行う平均時間（0.2～0.5秒）</summary>
         [SerializeField] private float userActionTime = .2f;
         /// <summary>ユーザの1入力を行う平均時間（0.2～0.5秒）</summary>
-        [SerializeField] private float userActionTimeForUI = .35f;
+        [SerializeField] private float userActionTimeForUI = .2f;
 
         /// <summary>
         /// Scratchのアクションに応じてフラグを更新
