@@ -15,8 +15,6 @@ namespace Main.InputSystem
     {
         /// <summary>入力の制限時間</summary>
         private float _elapsedTime;
-        /// <summary>入力の制限加算値（ポーズ時）</summary>
-        private float fixDeltaTime = .01f;
 
         private void Start()
         {
@@ -30,7 +28,7 @@ namespace Main.InputSystem
                 .Where(_ => _scratch != 0f)
                 .Subscribe(_ =>
                 {
-                    _elapsedTime += Time.timeScale == 1f ? Time.deltaTime : fixDeltaTime;
+                    _elapsedTime += Time.timeScale == 1f ? Time.deltaTime : Time.unscaledDeltaTime;
                     if ((Time.timeScale == 1f ? userActionTime : userActionTimeForUI) < _elapsedTime)
                         if (!ResetTime(ref _scratch, ref _elapsedTime))
                             Debug.LogError("ResetTime");
