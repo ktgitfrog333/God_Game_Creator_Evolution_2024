@@ -553,7 +553,7 @@ MonoBehaviour:
   enemiesSpawnTable:
     instanceRateTimeSec: 1
     instanceCount: 2
-    enemiesIDs: 000000000000000000000000000000000000000000000000000000000f0000000f00000006000000
+    enemiesIDs: 00000000000000000000000000000000000000000000000000000000000000000f00000006000000
     sunMoonState: 0
   isSpawnPositionLock: 0
   changeDegree: 0
@@ -597,7 +597,7 @@ MonoBehaviour:
   enemiesSpawnTable:
     instanceRateTimeSec: 1
     instanceCount: 3
-    enemiesIDs: 0000000000000000000000000000000000000000000000000f0000000f0000000600000006000000
+    enemiesIDs: 00000000000000000000000000000000000000000000000000000000000000000f00000006000000
     sunMoonState: 0
   isSpawnPositionLock: 0
   changeDegree: 0
@@ -663,7 +663,7 @@ MonoBehaviour:
   enemiesSpawnTable:
     instanceRateTimeSec: 1
     instanceCount: 2
-    enemiesIDs: 00000000000000000000000000000000000000000000000000000000110000001100000006000000
+    enemiesIDs: 00000000000000000000000000000000000000000000000000000000000000001100000006000000
     sunMoonState: 0
   isSpawnPositionLock: 0
   changeDegree: 0
@@ -1286,7 +1286,7 @@ MonoBehaviour:
   enemiesSpawnTable:
     instanceRateTimeSec: 1
     instanceCount: 2
-    enemiesIDs: 00000000000000000000000000000000000000000000000000000000100000001000000006000000
+    enemiesIDs: 00000000000000000000000000000000000000000000000000000000000000001000000006000000
     sunMoonState: 0
   isSpawnPositionLock: 0
   changeDegree: 0
@@ -1505,7 +1505,7 @@ MonoBehaviour:
     defaultValue: {fileID: 0}
   enemiesSpawnTable:
     instanceRateTimeSec: 1
-    instanceCount: 5
+    instanceCount: 2
     enemiesIDs: 00000000000000000000000000000000000000000000000000000000000000000000000006000000
     sunMoonState: 0
   isSpawnPositionLock: 1
