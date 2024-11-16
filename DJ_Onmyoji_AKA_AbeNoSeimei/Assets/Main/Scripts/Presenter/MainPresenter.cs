@@ -801,7 +801,7 @@ namespace Main.Presenter
                     x.ObserveEveryValueChanged(x => x.Value)
                         .Subscribe(x =>
                         {
-                            pentagramTurnTableView.SetLoopImageSize(x);
+                            pentagramTurnTableView.SetBeatLength(x);
                         });
                 });
             this.UpdateAsObservable()
