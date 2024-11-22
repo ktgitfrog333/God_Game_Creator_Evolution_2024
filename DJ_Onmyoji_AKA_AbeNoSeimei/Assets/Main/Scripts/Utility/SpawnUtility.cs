@@ -5,6 +5,7 @@ using Main.Common;
 using Main.Model;
 using UniRx;
 using UnityEngine;
+using static UnityEngine.GraphicsBuffer;
 
 namespace Main.Utility
 {
@@ -110,6 +111,19 @@ namespace Main.Utility
                 Debug.LogError(e);
                 return false;
             }
+        }
+
+        public bool ManageEnemiesSpawnTutorial(EnemiesSpawnTutorialStruct enemiesSpawnTutorialStruct, ObjectsPoolModel objectsPoolModel)
+        {
+            var enemy = objectsPoolModel.GetEnemyModel(enemiesSpawnTutorialStruct.enemiesID);
+            if (enemy == null)
+                throw new System.Exception("GetEnemyModel");
+            if (!enemy.Initialize(enemiesSpawnTutorialStruct.instancePosition, enemy.transform))
+                throw new System.Exception("Initialize");
+            if (!enemy.isActiveAndEnabled)
+                enemy.gameObject.SetActive(true);
+
+            throw new System.NotImplementedException();
         }
 
         /// <summary>
@@ -227,6 +241,13 @@ namespace Main.Utility
         /// <param name="onmyoState">陰陽（昼夜）の状態</param>
         /// <returns>成功／失敗</returns>
         public bool ManageEnemiesSpawn(EnemiesSpawnTable[] enemiesSpawnTables, ref float elapsedTime, Transform target, ObjectsPoolModel objectsPoolModel, float radiusMin, float radiusMax, float onmyoState);
+        /// <summary>
+        /// 敵系のスポーン制御（チュートリアル用）
+        /// </summary>
+        /// <param name="enemiesSpawnTutorialStruct">チュートリアル用の敵スポーン制御構造体</param>
+        /// <param name="objectsPoolModel">オブジェクトプール</param>
+        /// <returns>成功／失敗</returns>
+        public bool ManageEnemiesSpawnTutorial(EnemiesSpawnTutorialStruct enemiesSpawnTutorialStruct, ObjectsPoolModel objectsPoolModel);
         /// <summary>
         /// オブジェクトプールモデルを取得するために
         /// 対象オブジェクトを検索または生成

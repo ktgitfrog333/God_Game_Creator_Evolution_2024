@@ -78,12 +78,54 @@ namespace Main.View
 
         public IEnumerator PlayMoveAnchorsHeight(System.IObserver<bool> observer)
         {
-            throw new System.NotImplementedException();
+            if (_isPlaying)
+            {
+                if (_sequence != null && _sequence.IsActive() && !_sequence.IsComplete())
+                    _sequence.Restart();
+            }
+            else
+            {
+                _isPlaying = true;
+                _sequence = DOTween.Sequence()
+                    .Append(RectTransform.DOAnchorPos(betweenPoses[0], 0f)
+                        .OnComplete(() =>
+                        {
+                            // ここでオブジェクトの破棄をチェック
+                            if (this == null || gameObject == null)
+                                return;
+
+                            _isPlaying = false;
+                            observer.OnNext(true);
+                        }));
+            }
+
+            yield return null;
         }
 
         public IEnumerator PlayMoveAnchorsBased(System.IObserver<bool> observer)
         {
-            throw new System.NotImplementedException();
+            if (_isPlaying)
+            {
+                if (_sequence != null && _sequence.IsActive() && !_sequence.IsComplete())
+                    _sequence.Restart();
+            }
+            else
+            {
+                _isPlaying = true;
+                _sequence = DOTween.Sequence()
+                    .Append(RectTransform.DOAnchorPos(betweenPoses[1], 0f)
+                        .OnComplete(() =>
+                        {
+                            // ここでオブジェクトの破棄をチェック
+                            if (this == null || gameObject == null)
+                                return;
+
+                            _isPlaying = false;
+                            observer.OnNext(true);
+                        }));
+            }
+
+            yield return null;
         }
     }
 

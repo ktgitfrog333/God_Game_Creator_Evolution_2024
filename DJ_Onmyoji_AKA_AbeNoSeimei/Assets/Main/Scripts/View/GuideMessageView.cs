@@ -1,9 +1,13 @@
+using DG.Tweening;
 using Fungus;
 using Main.Common;
+using Main.InputSystem;
 using Main.Model;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using UniRx;
+using UniRx.Triggers;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -17,6 +21,10 @@ namespace Main.View
     {
         /// <summary>FungusのSayDialog</summary>
         [SerializeField] private SayDialog sayDialog;
+        /// <summary>FungusのDialogInput</summary>
+        [SerializeField] private DialogInput dialogInput;
+        /// <summary>FungusのStoryText</summary>
+        [SerializeField] private Text storyText;
         /// <summary>FungusのSayDialogを管理する構造体</summary>
         [SerializeField]
         private GuideMessageStruct[] guideMessageStructs = new GuideMessageStruct[]
@@ -25,26 +33,57 @@ namespace Main.View
             {
                 missionID = MissionID.MI0001,
                 sentenceTemplate = "ターンテーブルを回して、全ての敵を倒そう！！！\n" +
-                "【 $killedEnemyCount ／ $killedEnemyCountMax 】"
+                "【 $killedEnemyCountCurrent ／ $killedEnemyCountMax 】"
             },
             new GuideMessageStruct()
             {
                 missionID = MissionID.MI0002,
-                sentenceTemplate = "イコライザーを左右に回して、式神の強さを調整して、\n" +
-                "各色のオーラを纏った敵を全て倒そう！！！\n" +
-                "【 $killedEnemyCount ／ $killedEnemyCountMax 】"
+                sentenceTemplate = "イコライザーを調整して、全ての敵を倒そう！！！\n" +
+                "【 $killedEnemyCountCurrent ／ $killedEnemyCountMax 】"
             },
         };
 
         private void Reset()
         {
-            sayDialog = GetComponent<SayDialog>();
+            dialogInput = GetComponent<DialogInput>();
+            storyText = GameObject.Find("StoryText").GetComponent<Text>();
+        }
+
+        private void Start()
+        {
+            var isLockScroll = new BoolReactiveProperty();
+            this.UpdateAsObservable()
+                .Select(_ => MainGameManager.Instance)
+                .Where(x => x != null &&
+                    x.InputSystemsOwner.CurrentInputMode.Value == (int)InputMode.MidiJackDDJ200)
+                .Select(x => x.InputSystemsOwner.InputMidiJackDDJ200)
+                .Subscribe(x =>
+                {
+                    if (x.Cue)
+                    {
+                        if (isLockScroll.Value)
+                            dialogInput.SetIsUiButton(false);
+                        else
+                        {
+                            isLockScroll.Value = true;
+                            dialogInput.SetIsUiButton(true);
+                        }
+                    }
+                    else
+                    {
+                        if (isLockScroll.Value)
+                            isLockScroll.Value = false;
+                    }
+                });
         }
 
         public bool SetButtonEnabled(bool enabled)
         {
             try
             {
+                if (!dialogInput.SetButtonPushEnabled(enabled))
+                    throw new System.ArgumentException("SetButtonPushEnabled");
+                sayDialog = SayDialog.GetSayDialog();
                 sayDialog.SetInteractableOfContinueButton(enabled);
 
                 return true;
@@ -68,9 +107,10 @@ namespace Main.View
                 var guideMessageStruct = guideMessageStructs.FirstOrDefault(g => g.missionID.Equals(missionID));
                 string sentence = guideMessageStruct.sentenceTemplate;
                 // 置換処理
-                sentence = sentence.Replace("$killedEnemyCount", killedEnemyCount.ToString("D").ToFullWidth());
+                sentence = sentence.Replace("$killedEnemyCountCurrent", killedEnemyCount.ToString("D").ToFullWidth());
                 sentence = sentence.Replace("$killedEnemyCountMax", killedEnemyCountMax.ToString("D").ToFullWidth());
 
+                storyText.text = sentence;
 
                 return true;
             }
@@ -79,8 +119,6 @@ namespace Main.View
                 Debug.LogError(e);
                 return false;
             }
-
-            throw new System.NotImplementedException();
         }
     }
 

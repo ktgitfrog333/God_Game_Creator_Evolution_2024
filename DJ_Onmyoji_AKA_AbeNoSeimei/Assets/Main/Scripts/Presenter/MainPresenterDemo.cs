@@ -14,6 +14,7 @@ using Unity.Collections;
 using Main.Test.Driver;
 using DG.Tweening;
 using Main.Utility;
+using Main.InputSystem;
 
 namespace Main.Presenter
 {
@@ -1108,6 +1109,102 @@ namespace Main.Presenter
 
         public void OnStart()
         {
+            // 初期設定
+            pauseView.gameObject.SetActive(false);
+            // ポーズボタンの押下（有効／無効）状態
+            var isInputUIPausedEnabled = new BoolReactiveProperty();
+            isInputUIPausedEnabled.Value = true;
+            // ポーズ押下
+            var inputUIPausedState = new BoolReactiveProperty();
+            inputUIPausedState.ObserveEveryValueChanged(x => x.Value)
+                .Subscribe(x =>
+                {
+                    // ポーズ画面が閉じている　かつ、
+                    // クリア画面が閉じている
+                    if (x &&
+                        !pauseView.gameObject.activeSelf /*&&*/
+                        //!clearView.gameObject.activeSelf &&
+                        //!gameOverView.gameObject.activeSelf &&
+                        //!congratulationsView.gameObject.activeSelf
+                        )
+                    {
+                        MainGameManager.Instance.AudioOwner.PlaySFX(ClipToPlay.se_play_open);
+                        //// 遊び方確認ページを開いているなら閉じる
+                        //if (gameManualScrollView.gameObject.activeSelf)
+                        //{
+                        //    if (!gameManualViewPageModels[(int)EnumShortcuActionMode.CheckAction].SetButtonEnabled(false))
+                        //        Debug.LogError("ボタン有効／無効切り替え呼び出しの失敗");
+                        //    if (!gameManualViewPageModels[(int)EnumShortcuActionMode.CheckAction].SetEventTriggerEnabled(false))
+                        //        Debug.LogError("イベント有効／無効切り替え呼び出しの失敗");
+                        //    // 遊び方を確認クローズのアニメーション
+                        //    Observable.FromCoroutine<bool>(observer => gameManualScrollView.PlayCloseAnimation(observer))
+                        //        .Subscribe(_ =>
+                        //        {
+                        //            gameManualScrollView.gameObject.SetActive(false);
+                        //        })
+                        //        .AddTo(gameObject);
+                        //}
+                        pauseView.gameObject.SetActive(true);
+                        //gamePauseModel.SetSelectedGameObject();
+                        //if (!playerModel.SetInputBan(true))
+                        //    Debug.LogError("操作禁止フラグをセット呼び出しの失敗");
+                    }
+                });
+
+            // ポーズ入力状態を監視して購読した際に下記の処理を追加
+            this.UpdateAsObservable()
+                .Subscribe(_ =>
+                {
+                    if (isInputUIPausedEnabled.Value &&
+                    #region チュートリアル実装_3 メインシーンにてチュートリアルモード追加、会話システム追加など
+                        pauseView.IsControllEnabled
+                    #endregion
+                    )
+                    {
+                        var inputSystemsOwner = MainGameManager.Instance.InputSystemsOwner;
+                        switch ((InputMode)inputSystemsOwner.CurrentInputMode.Value)
+                        {
+                            case InputMode.Gamepad:
+                                inputUIPausedState.Value = inputSystemsOwner.InputUI.Paused;
+
+                                break;
+                            case InputMode.MidiJackDDJ200:
+                                inputUIPausedState.Value = inputSystemsOwner.InputMidiJackDDJ200.PlayOrPause ||
+                                    inputSystemsOwner.InputMidiJackDDJ200.Cue;
+
+                                break;
+                            default:
+                                break;
+                        }
+                    }
+                    //if (isInputUIActionsEnabled.Value)
+                    //{
+                    //    if (((EnumShortcuActionMode)inputUIActionsState.Value).Equals(EnumShortcuActionMode.None))
+                    //    {
+                    //        // ショートカットキーの押下が None -> Any へ変わる
+                    //        if (MainGameManager.Instance.InputSystemsOwner.GetComponent<InputSystemsOwner>().InputUI.Undoed &&
+                    //            !MainGameManager.Instance.InputSystemsOwner.GetComponent<InputSystemsOwner>().InputUI.Selected)
+                    //            inputUIActionsState.Value = (int)EnumShortcuActionMode.UndoAction;
+                    //        else if (MainGameManager.Instance.InputSystemsOwner.GetComponent<InputSystemsOwner>().InputUI.Selected)
+                    //            inputUIActionsState.Value = (int)EnumShortcuActionMode.SelectAction;
+                    //    }
+                    //    else if ((((EnumShortcuActionMode)inputUIActionsState.Value).Equals(EnumShortcuActionMode.UndoAction) &&
+                    //        !MainGameManager.Instance.InputSystemsOwner.GetComponent<InputSystemsOwner>().InputUI.Undoed) ||
+                    //        (((EnumShortcuActionMode)inputUIActionsState.Value).Equals(EnumShortcuActionMode.SelectAction) &&
+                    //        !MainGameManager.Instance.InputSystemsOwner.GetComponent<InputSystemsOwner>().InputUI.Selected))
+                    //    {
+                    //        // ショートカットキーの押下が Any -> None へ変わる
+                    //        inputUIActionsState.Value = (int)EnumShortcuActionMode.None;
+                    //    }
+                    //    if (!((EnumShortcuActionMode)inputUIActionsState.Value).Equals(EnumShortcuActionMode.None))
+                    //        inputUIPushedTime.Value += Time.deltaTime;
+                    //    else if (0f < inputUIPushedTime.Value)
+                    //        // ショートカットキーの押下状態がNoneへ戻ったらリセット
+                    //        // 既に0fなら何度も更新は行わない
+                    //        inputUIPushedTime.Value = 0f;
+                    //}
+                });
+
             #region チュートリアル実装_3 メインシーンにてチュートリアルモード追加、会話システム追加など
             // チュートリアルモードであるかのフラグ（IsTutorialMode）を監視
             tutorialModel.IsTutorialMode.ObserveEveryValueChanged(x => x.Value)
@@ -1151,7 +1248,7 @@ namespace Main.Presenter
                     else
                     {
                         // TutorialModelコンポーネントのオブジェクトを無効化
-                        tutorialModel.gameObject.SetActive(true);
+                        tutorialModel.gameObject.SetActive(false);
                     }
                 });
             #endregion
@@ -1234,21 +1331,5 @@ namespace Main.Presenter
             public EnemiesSpawnTutorialModel enemiesSpawnTutorialModel;
         }
         #endregion
-
-        private void OnGUI()
-        {
-            // ボタンの配置やサイズを決定（x, y, width, height）
-            if (GUI.Button(new Rect(10, 10, 100, 50), "Button 1"))
-            {
-            }
-
-            if (GUI.Button(new Rect(10, 70, 100, 50), "Button 2"))
-            {
-            }
-
-            if (GUI.Button(new Rect(10, 130, 100, 50), "Button 3"))
-            {
-            }
-        }
     }
 }

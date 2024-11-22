@@ -8,14 +8,14 @@ namespace Fungus
     /// <summary>
     /// Writes text in a dialog box.
     /// </summary>
-    [CommandInfo("Narrative", 
-                 "Say", 
+    [CommandInfo("Narrative",
+                 "Say",
                  "Writes text in a dialog box.")]
     [AddComponentMenu("")]
     public class Say : Command, ILocalizable
     {
         // Removed this tooltip as users's reported it obscures the text box
-        [TextArea(5,10)]
+        [TextArea(5, 10)]
         [SerializeField] protected string storyText = "";
 
         [Tooltip("Notes about this story text for other authors, localization, etc.")]
@@ -102,7 +102,7 @@ namespace Fungus
                 Continue();
                 return;
             }
-    
+
             var flowchart = GetFlowchart();
 
             sayDialog.SetActive(true);

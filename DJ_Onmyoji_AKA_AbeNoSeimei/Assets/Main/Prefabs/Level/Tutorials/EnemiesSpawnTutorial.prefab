@@ -44,5 +44,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7ee0fa09b6b4a244a97ed030b2dbd481, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  objectsPoolPrefab: {fileID: 0}
+  objectsPoolPrefab: {fileID: 7497276588651718180, guid: 4434f5da33952be4c941a59c25b13d50, type: 3}
   instanceRateTimeSec: 0.5

@@ -1,7 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
+using Title.Utility;
 using UniRx;
-using Unity.VisualScripting;
 using UnityEngine;
 
 namespace Main.Model
@@ -29,6 +29,15 @@ namespace Main.Model
         private void OnEnable()
         {
             guideMessageModel.gameObject.SetActive(true);
+        }
+
+        private void Start()
+        {
+            // ユーザデータ取得
+            var utility = new TitleCommonUtility();
+            var currentSceneId = utility.UserDataSingleton.UserBeanReloaded.sceneId;
+            // シーンIDが8ならチュートリアルモード
+            _isTutorialMode.Value = currentSceneId == 8;
         }
 
         private void OnDisable()

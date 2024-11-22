@@ -17,11 +17,6 @@ namespace Main.Model
         /// <summary>呼び出されたガイドメッセージID</summary>
         public IReactiveProperty<GuideMessageID> CalledGuideMessageID => _calledGuideMessageID;
 
-        private void Start()
-        {
-            gameObject.SetActive(false);
-        }
-
         public void CallGuideMessageID(GuideMessageID guideMessageID)
         {
             _calledGuideMessageID.Value = guideMessageID;

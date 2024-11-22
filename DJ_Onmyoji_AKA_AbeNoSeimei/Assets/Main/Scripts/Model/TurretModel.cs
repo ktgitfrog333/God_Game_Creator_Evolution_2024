@@ -41,6 +41,10 @@ namespace Main.Model
         protected MainCommonUtility _mainCommonUtility = new MainCommonUtility();
         /// <summary>オーラサイズ変更用のRectトランスフォーム</summary>
         [SerializeField] protected RectTransform auraRectTransform;
+        /// <summary>自動生成処理の実行、停止</summary>
+        private bool _isAutoInstanceMode = true;
+        /// <summary>自動生成処理の実行、停止</summary>
+        public bool IsAutoInstanceMode => _isAutoInstanceMode;
 
         protected virtual void Awake()
         {
@@ -82,7 +86,8 @@ namespace Main.Model
                 float elapsedTime = 0f;
                 // 一定間隔で弾を生成するための実装
                 this.UpdateAsObservable()
-                    .Where(_ => !_isUnLoopNormalActionRate)
+                    .Where(_ => _isAutoInstanceMode &&
+                        !_isUnLoopNormalActionRate)
                     .Subscribe(_ =>
                     {
                         config = ReLoadOnmyoBulletConfig(config);
@@ -121,7 +126,17 @@ namespace Main.Model
 
         public bool SetAutoInstanceMode(bool isAutoInstanceMode)
         {
-            throw new System.NotImplementedException();
+            try
+            {
+                _isAutoInstanceMode = isAutoInstanceMode;
+
+                return true;
+            }
+            catch (System.Exception e)
+            {
+                Debug.LogError(e);
+                return false;
+            }
         }
 
         /// <summary>

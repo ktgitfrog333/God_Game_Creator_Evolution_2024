@@ -81,7 +81,7 @@ MonoBehaviour:
   scrollPos: {x: 0, y: 0}
   variablesScrollPos: {x: 0, y: 0}
   variablesExpanded: 1
-  blockViewHeight: 280
+  blockViewHeight: 541
   zoom: 1
   scrollViewRect:
     serializedVersion: 2
@@ -91,8 +91,7 @@ MonoBehaviour:
     height: 859
   selectedBlocks:
   - {fileID: 5780540346074303063}
-  selectedCommands:
-  - {fileID: 8949204441234390214}
+  selectedCommands: []
   variables: []
   description: 
   stepPause: 0
@@ -120,7 +119,7 @@ MonoBehaviour:
     serializedVersion: 2
     x: 67
     y: 70
-    width: 192
+    width: 191
     height: 40
   tint: {r: 1, g: 1, b: 1, a: 1}
   useCustomTint: 0

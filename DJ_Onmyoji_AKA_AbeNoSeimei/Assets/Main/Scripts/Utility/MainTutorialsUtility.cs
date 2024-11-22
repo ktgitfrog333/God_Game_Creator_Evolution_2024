@@ -398,13 +398,13 @@ namespace Main.Utility
                     case MainPresenterDemo.ComponentState.Enable:
                         foreach (var item in target.Where(q => !q.gameObject.activeSelf))
                             item.gameObject.SetActive(true);
-                        foreach (var item in target)
+                        foreach (var item in target.Where(q => !q.IsAutoInstanceMode))
                             if (!item.SetAutoInstanceMode(true))
                                 throw new System.ArgumentException("SetAutoInstanceMode");
 
                         break;
                     case MainPresenterDemo.ComponentState.Pause:
-                        foreach (var item in target)
+                        foreach (var item in target.Where(q => q.IsAutoInstanceMode))
                             if (!item.SetAutoInstanceMode(false))
                                 throw new System.ArgumentException("SetAutoInstanceMode");
 
@@ -443,13 +443,13 @@ namespace Main.Utility
                     case MainPresenterDemo.ComponentState.Enable:
                         foreach (var item in target.Where(q => !q.gameObject.activeSelf))
                             item.gameObject.SetActive(true);
-                        foreach (var item in target)
+                        foreach (var item in target.Where(q => !q.IsControllEnabled))
                             if (!item.SetControllEnabled(true))
                                 throw new System.ArgumentException("SetControllEnabled");
 
                         break;
                     case MainPresenterDemo.ComponentState.Pause:
-                        foreach (var item in target)
+                        foreach (var item in target.Where(q => q.IsControllEnabled))
                             if (!item.SetControllEnabled(false))
                                 throw new System.ArgumentException("SetControllEnabled");
 

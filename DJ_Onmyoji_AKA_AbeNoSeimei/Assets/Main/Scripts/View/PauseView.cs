@@ -15,7 +15,9 @@ namespace Main.View
         /// <summary>閉じるまでの時間</summary>
         [SerializeField] private float closedTime = .5f;
         /// <summary>操作の許可、禁止</summary>
-        public bool IsControllEnabled => throw new System.NotImplementedException();
+        private bool _isControllEnabled = true;
+        /// <summary>操作の許可、禁止</summary>
+        public bool IsControllEnabled => _isControllEnabled;
 
         /// <summary>
         /// フェードのDOTweenアニメーション再生
@@ -34,7 +36,17 @@ namespace Main.View
 
         public bool SetControllEnabled(bool isControllEnabled)
         {
-            throw new System.NotImplementedException();
+            try
+            {
+                _isControllEnabled = isControllEnabled;
+
+                return true;
+            }
+            catch (System.Exception e)
+            {
+                Debug.LogError(e);
+                return false;
+            }
         }
     }
 
