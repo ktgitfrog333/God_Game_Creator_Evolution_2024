@@ -113,17 +113,30 @@ namespace Main.Utility
             }
         }
 
-        public bool ManageEnemiesSpawnTutorial(EnemiesSpawnTutorialStruct enemiesSpawnTutorialStruct, ObjectsPoolModel objectsPoolModel)
+        public bool ManageEnemiesSpawnTutorial(EnemiesSpawnTutorialStruct enemiesSpawnTutorialStruct, ObjectsPoolModel objectsPoolModel, Transform targetOther)
         {
-            var enemy = objectsPoolModel.GetEnemyModel(enemiesSpawnTutorialStruct.enemiesID);
-            if (enemy == null)
-                throw new System.Exception("GetEnemyModel");
-            if (!enemy.Initialize(enemiesSpawnTutorialStruct.instancePosition, enemy.transform))
-                throw new System.Exception("Initialize");
-            if (!enemy.isActiveAndEnabled)
-                enemy.gameObject.SetActive(true);
+            try
+            {
+                var enemy = objectsPoolModel.GetEnemyModel(enemiesSpawnTutorialStruct.enemiesID);
+                if (enemy == null)
+                    throw new System.Exception("GetEnemyModel");
+                var target = enemiesSpawnTutorialStruct.enemiesID switch
+                {
+                    EnemiesID.EN0000_D => targetOther,
+                    _ => enemy.transform,
+                };
+                if (!enemy.Initialize(enemiesSpawnTutorialStruct.instancePosition, target))
+                    throw new System.Exception("Initialize");
+                if (!enemy.isActiveAndEnabled)
+                    enemy.gameObject.SetActive(true);
 
-            throw new System.NotImplementedException();
+                return true;
+            }
+            catch (System.Exception e)
+            {
+                Debug.LogError(e);
+                return false;
+            }
         }
 
         /// <summary>
@@ -246,8 +259,9 @@ namespace Main.Utility
         /// </summary>
         /// <param name="enemiesSpawnTutorialStruct">チュートリアル用の敵スポーン制御構造体</param>
         /// <param name="objectsPoolModel">オブジェクトプール</param>
+        /// <param name="targetOther">ターゲットとして利用する場合セット（ダンスはプレイヤーへ向かっていく）</param>
         /// <returns>成功／失敗</returns>
-        public bool ManageEnemiesSpawnTutorial(EnemiesSpawnTutorialStruct enemiesSpawnTutorialStruct, ObjectsPoolModel objectsPoolModel);
+        public bool ManageEnemiesSpawnTutorial(EnemiesSpawnTutorialStruct enemiesSpawnTutorialStruct, ObjectsPoolModel objectsPoolModel, Transform targetOther);
         /// <summary>
         /// オブジェクトプールモデルを取得するために
         /// 対象オブジェクトを検索または生成

@@ -143,6 +143,11 @@ namespace Main.Common
         {
             SceneManager.LoadScene(titleSceneName);
         }
+
+        public bool ReverseSceneId(int sceneId, UserBean datas)
+        {
+            throw new System.NotImplementedException();
+        }
     }
 
     /// <summary>
@@ -156,5 +161,12 @@ namespace Main.Common
         /// </summary>
         /// <returns>成功／失敗</returns>
         public bool DestroyMainSceneStagesState();
+        /// <summary>
+        /// ステージIDを遷移前IDへ戻す
+        /// </summary>
+        /// <param name="sceneId">現在のシーンID</param>
+        /// <param name="datas">ユーザデータ</param>
+        /// <returns>チュートリアルステージか</returns>
+        public bool ReverseSceneId(int sceneId, UserBean datas);
     }
 }

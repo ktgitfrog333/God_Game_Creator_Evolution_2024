@@ -7,6 +7,7 @@ using Main.Model;
 using System.Linq;
 using Main.View;
 using UniRx;
+using UniRx.Triggers;
 
 namespace Main.Utility
 {
@@ -563,11 +564,12 @@ namespace Main.Utility
             }
         }
 
-        public bool DoTutorialMissionContents(MissionID missionID, MainPresenterDemo.TutorialMissionContentsStuct tutorialMissionContentsStuct)
+        public bool DoTutorialMissionContents(MissionID missionID, MainPresenterDemo.TutorialMissionContentsStuct tutorialMissionContentsStuct, System.IDisposable modelUpdObservable)
         {
             try
             {
                 var tutorialStuct = tutorialMissionContentsStuct;
+                modelUpdObservable.Dispose();
                 switch (missionID)
                 {
                     case MissionID.MI0000:
@@ -575,41 +577,59 @@ namespace Main.Utility
 
                         break;
                     case MissionID.MI0001:
-                        tutorialStuct.missionsSystemTutorialModel.CurrentMissionsSystemTutorialStruct.killedEnemyCount.ObserveEveryValueChanged(x => x.Value)
-                            .Subscribe(x =>
+                        modelUpdObservable = tutorialStuct.missionsSystemTutorialModel.UpdateAsObservable()
+                            .Select(_ => tutorialStuct.missionsSystemTutorialModel.CurrentMissionsSystemTutorialStruct)
+                            .Where(currentStruct => currentStruct.killedEnemyCount != null &&
+                                currentStruct.isCompleted != null)
+                            .Take(1)
+                            .Subscribe(currentStruct =>
                             {
-                                if (!tutorialStuct.guideMessageView.UpdateSentence(missionID, x, tutorialStuct.missionsSystemTutorialModel.CurrentMissionsSystemTutorialStruct.killedEnemyCountMax))
-                                    Debug.LogError("UpdateSentence");
-                            });
-                        tutorialStuct.missionsSystemTutorialModel.CurrentMissionsSystemTutorialStruct.isCompleted.ObserveEveryValueChanged(x => x.Value)
-                            .Where(x => x)
-                            .Subscribe(x =>
-                            {
-                                if (!tutorialStuct.guideMessageView.SetButtonEnabled(true))
-                                    Debug.LogError("SetButtonEnabled");
-                                MainGameManager.Instance.InputSystemsOwner.InputMidiJackDDJ200.AutoPushCue();
-                            });
-                        if (!tutorialStuct.enemiesSpawnTutorialModel.InstanceTamachans())
-                            Debug.LogError("InstanceTamachans");
+                                currentStruct.killedEnemyCount.ObserveEveryValueChanged(x => x.Value)
+                                    .Subscribe(x =>
+                                    {
+                                        if (!tutorialStuct.guideMessageView.UpdateSentence(missionID, x, tutorialStuct.missionsSystemTutorialModel.CurrentMissionsSystemTutorialStruct.killedEnemyCountMax))
+                                            Debug.LogError("UpdateSentence");
+                                        if (!tutorialStuct.enemiesSpawnTutorialModel.InstanceTamachans(x))
+                                            Debug.LogError("InstanceTamachans");
+                                    });
+                                currentStruct.isCompleted.ObserveEveryValueChanged(x => x.Value)
+                                    .Where(x => x)
+                                    .Subscribe(x =>
+                                    {
+                                        if (!tutorialStuct.guideMessageView.SetButtonEnabled(true))
+                                            Debug.LogError("SetButtonEnabled");
+                                        MainGameManager.Instance.InputSystemsOwner.InputMidiJackDDJ200.AutoPushCue();
+                                    });
+                            })
+                            .AddTo(tutorialStuct.missionsSystemTutorialModel);
 
                         break;
                     case MissionID.MI0002:
-                        tutorialStuct.missionsSystemTutorialModel.CurrentMissionsSystemTutorialStruct.killedEnemyCount.ObserveEveryValueChanged(x => x.Value)
-                            .Subscribe(x =>
+                        modelUpdObservable = tutorialStuct.missionsSystemTutorialModel.UpdateAsObservable()
+                            .Select(_ => tutorialStuct.missionsSystemTutorialModel.CurrentMissionsSystemTutorialStruct)
+                            .Where(currentStruct => currentStruct.killedEnemyCount != null &&
+                                currentStruct.isCompleted != null)
+                            .Take(1)
+                            .Subscribe(currentStruct =>
                             {
-                                if (!tutorialStuct.guideMessageView.UpdateSentence(missionID,x, tutorialStuct.missionsSystemTutorialModel.CurrentMissionsSystemTutorialStruct.killedEnemyCountMax))
-                                    Debug.LogError("UpdateSentence");
-                            });
-                        tutorialStuct.missionsSystemTutorialModel.CurrentMissionsSystemTutorialStruct.isCompleted.ObserveEveryValueChanged(x => x.Value)
-                            .Where(x => x)
-                            .Subscribe(x =>
-                            {
-                                if (!tutorialStuct.guideMessageView.SetButtonEnabled(true))
-                                    Debug.LogError("SetButtonEnabled");
-                                MainGameManager.Instance.InputSystemsOwner.InputMidiJackDDJ200.AutoPushCue();
-                            });
-                        if (!tutorialStuct.enemiesSpawnTutorialModel.InstanceAuraTamachans())
-                            Debug.LogError("InstanceAuraTamachans");
+                                currentStruct.killedEnemyCount.ObserveEveryValueChanged(x => x.Value)
+                                    .Subscribe(x =>
+                                    {
+                                        if (!tutorialStuct.guideMessageView.UpdateSentence(missionID, x, tutorialStuct.missionsSystemTutorialModel.CurrentMissionsSystemTutorialStruct.killedEnemyCountMax))
+                                            Debug.LogError("UpdateSentence");
+                                        if (!tutorialStuct.enemiesSpawnTutorialModel.InstanceAuraTamachans(x))
+                                            Debug.LogError("InstanceAuraTamachans");
+                                    });
+                                currentStruct.isCompleted.ObserveEveryValueChanged(x => x.Value)
+                                    .Where(x => x)
+                                    .Subscribe(x =>
+                                    {
+                                        if (!tutorialStuct.guideMessageView.SetButtonEnabled(true))
+                                            Debug.LogError("SetButtonEnabled");
+                                        MainGameManager.Instance.InputSystemsOwner.InputMidiJackDDJ200.AutoPushCue();
+                                    });
+                            })
+                            .AddTo(tutorialStuct.missionsSystemTutorialModel);
 
                         break;
                 }
@@ -650,7 +670,8 @@ namespace Main.Utility
         /// </summary>
         /// <param name="missionID">ミッションID</param>
         /// <param name="tutorialMissionContentsStuct">チュートリアルのミッションで扱うリソースの構造体</param>
+        /// <param name="modelUpdObservable">監視用モデルコンポーネント</param>
         /// <returns>成功／失敗</returns>
-        public bool DoTutorialMissionContents(MissionID missionID, MainPresenterDemo.TutorialMissionContentsStuct tutorialMissionContentsStuct);
+        public bool DoTutorialMissionContents(MissionID missionID, MainPresenterDemo.TutorialMissionContentsStuct tutorialMissionContentsStuct, System.IDisposable modelUpdObservable);
     }
 }

@@ -286,6 +286,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 67fae4a09dc851b4e86f681ba514057b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  missionsSystemTutorialStructs:
+  - missionID: 1
+    killedEnemyCount:
+      value: 0
+    killedEnemyCountMax: 3
+    isCompleted:
+      value: 0
+  - missionID: 2
+    killedEnemyCount:
+      value: 0
+    killedEnemyCountMax: 9
+    isCompleted:
+      value: 0
+  convertMapMissionIDToGuideMessageIDs: []
 --- !u!4 &2631382
 Transform:
   m_ObjectHideFlags: 0
@@ -1912,6 +1926,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 67fae4a09dc851b4e86f681ba514057b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  missionsSystemTutorialStructs:
+  - missionID: 1
+    killedEnemyCount:
+      value: 0
+    killedEnemyCountMax: 3
+    isCompleted:
+      value: 0
+  - missionID: 2
+    killedEnemyCount:
+      value: 0
+    killedEnemyCountMax: 9
+    isCompleted:
+      value: 0
+  convertMapMissionIDToGuideMessageIDs: []
 --- !u!4 &174510253
 Transform:
   m_ObjectHideFlags: 0
@@ -4486,6 +4514,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 67fae4a09dc851b4e86f681ba514057b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  missionsSystemTutorialStructs:
+  - missionID: 1
+    killedEnemyCount:
+      value: 0
+    killedEnemyCountMax: 3
+    isCompleted:
+      value: 0
+  - missionID: 2
+    killedEnemyCount:
+      value: 0
+    killedEnemyCountMax: 9
+    isCompleted:
+      value: 0
+  convertMapMissionIDToGuideMessageIDs: []
 --- !u!4 &469342497
 Transform:
   m_ObjectHideFlags: 0
@@ -7174,6 +7216,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 67fae4a09dc851b4e86f681ba514057b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  missionsSystemTutorialStructs:
+  - missionID: 1
+    killedEnemyCount:
+      value: 0
+    killedEnemyCountMax: 3
+    isCompleted:
+      value: 0
+  - missionID: 2
+    killedEnemyCount:
+      value: 0
+    killedEnemyCountMax: 9
+    isCompleted:
+      value: 0
+  convertMapMissionIDToGuideMessageIDs: []
 --- !u!4 &730396113
 Transform:
   m_ObjectHideFlags: 0
@@ -11134,6 +11190,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fb07bd4e0fc12464fbc8ff1406c3e2f2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &1012774807 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 527253223230264901, guid: 7814bbaffd89eae4bbb761745b007eef, type: 3}
+  m_PrefabInstance: {fileID: 1949282392228573877}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7ee0fa09b6b4a244a97ed030b2dbd481, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &1013344722
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -11576,6 +11643,17 @@ MonoBehaviour:
   audioOwner: {fileID: 1057128955}
   pbSpeed: 0
   invert: 0
+--- !u!114 &1061014614 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 2307162161786062241, guid: a7c16d138bc1b994299d2cd2c69cc55b, type: 3}
+  m_PrefabInstance: {fileID: 796380141268858604}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 67fae4a09dc851b4e86f681ba514057b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1063084985
 GameObject:
   m_ObjectHideFlags: 0
@@ -13367,6 +13445,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 67fae4a09dc851b4e86f681ba514057b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  missionsSystemTutorialStructs:
+  - missionID: 1
+    killedEnemyCount:
+      value: 0
+    killedEnemyCountMax: 3
+    isCompleted:
+      value: 0
+  - missionID: 2
+    killedEnemyCount:
+      value: 0
+    killedEnemyCountMax: 9
+    isCompleted:
+      value: 0
+  convertMapMissionIDToGuideMessageIDs: []
 --- !u!4 &1201576803
 Transform:
   m_ObjectHideFlags: 0
@@ -19999,6 +20091,57 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!1 &1742273877
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1742273879}
+  - component: {fileID: 1742273878}
+  m_Layer: 0
+  m_Name: EnemiesSpawnTutorialModelTest
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1742273878
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1742273877}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d6010a0301ddbd04293d15fd6a2d918e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  enemiesSpawnTutorialModel: {fileID: 1012774807}
+  wrapTurretModel: {fileID: 0}
+  danceTurretModel: {fileID: 0}
+  graffitiTurretModel: {fileID: 0}
+  onmyoTurretModels: []
+  killedEnemyCount: 0
+  playerPrefab: {fileID: 7897886183892488649, guid: 7ff9a08919326814bb6c52898bf3e31e, type: 3}
+--- !u!4 &1742273879
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1742273877}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1748399251
 GameObject:
   m_ObjectHideFlags: 0
@@ -21246,6 +21389,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 67fae4a09dc851b4e86f681ba514057b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  missionsSystemTutorialStructs:
+  - missionID: 1
+    killedEnemyCount:
+      value: 0
+    killedEnemyCountMax: 3
+    isCompleted:
+      value: 0
+  - missionID: 2
+    killedEnemyCount:
+      value: 0
+    killedEnemyCountMax: 9
+    isCompleted:
+      value: 0
+  convertMapMissionIDToGuideMessageIDs: []
 --- !u!4 &1909224195
 Transform:
   m_ObjectHideFlags: 0
@@ -22370,6 +22527,52 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 014a989a6d97cde498001048a33af87b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!1 &2010644314
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2010644316}
+  - component: {fileID: 2010644315}
+  m_Layer: 0
+  m_Name: MissionsSystemTutorialModelTest
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 0
+--- !u!114 &2010644315
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2010644314}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7deb871f94ac8684b9c4ace2b6e31014, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  missionsSystemTutorialModel: {fileID: 1061014614}
+  testGuideMessageID: 0
+--- !u!4 &2010644316
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2010644314}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2010740751
 GameObject:
   m_ObjectHideFlags: 0
@@ -25198,4 +25401,6 @@ SceneRoots:
   - {fileID: 1949282392228573877}
   - {fileID: 796380141268858604}
   - {fileID: 269219975}
+  - {fileID: 2010644316}
+  - {fileID: 1742273879}
   - {fileID: 1181590741}

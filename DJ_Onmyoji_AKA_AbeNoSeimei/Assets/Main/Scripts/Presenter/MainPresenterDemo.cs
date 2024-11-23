@@ -1237,10 +1237,12 @@ namespace Main.Presenter
                                             Debug.LogError("SetCallMissionID");
                                     });
                                 // MissionsSystemTutorialModelコンポーネントの進行中のミッションID（CallMissionID）を監視
+                                System.IDisposable modelUpdObservable = tutorialMissionContentsStuct.missionsSystemTutorialModel.UpdateAsObservable().Subscribe(_ => { });
+                                modelUpdObservable.Dispose();
                                 missionsSystemTutorialModel.CallMissionID.ObserveEveryValueChanged(x => x.Value)
                                     .Subscribe(x =>
                                     {
-                                        if (!utility.DoTutorialMissionContents(x, tutorialMissionContentsStuct))
+                                        if (!utility.DoTutorialMissionContents(x, tutorialMissionContentsStuct, modelUpdObservable))
                                             Debug.LogError("DoTutorialMissionContents");
                                     });
                             });
@@ -1265,6 +1267,72 @@ namespace Main.Presenter
                     Debug.LogError("UpdateKilledEnemyCount");
                 #endregion
             });
+            var common = new MainPresenterCommon();
+            // クリア画面表示のため、ゴール到達のフラグ更新
+            var datas = MainGameManager.Instance.SceneOwner.GetSaveDatas();
+            var isGoalReached = new BoolReactiveProperty();
+            // ゲームオーバー画面表示のため、HP0になった時ののフラグ更新
+            var isPlayerDead = new BoolReactiveProperty();
+            isGoalReached.ObserveEveryValueChanged(x => x.Value)
+                .Subscribe(x =>
+                {
+                    if (x)
+                    {
+                        // クリア済みデータの更新
+                        if (0 < datas.sceneId
+                        #region チュートリアル実装_3 メインシーンにてチュートリアルモード追加、会話システム追加など
+                        && datas.sceneId < 8
+                        #endregion
+                            )
+                        {
+                            datas.state[datas.sceneId - 1] = 2;
+                            if (datas.sceneId < datas.state.Length - 1 &&
+                                datas.state[(datas.sceneId)] < 1)
+                                datas.state[(datas.sceneId)] = 1;
+                        }
+                        MainGameManager.Instance.AudioOwner.PlaySFX(ClipToPlay.me_game_clear);
+                        // 初回のみ最初から拡大表示
+                        if (!common.IsFinalLevel(datas))
+                        {
+                            // 初期処理
+                            //if (!rewardSelectView.SetContents(rewardSelectModel.RewardContentProps))
+                            //    Debug.LogError("SetContents");
+                            //if (!clearView.SetActiveGameObject(true))
+                            //    Debug.LogError("SetActiveGameObject");
+                            //gameSelectButtonView.gameObject.SetActive(false);
+                            //var rewardContentModel = rewardSelectModel.RewardContentModels[0];
+                            //if (!cursorIconView.SetSelectAndScale(rewardContentModel.transform.position, (rewardContentModel.transform as RectTransform).sizeDelta))
+                            //    Debug.LogError("SetSelectAndScale");
+                            //rewardContentModel.SetSelectedGameObject();
+                            #region チュートリアル実装_3 メインシーンにてチュートリアルモード追加、会話システム追加など
+                            if (!MainGameManager.Instance.SceneOwner.ReverseSceneId(datas.sceneId, datas))
+                                datas.sceneId++;
+                            #endregion
+                            //datas.sceneId++;
+                            //if (!MainGameManager.Instance.SceneOwner.SetSaveDatas(datas))
+                            //    Debug.LogError("クリア済みデータ保存呼び出しの失敗");
+                            //gameSelectButtonView.gameObject.SetActive(true);
+                            //cursorIconView.gameObject.SetActive(true);
+                        }
+                        else
+                        {
+                            //// 初期処理
+                            //if (!congratulationsView.SetActiveGameObject(true))
+                            //    Debug.LogError("SetActiveGameObject");
+                            //foreach (var gameTitleButtonView in gameTitleButtonViews.Where(q => q.transform.parent.gameObject.name.Equals("Congratulations")))
+                            //    gameTitleButtonView.gameObject.SetActive(true);
+                            //foreach (var gameTitleButtonModel in gameTitleButtonModels.Where(q => q.transform.parent.gameObject.name.Equals("Congratulations")))
+                            //    gameTitleButtonModel.SetSelectedGameObject();
+                            //if (!playerModel.SetInputBan(true))
+                            //    Debug.LogError("操作禁止フラグをセット呼び出しの失敗");
+                            //if (!MainGameManager.Instance.SceneOwner.DestroyMainSceneStagesState())
+                            //    Debug.LogError("DestroyMainSceneStagesState");
+                            //if (!soulWalletModel.SetIsClearFinalStage(true))
+                            //    Debug.LogError("SetIsClearFinalStage");
+                        }
+                    }
+                });
+
         }
 
         #region チュートリアル実装_3 メインシーンにてチュートリアルモード追加、会話システム追加など

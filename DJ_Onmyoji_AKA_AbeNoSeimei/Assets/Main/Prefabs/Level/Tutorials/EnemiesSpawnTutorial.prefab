@@ -46,3 +46,52 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   objectsPoolPrefab: {fileID: 7497276588651718180, guid: 4434f5da33952be4c941a59c25b13d50, type: 3}
   instanceRateTimeSec: 0.5
+  enemiesSpawnTutorialStructs:
+  - categoryID: 0
+    spawnIdx: 0
+    instancePosition: {x: 4.42, y: 3.02}
+    enemiesID: 0
+  - categoryID: 0
+    spawnIdx: 1
+    instancePosition: {x: 7.24, y: -2.53}
+    enemiesID: 0
+  - categoryID: 0
+    spawnIdx: 2
+    instancePosition: {x: -3.69, y: -2.75}
+    enemiesID: 0
+  - categoryID: 1
+    spawnIdx: 0
+    instancePosition: {x: 3.73, y: 2.76}
+    enemiesID: 15
+  - categoryID: 1
+    spawnIdx: 1
+    instancePosition: {x: -8.19, y: -0.48}
+    enemiesID: 15
+  - categoryID: 1
+    spawnIdx: 2
+    instancePosition: {x: 9.68, y: -2.11}
+    enemiesID: 15
+  - categoryID: 1
+    spawnIdx: 3
+    instancePosition: {x: 3.16, y: 0.61}
+    enemiesID: 16
+  - categoryID: 1
+    spawnIdx: 4
+    instancePosition: {x: -2.74, y: 1.5}
+    enemiesID: 16
+  - categoryID: 1
+    spawnIdx: 5
+    instancePosition: {x: -2.4, y: -2.51}
+    enemiesID: 16
+  - categoryID: 1
+    spawnIdx: 6
+    instancePosition: {x: 4.87, y: -2.12}
+    enemiesID: 17
+  - categoryID: 1
+    spawnIdx: 7
+    instancePosition: {x: -5.08, y: -1.63}
+    enemiesID: 17
+  - categoryID: 1
+    spawnIdx: 8
+    instancePosition: {x: 8.8, y: -0.05}
+    enemiesID: 17
