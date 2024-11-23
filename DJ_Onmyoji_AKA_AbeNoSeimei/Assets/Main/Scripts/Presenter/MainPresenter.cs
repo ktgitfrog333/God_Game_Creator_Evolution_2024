@@ -323,9 +323,6 @@ namespace Main.Presenter
                             if (!cursorIconView.SetSelectAndScale(rewardContentModel.transform.position, (rewardContentModel.transform as RectTransform).sizeDelta))
                                 Debug.LogError("SetSelectAndScale");
                             rewardContentModel.SetSelectedGameObject();
-                            datas.sceneId++;
-                            if (!MainGameManager.Instance.SceneOwner.SetSaveDatas(datas))
-                                Debug.LogError("クリア済みデータ保存呼び出しの失敗");
                             gameSelectButtonView.gameObject.SetActive(true);
                             cursorIconView.gameObject.SetActive(true);
                         }
@@ -369,6 +366,11 @@ namespace Main.Presenter
                                 Debug.LogError("デフォルトサイズへ変更呼び出しの失敗");
                             break;
                         case EnumEventCommand.Submited:
+                            // クリア状況のセーブ
+                            datas.sceneId++;
+                            if (!MainGameManager.Instance.SceneOwner.SetSaveDatas(datas))
+                                Debug.LogError("クリア済みデータ保存呼び出しの失敗");
+                            // 遷移処理
                             MainGameManager.Instance.AudioOwner.PlaySFX(ClipToPlay.se_decided);
                             if (!gameSelectButtonModel.SetButtonEnabled(false))
                                 Debug.LogError("ボタン有効／無効切り替え呼び出しの失敗");
@@ -775,14 +777,14 @@ namespace Main.Presenter
                             {
                                 if (!pentagramTurnTableModel.SetMoveDirectionsToDanceOfOnmyoWrapGraffitiTurret())
                                     Debug.LogError("SetMoveDirectionsToDanceOfOnmyoWrapGraffitiTurret");
-                                if (!pentagramTurnTableModel.AttackOfOnmyoTurret())
-                                    Debug.LogError("AttackOfOnmyoTurret");
                                 Observable.FromCoroutine<bool>(observer => pentagramTurnTableView.MoveSpin(observer, pentagramSystemModel.InputSlipLoopState))
                                     .Subscribe(x =>
                                     {
                                         if (x)
                                         {
-                                            if (!shikigamiSkillSystemModel.UpdateCandleResourceOfAttackOnmyoTurret())
+                                            if (!pentagramTurnTableModel.AttackOfOnmyoTurretLoop(pentagramSystemModel.InputSlipLoopState))
+                                                Debug.LogError("AttackOfOnmyoTurret");
+                                            if (!shikigamiSkillSystemModel.UpdateCandleResourceOfAttackOnmyoTurret(pentagramSystemModel.InputSlipLoopState))
                                                 Debug.LogError("UpdateCandleResourceOfAttackOnmyoTurret");
                                         }
                                     })
@@ -799,7 +801,7 @@ namespace Main.Presenter
                     x.ObserveEveryValueChanged(x => x.Value)
                         .Subscribe(x =>
                         {
-                            pentagramTurnTableView.SetLoopImageSize(x);
+                            pentagramTurnTableView.SetBeatLength(x);
                         });
                 });
             this.UpdateAsObservable()

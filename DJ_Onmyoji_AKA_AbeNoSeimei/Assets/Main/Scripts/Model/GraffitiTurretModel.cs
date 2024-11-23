@@ -21,7 +21,7 @@ namespace Main.Model
                 // 陰陽玉と発射角度が異なるため再設定
                 range = _shikigamiUtility.GetMainSkillValue(_shikigamiInfo, MainSkillType.Range),
                 debuffEffectLifeTime = _shikigamiUtility.GetMainSkillValue(_shikigamiInfo, MainSkillType.DebuffEffectLifeTime),
-                attackPoint = 1,
+                attackPoint = 100,
                 subSkillType = _shikigamiUtility.GetSubSkillType(_shikigamiInfo),
                 subSkillRank = _shikigamiUtility.GetSubSkillRank(_shikigamiInfo),
                 subSkillValue = _shikigamiUtility.GetSubSkillValue(_shikigamiInfo),
@@ -31,7 +31,7 @@ namespace Main.Model
         protected override OnmyoBulletConfig ReLoadOnmyoBulletConfig(OnmyoBulletConfig config)
         {
             config.actionRate = _shikigamiUtility.GetMainSkillValueAddValueBuffMax(_shikigamiInfo, MainSkillType.ActionRate);
-            config.attackPoint = 1;
+            config.attackPoint = 100;
 
             return _turretUtility.UpdateMoveDirection(_bulletCompass, config);
         }

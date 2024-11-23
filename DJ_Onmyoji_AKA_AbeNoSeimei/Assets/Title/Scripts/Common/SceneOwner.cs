@@ -81,14 +81,7 @@ namespace Title.Common
         /// </summary>
         public void LoadNextScene()
         {
-            // ユーザデータ取得
-            var utility = new TitleCommonUtility();
-            var currentSceneId = utility.UserDataSingleton.UserBean.sceneId;
-            // シーンIDが0ならメインシーンをロードする
-            if (currentSceneId == 0)
-                SceneManager.LoadScene(nextMainSceneName);
-            else
-                SceneManager.LoadScene(nextSceneName);
+            SceneManager.LoadScene(nextSceneName);
         }
     }
 }

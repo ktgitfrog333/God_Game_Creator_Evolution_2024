@@ -76,37 +76,38 @@ namespace Select.Presenter
                     // UI操作を許可
                     if (!stageSelectModel.SetButtonAndEventTriggerEnabled(true))
                         Debug.LogError("SetButtonAndEventTriggerEnabled");
-                    switch (stageIndex.Value)
-                    {
-                        case 1:
-                            _tween = DOVirtual.DelayedCall(0.5f, () =>
-                            {
-                                if (!tutorialView.gameObject.activeSelf)
-                                {
-                                    // チュートリアル画面の表示
-                                    tutorialView.gameObject.SetActive(true);
-                                    if (!tutorialView.SetPage(EnumTutorialPagesIndex.Page_1))
-                                        Debug.LogError("ページ変更呼び出しの失敗");
-                                    tutorialViewPageModels[(int)EnumTutorialPagesIndex.Page_1].SetSelectedGameObject();
-                                }
-                            });
+                    // チュートリアルの表示はタイトル遷移になるためコメントアウト
+                //    switch (stageIndex.Value)
+                //    {
+                //        case 1:
+                //            _tween = DOVirtual.DelayedCall(0.5f, () =>
+                //            {
+                //                if (!tutorialView.gameObject.activeSelf)
+                //                {
+                //                    // チュートリアル画面の表示
+                //                    tutorialView.gameObject.SetActive(true);
+                //                    if (!tutorialView.SetPage(EnumTutorialPagesIndex.Page_1))
+                //                        Debug.LogError("ページ変更呼び出しの失敗");
+                //                    tutorialViewPageModels[(int)EnumTutorialPagesIndex.Page_1].SetSelectedGameObject();
+                //                }
+                //            });
 
-                            break;
-                        default:
-                            _tween = DOVirtual.DelayedCall(5.0f, () =>
-                            {
-                                if (!tutorialView.gameObject.activeSelf)
-                                {
-                                    // チュートリアル画面の表示
-                                    tutorialView.gameObject.SetActive(true);
-                                    if (!tutorialView.SetPage(EnumTutorialPagesIndex.Page_1))
-                                        Debug.LogError("ページ変更呼び出しの失敗");
-                                    tutorialViewPageModels[(int)EnumTutorialPagesIndex.Page_1].SetSelectedGameObject();
-                                }
-                            });
+                //            break;
+                //        default:
+                //            _tween = DOVirtual.DelayedCall(5.0f, () =>
+                //            {
+                //                if (!tutorialView.gameObject.activeSelf)
+                //                {
+                //                    // チュートリアル画面の表示
+                //                    tutorialView.gameObject.SetActive(true);
+                //                    if (!tutorialView.SetPage(EnumTutorialPagesIndex.Page_1))
+                //                        Debug.LogError("ページ変更呼び出しの失敗");
+                //                    tutorialViewPageModels[(int)EnumTutorialPagesIndex.Page_1].SetSelectedGameObject();
+                //                }
+                //            });
 
-                            break;
-                    }
+                //            break;
+                //    }
                 })
                 .AddTo(gameObject);
             foreach (var eventState in stageSelectModel.EventStates.Select((p, i) => new { Content = p, Index = i }))

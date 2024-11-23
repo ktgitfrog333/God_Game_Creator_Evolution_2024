@@ -37,7 +37,7 @@
 	"enemyModel": {
 		"prop": {
 			"moveSpeed": 0.25,
-			"hpMax": 2
+			"hpMax": 200
 		},
 		"damageSufferedZoneOfEnemyModel": {
 			"invincibleTimeSec": 0
@@ -134,35 +134,35 @@
 				"shikigamiType": 3,
 				"mainSkillType": 3,
 				"skillRank": 4,
-				"value": 10,
+				"value": 1000,
                 "valueBuffMax": 1.0
 			},
 			{
 				"shikigamiType": 3,
 				"mainSkillType": 3,
 				"skillRank": 3,
-				"value": 8,
+				"value": 800,
                 "valueBuffMax": 1.0
 			},
 			{
 				"shikigamiType": 3,
 				"mainSkillType": 3,
 				"skillRank": 2,
-				"value": 6,
+				"value": 600,
                 "valueBuffMax": 1.0
 			},
 			{
 				"shikigamiType": 3,
 				"mainSkillType": 3,
 				"skillRank": 1,
-				"value": 4,
+				"value": 400,
                 "valueBuffMax": 1.0
 			},
 			{
 				"shikigamiType": 3,
 				"mainSkillType": 3,
 				"skillRank": 0,
-				"value": 2,
+				"value": 200,
                 "valueBuffMax": 1.0
 			},
 			{
@@ -210,35 +210,35 @@
 				"shikigamiType": 0,
 				"mainSkillType": 3,
 				"skillRank": 4,
-				"value": 15,
+				"value": 1500,
                 "valueBuffMax": 1.0
 			},
 			{
 				"shikigamiType": 0,
 				"mainSkillType": 3,
 				"skillRank": 3,
-				"value": 12,
+				"value": 1200,
                 "valueBuffMax": 1.0
 			},
 			{
 				"shikigamiType": 0,
 				"mainSkillType": 3,
 				"skillRank": 2,
-				"value": 9,
+				"value": 900,
                 "valueBuffMax": 1.0
 			},
 			{
 				"shikigamiType": 0,
 				"mainSkillType": 3,
 				"skillRank": 1,
-				"value": 6,
+				"value": 600,
                 "valueBuffMax": 1.0
 			},
 			{
 				"shikigamiType": 0,
 				"mainSkillType": 3,
 				"skillRank": 0,
-				"value": 3,
+				"value": 300,
                 "valueBuffMax": 1.0
 			},
 			{
@@ -316,35 +316,35 @@
 				"shikigamiType": 1,
 				"mainSkillType": 3,
 				"skillRank": 4,
-				"value": 10,
+				"value": 1000,
                 "valueBuffMax": 1.0
 			},
 			{
 				"shikigamiType": 1,
 				"mainSkillType": 3,
 				"skillRank": 3,
-				"value": 8,
+				"value": 800,
                 "valueBuffMax": 1.0
 			},
 			{
 				"shikigamiType": 1,
 				"mainSkillType": 3,
 				"skillRank": 2,
-				"value": 6,
+				"value": 600,
                 "valueBuffMax": 1.0
 			},
 			{
 				"shikigamiType": 1,
 				"mainSkillType": 3,
 				"skillRank": 1,
-				"value": 4,
+				"value": 400,
                 "valueBuffMax": 1.0
 			},
 			{
 				"shikigamiType": 1,
 				"mainSkillType": 3,
 				"skillRank": 0,
-				"value": 2,
+				"value": 200,
                 "valueBuffMax": 1.0
 			},
 			{
@@ -580,31 +580,31 @@
         "shikigamiType": 0,
         "subSkillType": 4,
         "skillRank": 0,
-        "value": 1.0
-      },
-      {
-        "shikigamiType": 0,
-        "subSkillType": 4,
-        "skillRank": 1,
         "value": 2.0
       },
       {
         "shikigamiType": 0,
         "subSkillType": 4,
-        "skillRank": 2,
+        "skillRank": 1,
         "value": 3.0
       },
       {
         "shikigamiType": 0,
         "subSkillType": 4,
-        "skillRank": 3,
+        "skillRank": 2,
         "value": 4.0
       },
       {
         "shikigamiType": 0,
         "subSkillType": 4,
-        "skillRank": 4,
+        "skillRank": 3,
         "value": 5.0
+      },
+      {
+        "shikigamiType": 0,
+        "subSkillType": 4,
+        "skillRank": 4,
+        "value": 6.0
       },
       {
         "shikigamiType": 1,
@@ -790,31 +790,31 @@
         "shikigamiType": 2,
         "subSkillType": 11,
         "skillRank": 0,
-        "value": 1.0
+        "value": 200.0
       },
       {
         "shikigamiType": 2,
         "subSkillType": 11,
         "skillRank": 1,
-        "value": 3.0
+        "value": 300.0
       },
       {
         "shikigamiType": 2,
         "subSkillType": 11,
         "skillRank": 2,
-        "value": 4.0
+        "value": 400.0
       },
       {
         "shikigamiType": 2,
         "subSkillType": 11,
         "skillRank": 3,
-        "value": 5.0
+        "value": 500.0
       },
       {
         "shikigamiType": 2,
         "subSkillType": 11,
         "skillRank": 4,
-        "value": 6.0
+        "value": 600.0
       },
       {
         "shikigamiType": 2,
