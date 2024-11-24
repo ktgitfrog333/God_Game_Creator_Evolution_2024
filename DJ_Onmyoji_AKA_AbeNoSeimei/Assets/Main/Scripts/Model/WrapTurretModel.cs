@@ -18,7 +18,8 @@ namespace Main.Model
         protected override void Start()
         {
             base.Start();
-            spreadNum = _shikigamiUtility.GetSubSkillValue(_shikigamiInfo, SubSkillType.Spreading);
+            if(SubSkillType.Spreading.Equals(_shikigamiUtility.GetSubSkillType(_shikigamiInfo)))
+                spreadNum = _shikigamiUtility.GetSubSkillValue(_shikigamiInfo, SubSkillType.Spreading);
         }
 
         protected override OnmyoBulletConfig InitializeOnmyoBulletConfig()
@@ -64,6 +65,10 @@ namespace Main.Model
 
             if (spreadNum >= 5.0f)
                 if (!ActionOfBulletSpread(objectsPoolModel, onmyoBulletConfig, -20f))
+                    return false;
+
+            if (spreadNum >= 6.0f)
+                if (!ActionOfBulletSpread(objectsPoolModel, onmyoBulletConfig, 30f))
                     return false;
 
             return true;

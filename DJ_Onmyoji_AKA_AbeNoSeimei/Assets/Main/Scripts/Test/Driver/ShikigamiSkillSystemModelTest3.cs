@@ -42,7 +42,7 @@ namespace Main.Test.Driver
                 // Debug.Log($"time:[{_elapsedTime}/{limit}]");
                 if (limit <= _elapsedTime)
                 {
-                    if (!_shikigamiSkillSystemModel.UpdateCandleResourceOfAttackOnmyoTurret())
+                    if (!_shikigamiSkillSystemModel.UpdateCandleResourceOfAttackOnmyoTurret(inputSlipLoopState))
                         Debug.LogError("UpdateCandleResourceOfAttackOnmyoTurret");
                     _elapsedTime = 0f;
                 }

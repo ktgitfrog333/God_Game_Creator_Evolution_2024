@@ -42,6 +42,18 @@ namespace Main.Model
         [SerializeField] private float onmyoSlipLoopRate = 15f;
         /// <summary>ペンダグラムターンテーブルのスクリプテーブル</summary>
         [SerializeField] private PentagramTurnTableScriptableObject pentagramTurnTableScriptableObject;
+        /// <summary>スリップループの消費エネルギー</summary>
+        [SerializeField] private float onmyoSlipLoopEnergy = 4f;
+        /// <summary>スリップループの消費エネルギーリセット時間（秒）</summary>
+        [SerializeField] private float onmyoSlipLoopResetTime = 30f;
+        private float onmyoSlipLoopRateTwoBeats = 0f;
+        private float onmyoSlipLoopRateOneBeat = 0f;
+        private float onmyoSlipLoopRateHalfBeat = 0f;
+        private float onmyoSlipLoopRateQuarterBeat = 0f;
+        private Coroutine coroutineTwoBeats;
+        private Coroutine coroutineOneBeat;
+        private Coroutine coroutineHalfBeat;
+        private Coroutine coroutineQuarterBeat;
 
         private void Start()
         {
@@ -98,8 +110,41 @@ namespace Main.Model
             }
         }
 
-        public bool UpdateCandleResourceOfAttackOnmyoTurret()
+        public bool UpdateCandleResourceOfAttackOnmyoTurret(InputSlipLoopState inputSlipLoopState)
         {
+            switch ((BeatLength)inputSlipLoopState.beatLength.Value)
+            {
+                case BeatLength.TwoBeats:
+                    onmyoSlipLoopRateTwoBeats += onmyoSlipLoopEnergy * 4;
+                    onmyoSlipLoopRate = onmyoSlipLoopRateTwoBeats;
+                    if(coroutineTwoBeats != null)
+                        StopCoroutine(coroutineTwoBeats);
+                    coroutineTwoBeats = StartCoroutine(ResetLoppEnergy(BeatLength.TwoBeats));
+                    break;
+                case BeatLength.OneBeat:
+                    onmyoSlipLoopRateOneBeat += onmyoSlipLoopEnergy * 3;
+                    onmyoSlipLoopRate = onmyoSlipLoopRateOneBeat;
+                    if (coroutineOneBeat != null)
+                        StopCoroutine(coroutineOneBeat);
+                    coroutineOneBeat = StartCoroutine(ResetLoppEnergy(BeatLength.OneBeat));
+                    break;
+                case BeatLength.HalfBeat:
+                    onmyoSlipLoopRateHalfBeat += onmyoSlipLoopEnergy * 2;
+                    onmyoSlipLoopRate = onmyoSlipLoopRateHalfBeat;
+                    if (coroutineHalfBeat != null)
+                        StopCoroutine(coroutineHalfBeat);
+                    coroutineHalfBeat = StartCoroutine(ResetLoppEnergy(BeatLength.HalfBeat));
+                    break;
+                case BeatLength.QuarterBeat:
+                    onmyoSlipLoopRateQuarterBeat += onmyoSlipLoopEnergy;
+                    onmyoSlipLoopRate = onmyoSlipLoopRateQuarterBeat;
+                    if (coroutineQuarterBeat != null)
+                        StopCoroutine(coroutineQuarterBeat);
+                    coroutineQuarterBeat = StartCoroutine(ResetLoppEnergy(BeatLength.QuarterBeat));
+                    break;
+                default:
+                    break;
+            }
             return _inputSysUtility.UpdateCandleResourceByPentagram(candleInfo, _shikigamiInfos, onmyoSlipLoopRate);
         }
 
@@ -131,6 +176,29 @@ namespace Main.Model
         public void HealResource(float healValue)
         {
             candleInfo.CandleResource.Value += healValue;
+        }
+
+        private IEnumerator ResetLoppEnergy(BeatLength beatLength)
+        {
+            yield return new WaitForSeconds(onmyoSlipLoopResetTime);
+
+            switch (beatLength)
+            {
+                case BeatLength.TwoBeats:
+                    onmyoSlipLoopRateTwoBeats = 0;
+                    break;
+                case BeatLength.OneBeat:
+                    onmyoSlipLoopRateOneBeat = 0;
+                    break;
+                case BeatLength.HalfBeat:
+                    onmyoSlipLoopRateHalfBeat = 0;
+                    break;
+                case BeatLength.QuarterBeat:
+                    onmyoSlipLoopRateQuarterBeat = 0;
+                    break;
+                default:
+                    break;
+            }
         }
     }
 
@@ -201,7 +269,7 @@ namespace Main.Model
         /// 陰陽砲台の攻撃によるリソース消費更新
         /// </summary>
         /// <returns>成功／失敗</returns>
-        public bool UpdateCandleResourceOfAttackOnmyoTurret();
+        public bool UpdateCandleResourceOfAttackOnmyoTurret(InputSlipLoopState inputSlipLoopState);
         /// <summary>
         /// 回復停止状態か（スリップループのみ使用）をセット
         /// </summary>

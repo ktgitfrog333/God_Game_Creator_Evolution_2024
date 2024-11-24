@@ -210,7 +210,7 @@ namespace Main.Model
                 .Where(_ => SubSkillType.Fire.Equals(damageSufferedZoneModel.badStatus.Value) && !State.IsDead.Value)
                 .Subscribe(_ =>
                 {
-                    State.HP.Value -= 1;
+                    State.HP.Value -= 20;
                     if (State.HP.Value <= 0)
                         State.IsDead.Value = true;
 

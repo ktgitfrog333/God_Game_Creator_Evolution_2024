@@ -324,7 +324,7 @@ namespace Title.Presenter
                         case EnumEventCommand.Submited:
 
                             //魂が1以上、あるいは１ステージ以上クリア済みなら中断データからの再開確認
-                            if (soulMoneyNum >= 1 || sceneId >= 2)
+                            if (soulMoneyNum >= 1 || sceneId >= 1)
                             {
                                 gameStartOrExit.SetActive(false);
                                 gameStartConfirm.SetActive(true);

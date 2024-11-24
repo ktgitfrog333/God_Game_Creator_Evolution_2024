@@ -27,18 +27,39 @@ namespace Main.View
         /// <summary>スリップループ用の変更前角度</summary>
         private Vector3? _fromAngle;
         /// <summary>ループエリア</summary>
-        [SerializeField] protected Image loopImage;
+        [SerializeField] protected Image[] loopImage;
         /// <summary>ループエリアのTransform</summary>
-        private RectTransform loopImageRectTransform;
+        private RectTransform[] loopImageRectTransform;
         /// <summary>ループする際にアタッチするオブジェクト</summary>
         public Transform parentObjectLoopOn;
         /// <summary>ループしない際にアタッチするオブジェクト</summary>
         public Transform parentObjectLoopOff; // GUIにアタッチしないと表示されない
+        /// <summary>今の拍数を保存</summary>
+        private int nowBeatLength;
+        /// <summary>初期状態のPositionを保存</summary>
+        private Vector3[] loopImageStartPosition;
+        /// <summary>初期状態のRotationを保存</summary>
+        private Quaternion[] loopImageStartRotation;
+        /// <summary>ループイメージのカラー</summary>
+        private Color color;
 
         protected virtual void Start()
         {
-            loopImage.enabled = false;
-            loopImageRectTransform = loopImage.GetComponent<RectTransform>();
+            loopImageRectTransform = new RectTransform[loopImage.Length];
+            loopImageStartPosition = new Vector3[loopImage.Length];
+            loopImageStartRotation = new Quaternion[loopImage.Length];
+            for (int index = 0; index < loopImage.Length; index++)
+            {
+                loopImageRectTransform[index] = loopImage[index].GetComponent<RectTransform>();
+                loopImage[index].enabled = false;
+                loopImageStartPosition[index] = loopImageRectTransform[index].localPosition;
+                loopImageStartRotation[index] = loopImageRectTransform[index].localRotation;
+
+                if (index == 0)
+                    color = loopImage[index].color;
+                else
+                    loopImage[index].color = color;
+            }
             base.Start();
         }
 
@@ -218,40 +239,42 @@ namespace Main.View
 
         public void SetLoopImage(bool isLooping)
         {
-            if (isLooping)
-            { 
-                loopImageRectTransform.SetParent(parentObjectLoopOff);
-                loopImageRectTransform.position = parentObjectLoopOn.TransformPoint(new Vector3(0, 7, 0));
-            }
-            else
+            for (int index = 0; index < loopImage.Length; index++)
             {
-                loopImageRectTransform.SetParent(parentObjectLoopOn);
-                loopImageRectTransform.localPosition = new Vector3(0, 7, 0);
-                loopImageRectTransform.localRotation = Quaternion.identity;
+                if (isLooping)
+                {
+                    loopImageRectTransform[index].SetParent(parentObjectLoopOff);
+                    SetLoopImageEnabled();
+                }
+                else
+                {
+                    loopImageRectTransform[index].SetParent(parentObjectLoopOn);
+                    loopImageRectTransform[index].localPosition = loopImageStartPosition[index];
+                    loopImageRectTransform[index].localRotation = loopImageStartRotation[index];
+                    loopImage[index].enabled = false;
+                }
             }
 
-            loopImage.enabled = isLooping;
+
         }
 
-        public void SetLoopImageSize(float beatLength)
+        public void SetBeatLength(float beatLength)
         {
-            switch (beatLength)
+            nowBeatLength = (int)beatLength;
+            SetLoopImageEnabled();
+        }
+
+        public void SetLoopImageEnabled()
+        {
+            for (int index = 0; index < loopImage.Length; index++)
+                loopImage[index].enabled = false;
+
+            if (nowBeatLength != 0)
             {
-                case 1:
-                    loopImageRectTransform.sizeDelta = new Vector2(9f, loopImageRectTransform.sizeDelta.y);
-                    break;
-                case 2:
-                    loopImageRectTransform.sizeDelta = new Vector2(7f, loopImageRectTransform.sizeDelta.y);
-                    break;
-                case 3:
-                    loopImageRectTransform.sizeDelta = new Vector2(5f, loopImageRectTransform.sizeDelta.y);
-                    break;
-                case 4:
-                    loopImageRectTransform.sizeDelta = new Vector2(3f, loopImageRectTransform.sizeDelta.y);
-                    break;
-                default:
-                    break;
+                loopImage[0].enabled = true;
+                loopImage[nowBeatLength].enabled = true;
             }
+
         }
     }
 
