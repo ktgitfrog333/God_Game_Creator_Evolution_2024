@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using Main.Common;
+using Main.TableObject;
 using Main.Utility;
 using UniRx;
 using UnityEngine;
@@ -39,6 +40,8 @@ namespace Main.Model
         [SerializeField] private float[] durations = { 1.5f, 3.0f };
         /// <summary>スリップループ時、陰陽砲台のみ特殊レート値</summary>
         [SerializeField] private float onmyoSlipLoopRate = 15f;
+        /// <summary>ペンダグラムターンテーブルのスクリプテーブル</summary>
+        [SerializeField] private PentagramTurnTableScriptableObject pentagramTurnTableScriptableObject;
 
         private void Start()
         {
@@ -53,7 +56,7 @@ namespace Main.Model
             candleInfo.isStopRecovery = new BoolReactiveProperty();
             candleInfo.isRest = new BoolReactiveProperty();
             var utility = new ShikigamiParameterUtility();
-            var shikigamis = utility.GetPentagramTurnTableInfo().slots.Select(q => q.prop.shikigamiInfo).ToArray();
+            var shikigamis = utility.GetPentagramTurnTableInfo(pentagramTurnTableScriptableObject).slots.Select(q => q.prop.shikigamiInfo).ToArray();
             for (var i = 0; i < shikigamis.Length; i++)
             {
                 shikigamis[i].state.tempoLevel = new FloatReactiveProperty();

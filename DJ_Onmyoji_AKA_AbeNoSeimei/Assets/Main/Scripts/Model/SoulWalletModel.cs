@@ -29,7 +29,11 @@ namespace Main.Model
         {
             var utility = new MainCommonUtility();
             var userDataSingleton = utility.UserDataSingleton;
-            SoulMoney.Value = userDataSingleton.UserBean.soulMoney;
+            // sceneIdが8なら経験値を0としてセットする
+            if (userDataSingleton.UserBean.sceneId == 8)
+                SoulMoney.Value = 0;
+            else
+                SoulMoney.Value = userDataSingleton.UserBean.soulMoney;
             this.UpdateAsObservable()
                 .Where(_ => GameObject.FindGameObjectWithTag(ConstTagNames.TAG_NAME_PLAYER) != null)
                 .Select(_ => GameObject.FindGameObjectWithTag(ConstTagNames.TAG_NAME_PLAYER).GetComponent<PlayerModel>())
@@ -45,6 +49,10 @@ namespace Main.Model
             {
                 var temp = new TemplateResourcesAccessory();
                 var userBean = temp.LoadSaveDatasJsonOfUserBean(ConstResorcesNames.USER_DATA);
+                // sceneIdが8ならセーブしない
+                if (userBean.sceneId == 8)
+                    return;
+
                 userBean.soulMoney = _isDeadOfPlayer != null && !_isDeadOfPlayer.Value ? SoulMoney.Value : 0;
                 var userBeanUpd = userBean;
                 if (!temp.SaveDatasJsonOfUserBean(ConstResorcesNames.USER_DATA, userBeanUpd))

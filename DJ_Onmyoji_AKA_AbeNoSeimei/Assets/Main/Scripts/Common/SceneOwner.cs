@@ -146,7 +146,21 @@ namespace Main.Common
 
         public bool ReverseSceneId(int sceneId, UserBean datas)
         {
-            throw new System.NotImplementedException();
+            try
+            {
+                // チュートリアル以外は無関係
+                if (sceneId != 8)
+                    return false;
+
+                datas.sceneId = datas.sceneIdPrevious;
+
+                return true;
+            }
+            catch (System.Exception e)
+            {
+                Debug.LogError(e);
+                throw e;
+            }
         }
     }
 
@@ -167,6 +181,7 @@ namespace Main.Common
         /// <param name="sceneId">現在のシーンID</param>
         /// <param name="datas">ユーザデータ</param>
         /// <returns>チュートリアルステージか</returns>
+        /// <remarks>ステージ8の場合は、ステージIDの更新処理を呼び出して、sceneIdを遷移前のsceneIdにする</remarks>
         public bool ReverseSceneId(int sceneId, UserBean datas);
     }
 }

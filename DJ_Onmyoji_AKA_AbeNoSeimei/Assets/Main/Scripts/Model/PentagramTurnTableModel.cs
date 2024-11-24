@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using Main.Common;
+using Main.TableObject;
 using Main.Utility;
 using UnityEngine;
 using Universal.Common;
@@ -52,6 +53,8 @@ namespace Main.Model
         private GraffitiTurretModel _graffitiTurretModel;
         /// <summary>グラフィティモデル</summary>
         public GraffitiTurretModel GraffitiTurretModel => _graffitiTurretModel != null ? _graffitiTurretModel : _graffitiTurretModel = GetComponentInChildren<GraffitiTurretModel>();
+        /// <summary>ペンダグラムターンテーブルのスクリプテーブル</summary>
+        [SerializeField] private PentagramTurnTableScriptableObject pentagramTurnTableScriptableObject;
 
         private void Start()
         {
@@ -62,7 +65,7 @@ namespace Main.Model
             // 式神の情報を内部管理する
             // どのスロットへどの式神がセットされているかを管理する処理を呼び出してメンバー変数へセット
             var utility = new ShikigamiParameterUtility();
-            _pentagramTurnTableInfo = utility.GetPentagramTurnTableInfo();
+            _pentagramTurnTableInfo = utility.GetPentagramTurnTableInfo(pentagramTurnTableScriptableObject);
             var slots = _pentagramTurnTableInfo.slots;
 
             // オブジェクトを中心に5つの位置へプレハブを生成

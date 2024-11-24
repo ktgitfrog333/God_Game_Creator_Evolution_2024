@@ -2632,11 +2632,11 @@ Transform:
   m_GameObject: {fileID: 257694027}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 860.45154, y: 457.23743, z: -6.179406}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 1181590741}
+  m_Father: {fileID: 2028995780}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &258869271
 GameObject:
@@ -5734,6 +5734,7 @@ MonoBehaviour:
   - 1.5
   - 3
   onmyoSlipLoopRate: 15
+  pentagramTurnTableScriptableObject: {fileID: 0}
 --- !u!4 &631062208
 Transform:
   m_ObjectHideFlags: 0
@@ -7953,11 +7954,11 @@ Transform:
   m_GameObject: {fileID: 805377640}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 258.1023, y: 21.672607, z: 8.2885065}
+  m_LocalPosition: {x: 1118.5538, y: 478.91003, z: 2.1091003}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 1181590741}
+  m_Father: {fileID: 2028995780}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &810270448
 GameObject:
@@ -8377,7 +8378,7 @@ Transform:
   m_GameObject: {fileID: 830759340}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 258.1023, y: 21.672607, z: 8.2885065}
+  m_LocalPosition: {x: 1118.5538, y: 478.91003, z: 2.1091003}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -8390,7 +8391,7 @@ Transform:
   - {fileID: 819344882}
   - {fileID: 1472546149}
   - {fileID: 134423825}
-  m_Father: {fileID: 1181590741}
+  m_Father: {fileID: 2028995780}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &830759342
 MonoBehaviour:
@@ -9256,11 +9257,11 @@ Transform:
   m_GameObject: {fileID: 886958208}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 860.45154, y: 457.23743, z: -6.179406}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 1181590741}
+  m_Father: {fileID: 2028995780}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &886958210
 MonoBehaviour:
@@ -9929,7 +9930,7 @@ Transform:
   m_GameObject: {fileID: 939355146}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -860.45154, y: -457.23743, z: 6.179406}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -9939,7 +9940,7 @@ Transform:
   - {fileID: 741930270}
   - {fileID: 1219015899}
   - {fileID: 521829597}
-  m_Father: {fileID: 1181590741}
+  m_Father: {fileID: 2028995780}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &939355148
 MonoBehaviour:
@@ -11074,6 +11075,7 @@ MonoBehaviour:
   danceTurretPrefab: {fileID: 6136139883152712860, guid: 914fb5ca29f11444796d568590529f68, type: 3}
   graffitiTurretPrefab: {fileID: 4366619944616285173, guid: b18327039445bbb4fa26d519c049acd6, type: 3}
   distance: 0
+  pentagramTurnTableScriptableObject: {fileID: 0}
 --- !u!4 &997187995
 Transform:
   m_ObjectHideFlags: 0
@@ -12518,7 +12520,7 @@ Transform:
   m_GameObject: {fileID: 1119562605}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 258.1023, y: 21.672607, z: 8.2885065}
+  m_LocalPosition: {x: 1118.5538, y: 478.91003, z: 2.1091003}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -12636,7 +12638,7 @@ Transform:
   - {fileID: 377966688}
   - {fileID: 1242680338}
   - {fileID: 730396113}
-  m_Father: {fileID: 1181590741}
+  m_Father: {fileID: 2028995780}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1122044178
 GameObject:
@@ -13101,6 +13103,7 @@ MonoBehaviour:
   - 1.5
   - 3
   onmyoSlipLoopRate: 15
+  pentagramTurnTableScriptableObject: {fileID: 0}
 --- !u!4 &1162628831
 Transform:
   m_ObjectHideFlags: 0
@@ -13195,44 +13198,6 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!1 &1181590740
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1181590741}
-  m_Layer: 0
-  m_Name: ----- TutorialFIXED -----
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &1181590741
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1181590740}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 860.45154, y: 457.23743, z: -6.179406}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children:
-  - {fileID: 1466903391}
-  - {fileID: 886958209}
-  - {fileID: 257694029}
-  - {fileID: 805377642}
-  - {fileID: 939355147}
-  - {fileID: 1119562608}
-  - {fileID: 830759341}
-  m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1190939256
 GameObject:
   m_ObjectHideFlags: 0
@@ -15901,11 +15866,11 @@ Transform:
   m_GameObject: {fileID: 1466903389}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 860.45154, y: 457.23743, z: -6.179406}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 1181590741}
+  m_Father: {fileID: 2028995780}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1468632710
 GameObject:
@@ -16199,6 +16164,7 @@ MonoBehaviour:
   danceTurretPrefab: {fileID: 6136139883152712860, guid: 914fb5ca29f11444796d568590529f68, type: 3}
   graffitiTurretPrefab: {fileID: 4366619944616285173, guid: b18327039445bbb4fa26d519c049acd6, type: 3}
   distance: 0
+  pentagramTurnTableScriptableObject: {fileID: 0}
 --- !u!4 &1472603860
 Transform:
   m_ObjectHideFlags: 0
@@ -17656,6 +17622,7 @@ MonoBehaviour:
                 emphasisType: 0
               tempoLevelRevertTimeSec: 0
           instanceId: -1
+        state: {}
       - prop:
           slotId: 0
           shikigamiInfo:
@@ -17675,6 +17642,7 @@ MonoBehaviour:
                 emphasisType: 0
               tempoLevelRevertTimeSec: 0
           instanceId: -1
+        state: {}
   - caseId: 1000
     throwMessage: "\u30B9\u30ED\u30C3\u30C8\u304B\u3089\u53D6\u5F97\u3067\u304D\u306A\u3044"
     pentagramTurnTableInfo:
@@ -17692,6 +17660,7 @@ MonoBehaviour:
               subSkills: []
               tempoLevelRevertTimeSec: 0
           instanceId: 0
+        state: {}
   - caseId: 1001
     throwMessage: "\u30B9\u30ED\u30C3\u30C8\u304B\u3089\u53D6\u5F97\u3067\u304D\u306A\u3044"
     pentagramTurnTableInfo:
@@ -17709,6 +17678,7 @@ MonoBehaviour:
               subSkills: []
               tempoLevelRevertTimeSec: 0
           instanceId: 0
+        state: {}
   - caseId: 2000
     throwMessage: 
     pentagramTurnTableInfo:
@@ -17732,6 +17702,7 @@ MonoBehaviour:
                 emphasisType: 0
               tempoLevelRevertTimeSec: 0
           instanceId: -1
+        state: {}
       - prop:
           slotId: 0
           shikigamiInfo:
@@ -17751,6 +17722,7 @@ MonoBehaviour:
                 emphasisType: 0
               tempoLevelRevertTimeSec: 0
           instanceId: -1
+        state: {}
       - prop:
           slotId: 0
           shikigamiInfo:
@@ -17770,6 +17742,7 @@ MonoBehaviour:
                 emphasisType: 0
               tempoLevelRevertTimeSec: 0
           instanceId: -1
+        state: {}
   - caseId: 3000
     throwMessage: 
     pentagramTurnTableInfo:
@@ -17793,6 +17766,7 @@ MonoBehaviour:
                 emphasisType: 0
               tempoLevelRevertTimeSec: 0
           instanceId: -1
+        state: {}
       - prop:
           slotId: 1
           shikigamiInfo:
@@ -17812,6 +17786,7 @@ MonoBehaviour:
                 emphasisType: 0
               tempoLevelRevertTimeSec: 0
           instanceId: -1
+        state: {}
       - prop:
           slotId: 2
           shikigamiInfo:
@@ -17831,6 +17806,7 @@ MonoBehaviour:
                 emphasisType: 0
               tempoLevelRevertTimeSec: 0
           instanceId: -1
+        state: {}
       - prop:
           slotId: 3
           shikigamiInfo:
@@ -17850,6 +17826,7 @@ MonoBehaviour:
                 emphasisType: 0
               tempoLevelRevertTimeSec: 0
           instanceId: -1
+        state: {}
       - prop:
           slotId: 4
           shikigamiInfo:
@@ -17869,6 +17846,7 @@ MonoBehaviour:
                 emphasisType: 0
               tempoLevelRevertTimeSec: 0
           instanceId: -1
+        state: {}
 --- !u!114 &1534838209
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -18086,6 +18064,7 @@ MonoBehaviour:
   danceTurretPrefab: {fileID: 6136139883152712860, guid: 914fb5ca29f11444796d568590529f68, type: 3}
   graffitiTurretPrefab: {fileID: 4366619944616285173, guid: b18327039445bbb4fa26d519c049acd6, type: 3}
   distance: 0
+  pentagramTurnTableScriptableObject: {fileID: 0}
 --- !u!4 &1551989641
 Transform:
   m_ObjectHideFlags: 0
@@ -20107,7 +20086,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &1742273878
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -20135,12 +20114,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1742273877}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 0}
+  m_Father: {fileID: 2028995780}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1748399251
 GameObject:
@@ -20485,6 +20464,7 @@ MonoBehaviour:
   - 1.5
   - 3
   onmyoSlipLoopRate: 15
+  pentagramTurnTableScriptableObject: {fileID: 0}
 --- !u!4 &1783028073
 Transform:
   m_ObjectHideFlags: 0
@@ -20597,6 +20577,7 @@ MonoBehaviour:
   - 1.5
   - 3
   onmyoSlipLoopRate: 15
+  pentagramTurnTableScriptableObject: {fileID: 0}
 --- !u!4 &1820392346
 Transform:
   m_ObjectHideFlags: 0
@@ -22566,12 +22547,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2010644314}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 0}
+  m_Father: {fileID: 2028995780}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2010740751
 GameObject:
@@ -22927,6 +22908,15 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
+  - {fileID: 830759341}
+  - {fileID: 1119562608}
+  - {fileID: 939355147}
+  - {fileID: 805377642}
+  - {fileID: 257694029}
+  - {fileID: 886958209}
+  - {fileID: 1466903391}
+  - {fileID: 2010644316}
+  - {fileID: 1742273879}
   - {fileID: 763555472}
   - {fileID: 925175836}
   - {fileID: 21203013}
@@ -24124,6 +24114,7 @@ MonoBehaviour:
   - 1.5
   - 3
   onmyoSlipLoopRate: 15
+  pentagramTurnTableScriptableObject: {fileID: 0}
 --- !u!4 &2109450583
 Transform:
   m_ObjectHideFlags: 0
@@ -25401,6 +25392,3 @@ SceneRoots:
   - {fileID: 1949282392228573877}
   - {fileID: 796380141268858604}
   - {fileID: 269219975}
-  - {fileID: 2010644316}
-  - {fileID: 1742273879}
-  - {fileID: 1181590741}

@@ -185,8 +185,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   image: {fileID: 2489806190623033527}
-  childObject: {fileID: 1810146194521712240}
-  parentObject: {fileID: 3784701457303032469}
   angleCorrectionValue: 5
   sprites:
   - {fileID: 21300000, guid: 8be1b76402ef6da4bb4f46d64944d704, type: 3}
@@ -198,6 +196,8 @@ MonoBehaviour:
   - 1.5
   slipLoopAngle: 30
   loopImage: {fileID: 0}
+  parentObjectLoopOn: {fileID: 0}
+  parentObjectLoopOff: {fileID: 0}
 --- !u!114 &8641881819551968395
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -215,6 +215,7 @@ MonoBehaviour:
   danceTurretPrefab: {fileID: 6136139883152712860, guid: 914fb5ca29f11444796d568590529f68, type: 3}
   graffitiTurretPrefab: {fileID: 4366619944616285173, guid: b18327039445bbb4fa26d519c049acd6, type: 3}
   distance: 0.5
+  pentagramTurnTableScriptableObject: {fileID: 11400000, guid: e093617fc1a2b024983809efd80547c1, type: 2}
 --- !u!1001 &14590183633192915
 PrefabInstance:
   m_ObjectHideFlags: 0

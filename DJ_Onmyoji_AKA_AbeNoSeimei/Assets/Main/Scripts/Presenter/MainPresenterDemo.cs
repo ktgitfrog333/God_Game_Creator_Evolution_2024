@@ -1309,8 +1309,8 @@ namespace Main.Presenter
                                 datas.sceneId++;
                             #endregion
                             //datas.sceneId++;
-                            //if (!MainGameManager.Instance.SceneOwner.SetSaveDatas(datas))
-                            //    Debug.LogError("クリア済みデータ保存呼び出しの失敗");
+                            if (!MainGameManager.Instance.SceneOwner.SetSaveDatas(datas))
+                                Debug.LogError("クリア済みデータ保存呼び出しの失敗");
                             //gameSelectButtonView.gameObject.SetActive(true);
                             //cursorIconView.gameObject.SetActive(true);
                         }
