@@ -70,7 +70,7 @@ namespace Main.Common
                 subSkillType = SubSkillType.Explosion,
                 subSkillTags = new SubSkillTag[]
                 {
-                    SubSkillTag.ST0001,
+                    SubSkillTag.ST0000,
                 },
             },
             new SubSkillsSynergy()
@@ -78,7 +78,7 @@ namespace Main.Common
                 subSkillType = SubSkillType.Penetrating,
                 subSkillTags = new SubSkillTag[]
                 {
-                    SubSkillTag.ST0000,
+                    SubSkillTag.ST0001,
                 },
             },
             new SubSkillsSynergy()
@@ -86,7 +86,7 @@ namespace Main.Common
                 subSkillType = SubSkillType.Spreading,
                 subSkillTags = new SubSkillTag[]
                 {
-                    SubSkillTag.ST0000,
+                    SubSkillTag.ST0002,
                 },
             },
             new SubSkillsSynergy()
@@ -94,7 +94,71 @@ namespace Main.Common
                 subSkillType = SubSkillType.Paralysis,
                 subSkillTags = new SubSkillTag[]
                 {
+                    SubSkillTag.ST0003,
+                },
+            },
+            new SubSkillsSynergy()
+            {
+                subSkillType = SubSkillType.Heal,
+                subSkillTags = new SubSkillTag[]
+                {
+                    SubSkillTag.ST0000,
+                },
+            },
+            new SubSkillsSynergy()
+            {
+                subSkillType = SubSkillType.Fire,
+                subSkillTags = new SubSkillTag[]
+                {
+                    SubSkillTag.ST0001,
+                },
+            },
+            new SubSkillsSynergy()
+            {
+                subSkillType = SubSkillType.Knockback,
+                subSkillTags = new SubSkillTag[]
+                {
                     SubSkillTag.ST0002,
+                },
+            },
+            new SubSkillsSynergy()
+            {
+                subSkillType = SubSkillType.Critical,
+                subSkillTags = new SubSkillTag[]
+                {
+                    SubSkillTag.ST0003,
+                },
+            },
+            new SubSkillsSynergy()
+            {
+                subSkillType = SubSkillType.Poison,
+                subSkillTags = new SubSkillTag[]
+                {
+                    SubSkillTag.ST0000,
+                },
+            },
+            new SubSkillsSynergy()
+            {
+                subSkillType = SubSkillType.Darkness,
+                subSkillTags = new SubSkillTag[]
+                {
+                    SubSkillTag.ST0001,
+                },
+            },
+            new SubSkillsSynergy()
+            {
+                subSkillType = SubSkillType.Curse,
+                subSkillTags = new SubSkillTag[]
+                {
+                    SubSkillTag.ST0002,
+                },
+            },
+            new SubSkillsSynergy()
+            {
+                subSkillType = SubSkillType.Paralysis,
+                subSkillTags = new SubSkillTag[]
+                {
+                    SubSkillTag.ST0003,
                 },
             },
         };

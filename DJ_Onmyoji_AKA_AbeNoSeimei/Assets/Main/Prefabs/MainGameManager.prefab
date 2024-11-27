@@ -140,27 +140,27 @@ MonoBehaviour:
   - subSkillType: 1
     subSkillTags: 00000000
   - subSkillType: 2
-    subSkillTags: 00000000
-  - subSkillType: 3
-    subSkillTags: 00000000
-  - subSkillType: 4
-    subSkillTags: 00000000
-  - subSkillType: 5
     subSkillTags: 01000000
+  - subSkillType: 3
+    subSkillTags: 02000000
+  - subSkillType: 4
+    subSkillTags: 03000000
+  - subSkillType: 5
+    subSkillTags: 00000000
   - subSkillType: 6
     subSkillTags: 01000000
   - subSkillType: 7
-    subSkillTags: 01000000
+    subSkillTags: 02000000
   - subSkillType: 8
-    subSkillTags: 01000000
+    subSkillTags: 03000000
   - subSkillType: 9
-    subSkillTags: 02000000
+    subSkillTags: 00000000
   - subSkillType: 10
-    subSkillTags: 02000000
+    subSkillTags: 01000000
   - subSkillType: 11
     subSkillTags: 02000000
   - subSkillType: 12
-    subSkillTags: 02000000
+    subSkillTags: 03000000
 --- !u!1 &1827416082
 GameObject:
   m_ObjectHideFlags: 0
@@ -273,6 +273,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   scratchLevel: 1
   userActionTime: 0.2
+  userActionTimeForUI: 0.2
 --- !u!1 &1369696454595932813
 GameObject:
   m_ObjectHideFlags: 0
