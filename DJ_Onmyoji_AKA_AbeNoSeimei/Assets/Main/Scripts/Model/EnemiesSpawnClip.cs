@@ -76,7 +76,7 @@ namespace Main.Model
             DoIsApplicationPlaying(() =>
             {
                 // プレイアブルが再生中でなく、前のフレームでプレイアブルが評価中（再生中）であったかどうかをチェックする。
-                if (info.evaluationType == FrameData.EvaluationType.Playback)
+                if (info.evaluationType == FrameData.EvaluationType.Playback && EnemiesSpawnModel != null)
                 {
                     EnemiesSpawnModel.gameObject.SetActive(false);
                 }
@@ -85,7 +85,8 @@ namespace Main.Model
 
         public override void OnGraphStop(Playable playable)
         {
-            DoIsApplicationPlaying(() => EnemiesSpawnModel.gameObject.SetActive(false));
+            if (EnemiesSpawnModel != null)
+                DoIsApplicationPlaying(() => EnemiesSpawnModel.gameObject.SetActive(false));
         }
 
         /// <summary>

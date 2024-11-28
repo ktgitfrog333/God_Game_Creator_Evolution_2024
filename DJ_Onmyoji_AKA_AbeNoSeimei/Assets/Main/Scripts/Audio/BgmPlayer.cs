@@ -262,7 +262,8 @@ namespace Main.Audio
 
         public void Pause()
         {
-            audioSource.Pause();
+            if(audioSource != null)
+                audioSource.Pause();
         }
 
         public void UnPause()
