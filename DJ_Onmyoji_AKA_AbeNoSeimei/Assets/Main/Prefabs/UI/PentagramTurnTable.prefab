@@ -563,8 +563,7 @@ MonoBehaviour:
   durations:
   - 1.5
   slipLoopAngle: 30
-  loopImage:
-  - {fileID: 0}
+  loopImage: {fileID: 0}
   parentObjectLoopOn: {fileID: 0}
   parentObjectLoopOff: {fileID: 0}
 --- !u!114 &8641881819551968395
@@ -584,6 +583,7 @@ MonoBehaviour:
   danceTurretPrefab: {fileID: 6136139883152712860, guid: 914fb5ca29f11444796d568590529f68, type: 3}
   graffitiTurretPrefab: {fileID: 4366619944616285173, guid: b18327039445bbb4fa26d519c049acd6, type: 3}
   distance: 0.5
+  pentagramTurnTableScriptableObject: {fileID: 11400000, guid: e093617fc1a2b024983809efd80547c1, type: 2}
 --- !u!1001 &14590183633192915
 PrefabInstance:
   m_ObjectHideFlags: 0

@@ -20,6 +20,14 @@ namespace Main.Common
         /// <summary>タイトルのシーン名</summary>
         [SerializeField] private string titleSceneName = "TitleScene";
 
+        private void OnDestroy()
+        {
+            var datas = GetSaveDatas();
+            if (ReverseSceneId(datas.sceneId, datas))
+                if (!SetSaveDatas(datas))
+                    Debug.LogError("クリア済みデータ保存呼び出しの失敗");
+        }
+
         public void OnStart()
         {
             new TemplateResourcesAccessory();
@@ -143,6 +151,25 @@ namespace Main.Common
         {
             SceneManager.LoadScene(titleSceneName);
         }
+
+        public bool ReverseSceneId(int sceneId, UserBean datas)
+        {
+            try
+            {
+                // チュートリアル以外は無関係
+                if (sceneId != 8)
+                    return false;
+
+                datas.sceneId = datas.sceneIdPrevious;
+
+                return true;
+            }
+            catch (System.Exception e)
+            {
+                Debug.LogError(e);
+                throw e;
+            }
+        }
     }
 
     /// <summary>
@@ -156,5 +183,13 @@ namespace Main.Common
         /// </summary>
         /// <returns>成功／失敗</returns>
         public bool DestroyMainSceneStagesState();
+        /// <summary>
+        /// ステージIDを遷移前IDへ戻す
+        /// </summary>
+        /// <param name="sceneId">現在のシーンID</param>
+        /// <param name="datas">ユーザデータ</param>
+        /// <returns>チュートリアルステージか</returns>
+        /// <remarks>ステージ8の場合は、ステージIDの更新処理を呼び出して、sceneIdを遷移前のsceneIdにする</remarks>
+        public bool ReverseSceneId(int sceneId, UserBean datas);
     }
 }

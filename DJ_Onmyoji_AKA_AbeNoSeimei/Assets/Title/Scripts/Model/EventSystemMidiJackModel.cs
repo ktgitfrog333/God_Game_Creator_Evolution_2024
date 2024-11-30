@@ -26,8 +26,6 @@ namespace Title.Model
         [SerializeField] private PushGameStartLogoModel pushGameStartLogoModel;
         /// <summary>GameStartLogoのモデル</summary>
         [SerializeField] private GameStartLogoModel gameStartLogoModel;
-        /// <summary>OptionLogoのモデル</summary>
-        [SerializeField] private OptionLogoModel optionLogoModel;
         /// <summary>GameExitLogoのモデル</summary>
         [SerializeField] private GameExitLogoModel gameExitLogoModel;
         /// <summary>GameExitConfirmYesLogoのモデル</summary>
@@ -52,12 +50,13 @@ namespace Title.Model
         [SerializeField] private FixModel fixModel;
         /// <summary>戻るボタンのモデル</summary>
         [SerializeField] private BackModel backModel;
+        /// <summary>チュートリアルのモデル</summary>
+        [SerializeField] private TutorialLogoModel tutorialLogoModel;
 
         private void Reset()
         {
             pushGameStartLogoModel = GameObject.Find("PushGameStartLogo").GetComponent<PushGameStartLogoModel>();
             gameStartLogoModel = GameObject.Find("GameStartLogo").GetComponent<GameStartLogoModel>();
-            optionLogoModel = GameObject.Find("OptionLogo").GetComponent<OptionLogoModel>();
             gameExitLogoModel = GameObject.Find("GameExitLogo").GetComponent<GameExitLogoModel>();
             gameExitConfirmYesLogoModel = GameObject.Find("GameExitConfirmYesLogo").GetComponent<GameExitConfirmYesLogoModel>();
             gameExitConfirmNoLogoModel = GameObject.Find("GameExitConfirmNoLogo").GetComponent<GameExitConfirmNoLogoModel>();
@@ -76,6 +75,7 @@ namespace Title.Model
             allLevelReleasedModel = GameObject.Find("AllLevelReleased").GetComponent<AllLevelReleasedModel>();
             fixModel = GameObject.Find("Fix").GetComponent<FixModel>();
             backModel = GameObject.Find("Back").GetComponent<BackModel>();
+            tutorialLogoModel = GameObject.Find("TutorialLogo").GetComponent<TutorialLogoModel>();
         }
 
         private void Start()
@@ -89,7 +89,6 @@ namespace Title.Model
             List<GameObject> modalObjects = new List<GameObject>{
                 pushGameStartLogoModel.gameObject,
                 gameStartLogoModel.gameObject,
-                optionLogoModel.gameObject,
                 gameExitLogoModel.gameObject,
                 gameExitConfirmYesLogoModel.gameObject,
                 gameExitConfirmNoLogoModel.gameObject,
@@ -99,7 +98,8 @@ namespace Title.Model
                 resetConfigModel.gameObject,
                 allLevelReleasedModel.gameObject,
                 fixModel.gameObject,
-                backModel.gameObject
+                backModel.gameObject,
+                tutorialLogoModel.gameObject,
             };
             modalObjects.AddRange(sliderVolModelsBgms.Select(q => q.gameObject).ToArray());
             modalObjects.AddRange(sliderVolModelsSes.Select(q => q.gameObject).ToArray());

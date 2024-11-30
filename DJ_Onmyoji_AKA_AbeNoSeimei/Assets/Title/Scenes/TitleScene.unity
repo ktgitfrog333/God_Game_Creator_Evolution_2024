@@ -640,6 +640,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 98ccd0dc59a47494fa56e2b16bd023e4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &1252049544 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 4681586169698824079, guid: 8d58fdf3daa19224d95a6a62c61ead20, type: 3}
+  m_PrefabInstance: {fileID: 2659508917519439743}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0ac695aa0195c9643ae944846eb9d9fd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &1279607620 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 1279607620, guid: 8d58fdf3daa19224d95a6a62c61ead20, type: 3}
@@ -693,28 +704,6 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 653a0ff3512320547ad7e3c5942c9643, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &1598187928 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 1106799719, guid: 8d58fdf3daa19224d95a6a62c61ead20, type: 3}
-  m_PrefabInstance: {fileID: 2659508917519439743}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &1659087294 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 610507084, guid: 8d58fdf3daa19224d95a6a62c61ead20, type: 3}
-  m_PrefabInstance: {fileID: 2659508917519439743}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!114 &1851718233 stripped
@@ -900,6 +889,10 @@ PrefabInstance:
       propertyPath: resetSaveDataView
       value: 
       objectReference: {fileID: 2659508917519439788}
+    - target: {fileID: 1887719676, guid: e2f26f4929200c644bf6d9377ba0a3aa, type: 3}
+      propertyPath: tutorialLogoModel
+      value: 
+      objectReference: {fileID: 1252049544}
     - target: {fileID: 1887719676, guid: e2f26f4929200c644bf6d9377ba0a3aa, type: 3}
       propertyPath: gameStartLogoModel
       value: 
@@ -1121,18 +1114,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 325819138, guid: 8d58fdf3daa19224d95a6a62c61ead20, type: 3}
-      propertyPath: m_Color.b
-      value: 0.39215687
-      objectReference: {fileID: 0}
-    - target: {fileID: 325819138, guid: 8d58fdf3daa19224d95a6a62c61ead20, type: 3}
-      propertyPath: m_Color.g
-      value: 0.39215687
-      objectReference: {fileID: 0}
-    - target: {fileID: 325819138, guid: 8d58fdf3daa19224d95a6a62c61ead20, type: 3}
-      propertyPath: m_Color.r
-      value: 0.39215687
-      objectReference: {fileID: 0}
     - target: {fileID: 339764724, guid: 8d58fdf3daa19224d95a6a62c61ead20, type: 3}
       propertyPath: m_AnchorMax.x
       value: 0
@@ -1153,10 +1134,6 @@ PrefabInstance:
       propertyPath: m_AnchorMin.x
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 610507084, guid: 8d58fdf3daa19224d95a6a62c61ead20, type: 3}
-      propertyPath: m_Navigation.m_SelectOnDown
-      value: 
-      objectReference: {fileID: 1598187928}
     - target: {fileID: 953526882, guid: 8d58fdf3daa19224d95a6a62c61ead20, type: 3}
       propertyPath: m_AnchorMax.x
       value: 0
@@ -1169,10 +1146,6 @@ PrefabInstance:
       propertyPath: m_AnchorMin.x
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 1106799719, guid: 8d58fdf3daa19224d95a6a62c61ead20, type: 3}
-      propertyPath: m_Navigation.m_SelectOnUp
-      value: 
-      objectReference: {fileID: 1659087294}
     - target: {fileID: 2147321357, guid: 8d58fdf3daa19224d95a6a62c61ead20, type: 3}
       propertyPath: m_AnchorMax.x
       value: 0
@@ -1808,6 +1781,10 @@ PrefabInstance:
       propertyPath: offVibrationModel
       value: 
       objectReference: {fileID: 2659508917519439748}
+    - target: {fileID: 2396147336708981803, guid: 16e60400e58675547b0cb2749aa8b242, type: 3}
+      propertyPath: tutorialLogoModel
+      value: 
+      objectReference: {fileID: 1252049544}
     - target: {fileID: 2396147336708981803, guid: 16e60400e58675547b0cb2749aa8b242, type: 3}
       propertyPath: gameStartLogoModel
       value: 

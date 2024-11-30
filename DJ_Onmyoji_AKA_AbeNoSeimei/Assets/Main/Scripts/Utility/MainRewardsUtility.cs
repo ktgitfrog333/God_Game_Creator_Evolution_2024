@@ -644,7 +644,7 @@ namespace Main.Utility
                 .ToArray();
 
             // 除外後のリストの長さを合計し、3より大きいかどうかをチェック
-            return 3 < duplicateSkills.Length + filteredDSkills.Length + filteredRandomOneSkills.Length;
+            return 1 < duplicateSkills.Length + filteredDSkills.Length + filteredRandomOneSkills.Length;
         }
 
         /// <summary>
@@ -935,10 +935,15 @@ namespace Main.Utility
                         if (newRewardContentProp.detailProp.afterShikigamiInfoProp.subSkills != null &&
                             0 < newRewardContentProp.detailProp.afterShikigamiInfoProp.subSkills.Length)
                         {
+                            // 2件目以降がサブスキル無しの場合はスキップ
+                            if (rewardContentProp.detailProp.afterShikigamiInfoProp.subSkills == null)
+                                continue;
+
                             // 同じタイプを持つ場合はランクを比較して高い方を反映
                             var foundSkills = rewardContentProp.detailProp.afterShikigamiInfoProp.subSkills
-                                .Where(q => newRewardContentProp.detailProp.afterShikigamiInfoProp.subSkills.Any(ns => q.type.Equals(ns.type)))
-                                .ToArray();
+                            .Where(q => newRewardContentProp.detailProp.afterShikigamiInfoProp.subSkills.Any(ns => q.type.Equals(ns.type)))
+                            .ToArray();
+
                             if (0 < foundSkills.Length)
                                 for (var i = 0; i < newRewardContentProp.detailProp.afterShikigamiInfoProp.subSkills.Length; i++)
                                     if (newRewardContentProp.detailProp.afterShikigamiInfoProp.subSkills[i].rank < foundSkills[i].rank)

@@ -24,12 +24,19 @@ namespace Main.Model
         public bool IsUnLockUpdateOfSoulMoney { get; private set; }
         /// <summary>最終ステージをクリアしたか</summary>
         private bool _isClearFinalStage;
+        /// <summary>現在のシーンID</summary>
+        private int _currentSceneId = -1;
 
         private void Start()
         {
             var utility = new MainCommonUtility();
             var userDataSingleton = utility.UserDataSingleton;
-            SoulMoney.Value = userDataSingleton.UserBean.soulMoney;
+            _currentSceneId = userDataSingleton.UserBean.sceneId;
+            // sceneIdが8なら経験値を0としてセットする
+            if (_currentSceneId == 8)
+                SoulMoney.Value = 0;
+            else
+                SoulMoney.Value = userDataSingleton.UserBean.soulMoney;
             this.UpdateAsObservable()
                 .Where(_ => GameObject.FindGameObjectWithTag(ConstTagNames.TAG_NAME_PLAYER) != null)
                 .Select(_ => GameObject.FindGameObjectWithTag(ConstTagNames.TAG_NAME_PLAYER).GetComponent<PlayerModel>())
@@ -43,6 +50,10 @@ namespace Main.Model
             // 最後のステージクリアの場合はセーブしない
             if (!_isClearFinalStage)
             {
+                // sceneIdが8ならセーブしない
+                if (_currentSceneId == 8)
+                    return;
+
                 var temp = new TemplateResourcesAccessory();
                 var userBean = temp.LoadSaveDatasJsonOfUserBean(ConstResorcesNames.USER_DATA);
                 userBean.soulMoney = _isDeadOfPlayer != null && !_isDeadOfPlayer.Value ? SoulMoney.Value : 0;

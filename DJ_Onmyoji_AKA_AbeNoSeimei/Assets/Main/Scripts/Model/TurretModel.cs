@@ -41,6 +41,10 @@ namespace Main.Model
         protected MainCommonUtility _mainCommonUtility = new MainCommonUtility();
         /// <summary>オーラサイズ変更用のRectトランスフォーム</summary>
         [SerializeField] protected RectTransform auraRectTransform;
+        /// <summary>自動生成処理の実行、停止</summary>
+        private bool _isAutoInstanceMode = true;
+        /// <summary>自動生成処理の実行、停止</summary>
+        public bool IsAutoInstanceMode => _isAutoInstanceMode;
 
         protected virtual void Awake()
         {
@@ -82,7 +86,8 @@ namespace Main.Model
                 float elapsedTime = 0f;
                 // 一定間隔で弾を生成するための実装
                 this.UpdateAsObservable()
-                    .Where(_ => !_isUnLoopNormalActionRate)
+                    .Where(_ => _isAutoInstanceMode &&
+                        !_isUnLoopNormalActionRate)
                     .Subscribe(_ =>
                     {
                         config = ReLoadOnmyoBulletConfig(config);
@@ -109,6 +114,21 @@ namespace Main.Model
             try
             {
                 _jockeyCommandType = jockeyCommandType;
+
+                return true;
+            }
+            catch (System.Exception e)
+            {
+                Debug.LogError(e);
+                return false;
+            }
+        }
+
+        public bool SetAutoInstanceMode(bool isAutoInstanceMode)
+        {
+            try
+            {
+                _isAutoInstanceMode = isAutoInstanceMode;
 
                 return true;
             }
@@ -153,6 +173,12 @@ namespace Main.Model
         /// <param name="jockeyCommandType">ジョッキーコマンドタイプ</param>
         /// <returns>成功／失敗</returns>
         public bool SetJockeyCommandType(JockeyCommandType jockeyCommandType);
+        /// <summary>
+        /// 自動生成処理の実行、停止を切り替える
+        /// </summary>
+        /// <param name="isAutoInstanceMode">自動生成処理の実行、停止</param>
+        /// <returns>成功／失敗</returns>
+        public bool SetAutoInstanceMode(bool isAutoInstanceMode);
     }
 
     /// <summary>

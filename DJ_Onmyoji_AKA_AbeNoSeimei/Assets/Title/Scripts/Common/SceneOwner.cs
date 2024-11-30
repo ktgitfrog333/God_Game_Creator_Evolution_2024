@@ -12,12 +12,14 @@ namespace Title.Common
     /// <summary>
     /// シーンオーナー
     /// </summary>
-    public class SceneOwner : MonoBehaviour, ITitleGameManager
+    public class SceneOwner : MonoBehaviour, ITitleGameManager, ISceneOwner
     {
         /// <summary>次のシーン名</summary>
         [SerializeField] private string nextSceneName = "SelectScene";
         /// <summary>次のシーン名（メイン）</summary>
         [SerializeField] private string nextMainSceneName = "MainScene";
+        /// <summary>チュートリアルのシーンID</summary>
+        [SerializeField] private int tutorialSceneId = 8;
 
         public void OnStart()
         {
@@ -81,7 +83,49 @@ namespace Title.Common
         /// </summary>
         public void LoadNextScene()
         {
-            SceneManager.LoadScene(nextSceneName);
+            // ユーザデータ取得
+            var utility = new TitleCommonUtility();
+            var currentSceneId = utility.UserDataSingleton.UserBeanReloaded.sceneId;
+            // シーンIDが8ならメインシーンをロードする
+            if (currentSceneId == 8)
+                SceneManager.LoadScene(nextMainSceneName);
+            else
+                SceneManager.LoadScene(nextSceneName);
         }
+
+        public bool SaveSceneIdCurrentAndPrevious()
+        {
+            try
+            {
+                // ユーザデータ取得
+                var utility = new TitleCommonUtility();
+                var userBean = utility.UserDataSingleton.UserBean;
+                var currentSceneId = userBean.sceneId;
+                userBean.sceneIdPrevious = currentSceneId;
+                userBean.sceneId = tutorialSceneId;
+                if (!utility.UserDataSingleton.SetAndSaveUserBean(userBean))
+                    throw new System.ArgumentException("SetAndSaveUserBean");
+
+                return true;
+            }
+            catch (System.Exception e)
+            {
+                Debug.LogError(e);
+                return false;
+            }
+        }
+    }
+
+    /// <summary>
+    /// シーンオーナー
+    /// インターフェース
+    /// </summary>
+    public interface ISceneOwner
+    {
+        /// <summary>
+        /// 遷移前のsceneIdを記録して、sceneIdを8へ更新して保存する
+        /// </summary>
+        /// <returns>成功／失敗</returns>
+        public bool SaveSceneIdCurrentAndPrevious();
     }
 }

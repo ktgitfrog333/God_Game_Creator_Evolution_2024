@@ -36,6 +36,8 @@ namespace Main.Audio
         [SerializeField] private BGMDayOrNightMap[] bGMDayOrNightMaps;
         /// <summary>BGM開始時の（秒）</summary>
         private float startBGMTimeSec = 0f;
+        /// <summary>共通のユーティリティ</summary>
+        private MainCommonUtility _mainCommonUtility = new MainCommonUtility();
 
         private void Reset()
         {
@@ -50,14 +52,13 @@ namespace Main.Audio
 
         public void OnStartAndPlayBGM()
         {
-            var utility = new MainCommonUtility();
             startBGMTimeSec = Time.time;
             // clipToPlayBGMNight
-            SwitchClip(bGMDayOrNightMaps.Where(q => q.sceneId == utility.UserDataSingleton.UserBean.sceneId)
+            SwitchClip(bGMDayOrNightMaps.Where(q => q.sceneId == _mainCommonUtility.UserDataSingleton.UserBean.sceneId)
                 .Select(q => q.clipToPlayBGMNight)
                 .ToArray());
             // clipToPlayBGMDay
-            SwitchClip(bGMDayOrNightMaps.Where(q => q.sceneId == utility.UserDataSingleton.UserBean.sceneId)
+            SwitchClip(bGMDayOrNightMaps.Where(q => q.sceneId == _mainCommonUtility.UserDataSingleton.UserBean.sceneId)
                 .Select(q => q.clipToPlayBGMDay)
                 .ToArray());
         }
@@ -87,6 +88,9 @@ namespace Main.Audio
                 if ((int)clipToPlay <= (clip.Length - 1))
                 {
                     audioSource.clip = clip[(int)clipToPlay];
+                    var sceneId = _mainCommonUtility.UserDataSingleton.UserBean.sceneId;
+                    // シーン8（チュートリアルステージ）ならループ
+                    audioSource.loop = sceneId == 8;
 
                     // BGMを再生
                     audioSource.Play();
@@ -202,8 +206,7 @@ namespace Main.Audio
         {
             try
             {
-                var utility = new MainCommonUtility();
-                return SwitchClip(bGMDayOrNightMaps.Where(q => q.sceneId == utility.UserDataSingleton.UserBean.sceneId)
+                return SwitchClip(bGMDayOrNightMaps.Where(q => q.sceneId == _mainCommonUtility.UserDataSingleton.UserBean.sceneId)
                     .Select(q => q.clipToPlayBGMDay)
                     .ToArray());
             }
@@ -218,8 +221,7 @@ namespace Main.Audio
         {
             try
             {
-                var utility = new MainCommonUtility();
-                return SwitchClip(bGMDayOrNightMaps.Where(q => q.sceneId == utility.UserDataSingleton.UserBean.sceneId)
+                return SwitchClip(bGMDayOrNightMaps.Where(q => q.sceneId == _mainCommonUtility.UserDataSingleton.UserBean.sceneId)
                     .Select(q => q.clipToPlayBGMNight)
                     .ToArray());
             }
@@ -262,7 +264,8 @@ namespace Main.Audio
 
         public void Pause()
         {
-            audioSource.Pause();
+            if(audioSource != null)
+                audioSource.Pause();
         }
 
         public void UnPause()

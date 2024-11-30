@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Main.Common;
 using Main.Model;
+using Main.TableObject;
 using Main.Test.Driver;
 using UnityEngine;
 using Universal.Bean;
@@ -20,9 +21,6 @@ namespace Main.Utility
     {
         /// <summary>共通のユーティリティ</summary>
         private MainCommonUtility _common = new MainCommonUtility();
-
-        /// <summary>スロット番号が未セットであることを表す</summary>
-        private const int UNSET_SLOT_NUMBER = -1;
 
         /// <summary>メインスキル倍率値（デフォルト）の取得</summary>
         private const float MAIN_SKILL_VALUE_BUFF_MAX_DEFAULT = 1f;
@@ -209,12 +207,16 @@ namespace Main.Utility
             return array[0];
         }
 
-        public PentagramTurnTableInfo GetPentagramTurnTableInfo()
+        public PentagramTurnTableInfo GetPentagramTurnTableInfo(PentagramTurnTableScriptableObject pentagramTurnTableScriptableObject)
         {
             try
             {
                 List<PentagramTurnTableInfo.Slot> slots = new List<PentagramTurnTableInfo.Slot>();
                 var bean = _common.UserDataSingleton.UserBean;
+                // チュートリアルステージの場合はチュートリアルステージ用の式神をセットする
+                if (bean.sceneId == 8)
+                    return pentagramTurnTableScriptableObject.PentagramTurnTableInfoTutorial;
+
                 if (bean.pentagramTurnTableInfo == null ||
                     bean.pentagramTurnTableInfo.slots == null ||
                     bean.pentagramTurnTableInfo.slots.Length < 2)
@@ -237,7 +239,7 @@ namespace Main.Utility
                                     subSkills = ConvertSubSkills(item.shikigamiInfo.subSkills),
                                 }
                             },
-                            instanceId = UNSET_SLOT_NUMBER,
+                            instanceId = ConstShikigamiParameters.UNSET_SLOT_NUMBER,
                         },
                     });
                 }
@@ -377,11 +379,12 @@ namespace Main.Utility
         /// <param name="instanceId">オブジェクトID</param>
         /// <returns>式神の情報</returns>
         public ShikigamiInfo GetShikigamiInfo(PentagramTurnTableInfo pentagramTurnTableInfo, int instanceId);
-        
+
         /// <summary>
         /// ペンダグラムターンテーブル情報を取得
         /// </summary>
+        /// <param name="pentagramTurnTableScriptableObject">ペンダグラムターンテーブルのスクリプテーブル</param>
         /// <returns>ペンダグラムテーブル情報</returns>
-        public PentagramTurnTableInfo GetPentagramTurnTableInfo();
+        public PentagramTurnTableInfo GetPentagramTurnTableInfo(PentagramTurnTableScriptableObject pentagramTurnTableScriptableObject);
     }
 }

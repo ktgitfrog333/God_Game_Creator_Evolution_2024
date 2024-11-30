@@ -41,24 +41,6 @@ namespace Main.Model
                 .AddTo(gameObject);
         }
 
-        /// <summary>
-        /// ターゲットが生成されるまで待機
-        /// </summary>
-        /// <param name="observer">トランスフォーム</param>
-        /// <returns>コルーチン</returns>
-        private IEnumerator WaitForTarget(System.IObserver<Transform> observer)
-        {
-            Transform target = null;
-            while (target == null)
-            {
-                var obj = GameObject.FindGameObjectWithTag(ConstTagNames.TAG_NAME_PLAYER);
-                if (obj != null)
-                    target = obj.transform;
-                yield return null;
-            }
-            observer.OnNext(target);
-        }
-
         private void OnDrawGizmosSelected()
         {
             Gizmos.color = Color.cyan;
