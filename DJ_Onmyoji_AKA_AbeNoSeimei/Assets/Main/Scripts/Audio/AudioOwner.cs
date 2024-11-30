@@ -298,5 +298,9 @@ namespace Main.Audio
         bgm_stage_vol14,
         /// <summary>ボスのBGM</summary>
         bgm_stage_vol15,
+        /// <summary>チュートリアルステージ（昼）のBGM</summary>
+        bgm_stage_vol16,
+        /// <summary>チュートリアルステージ（夜）のBGM</summary>
+        bgm_stage_vol17,
     }
 }

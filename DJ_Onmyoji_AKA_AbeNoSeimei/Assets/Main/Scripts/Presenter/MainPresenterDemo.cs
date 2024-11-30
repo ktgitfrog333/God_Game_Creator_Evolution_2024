@@ -13,51 +13,1393 @@ using Fungus;
 using Unity.Collections;
 using Main.Test.Driver;
 using DG.Tweening;
+using Main.Utility;
+using Main.InputSystem;
 
 namespace Main.Presenter
 {
     public class MainPresenterDemo : MonoBehaviour, IMainGameManager
     {
-        [SerializeField] private CountdownLogosView countdownLogosView;
+        #region チュートリアル実装_3 メインシーンにてチュートリアルモード追加、会話システム追加など
+        /// <summary>チュートリアルのモデル</summary>
+        [SerializeField] private TutorialModel tutorialModel;
+        /// <summary>チュートリアルのビュー</summary>
+        [SerializeField] private TutorialView tutorialView;
+        /// <summary>チュートリアル用の敵スポーン制御のモデル</summary>
+        [SerializeField] private EnemiesSpawnTutorialModel enemiesSpawnTutorialModel;
+        /// <summary>チュートリアルの中のミッションを管理するのモデル</summary>
+        [SerializeField] private MissionsSystemTutorialModel missionsSystemTutorialModel;
+        /// <summary>チュートリアルのガイドで扱うリソースの構造体</summary>
+        [SerializeField] private MainPresenter.TutorialGuideContentsStuct tutorialGuideContentsStuct;
+        /// <summary>チュートリアルのミッションで扱うリソースの構造体</summary>
+        [SerializeField] private MainPresenter.TutorialMissionContentsStuct tutorialMissionContentsStuct;
+        #endregion
+        [SerializeField] private EnemyEventSystemModel enemyEventSystemModel;
+        /// <summary>ペンダグラムシステムのモデル</summary>
+        [SerializeField] private PentagramSystemModel pentagramSystemModel;
+        /// <summary>式神スキル管理システムのモデル</summary>
+        [SerializeField] private ShikigamiSkillSystemModel shikigamiSkillSystemModel;
+        /// <summary>ペンダグラムターンテーブルのモデル</summary>
+        [SerializeField] private PentagramTurnTableModel pentagramTurnTableModel;
+        /// <summary>陰陽（昼夜）の切り替えのモデル</summary>
+        [SerializeField] private SunMoonSystemModel sunMoonSystemModel;
+        /// <summary>クリア条件を満たす要素を管理するシステムのモデル</summary>
+        [SerializeField] private ClearCountdownTimerSystemModel clearCountdownTimerSystemModel;
+        /// <summary>ポーズ画面のビュー</summary>
+        [SerializeField] private PauseView pauseView;
+        /// <summary>フェーダーグループのビュー</summary>
+        [SerializeField] private FadersGroupView fadersGroupView;
 
         private void Reset()
         {
-            countdownLogosView = GameObject.Find("CountdownLogos").GetComponent<CountdownLogosView>();
+            #region チュートリアル実装_3 メインシーンにてチュートリアルモード追加、会話システム追加など
+            tutorialModel = GameObject.Find("Tutorial").GetComponent<TutorialModel>();
+            enemiesSpawnTutorialModel = GameObject.Find("EnemiesSpawnTutorial").GetComponent<EnemiesSpawnTutorialModel>();
+            missionsSystemTutorialModel = GameObject.Find("MissionsSystemTutorial").GetComponent<MissionsSystemTutorialModel>();
+            /*
+             * 対象のコンポーネント
+             * ●静的にアタッチ
+             *  PentagramSystemModel
+             *  ShikigamiSkillSystemModel
+             *  SunMoonSystemModel
+             *  ClearCountdownTimerSystemModel
+             *  PauseView
+             *  FadersGroupView
+             *  GuideMessageView
+             *  GuideUITheTurntableView
+             *  GuideUITheEqualizerView
+             *  GuideUITheEqualizerGageView
+             *  GuideUITheDJEnergyView
+             *  GuideUIThePlayerHPView
+             *  GuideUITheClearCountdownTimerCircleView
+             *  GuideUITheClearRewardTextContentsView
+             *  MissionsSystemTutorialModel（※ダミー用）
+             * ●非同期で動的にアタッチ
+             *  DanceTurretModel
+             *  GraffitiTurretModel
+             *  OnmyoTurretModel
+             *  WrapTurretModel
+            */
+            tutorialGuideContentsStuct = new MainPresenter.TutorialGuideContentsStuct()
+            {
+                targetComponents = new Component[]
+                {
+                    pentagramSystemModel,
+                    shikigamiSkillSystemModel,
+                    sunMoonSystemModel,
+                    clearCountdownTimerSystemModel,
+                    pauseView,
+                    fadersGroupView,
+                    tutorialView.GuideMessageView,
+                    tutorialView.GuideUITheTurntableView,
+                    tutorialView.GuideUITheEqualizerGageView,
+                    tutorialView.GuideUITheDJEnergyView,
+                    tutorialView.GuideUIThePlayerHPView,
+                    tutorialView.GuideUITheClearCountdownTimerCircleView,
+                    tutorialView.GuideUITheClearRewardTextContentsView,
+                },
+                tutorialComponentMaps = new MainPresenter.TutorialComponentMap[]
+                {
+                    new MainPresenter.TutorialComponentMap()
+                    {
+                        guideMessageID = GuideMessageID.GM0000,
+                        tutorialComponents = new MainPresenter.TutorialComponent[]
+                        {
+                            new MainPresenter.TutorialComponent()
+                            {
+                                component = pentagramSystemModel,
+                                componentState = MainPresenter.ComponentState.Disable,
+                            },
+                            new MainPresenter.TutorialComponent()
+                            {
+                                component = shikigamiSkillSystemModel,
+                                componentState = MainPresenter.ComponentState.Disable,
+                            },
+                            new MainPresenter.TutorialComponent()
+                            {
+                                component = sunMoonSystemModel,
+                                componentState = MainPresenter.ComponentState.Disable,
+                            },
+                            new MainPresenter.TutorialComponent()
+                            {
+                                component = clearCountdownTimerSystemModel,
+                                componentState = MainPresenter.ComponentState.Disable,
+                            },
+                            new MainPresenter.TutorialComponent()
+                            {
+                                component = pauseView,
+                                componentState = MainPresenter.ComponentState.Pause,
+                            },
+                            new MainPresenter.TutorialComponent()
+                            {
+                                component = fadersGroupView,
+                                componentState = MainPresenter.ComponentState.Pause,
+                            },
+                            new MainPresenter.TutorialComponent()
+                            {
+                                component = tutorialView.GuideMessageView,
+                                componentState = MainPresenter.ComponentState.Pause,
+                            },
+                            new MainPresenter.TutorialComponent()
+                            {
+                                component = tutorialView.GuideUITheTurntableView,
+                                componentState = MainPresenter.ComponentState.Disable,
+                            },
+                            new MainPresenter.TutorialComponent()
+                            {
+                                component = tutorialView.GuideUITheEqualizerView,
+                                componentState = MainPresenter.ComponentState.Disable,
+                            },
+                            new MainPresenter.TutorialComponent()
+                            {
+                                component = tutorialView.GuideUITheEqualizerGageView,
+                                componentState = MainPresenter.ComponentState.Disable,
+                            },
+                            new MainPresenter.TutorialComponent()
+                            {
+                                component = tutorialView.GuideUITheDJEnergyView,
+                                componentState = MainPresenter.ComponentState.Disable,
+                            },
+                            new MainPresenter.TutorialComponent()
+                            {
+                                component = tutorialView.GuideUIThePlayerHPView,
+                                componentState = MainPresenter.ComponentState.Disable,
+                            },
+                            new MainPresenter.TutorialComponent()
+                            {
+                                component = tutorialView.GuideUITheClearCountdownTimerCircleView,
+                                componentState = MainPresenter.ComponentState.Disable,
+                            },
+                            new MainPresenter.TutorialComponent()
+                            {
+                                component = tutorialView.GuideUITheClearRewardTextContentsView,
+                                componentState = MainPresenter.ComponentState.Disable,
+                            },
+                        }
+                    },
+                    new MainPresenter.TutorialComponentMap()
+                    {
+                        guideMessageID = GuideMessageID.GM0001,
+                        tutorialComponents = new MainPresenter.TutorialComponent[]
+                        {
+                            new MainPresenter.TutorialComponent()
+                            {
+                                component = pentagramSystemModel,
+                                componentState = MainPresenter.ComponentState.Disable,
+                            },
+                            new MainPresenter.TutorialComponent()
+                            {
+                                component = shikigamiSkillSystemModel,
+                                componentState = MainPresenter.ComponentState.Disable,
+                            },
+                            new MainPresenter.TutorialComponent()
+                            {
+                                component = sunMoonSystemModel,
+                                componentState = MainPresenter.ComponentState.Disable,
+                            },
+                            new MainPresenter.TutorialComponent()
+                            {
+                                component = clearCountdownTimerSystemModel,
+                                componentState = MainPresenter.ComponentState.Disable,
+                            },
+                            new MainPresenter.TutorialComponent()
+                            {
+                                component = pauseView,
+                                componentState = MainPresenter.ComponentState.Pause,
+                            },
+                            new MainPresenter.TutorialComponent()
+                            {
+                                component = fadersGroupView,
+                                componentState = MainPresenter.ComponentState.Pause,
+                            },
+                            new MainPresenter.TutorialComponent()
+                            {
+                                component = tutorialView.GuideMessageView,
+                                componentState = MainPresenter.ComponentState.Enable,
+                            },
+                            new MainPresenter.TutorialComponent()
+                            {
+                                component = tutorialView.GuideUITheTurntableView,
+                                componentState = MainPresenter.ComponentState.Disable,
+                            },
+                            new MainPresenter.TutorialComponent()
+                            {
+                                component = tutorialView.GuideUITheEqualizerView,
+                                componentState = MainPresenter.ComponentState.Disable,
+                            },
+                            new MainPresenter.TutorialComponent()
+                            {
+                                component = tutorialView.GuideUITheEqualizerGageView,
+                                componentState = MainPresenter.ComponentState.Disable,
+                            },
+                            new MainPresenter.TutorialComponent()
+                            {
+                                component = tutorialView.GuideUITheDJEnergyView,
+                                componentState = MainPresenter.ComponentState.Disable,
+                            },
+                            new MainPresenter.TutorialComponent()
+                            {
+                                component = tutorialView.GuideUIThePlayerHPView,
+                                componentState = MainPresenter.ComponentState.Disable,
+                            },
+                            new MainPresenter.TutorialComponent()
+                            {
+                                component = tutorialView.GuideUITheClearCountdownTimerCircleView,
+                                componentState = MainPresenter.ComponentState.Disable,
+                            },
+                            new MainPresenter.TutorialComponent()
+                            {
+                                component = tutorialView.GuideUITheClearRewardTextContentsView,
+                                componentState = MainPresenter.ComponentState.Disable,
+                            },
+                        }
+                    },
+                    new MainPresenter.TutorialComponentMap()
+                    {
+                        guideMessageID = GuideMessageID.GM0002,
+                        tutorialComponents = new MainPresenter.TutorialComponent[]
+                        {
+                            new MainPresenter.TutorialComponent()
+                            {
+                                component = pentagramSystemModel,
+                                componentState = MainPresenter.ComponentState.Disable,
+                            },
+                            new MainPresenter.TutorialComponent()
+                            {
+                                component = shikigamiSkillSystemModel,
+                                componentState = MainPresenter.ComponentState.Disable,
+                            },
+                            new MainPresenter.TutorialComponent()
+                            {
+                                component = sunMoonSystemModel,
+                                componentState = MainPresenter.ComponentState.Disable,
+                            },
+                            new MainPresenter.TutorialComponent()
+                            {
+                                component = clearCountdownTimerSystemModel,
+                                componentState = MainPresenter.ComponentState.Disable,
+                            },
+                            new MainPresenter.TutorialComponent()
+                            {
+                                component = pauseView,
+                                componentState = MainPresenter.ComponentState.Pause,
+                            },
+                            new MainPresenter.TutorialComponent()
+                            {
+                                component = fadersGroupView,
+                                componentState = MainPresenter.ComponentState.Pause,
+                            },
+                            new MainPresenter.TutorialComponent()
+                            {
+                                component = tutorialView.GuideMessageView,
+                                componentState = MainPresenter.ComponentState.Enable,
+                            },
+                            new MainPresenter.TutorialComponent()
+                            {
+                                component = tutorialView.GuideUITheTurntableView,
+                                componentState = MainPresenter.ComponentState.Enable,
+                            },
+                            new MainPresenter.TutorialComponent()
+                            {
+                                component = tutorialView.GuideUITheEqualizerView,
+                                componentState = MainPresenter.ComponentState.Disable,
+                            },
+                            new MainPresenter.TutorialComponent()
+                            {
+                                component = tutorialView.GuideUITheEqualizerGageView,
+                                componentState = MainPresenter.ComponentState.Disable,
+                            },
+                            new MainPresenter.TutorialComponent()
+                            {
+                                component = tutorialView.GuideUITheDJEnergyView,
+                                componentState = MainPresenter.ComponentState.Disable,
+                            },
+                            new MainPresenter.TutorialComponent()
+                            {
+                                component = tutorialView.GuideUIThePlayerHPView,
+                                componentState = MainPresenter.ComponentState.Disable,
+                            },
+                            new MainPresenter.TutorialComponent()
+                            {
+                                component = tutorialView.GuideUITheClearCountdownTimerCircleView,
+                                componentState = MainPresenter.ComponentState.Disable,
+                            },
+                            new MainPresenter.TutorialComponent()
+                            {
+                                component = tutorialView.GuideUITheClearRewardTextContentsView,
+                                componentState = MainPresenter.ComponentState.Disable,
+                            },
+                        }
+                    },
+                    new MainPresenter.TutorialComponentMap()
+                    {
+                        guideMessageID = GuideMessageID.GM0003,
+                        tutorialComponents = new MainPresenter.TutorialComponent[]
+                        {
+                            new MainPresenter.TutorialComponent()
+                            {
+                                component = pentagramSystemModel,
+                                componentState = MainPresenter.ComponentState.Enable,
+                            },
+                            new MainPresenter.TutorialComponent()
+                            {
+                                component = shikigamiSkillSystemModel,
+                                componentState = MainPresenter.ComponentState.Disable,
+                            },
+                            new MainPresenter.TutorialComponent()
+                            {
+                                component = sunMoonSystemModel,
+                                componentState = MainPresenter.ComponentState.Disable,
+                            },
+                            new MainPresenter.TutorialComponent()
+                            {
+                                component = clearCountdownTimerSystemModel,
+                                componentState = MainPresenter.ComponentState.Disable,
+                            },
+                            new MainPresenter.TutorialComponent()
+                            {
+                                component = pauseView,
+                                componentState = MainPresenter.ComponentState.Pause,
+                            },
+                            new MainPresenter.TutorialComponent()
+                            {
+                                component = fadersGroupView,
+                                componentState = MainPresenter.ComponentState.Pause,
+                            },
+                            new MainPresenter.TutorialComponent()
+                            {
+                                component = tutorialView.GuideMessageView,
+                                componentState = MainPresenter.ComponentState.Pause,
+                            },
+                            new MainPresenter.TutorialComponent()
+                            {
+                                component = tutorialView.GuideUITheTurntableView,
+                                componentState = MainPresenter.ComponentState.Disable,
+                            },
+                            new MainPresenter.TutorialComponent()
+                            {
+                                component = tutorialView.GuideUITheEqualizerView,
+                                componentState = MainPresenter.ComponentState.Disable,
+                            },
+                            new MainPresenter.TutorialComponent()
+                            {
+                                component = tutorialView.GuideUITheEqualizerGageView,
+                                componentState = MainPresenter.ComponentState.Disable,
+                            },
+                            new MainPresenter.TutorialComponent()
+                            {
+                                component = tutorialView.GuideUITheDJEnergyView,
+                                componentState = MainPresenter.ComponentState.Disable,
+                            },
+                            new MainPresenter.TutorialComponent()
+                            {
+                                component = tutorialView.GuideUIThePlayerHPView,
+                                componentState = MainPresenter.ComponentState.Disable,
+                            },
+                            new MainPresenter.TutorialComponent()
+                            {
+                                component = tutorialView.GuideUITheClearCountdownTimerCircleView,
+                                componentState = MainPresenter.ComponentState.Disable,
+                            },
+                            new MainPresenter.TutorialComponent()
+                            {
+                                component = tutorialView.GuideUITheClearRewardTextContentsView,
+                                componentState = MainPresenter.ComponentState.Disable,
+                            },
+                        }
+                    },
+                    new MainPresenter.TutorialComponentMap()
+                    {
+                        guideMessageID = GuideMessageID.GM0004,
+                        tutorialComponents = new MainPresenter.TutorialComponent[]
+                        {
+                            new MainPresenter.TutorialComponent()
+                            {
+                                component = pentagramSystemModel,
+                                componentState = MainPresenter.ComponentState.Disable,
+                            },
+                            new MainPresenter.TutorialComponent()
+                            {
+                                component = shikigamiSkillSystemModel,
+                                componentState = MainPresenter.ComponentState.Disable,
+                            },
+                            new MainPresenter.TutorialComponent()
+                            {
+                                component = sunMoonSystemModel,
+                                componentState = MainPresenter.ComponentState.Disable,
+                            },
+                            new MainPresenter.TutorialComponent()
+                            {
+                                component = clearCountdownTimerSystemModel,
+                                componentState = MainPresenter.ComponentState.Disable,
+                            },
+                            new MainPresenter.TutorialComponent()
+                            {
+                                component = pauseView,
+                                componentState = MainPresenter.ComponentState.Pause,
+                            },
+                            new MainPresenter.TutorialComponent()
+                            {
+                                component = fadersGroupView,
+                                componentState = MainPresenter.ComponentState.Pause,
+                            },
+                            new MainPresenter.TutorialComponent()
+                            {
+                                component = tutorialView.GuideMessageView,
+                                componentState = MainPresenter.ComponentState.Enable,
+                            },
+                            new MainPresenter.TutorialComponent()
+                            {
+                                component = tutorialView.GuideUITheTurntableView,
+                                componentState = MainPresenter.ComponentState.Disable,
+                            },
+                            new MainPresenter.TutorialComponent()
+                            {
+                                component = tutorialView.GuideUITheEqualizerView,
+                                componentState = MainPresenter.ComponentState.Enable,
+                            },
+                            new MainPresenter.TutorialComponent()
+                            {
+                                component = tutorialView.GuideUITheEqualizerGageView,
+                                componentState = MainPresenter.ComponentState.Disable,
+                            },
+                            new MainPresenter.TutorialComponent()
+                            {
+                                component = tutorialView.GuideUITheDJEnergyView,
+                                componentState = MainPresenter.ComponentState.Disable,
+                            },
+                            new MainPresenter.TutorialComponent()
+                            {
+                                component = tutorialView.GuideUIThePlayerHPView,
+                                componentState = MainPresenter.ComponentState.Disable,
+                            },
+                            new MainPresenter.TutorialComponent()
+                            {
+                                component = tutorialView.GuideUITheClearCountdownTimerCircleView,
+                                componentState = MainPresenter.ComponentState.Disable,
+                            },
+                            new MainPresenter.TutorialComponent()
+                            {
+                                component = tutorialView.GuideUITheClearRewardTextContentsView,
+                                componentState = MainPresenter.ComponentState.Disable,
+                            },
+                        }
+                    },
+                    new MainPresenter.TutorialComponentMap()
+                    {
+                        guideMessageID = GuideMessageID.GM0005,
+                        tutorialComponents = new MainPresenter.TutorialComponent[]
+                        {
+                            new MainPresenter.TutorialComponent()
+                            {
+                                component = pentagramSystemModel,
+                                componentState = MainPresenter.ComponentState.Enable,
+                            },
+                            new MainPresenter.TutorialComponent()
+                            {
+                                component = shikigamiSkillSystemModel,
+                                componentState = MainPresenter.ComponentState.Enable,
+                            },
+                            new MainPresenter.TutorialComponent()
+                            {
+                                component = sunMoonSystemModel,
+                                componentState = MainPresenter.ComponentState.Disable,
+                            },
+                            new MainPresenter.TutorialComponent()
+                            {
+                                component = clearCountdownTimerSystemModel,
+                                componentState = MainPresenter.ComponentState.Disable,
+                            },
+                            new MainPresenter.TutorialComponent()
+                            {
+                                component = pauseView,
+                                componentState = MainPresenter.ComponentState.Pause,
+                            },
+                            new MainPresenter.TutorialComponent()
+                            {
+                                component = fadersGroupView,
+                                componentState = MainPresenter.ComponentState.Pause,
+                            },
+                            new MainPresenter.TutorialComponent()
+                            {
+                                component = tutorialView.GuideMessageView,
+                                componentState = MainPresenter.ComponentState.Pause,
+                            },
+                            new MainPresenter.TutorialComponent()
+                            {
+                                component = tutorialView.GuideUITheTurntableView,
+                                componentState = MainPresenter.ComponentState.Disable,
+                            },
+                            new MainPresenter.TutorialComponent()
+                            {
+                                component = tutorialView.GuideUITheEqualizerView,
+                                componentState = MainPresenter.ComponentState.Disable,
+                            },
+                            new MainPresenter.TutorialComponent()
+                            {
+                                component = tutorialView.GuideUITheEqualizerGageView,
+                                componentState = MainPresenter.ComponentState.Disable,
+                            },
+                            new MainPresenter.TutorialComponent()
+                            {
+                                component = tutorialView.GuideUITheDJEnergyView,
+                                componentState = MainPresenter.ComponentState.Disable,
+                            },
+                            new MainPresenter.TutorialComponent()
+                            {
+                                component = tutorialView.GuideUIThePlayerHPView,
+                                componentState = MainPresenter.ComponentState.Disable,
+                            },
+                            new MainPresenter.TutorialComponent()
+                            {
+                                component = tutorialView.GuideUITheClearCountdownTimerCircleView,
+                                componentState = MainPresenter.ComponentState.Disable,
+                            },
+                            new MainPresenter.TutorialComponent()
+                            {
+                                component = tutorialView.GuideUITheClearRewardTextContentsView,
+                                componentState = MainPresenter.ComponentState.Disable,
+                            },
+                        }
+                    },
+                    new MainPresenter.TutorialComponentMap()
+                    {
+                        guideMessageID = GuideMessageID.GM0006,
+                        tutorialComponents = new MainPresenter.TutorialComponent[]
+                        {
+                            new MainPresenter.TutorialComponent()
+                            {
+                                component = pentagramSystemModel,
+                                componentState = MainPresenter.ComponentState.Disable,
+                            },
+                            new MainPresenter.TutorialComponent()
+                            {
+                                component = shikigamiSkillSystemModel,
+                                componentState = MainPresenter.ComponentState.Disable,
+                            },
+                            new MainPresenter.TutorialComponent()
+                            {
+                                component = sunMoonSystemModel,
+                                componentState = MainPresenter.ComponentState.Disable,
+                            },
+                            new MainPresenter.TutorialComponent()
+                            {
+                                component = clearCountdownTimerSystemModel,
+                                componentState = MainPresenter.ComponentState.Disable,
+                            },
+                            new MainPresenter.TutorialComponent()
+                            {
+                                component = pauseView,
+                                componentState = MainPresenter.ComponentState.Pause,
+                            },
+                            new MainPresenter.TutorialComponent()
+                            {
+                                component = fadersGroupView,
+                                componentState = MainPresenter.ComponentState.Enable,
+                            },
+                            new MainPresenter.TutorialComponent()
+                            {
+                                component = tutorialView.GuideMessageView,
+                                componentState = MainPresenter.ComponentState.Enable,
+                            },
+                            new MainPresenter.TutorialComponent()
+                            {
+                                component = tutorialView.GuideUITheTurntableView,
+                                componentState = MainPresenter.ComponentState.Disable,
+                            },
+                            new MainPresenter.TutorialComponent()
+                            {
+                                component = tutorialView.GuideUITheEqualizerView,
+                                componentState = MainPresenter.ComponentState.Disable,
+                            },
+                            new MainPresenter.TutorialComponent()
+                            {
+                                component = tutorialView.GuideUITheEqualizerGageView,
+                                componentState = MainPresenter.ComponentState.Enable,
+                            },
+                            new MainPresenter.TutorialComponent()
+                            {
+                                component = tutorialView.GuideUITheDJEnergyView,
+                                componentState = MainPresenter.ComponentState.Disable,
+                            },
+                            new MainPresenter.TutorialComponent()
+                            {
+                                component = tutorialView.GuideUIThePlayerHPView,
+                                componentState = MainPresenter.ComponentState.Disable,
+                            },
+                            new MainPresenter.TutorialComponent()
+                            {
+                                component = tutorialView.GuideUITheClearCountdownTimerCircleView,
+                                componentState = MainPresenter.ComponentState.Disable,
+                            },
+                            new MainPresenter.TutorialComponent()
+                            {
+                                component = tutorialView.GuideUITheClearRewardTextContentsView,
+                                componentState = MainPresenter.ComponentState.Disable,
+                            },
+                        }
+                    },
+                    new MainPresenter.TutorialComponentMap()
+                    {
+                        guideMessageID = GuideMessageID.GM0007,
+                        tutorialComponents = new MainPresenter.TutorialComponent[]
+                        {
+                            new MainPresenter.TutorialComponent()
+                            {
+                                component = pentagramSystemModel,
+                                componentState = MainPresenter.ComponentState.Disable,
+                            },
+                            new MainPresenter.TutorialComponent()
+                            {
+                                component = shikigamiSkillSystemModel,
+                                componentState = MainPresenter.ComponentState.Disable,
+                            },
+                            new MainPresenter.TutorialComponent()
+                            {
+                                component = sunMoonSystemModel,
+                                componentState = MainPresenter.ComponentState.Disable,
+                            },
+                            new MainPresenter.TutorialComponent()
+                            {
+                                component = clearCountdownTimerSystemModel,
+                                componentState = MainPresenter.ComponentState.Disable,
+                            },
+                            new MainPresenter.TutorialComponent()
+                            {
+                                component = pauseView,
+                                componentState = MainPresenter.ComponentState.Pause,
+                            },
+                            new MainPresenter.TutorialComponent()
+                            {
+                                component = fadersGroupView,
+                                componentState = MainPresenter.ComponentState.Pause,
+                            },
+                            new MainPresenter.TutorialComponent()
+                            {
+                                component = tutorialView.GuideMessageView,
+                                componentState = MainPresenter.ComponentState.Enable,
+                            },
+                            new MainPresenter.TutorialComponent()
+                            {
+                                component = tutorialView.GuideUITheTurntableView,
+                                componentState = MainPresenter.ComponentState.Disable,
+                            },
+                            new MainPresenter.TutorialComponent()
+                            {
+                                component = tutorialView.GuideUITheEqualizerView,
+                                componentState = MainPresenter.ComponentState.Disable,
+                            },
+                            new MainPresenter.TutorialComponent()
+                            {
+                                component = tutorialView.GuideUITheEqualizerGageView,
+                                componentState = MainPresenter.ComponentState.Disable,
+                            },
+                            new MainPresenter.TutorialComponent()
+                            {
+                                component = tutorialView.GuideUITheDJEnergyView,
+                                componentState = MainPresenter.ComponentState.Enable,
+                            },
+                            new MainPresenter.TutorialComponent()
+                            {
+                                component = tutorialView.GuideUIThePlayerHPView,
+                                componentState = MainPresenter.ComponentState.Disable,
+                            },
+                            new MainPresenter.TutorialComponent()
+                            {
+                                component = tutorialView.GuideUITheClearCountdownTimerCircleView,
+                                componentState = MainPresenter.ComponentState.Disable,
+                            },
+                            new MainPresenter.TutorialComponent()
+                            {
+                                component = tutorialView.GuideUITheClearRewardTextContentsView,
+                                componentState = MainPresenter.ComponentState.Disable,
+                            },
+                        }
+                    },
+                    new MainPresenter.TutorialComponentMap()
+                    {
+                        guideMessageID = GuideMessageID.GM0008,
+                        tutorialComponents = new MainPresenter.TutorialComponent[]
+                        {
+                            new MainPresenter.TutorialComponent()
+                            {
+                                component = pentagramSystemModel,
+                                componentState = MainPresenter.ComponentState.Disable,
+                            },
+                            new MainPresenter.TutorialComponent()
+                            {
+                                component = shikigamiSkillSystemModel,
+                                componentState = MainPresenter.ComponentState.Disable,
+                            },
+                            new MainPresenter.TutorialComponent()
+                            {
+                                component = sunMoonSystemModel,
+                                componentState = MainPresenter.ComponentState.Disable,
+                            },
+                            new MainPresenter.TutorialComponent()
+                            {
+                                component = clearCountdownTimerSystemModel,
+                                componentState = MainPresenter.ComponentState.Disable,
+                            },
+                            new MainPresenter.TutorialComponent()
+                            {
+                                component = pauseView,
+                                componentState = MainPresenter.ComponentState.Pause,
+                            },
+                            new MainPresenter.TutorialComponent()
+                            {
+                                component = fadersGroupView,
+                                componentState = MainPresenter.ComponentState.Pause,
+                            },
+                            new MainPresenter.TutorialComponent()
+                            {
+                                component = tutorialView.GuideMessageView,
+                                componentState = MainPresenter.ComponentState.Enable,
+                            },
+                            new MainPresenter.TutorialComponent()
+                            {
+                                component = tutorialView.GuideUITheTurntableView,
+                                componentState = MainPresenter.ComponentState.Disable,
+                            },
+                            new MainPresenter.TutorialComponent()
+                            {
+                                component = tutorialView.GuideUITheEqualizerView,
+                                componentState = MainPresenter.ComponentState.Disable,
+                            },
+                            new MainPresenter.TutorialComponent()
+                            {
+                                component = tutorialView.GuideUITheEqualizerGageView,
+                                componentState = MainPresenter.ComponentState.Disable,
+                            },
+                            new MainPresenter.TutorialComponent()
+                            {
+                                component = tutorialView.GuideUITheDJEnergyView,
+                                componentState = MainPresenter.ComponentState.Disable,
+                            },
+                            new MainPresenter.TutorialComponent()
+                            {
+                                component = tutorialView.GuideUIThePlayerHPView,
+                                componentState = MainPresenter.ComponentState.Enable,
+                            },
+                            new MainPresenter.TutorialComponent()
+                            {
+                                component = tutorialView.GuideUITheClearCountdownTimerCircleView,
+                                componentState = MainPresenter.ComponentState.Disable,
+                            },
+                            new MainPresenter.TutorialComponent()
+                            {
+                                component = tutorialView.GuideUITheClearRewardTextContentsView,
+                                componentState = MainPresenter.ComponentState.Disable,
+                            },
+                        }
+                    },
+                    new MainPresenter.TutorialComponentMap()
+                    {
+                        guideMessageID = GuideMessageID.GM0009,
+                        tutorialComponents = new MainPresenter.TutorialComponent[]
+                        {
+                            new MainPresenter.TutorialComponent()
+                            {
+                                component = pentagramSystemModel,
+                                componentState = MainPresenter.ComponentState.Disable,
+                            },
+                            new MainPresenter.TutorialComponent()
+                            {
+                                component = shikigamiSkillSystemModel,
+                                componentState = MainPresenter.ComponentState.Disable,
+                            },
+                            new MainPresenter.TutorialComponent()
+                            {
+                                component = sunMoonSystemModel,
+                                componentState = MainPresenter.ComponentState.Disable,
+                            },
+                            new MainPresenter.TutorialComponent()
+                            {
+                                component = clearCountdownTimerSystemModel,
+                                componentState = MainPresenter.ComponentState.Disable,
+                            },
+                            new MainPresenter.TutorialComponent()
+                            {
+                                component = pauseView,
+                                componentState = MainPresenter.ComponentState.Pause,
+                            },
+                            new MainPresenter.TutorialComponent()
+                            {
+                                component = fadersGroupView,
+                                componentState = MainPresenter.ComponentState.Pause,
+                            },
+                            new MainPresenter.TutorialComponent()
+                            {
+                                component = tutorialView.GuideMessageView,
+                                componentState = MainPresenter.ComponentState.Enable,
+                            },
+                            new MainPresenter.TutorialComponent()
+                            {
+                                component = tutorialView.GuideUITheTurntableView,
+                                componentState = MainPresenter.ComponentState.Disable,
+                            },
+                            new MainPresenter.TutorialComponent()
+                            {
+                                component = tutorialView.GuideUITheEqualizerView,
+                                componentState = MainPresenter.ComponentState.Disable,
+                            },
+                            new MainPresenter.TutorialComponent()
+                            {
+                                component = tutorialView.GuideUITheEqualizerGageView,
+                                componentState = MainPresenter.ComponentState.Disable,
+                            },
+                            new MainPresenter.TutorialComponent()
+                            {
+                                component = tutorialView.GuideUITheDJEnergyView,
+                                componentState = MainPresenter.ComponentState.Disable,
+                            },
+                            new MainPresenter.TutorialComponent()
+                            {
+                                component = tutorialView.GuideUIThePlayerHPView,
+                                componentState = MainPresenter.ComponentState.Disable,
+                            },
+                            new MainPresenter.TutorialComponent()
+                            {
+                                component = tutorialView.GuideUITheClearCountdownTimerCircleView,
+                                componentState = MainPresenter.ComponentState.Enable,
+                            },
+                            new MainPresenter.TutorialComponent()
+                            {
+                                component = tutorialView.GuideUITheClearRewardTextContentsView,
+                                componentState = MainPresenter.ComponentState.Disable,
+                            },
+                        }
+                    },
+                    new MainPresenter.TutorialComponentMap()
+                    {
+                        guideMessageID = GuideMessageID.GM0010,
+                        tutorialComponents = new MainPresenter.TutorialComponent[]
+                        {
+                            new MainPresenter.TutorialComponent()
+                            {
+                                component = pentagramSystemModel,
+                                componentState = MainPresenter.ComponentState.Disable,
+                            },
+                            new MainPresenter.TutorialComponent()
+                            {
+                                component = shikigamiSkillSystemModel,
+                                componentState = MainPresenter.ComponentState.Disable,
+                            },
+                            new MainPresenter.TutorialComponent()
+                            {
+                                component = sunMoonSystemModel,
+                                componentState = MainPresenter.ComponentState.Disable,
+                            },
+                            new MainPresenter.TutorialComponent()
+                            {
+                                component = clearCountdownTimerSystemModel,
+                                componentState = MainPresenter.ComponentState.Disable,
+                            },
+                            new MainPresenter.TutorialComponent()
+                            {
+                                component = pauseView,
+                                componentState = MainPresenter.ComponentState.Pause,
+                            },
+                            new MainPresenter.TutorialComponent()
+                            {
+                                component = fadersGroupView,
+                                componentState = MainPresenter.ComponentState.Pause,
+                            },
+                            new MainPresenter.TutorialComponent()
+                            {
+                                component = tutorialView.GuideMessageView,
+                                componentState = MainPresenter.ComponentState.Enable,
+                            },
+                            new MainPresenter.TutorialComponent()
+                            {
+                                component = tutorialView.GuideUITheTurntableView,
+                                componentState = MainPresenter.ComponentState.Disable,
+                            },
+                            new MainPresenter.TutorialComponent()
+                            {
+                                component = tutorialView.GuideUITheEqualizerView,
+                                componentState = MainPresenter.ComponentState.Disable,
+                            },
+                            new MainPresenter.TutorialComponent()
+                            {
+                                component = tutorialView.GuideUITheEqualizerGageView,
+                                componentState = MainPresenter.ComponentState.Disable,
+                            },
+                            new MainPresenter.TutorialComponent()
+                            {
+                                component = tutorialView.GuideUITheDJEnergyView,
+                                componentState = MainPresenter.ComponentState.Disable,
+                            },
+                            new MainPresenter.TutorialComponent()
+                            {
+                                component = tutorialView.GuideUIThePlayerHPView,
+                                componentState = MainPresenter.ComponentState.Disable,
+                            },
+                            new MainPresenter.TutorialComponent()
+                            {
+                                component = tutorialView.GuideUITheClearCountdownTimerCircleView,
+                                componentState = MainPresenter.ComponentState.Disable,
+                            },
+                            new MainPresenter.TutorialComponent()
+                            {
+                                component = tutorialView.GuideUITheClearRewardTextContentsView,
+                                componentState = MainPresenter.ComponentState.Enable,
+                            },
+                        }
+                    },
+                    new MainPresenter.TutorialComponentMap()
+                    {
+                        guideMessageID = GuideMessageID.GM0011,
+                        tutorialComponents = new MainPresenter.TutorialComponent[]
+                        {
+                            new MainPresenter.TutorialComponent()
+                            {
+                                component = pentagramSystemModel,
+                                componentState = MainPresenter.ComponentState.Disable,
+                            },
+                            new MainPresenter.TutorialComponent()
+                            {
+                                component = shikigamiSkillSystemModel,
+                                componentState = MainPresenter.ComponentState.Disable,
+                            },
+                            new MainPresenter.TutorialComponent()
+                            {
+                                component = sunMoonSystemModel,
+                                componentState = MainPresenter.ComponentState.Disable,
+                            },
+                            new MainPresenter.TutorialComponent()
+                            {
+                                component = clearCountdownTimerSystemModel,
+                                componentState = MainPresenter.ComponentState.Disable,
+                            },
+                            new MainPresenter.TutorialComponent()
+                            {
+                                component = pauseView,
+                                componentState = MainPresenter.ComponentState.Pause,
+                            },
+                            new MainPresenter.TutorialComponent()
+                            {
+                                component = fadersGroupView,
+                                componentState = MainPresenter.ComponentState.Pause,
+                            },
+                            new MainPresenter.TutorialComponent()
+                            {
+                                component = tutorialView.GuideMessageView,
+                                componentState = MainPresenter.ComponentState.Enable,
+                            },
+                            new MainPresenter.TutorialComponent()
+                            {
+                                component = tutorialView.GuideUITheTurntableView,
+                                componentState = MainPresenter.ComponentState.Disable,
+                            },
+                            new MainPresenter.TutorialComponent()
+                            {
+                                component = tutorialView.GuideUITheEqualizerView,
+                                componentState = MainPresenter.ComponentState.Disable,
+                            },
+                            new MainPresenter.TutorialComponent()
+                            {
+                                component = tutorialView.GuideUITheEqualizerGageView,
+                                componentState = MainPresenter.ComponentState.Disable,
+                            },
+                            new MainPresenter.TutorialComponent()
+                            {
+                                component = tutorialView.GuideUITheDJEnergyView,
+                                componentState = MainPresenter.ComponentState.Disable,
+                            },
+                            new MainPresenter.TutorialComponent()
+                            {
+                                component = tutorialView.GuideUIThePlayerHPView,
+                                componentState = MainPresenter.ComponentState.Disable,
+                            },
+                            new MainPresenter.TutorialComponent()
+                            {
+                                component = tutorialView.GuideUITheClearCountdownTimerCircleView,
+                                componentState = MainPresenter.ComponentState.Disable,
+                            },
+                            new MainPresenter.TutorialComponent()
+                            {
+                                component = tutorialView.GuideUITheClearRewardTextContentsView,
+                                componentState = MainPresenter.ComponentState.Disable,
+                            },
+                        }
+                    },
+                    new MainPresenter.TutorialComponentMap()
+                    {
+                        guideMessageID = GuideMessageID.GM0012,
+                        tutorialComponents = new MainPresenter.TutorialComponent[]
+                        {
+                            new MainPresenter.TutorialComponent()
+                            {
+                                component = pentagramSystemModel,
+                                componentState = MainPresenter.ComponentState.Disable,
+                            },
+                            new MainPresenter.TutorialComponent()
+                            {
+                                component = shikigamiSkillSystemModel,
+                                componentState = MainPresenter.ComponentState.Disable,
+                            },
+                            new MainPresenter.TutorialComponent()
+                            {
+                                component = sunMoonSystemModel,
+                                componentState = MainPresenter.ComponentState.Disable,
+                            },
+                            new MainPresenter.TutorialComponent()
+                            {
+                                component = clearCountdownTimerSystemModel,
+                                componentState = MainPresenter.ComponentState.Disable,
+                            },
+                            new MainPresenter.TutorialComponent()
+                            {
+                                component = pauseView,
+                                componentState = MainPresenter.ComponentState.Pause,
+                            },
+                            new MainPresenter.TutorialComponent()
+                            {
+                                component = fadersGroupView,
+                                componentState = MainPresenter.ComponentState.Pause,
+                            },
+                            new MainPresenter.TutorialComponent()
+                            {
+                                component = tutorialView.GuideMessageView,
+                                componentState = MainPresenter.ComponentState.Pause,
+                            },
+                            new MainPresenter.TutorialComponent()
+                            {
+                                component = tutorialView.GuideUITheTurntableView,
+                                componentState = MainPresenter.ComponentState.Disable,
+                            },
+                            new MainPresenter.TutorialComponent()
+                            {
+                                component = tutorialView.GuideUITheEqualizerView,
+                                componentState = MainPresenter.ComponentState.Disable,
+                            },
+                            new MainPresenter.TutorialComponent()
+                            {
+                                component = tutorialView.GuideUITheEqualizerGageView,
+                                componentState = MainPresenter.ComponentState.Disable,
+                            },
+                            new MainPresenter.TutorialComponent()
+                            {
+                                component = tutorialView.GuideUITheDJEnergyView,
+                                componentState = MainPresenter.ComponentState.Disable,
+                            },
+                            new MainPresenter.TutorialComponent()
+                            {
+                                component = tutorialView.GuideUIThePlayerHPView,
+                                componentState = MainPresenter.ComponentState.Disable,
+                            },
+                            new MainPresenter.TutorialComponent()
+                            {
+                                component = tutorialView.GuideUITheClearCountdownTimerCircleView,
+                                componentState = MainPresenter.ComponentState.Disable,
+                            },
+                            new MainPresenter.TutorialComponent()
+                            {
+                                component = tutorialView.GuideUITheClearRewardTextContentsView,
+                                componentState = MainPresenter.ComponentState.Disable,
+                            },
+                        }
+                    },
+                },
+            };
+            #endregion
+            enemyEventSystemModel = GameObject.Find("EnemyEventSystem").GetComponent<EnemyEventSystemModel>();
         }
 
         public void OnStart()
         {
-            //// TODO: UnityのデモUIボタン押下時に実行されるように条件を追加
-            //Observable.FromCoroutine<bool>(observer => countdownLogosView.PlayCountDownDirection(observer, 3))
-            //    .Subscribe(_ => { })
-            //    .AddTo(gameObject);
+            // 初期設定
+            pauseView.gameObject.SetActive(false);
+            // ポーズボタンの押下（有効／無効）状態
+            var isInputUIPausedEnabled = new BoolReactiveProperty();
+            isInputUIPausedEnabled.Value = true;
+            // ポーズ押下
+            var inputUIPausedState = new BoolReactiveProperty();
+            inputUIPausedState.ObserveEveryValueChanged(x => x.Value)
+                .Subscribe(x =>
+                {
+                    // ポーズ画面が閉じている　かつ、
+                    // クリア画面が閉じている
+                    if (x &&
+                        !pauseView.gameObject.activeSelf /*&&*/
+                        //!clearView.gameObject.activeSelf &&
+                        //!gameOverView.gameObject.activeSelf &&
+                        //!congratulationsView.gameObject.activeSelf
+                        )
+                    {
+                        MainGameManager.Instance.AudioOwner.PlaySFX(ClipToPlay.se_play_open);
+                        //// 遊び方確認ページを開いているなら閉じる
+                        //if (gameManualScrollView.gameObject.activeSelf)
+                        //{
+                        //    if (!gameManualViewPageModels[(int)EnumShortcuActionMode.CheckAction].SetButtonEnabled(false))
+                        //        Debug.LogError("ボタン有効／無効切り替え呼び出しの失敗");
+                        //    if (!gameManualViewPageModels[(int)EnumShortcuActionMode.CheckAction].SetEventTriggerEnabled(false))
+                        //        Debug.LogError("イベント有効／無効切り替え呼び出しの失敗");
+                        //    // 遊び方を確認クローズのアニメーション
+                        //    Observable.FromCoroutine<bool>(observer => gameManualScrollView.PlayCloseAnimation(observer))
+                        //        .Subscribe(_ =>
+                        //        {
+                        //            gameManualScrollView.gameObject.SetActive(false);
+                        //        })
+                        //        .AddTo(gameObject);
+                        //}
+                        pauseView.gameObject.SetActive(true);
+                        //gamePauseModel.SetSelectedGameObject();
+                        //if (!playerModel.SetInputBan(true))
+                        //    Debug.LogError("操作禁止フラグをセット呼び出しの失敗");
+                    }
+                });
+
+            // ポーズ入力状態を監視して購読した際に下記の処理を追加
+            this.UpdateAsObservable()
+                .Subscribe(_ =>
+                {
+                    if (isInputUIPausedEnabled.Value &&
+                    #region チュートリアル実装_3 メインシーンにてチュートリアルモード追加、会話システム追加など
+                        pauseView.IsControllEnabled
+                    #endregion
+                    )
+                    {
+                        var inputSystemsOwner = MainGameManager.Instance.InputSystemsOwner;
+                        switch ((InputMode)inputSystemsOwner.CurrentInputMode.Value)
+                        {
+                            case InputMode.Gamepad:
+                                inputUIPausedState.Value = inputSystemsOwner.InputUI.Paused;
+
+                                break;
+                            case InputMode.MidiJackDDJ200:
+                                inputUIPausedState.Value = inputSystemsOwner.InputMidiJackDDJ200.PlayOrPause ||
+                                    inputSystemsOwner.InputMidiJackDDJ200.Cue;
+
+                                break;
+                            default:
+                                break;
+                        }
+                    }
+                    //if (isInputUIActionsEnabled.Value)
+                    //{
+                    //    if (((EnumShortcuActionMode)inputUIActionsState.Value).Equals(EnumShortcuActionMode.None))
+                    //    {
+                    //        // ショートカットキーの押下が None -> Any へ変わる
+                    //        if (MainGameManager.Instance.InputSystemsOwner.GetComponent<InputSystemsOwner>().InputUI.Undoed &&
+                    //            !MainGameManager.Instance.InputSystemsOwner.GetComponent<InputSystemsOwner>().InputUI.Selected)
+                    //            inputUIActionsState.Value = (int)EnumShortcuActionMode.UndoAction;
+                    //        else if (MainGameManager.Instance.InputSystemsOwner.GetComponent<InputSystemsOwner>().InputUI.Selected)
+                    //            inputUIActionsState.Value = (int)EnumShortcuActionMode.SelectAction;
+                    //    }
+                    //    else if ((((EnumShortcuActionMode)inputUIActionsState.Value).Equals(EnumShortcuActionMode.UndoAction) &&
+                    //        !MainGameManager.Instance.InputSystemsOwner.GetComponent<InputSystemsOwner>().InputUI.Undoed) ||
+                    //        (((EnumShortcuActionMode)inputUIActionsState.Value).Equals(EnumShortcuActionMode.SelectAction) &&
+                    //        !MainGameManager.Instance.InputSystemsOwner.GetComponent<InputSystemsOwner>().InputUI.Selected))
+                    //    {
+                    //        // ショートカットキーの押下が Any -> None へ変わる
+                    //        inputUIActionsState.Value = (int)EnumShortcuActionMode.None;
+                    //    }
+                    //    if (!((EnumShortcuActionMode)inputUIActionsState.Value).Equals(EnumShortcuActionMode.None))
+                    //        inputUIPushedTime.Value += Time.deltaTime;
+                    //    else if (0f < inputUIPushedTime.Value)
+                    //        // ショートカットキーの押下状態がNoneへ戻ったらリセット
+                    //        // 既に0fなら何度も更新は行わない
+                    //        inputUIPushedTime.Value = 0f;
+                    //}
+                });
+
+            #region チュートリアル実装_3 メインシーンにてチュートリアルモード追加、会話システム追加など
+            // チュートリアルモードであるかのフラグ（IsTutorialMode）を監視
+            tutorialModel.IsTutorialMode.ObserveEveryValueChanged(x => x.Value)
+                .Subscribe(x =>
+                {
+                    if (x)
+                    {
+                        this.UpdateAsObservable()
+                            .Where(_ => pentagramTurnTableModel.WrapTurretModel != null &&
+                                pentagramTurnTableModel.DanceTurretModel != null &&
+                                pentagramTurnTableModel.GraffitiTurretModel != null &&
+                                pentagramTurnTableModel.OnmyoTurretModels != null &&
+                                pentagramTurnTableModel.OnmyoTurretModels.Length == 2)
+                            .Take(1)
+                            .Subscribe(_ =>
+                            {
+                                // 動的アタッチとなるコンポーネントはこのタイミングでアタッチする
+                                var utility = new MainTutorialsUtility();
+                                tutorialGuideContentsStuct = utility.InitializeTutorialGuideContentsOfPentagramTurnTableModel(tutorialGuideContentsStuct, pentagramTurnTableModel);
+                                if (tutorialGuideContentsStuct.targetComponents == null ||
+                                    tutorialGuideContentsStuct.targetComponents.Length < 1)
+                                    Debug.LogError("InitializeTutorialGuideContentsOfPentagramTurnTableModel");
+                                // TutorialModelコンポーネントのオブジェクトを有効化
+                                tutorialModel.gameObject.SetActive(true);
+                                // TutorialModelコンポーネント＞GuideMessageModelコンポーネントの呼び出されたガイドメッセージID（GuideMessageID）を監視
+                                tutorialModel.GuideMessageModel.CalledGuideMessageID.ObserveEveryValueChanged(x => x.Value)
+                                    .Subscribe(x =>
+                                    {
+                                        if (!utility.DoTutorialGuideContents(x, tutorialGuideContentsStuct))
+                                            Debug.LogError("DoTutorialGuideContents");
+                                        if (!missionsSystemTutorialModel.SetCallMissionID(x))
+                                            Debug.LogError("SetCallMissionID");
+                                    });
+                                // MissionsSystemTutorialModelコンポーネントの進行中のミッションID（CallMissionID）を監視
+                                System.IDisposable modelUpdObservable = tutorialMissionContentsStuct.missionsSystemTutorialModel.UpdateAsObservable().Subscribe(_ => { });
+                                modelUpdObservable.Dispose();
+                                missionsSystemTutorialModel.CallMissionID.ObserveEveryValueChanged(x => x.Value)
+                                    .Subscribe(x =>
+                                    {
+                                        if (!utility.DoTutorialMissionContents(x, tutorialMissionContentsStuct, modelUpdObservable))
+                                            Debug.LogError("DoTutorialMissionContents");
+                                    });
+                            });
+                    }
+                    else
+                    {
+                        // TutorialModelコンポーネントのオブジェクトを無効化
+                        tutorialModel.gameObject.SetActive(false);
+                    }
+                });
+            #endregion
+            // 敵の死亡を監視して購読した際に下記の処理を追加
+            enemyEventSystemModel.OnEnemyDead.Subscribe(enemyModel =>
+            {
+                //for (int i = 0; i < enemyModel.EnemiesProp.soulMoneyPoint; i++)
+                //{
+                //    if (!spawnSoulMoneyModel.InstanceCloneObjects(enemyModel.transform.position, enemyModel.EnemiesProp))
+                //        Debug.LogError("InstanceCloneObjects");
+                //}
+                #region チュートリアル実装_3 メインシーンにてチュートリアルモード追加、会話システム追加など
+                if (!missionsSystemTutorialModel.UpdateKilledEnemyCount())
+                    Debug.LogError("UpdateKilledEnemyCount");
+                #endregion
+            });
+            var common = new MainPresenterCommon();
+            // クリア画面表示のため、ゴール到達のフラグ更新
+            var datas = MainGameManager.Instance.SceneOwner.GetSaveDatas();
+            var isGoalReached = new BoolReactiveProperty();
+            // ゲームオーバー画面表示のため、HP0になった時ののフラグ更新
+            var isPlayerDead = new BoolReactiveProperty();
+            isGoalReached.ObserveEveryValueChanged(x => x.Value)
+                .Subscribe(x =>
+                {
+                    if (x)
+                    {
+                        // クリア済みデータの更新
+                        if (0 < datas.sceneId
+                        #region チュートリアル実装_3 メインシーンにてチュートリアルモード追加、会話システム追加など
+                        && datas.sceneId < 8
+                        #endregion
+                            )
+                        {
+                            datas.state[datas.sceneId - 1] = 2;
+                            if (datas.sceneId < datas.state.Length - 1 &&
+                                datas.state[(datas.sceneId)] < 1)
+                                datas.state[(datas.sceneId)] = 1;
+                        }
+                        MainGameManager.Instance.AudioOwner.PlaySFX(ClipToPlay.me_game_clear);
+                        // 初回のみ最初から拡大表示
+                        if (!common.IsFinalLevel(datas))
+                        {
+                            // 初期処理
+                            //if (!rewardSelectView.SetContents(rewardSelectModel.RewardContentProps))
+                            //    Debug.LogError("SetContents");
+                            //if (!clearView.SetActiveGameObject(true))
+                            //    Debug.LogError("SetActiveGameObject");
+                            //gameSelectButtonView.gameObject.SetActive(false);
+                            //var rewardContentModel = rewardSelectModel.RewardContentModels[0];
+                            //if (!cursorIconView.SetSelectAndScale(rewardContentModel.transform.position, (rewardContentModel.transform as RectTransform).sizeDelta))
+                            //    Debug.LogError("SetSelectAndScale");
+                            //rewardContentModel.SetSelectedGameObject();
+                            #region チュートリアル実装_3 メインシーンにてチュートリアルモード追加、会話システム追加など
+                            if (!MainGameManager.Instance.SceneOwner.ReverseSceneId(datas.sceneId, datas))
+                                datas.sceneId++;
+                            #endregion
+                            //datas.sceneId++;
+                            if (!MainGameManager.Instance.SceneOwner.SetSaveDatas(datas))
+                                Debug.LogError("クリア済みデータ保存呼び出しの失敗");
+                            //gameSelectButtonView.gameObject.SetActive(true);
+                            //cursorIconView.gameObject.SetActive(true);
+                        }
+                        else
+                        {
+                            //// 初期処理
+                            //if (!congratulationsView.SetActiveGameObject(true))
+                            //    Debug.LogError("SetActiveGameObject");
+                            //foreach (var gameTitleButtonView in gameTitleButtonViews.Where(q => q.transform.parent.gameObject.name.Equals("Congratulations")))
+                            //    gameTitleButtonView.gameObject.SetActive(true);
+                            //foreach (var gameTitleButtonModel in gameTitleButtonModels.Where(q => q.transform.parent.gameObject.name.Equals("Congratulations")))
+                            //    gameTitleButtonModel.SetSelectedGameObject();
+                            //if (!playerModel.SetInputBan(true))
+                            //    Debug.LogError("操作禁止フラグをセット呼び出しの失敗");
+                            //if (!MainGameManager.Instance.SceneOwner.DestroyMainSceneStagesState())
+                            //    Debug.LogError("DestroyMainSceneStagesState");
+                            //if (!soulWalletModel.SetIsClearFinalStage(true))
+                            //    Debug.LogError("SetIsClearFinalStage");
+                        }
+                    }
+                });
+
         }
 
-        private void OnGUI()
+        #region チュートリアル実装_3 メインシーンにてチュートリアルモード追加、会話システム追加など
+        /// <summary>
+        /// チュートリアルのガイドで扱うリソースの構造体
+        /// </summary>
+        [System.Serializable]
+        public struct TutorialGuideContentsStuct
         {
-            // ボタンの配置やサイズを決定（x, y, width, height）
-            if (GUI.Button(new Rect(10, 10, 100, 50), "Button 1"))
-            {
-                StartCountdown(1);  // ボタン1が押された場合、1を渡す
-            }
-
-            if (GUI.Button(new Rect(10, 70, 100, 50), "Button 2"))
-            {
-                StartCountdown(2);  // ボタン2が押された場合、2を渡す
-            }
-
-            if (GUI.Button(new Rect(10, 130, 100, 50), "Button 3"))
-            {
-                StartCountdown(3);  // ボタン3が押された場合、3を渡す
-            }
+            /// <summary>対象のコンポーネント</summary>
+            public Component[] targetComponents;
+            /// <summary>チュートリアルで扱うガイドIDとリソースの構造体</summary>
+            public TutorialComponentMap[] tutorialComponentMaps;
         }
 
-        // ボタンを押すとカウントダウンを開始する
-        private void StartCountdown(int number)
+        /// <summary>
+        /// チュートリアルで扱うガイドIDとリソースの構造体
+        /// </summary>
+        [System.Serializable]
+        public struct TutorialComponentMap
         {
-            Observable.FromCoroutine<bool>(observer => countdownLogosView.PlayCountDownDirection(observer, number))
-                .Subscribe(_ => { })
-                .AddTo(gameObject);
+            /// <summary>ガイドメッセージID</summary>
+            public GuideMessageID guideMessageID;
+            /// <summary>チュートリアルで扱うリソースの構造体</summary>
+            public TutorialComponent[] tutorialComponents;
         }
+
+        /// <summary>
+        /// チュートリアルで扱うリソースの構造体
+        /// </summary>
+        [System.Serializable]
+        public struct TutorialComponent
+        {
+            /// <summary>コンポーネント</summary>
+            public Component component;
+            /// <summary>コンポーネント、【有効、無効、一時停止】</summary>
+            public ComponentState componentState;
+        }
+
+        /// <summary>
+        /// コンポーネント、【有効、無効、一時停止】
+        /// </summary>
+        public enum ComponentState
+        {
+            /// <summary>無効</summary>
+            Disable,
+            /// <summary>有効</summary>
+            Enable,
+            /// <summary>一時停止</summary>
+            Pause,
+        }
+
+        /// <summary>
+        /// チュートリアルのミッションで扱うリソースの構造体
+        /// </summary>
+        [System.Serializable]
+        public struct TutorialMissionContentsStuct
+        {
+            /// <summary>チュートリアルの中のミッションを管理するモデル</summary>
+            public MissionsSystemTutorialModel missionsSystemTutorialModel;
+            /// <summary>FungusのSayDialogを管理ビュー</summary>
+            public GuideMessageView guideMessageView;
+            /// <summary>チュートリアル用の敵スポーン制御モデル</summary>
+            public EnemiesSpawnTutorialModel enemiesSpawnTutorialModel;
+        }
+        #endregion
     }
 }

@@ -1,0 +1,1288 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &502439594237340207
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 5954597495589241216}
+  - component: {fileID: 6269552399435300525}
+  - component: {fileID: 5780540346074303063}
+  - component: {fileID: 7454021454277373838}
+  - component: {fileID: 6899901905995081005}
+  - component: {fileID: 285544967067552934}
+  - component: {fileID: 5369939466519063241}
+  - component: {fileID: 8021790449625431513}
+  - component: {fileID: 4625509206903036080}
+  - component: {fileID: 2997982103565512073}
+  - component: {fileID: 2168785177328454987}
+  - component: {fileID: 3920806568053084141}
+  - component: {fileID: 4001462999108648714}
+  - component: {fileID: 6460664704899528046}
+  - component: {fileID: 6621530192003799033}
+  - component: {fileID: 1008212275914341549}
+  - component: {fileID: 6640082567174020424}
+  - component: {fileID: 7325410663203370147}
+  - component: {fileID: 5813906966002004821}
+  - component: {fileID: 2594781620535968109}
+  - component: {fileID: 8099816620705397838}
+  - component: {fileID: 8529961894501580206}
+  - component: {fileID: 1088336686868643986}
+  - component: {fileID: 2476698446996608757}
+  - component: {fileID: 6331192518301610036}
+  - component: {fileID: 8935075681479342922}
+  - component: {fileID: 3707225265592277046}
+  - component: {fileID: 4944622280521819382}
+  - component: {fileID: 1478773047868926030}
+  - component: {fileID: 4545480909702070861}
+  - component: {fileID: 6152744090853852828}
+  - component: {fileID: 8133988923243712879}
+  - component: {fileID: 4199181781497533159}
+  - component: {fileID: 8949204441234390214}
+  - component: {fileID: 5238991547095216749}
+  m_Layer: 0
+  m_Name: Flowchart
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &5954597495589241216
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 502439594237340207}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 8498046548159506962}
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &6269552399435300525
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 502439594237340207}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7a334fe2ffb574b3583ff3b18b4792d3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  version: 1
+  scrollPos: {x: 0, y: 0}
+  variablesScrollPos: {x: 0, y: 0}
+  variablesExpanded: 1
+  blockViewHeight: 541
+  zoom: 1
+  scrollViewRect:
+    serializedVersion: 2
+    x: -343
+    y: -340
+    width: 1114
+    height: 859
+  selectedBlocks:
+  - {fileID: 5780540346074303063}
+  selectedCommands:
+  - {fileID: 5238991547095216749}
+  variables: []
+  description: 
+  stepPause: 0
+  colorCommands: 1
+  hideComponents: 1
+  saveSelection: 1
+  localizationId: 
+  showLineNumbers: 0
+  hideCommands: []
+  luaEnvironment: {fileID: 0}
+  luaBindingName: flowchart
+--- !u!114 &5780540346074303063
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 502439594237340207}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3d3d73aef2cfc4f51abf34ac00241f60, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  nodeRect:
+    serializedVersion: 2
+    x: 67
+    y: 70
+    width: 191
+    height: 40
+  tint: {r: 1, g: 1, b: 1, a: 1}
+  useCustomTint: 0
+  itemId: 0
+  blockName: "\u30C1\u30E5\u30FC\u30C8\u30EA\u30A2\u30EB\u5185\u3067\u306E\u4F1A\u8A71\u5185\u5BB9"
+  description: "\u30C1\u30E5\u30FC\u30C8\u30EA\u30A2\u30EB\u5185\u3067\u767D\u305F\u307E\u3061\u3083\u3093\u304C\u558B\u308B\u70BA\u306E\u4F1A\u8A71\u5185\u5BB9\u3092\u8A18\u8F09\u3059\u308B\u3002"
+  eventHandler: {fileID: 285544967067552934}
+  commandList:
+  - {fileID: 5369939466519063241}
+  - {fileID: 6899901905995081005}
+  - {fileID: 8021790449625431513}
+  - {fileID: 4625509206903036080}
+  - {fileID: 2997982103565512073}
+  - {fileID: 6331192518301610036}
+  - {fileID: 2168785177328454987}
+  - {fileID: 8935075681479342922}
+  - {fileID: 3920806568053084141}
+  - {fileID: 4001462999108648714}
+  - {fileID: 3707225265592277046}
+  - {fileID: 6460664704899528046}
+  - {fileID: 5238991547095216749}
+  - {fileID: 6621530192003799033}
+  - {fileID: 4944622280521819382}
+  - {fileID: 1008212275914341549}
+  - {fileID: 6640082567174020424}
+  - {fileID: 1478773047868926030}
+  - {fileID: 7325410663203370147}
+  - {fileID: 5813906966002004821}
+  - {fileID: 2594781620535968109}
+  - {fileID: 4545480909702070861}
+  - {fileID: 8099816620705397838}
+  - {fileID: 6152744090853852828}
+  - {fileID: 8529961894501580206}
+  - {fileID: 8133988923243712879}
+  - {fileID: 1088336686868643986}
+  - {fileID: 4199181781497533159}
+  - {fileID: 2476698446996608757}
+  - {fileID: 8949204441234390214}
+  suppressAllAutoSelections: 0
+--- !u!114 &7454021454277373838
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 502439594237340207}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1257d4eb3e8da814fbcb7abd9c0394e5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &6899901905995081005
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 502439594237340207}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ec422cd568a9c4a31ad7c36d0572b9da, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  itemId: 1
+  indentLevel: 0
+  storyText: "\uFF24\uFF2A\u9670\u967D\u5E2B \uFF5Ea.k.a\u2606\u5B89\u500D\u6674\u660E\uFF5E\u306E\u4E16\u754C\u306B\u3088\u3046\u3053\u305D\n\u4ECA\u304B\u3089\u64CD\u4F5C\u8AAC\u660E\u3092\u884C\u3046\u3088"
+  description: 
+  character: {fileID: 7533831775956130097}
+  portrait: {fileID: 21300000, guid: c2e045c9211205942a1e6663f41a5d32, type: 3}
+  voiceOverClip: {fileID: 0}
+  showAlways: 1
+  showCount: 1
+  extendPrevious: 0
+  fadeWhenDone: 1
+  waitForClick: 1
+  stopVoiceover: 1
+  waitForVO: 0
+  setSayDialog: {fileID: 0}
+--- !u!114 &285544967067552934
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 502439594237340207}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d2f6487d21a03404cb21b245f0242e79, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  parentBlock: {fileID: 5780540346074303063}
+  suppressBlockAutoSelect: 0
+  waitForFrames: 1
+--- !u!114 &5369939466519063241
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 502439594237340207}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 688e35811870d403f9e2b1ab2a699d98, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  itemId: 2
+  indentLevel: 0
+  description: 
+  targetObject: {fileID: 502439594237340207}
+  targetComponentAssemblyName: Main.Model.GuideMessageModel, Assembly-CSharp, Version=0.0.0.0,
+    Culture=neutral, PublicKeyToken=null
+  targetComponentFullname: UnityEngine.Component[]
+  targetComponentText: GuideMessageModel
+  targetMethod: CallGuideMessageID
+  targetMethodText: 'CallGuideMessageID (GuideMessageID): Void'
+  methodParameters:
+  - objValue:
+      typeAssemblyname: Main.Common.GuideMessageID, Assembly-CSharp, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      typeFullname: Main.Common.GuideMessageID
+      intValue: 1
+      boolValue: 0
+      floatValue: 0
+      stringValue: 
+      colorValue: {r: 0, g: 0, b: 0, a: 0}
+      gameObjectValue: {fileID: 0}
+      materialValue: {fileID: 0}
+      objectValue: {fileID: 0}
+      spriteValue: {fileID: 0}
+      textureValue: {fileID: 0}
+      vector2Value: {x: 0, y: 0}
+      vector3Value: {x: 0, y: 0, z: 0}
+    variableKey: 
+  saveReturnValue: 0
+  returnValueVariableKey: 
+  returnValueType: System.Void
+  showInherited: 0
+  callMode: 0
+--- !u!114 &8021790449625431513
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 502439594237340207}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ec422cd568a9c4a31ad7c36d0572b9da, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  itemId: 3
+  indentLevel: 0
+  storyText: "\u753B\u9762\u306E\u56DB\u65B9\u5411\u304B\u3089\u5411\u304B\u3063\u3066\u304F\u308B\u6575\u306B\u5411\u304B\u3063\u3066\u3001\u5996\u9B54\u304C\u8FEB\u308B\u306E\u3067\u3001\n\u30BF\u30FC\u30F3\u30C6\u30FC\u30D6\u30EB\u3084\u30A4\u30B3\u30E9\u30A4\u30B6\u30FC\u3092\u64CD\u4F5C\u3057\u3066\u5012\u305D\u3046"
+  description: 
+  character: {fileID: 7533831775956130097}
+  portrait: {fileID: 21300000, guid: c2e045c9211205942a1e6663f41a5d32, type: 3}
+  voiceOverClip: {fileID: 0}
+  showAlways: 1
+  showCount: 1
+  extendPrevious: 0
+  fadeWhenDone: 1
+  waitForClick: 1
+  stopVoiceover: 1
+  waitForVO: 0
+  setSayDialog: {fileID: 0}
+--- !u!114 &4625509206903036080
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 502439594237340207}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 688e35811870d403f9e2b1ab2a699d98, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  itemId: 4
+  indentLevel: 0
+  description: 
+  targetObject: {fileID: 502439594237340207}
+  targetComponentAssemblyName: Main.Model.GuideMessageModel, Assembly-CSharp, Version=0.0.0.0,
+    Culture=neutral, PublicKeyToken=null
+  targetComponentFullname: UnityEngine.Component[]
+  targetComponentText: GuideMessageModel
+  targetMethod: CallGuideMessageID
+  targetMethodText: 'CallGuideMessageID (GuideMessageID): Void'
+  methodParameters:
+  - objValue:
+      typeAssemblyname: Main.Common.GuideMessageID, Assembly-CSharp, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      typeFullname: Main.Common.GuideMessageID
+      intValue: 2
+      boolValue: 0
+      floatValue: 0
+      stringValue: 
+      colorValue: {r: 0, g: 0, b: 0, a: 0}
+      gameObjectValue: {fileID: 0}
+      materialValue: {fileID: 0}
+      objectValue: {fileID: 0}
+      spriteValue: {fileID: 0}
+      textureValue: {fileID: 0}
+      vector2Value: {x: 0, y: 0}
+      vector3Value: {x: 0, y: 0, z: 0}
+    variableKey: 
+  saveReturnValue: 0
+  returnValueVariableKey: 
+  returnValueType: System.Void
+  showInherited: 0
+  callMode: 0
+--- !u!114 &2997982103565512073
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 502439594237340207}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ec422cd568a9c4a31ad7c36d0572b9da, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  itemId: 5
+  indentLevel: 0
+  storyText: "\u307E\u305A\u30BF\u30FC\u30F3\u30C6\u30FC\u30D6\u30EB\u3092\u56DE\u3057\u3066\u3001\u9670\u967D\u7389\u3092\u98DB\u3070\u3057\u3066\u6575\u3092\u5012\u305D\u3046"
+  description: 
+  character: {fileID: 7533831775956130097}
+  portrait: {fileID: 21300000, guid: c2e045c9211205942a1e6663f41a5d32, type: 3}
+  voiceOverClip: {fileID: 0}
+  showAlways: 1
+  showCount: 1
+  extendPrevious: 0
+  fadeWhenDone: 1
+  waitForClick: 1
+  stopVoiceover: 1
+  waitForVO: 0
+  setSayDialog: {fileID: 0}
+--- !u!114 &2168785177328454987
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 502439594237340207}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ec422cd568a9c4a31ad7c36d0572b9da, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  itemId: 6
+  indentLevel: 0
+  storyText: "\u30BF\u30FC\u30F3\u30C6\u30FC\u30D6\u30EB\u3092\u56DE\u3057\u3066\u3001\u5168\u3066\u306E\u6575\u3092\u5012\u305D\u3046\uFF01\uFF01\uFF01\r\n\u3010
+    \uFF10 \uFF0F \uFF13 \u3011"
+  description: 
+  character: {fileID: 7533831775956130097}
+  portrait: {fileID: 21300000, guid: c2e045c9211205942a1e6663f41a5d32, type: 3}
+  voiceOverClip: {fileID: 0}
+  showAlways: 1
+  showCount: 1
+  extendPrevious: 0
+  fadeWhenDone: 1
+  waitForClick: 1
+  stopVoiceover: 1
+  waitForVO: 0
+  setSayDialog: {fileID: 0}
+--- !u!114 &3920806568053084141
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 502439594237340207}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ec422cd568a9c4a31ad7c36d0572b9da, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  itemId: 7
+  indentLevel: 0
+  storyText: "\u6B21\u306F\uFF13\u7A2E\u985E\u306E\u30A4\u30B3\u30E9\u30A4\u30B6\u30FC\u3092\u5DE6\u53F3\u306B\u56DE\u3057\u3066\u3001\n\u5404\u8272\u306E\u5F0F\u795E\u306E\u5F37\u3055\u3092\u8ABF\u6574\u3057\u3088\u3046"
+  description: 
+  character: {fileID: 7533831775956130097}
+  portrait: {fileID: 21300000, guid: c2e045c9211205942a1e6663f41a5d32, type: 3}
+  voiceOverClip: {fileID: 0}
+  showAlways: 1
+  showCount: 1
+  extendPrevious: 0
+  fadeWhenDone: 1
+  waitForClick: 1
+  stopVoiceover: 1
+  waitForVO: 0
+  setSayDialog: {fileID: 0}
+--- !u!114 &4001462999108648714
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 502439594237340207}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ec422cd568a9c4a31ad7c36d0572b9da, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  itemId: 8
+  indentLevel: 0
+  storyText: "\u30AA\u30FC\u30E9\u3092\u7E8F\u3063\u305F\u6575\u306F\u540C\u3058\u8272\u306E\u5F0F\u795E\u3067\u3057\u304B\u30C0\u30E1\u30FC\u30B8\u304C\r\n\u5165\u3089\u306A\u3044\u306E\u3067\u3001\u30A4\u30B3\u30E9\u30A4\u30B6\u30FC\u3092\u64CD\u4F5C\u3057\u3066\u5012\u305D\u3046\uFF01\uFF01\uFF01"
+  description: 
+  character: {fileID: 7533831775956130097}
+  portrait: {fileID: 21300000, guid: c2e045c9211205942a1e6663f41a5d32, type: 3}
+  voiceOverClip: {fileID: 0}
+  showAlways: 1
+  showCount: 1
+  extendPrevious: 0
+  fadeWhenDone: 1
+  waitForClick: 1
+  stopVoiceover: 1
+  waitForVO: 0
+  setSayDialog: {fileID: 0}
+--- !u!114 &6460664704899528046
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 502439594237340207}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ec422cd568a9c4a31ad7c36d0572b9da, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  itemId: 9
+  indentLevel: 0
+  storyText: "\u30A4\u30B3\u30E9\u30A4\u30B6\u30FC\u3092\u8ABF\u6574\u3057\u3066\u3001\u5168\u3066\u306E\u6575\u3092\u5012\u305D\u3046\uFF01\uFF01\uFF01\r\n\u3010
+    \uFF10 \uFF0F \uFF19 \u3011"
+  description: 
+  character: {fileID: 7533831775956130097}
+  portrait: {fileID: 21300000, guid: c2e045c9211205942a1e6663f41a5d32, type: 3}
+  voiceOverClip: {fileID: 0}
+  showAlways: 1
+  showCount: 1
+  extendPrevious: 0
+  fadeWhenDone: 1
+  waitForClick: 1
+  stopVoiceover: 1
+  waitForVO: 0
+  setSayDialog: {fileID: 0}
+--- !u!114 &6621530192003799033
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 502439594237340207}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ec422cd568a9c4a31ad7c36d0572b9da, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  itemId: 10
+  indentLevel: 0
+  storyText: "\u6B21\u306F\u30B2\u30FC\u30E0\u3067\u8868\u793A\u3059\u308B\u5404\u7A2E\uFF35\uFF29\u306E\u8AAC\u660E\u3092\u3059\u308B\u3088"
+  description: 
+  character: {fileID: 7533831775956130097}
+  portrait: {fileID: 21300000, guid: c2e045c9211205942a1e6663f41a5d32, type: 3}
+  voiceOverClip: {fileID: 0}
+  showAlways: 1
+  showCount: 1
+  extendPrevious: 0
+  fadeWhenDone: 1
+  waitForClick: 1
+  stopVoiceover: 1
+  waitForVO: 0
+  setSayDialog: {fileID: 0}
+--- !u!114 &1008212275914341549
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 502439594237340207}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ec422cd568a9c4a31ad7c36d0572b9da, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  itemId: 11
+  indentLevel: 0
+  storyText: "\u30A4\u30B3\u30E9\u30A4\u30B6\u30FC\u3092\u56DE\u3059\u4E8B\u3067\r\n\u753B\u9762\u53F3\u4E0B\u306B\u30D5\u30A7\u30FC\u30C0\u30FC\u304C\u8868\u793A\u3059\u308B\u3088"
+  description: 
+  character: {fileID: 7533831775956130097}
+  portrait: {fileID: 21300000, guid: c2e045c9211205942a1e6663f41a5d32, type: 3}
+  voiceOverClip: {fileID: 0}
+  showAlways: 1
+  showCount: 1
+  extendPrevious: 0
+  fadeWhenDone: 1
+  waitForClick: 1
+  stopVoiceover: 1
+  waitForVO: 0
+  setSayDialog: {fileID: 0}
+--- !u!114 &6640082567174020424
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 502439594237340207}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ec422cd568a9c4a31ad7c36d0572b9da, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  itemId: 12
+  indentLevel: 0
+  storyText: "\u30A4\u30B3\u30E9\u30A4\u30B6\u30FC\u3092\u56DE\u3059\u65B9\u5411\u306B\u3088\u3063\u3066\u3001\u30D5\u30A7\u30FC\u30C0\u30FC\u3082\r\n\u4E0A\u4E0B\u306B\u79FB\u52D5\u3057\u3066\u3001\u5404\u8272\u306E\u5F0F\u795E\u306E\u653B\u6483\u529B\u304C\u5909\u5316\u3059\u308B\u3088"
+  description: 
+  character: {fileID: 7533831775956130097}
+  portrait: {fileID: 21300000, guid: c2e045c9211205942a1e6663f41a5d32, type: 3}
+  voiceOverClip: {fileID: 0}
+  showAlways: 1
+  showCount: 1
+  extendPrevious: 0
+  fadeWhenDone: 1
+  waitForClick: 1
+  stopVoiceover: 1
+  waitForVO: 0
+  setSayDialog: {fileID: 0}
+--- !u!114 &7325410663203370147
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 502439594237340207}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ec422cd568a9c4a31ad7c36d0572b9da, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  itemId: 13
+  indentLevel: 0
+  storyText: "\u30A4\u30B3\u30E9\u30A4\u30B6\u30FC\u3092\u53F3\u306B\u56DE\u3057\u3066\u3001\r\n\u5F0F\u795E\u306E\u653B\u6483\u529B\u3092\u4E0A\u3052\u308B\u3068SP\u30B2\u30FC\u30B8\u304C\u6E1B\u5C11\u3059\u308B\u3088"
+  description: 
+  character: {fileID: 7533831775956130097}
+  portrait: {fileID: 21300000, guid: c2e045c9211205942a1e6663f41a5d32, type: 3}
+  voiceOverClip: {fileID: 0}
+  showAlways: 1
+  showCount: 1
+  extendPrevious: 0
+  fadeWhenDone: 1
+  waitForClick: 1
+  stopVoiceover: 1
+  waitForVO: 0
+  setSayDialog: {fileID: 0}
+--- !u!114 &5813906966002004821
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 502439594237340207}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ec422cd568a9c4a31ad7c36d0572b9da, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  itemId: 14
+  indentLevel: 0
+  storyText: "\uFF33\uFF30\u30B2\u30FC\u30B8\u304C\uFF10\u306B\u306A\u308B\u3068\u5F0F\u795E\u306E\u80FD\u529B\u304C\u5927\u5E45\u306B\u4E0B\u304C\u308A\r\n\u56DE\u5FA9\u3059\u308B\u307E\u3067\u6642\u9593\u304C\u639B\u304B\u3063\u3066\u3057\u307E\u3046"
+  description: 
+  character: {fileID: 7533831775956130097}
+  portrait: {fileID: 21300000, guid: c2e045c9211205942a1e6663f41a5d32, type: 3}
+  voiceOverClip: {fileID: 0}
+  showAlways: 1
+  showCount: 1
+  extendPrevious: 0
+  fadeWhenDone: 1
+  waitForClick: 1
+  stopVoiceover: 1
+  waitForVO: 0
+  setSayDialog: {fileID: 0}
+--- !u!114 &2594781620535968109
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 502439594237340207}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ec422cd568a9c4a31ad7c36d0572b9da, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  itemId: 15
+  indentLevel: 0
+  storyText: "\u30A4\u30B3\u30E9\u30A4\u30B6\u30FC\u3092\u5DE6\u306B\u56DE\u3057\u3066\u3001\u5F0F\u795E\u306E\u80FD\u529B\u3092\u4E0B\u3052\u308B\u4E8B\u3067\r\n\uFF33\uFF30\u30B2\u30FC\u30B8\u306E\u56DE\u5FA9\u304C\u3067\u304D\u308B\u306E\u3067\u3001\u4E0A\u624B\u304F\u8ABF\u6574\u3057\u3088\u3046"
+  description: 
+  character: {fileID: 7533831775956130097}
+  portrait: {fileID: 21300000, guid: c2e045c9211205942a1e6663f41a5d32, type: 3}
+  voiceOverClip: {fileID: 0}
+  showAlways: 1
+  showCount: 1
+  extendPrevious: 0
+  fadeWhenDone: 1
+  waitForClick: 1
+  stopVoiceover: 1
+  waitForVO: 0
+  setSayDialog: {fileID: 0}
+--- !u!114 &8099816620705397838
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 502439594237340207}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ec422cd568a9c4a31ad7c36d0572b9da, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  itemId: 16
+  indentLevel: 0
+  storyText: "\u5996\u9B54\u306B\u89E6\u308C\u3066\u3057\u307E\u3046\u3068\uFF28\uFF30\u304C\u6E1B\u308A\u3001\u30B2\u30FC\u30B8\u304C\u6E1B\u5C11\u3059\u308B\u3088\r\n\uFF28\uFF30\u304C\uFF10\u306B\u306A\u308B\u3068\u30B2\u30FC\u30E0\u30AA\u30FC\u30D0\u30FC\u306B\u306A\u308B\u306E\u3067\u3001\u6C17\u3092\u4ED8\u3051\u3066"
+  description: 
+  character: {fileID: 7533831775956130097}
+  portrait: {fileID: 21300000, guid: c2e045c9211205942a1e6663f41a5d32, type: 3}
+  voiceOverClip: {fileID: 0}
+  showAlways: 1
+  showCount: 1
+  extendPrevious: 0
+  fadeWhenDone: 1
+  waitForClick: 1
+  stopVoiceover: 1
+  waitForVO: 0
+  setSayDialog: {fileID: 0}
+--- !u!114 &8529961894501580206
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 502439594237340207}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ec422cd568a9c4a31ad7c36d0572b9da, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  itemId: 17
+  indentLevel: 0
+  storyText: "\u6642\u9593\u7D4C\u904E\u3067\u753B\u9762\u4E0A\u90E8\u306E\u663C\u591C\u30B2\u30FC\u30B8\u304C\u6E1B\u5C11\u3059\u308B\u3088\r\n\u3053\u306E\u30B2\u30FC\u30B8\u304C\uFF10\u306B\u306A\u308B\u3068\u30B9\u30C6\u30FC\u30B8\u30AF\u30EA\u30A2\u3068\u306A\u308B\u3088"
+  description: 
+  character: {fileID: 7533831775956130097}
+  portrait: {fileID: 21300000, guid: c2e045c9211205942a1e6663f41a5d32, type: 3}
+  voiceOverClip: {fileID: 0}
+  showAlways: 1
+  showCount: 1
+  extendPrevious: 0
+  fadeWhenDone: 1
+  waitForClick: 1
+  stopVoiceover: 1
+  waitForVO: 0
+  setSayDialog: {fileID: 0}
+--- !u!114 &1088336686868643986
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 502439594237340207}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ec422cd568a9c4a31ad7c36d0572b9da, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  itemId: 18
+  indentLevel: 0
+  storyText: "\u5996\u9B54\u3092\u5012\u3059\u5EA6\u306B\u7372\u5F97\u3057\u305F\u9B42\u306E\u6570\u304C\u753B\u9762\u53F3\u4E0A\u306B\u8868\u793A\u3055\u308C\u308B\u3088\r\n\u30B9\u30C6\u30FC\u30B8\u30AF\u30EA\u30A2\u5F8C\u306B\u9B42\u3092\u6D88\u8CBB\u3057\u3066\u5B89\u500D\u6674\u660E\u3084\u5F0F\u795E\u3092\u5F37\u5316\u3057\u3088\u3046"
+  description: 
+  character: {fileID: 7533831775956130097}
+  portrait: {fileID: 21300000, guid: c2e045c9211205942a1e6663f41a5d32, type: 3}
+  voiceOverClip: {fileID: 0}
+  showAlways: 1
+  showCount: 1
+  extendPrevious: 0
+  fadeWhenDone: 1
+  waitForClick: 1
+  stopVoiceover: 1
+  waitForVO: 0
+  setSayDialog: {fileID: 0}
+--- !u!114 &2476698446996608757
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 502439594237340207}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ec422cd568a9c4a31ad7c36d0572b9da, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  itemId: 19
+  indentLevel: 0
+  storyText: "\u57FA\u672C\u64CD\u4F5C\u306E\u8AAC\u660E\u306F\u4EE5\u4E0A\u3060\u3088\r\n\u653B\u7565\u3068\u5F37\u5316\u3092\u7E70\u308A\u8FD4\u3057\u3066\u3001\u5168\u56FD\u30C4\u30A2\u30FC\u3092\u5236\u8987\u3057\u3088\u3046"
+  description: 
+  character: {fileID: 7533831775956130097}
+  portrait: {fileID: 21300000, guid: c2e045c9211205942a1e6663f41a5d32, type: 3}
+  voiceOverClip: {fileID: 0}
+  showAlways: 1
+  showCount: 1
+  extendPrevious: 0
+  fadeWhenDone: 1
+  waitForClick: 1
+  stopVoiceover: 1
+  waitForVO: 0
+  setSayDialog: {fileID: 0}
+--- !u!114 &6331192518301610036
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 502439594237340207}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 688e35811870d403f9e2b1ab2a699d98, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  itemId: 20
+  indentLevel: 0
+  description: 
+  targetObject: {fileID: 502439594237340207}
+  targetComponentAssemblyName: Main.Model.GuideMessageModel, Assembly-CSharp, Version=0.0.0.0,
+    Culture=neutral, PublicKeyToken=null
+  targetComponentFullname: UnityEngine.Component[]
+  targetComponentText: GuideMessageModel
+  targetMethod: CallGuideMessageID
+  targetMethodText: 'CallGuideMessageID (GuideMessageID): Void'
+  methodParameters:
+  - objValue:
+      typeAssemblyname: Main.Common.GuideMessageID, Assembly-CSharp, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      typeFullname: Main.Common.GuideMessageID
+      intValue: 3
+      boolValue: 0
+      floatValue: 0
+      stringValue: 
+      colorValue: {r: 0, g: 0, b: 0, a: 0}
+      gameObjectValue: {fileID: 0}
+      materialValue: {fileID: 0}
+      objectValue: {fileID: 0}
+      spriteValue: {fileID: 0}
+      textureValue: {fileID: 0}
+      vector2Value: {x: 0, y: 0}
+      vector3Value: {x: 0, y: 0, z: 0}
+    variableKey: 
+  saveReturnValue: 0
+  returnValueVariableKey: 
+  returnValueType: System.Void
+  showInherited: 0
+  callMode: 0
+--- !u!114 &8935075681479342922
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 502439594237340207}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 688e35811870d403f9e2b1ab2a699d98, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  itemId: 21
+  indentLevel: 0
+  description: 
+  targetObject: {fileID: 502439594237340207}
+  targetComponentAssemblyName: Main.Model.GuideMessageModel, Assembly-CSharp, Version=0.0.0.0,
+    Culture=neutral, PublicKeyToken=null
+  targetComponentFullname: UnityEngine.Component[]
+  targetComponentText: GuideMessageModel
+  targetMethod: CallGuideMessageID
+  targetMethodText: 'CallGuideMessageID (GuideMessageID): Void'
+  methodParameters:
+  - objValue:
+      typeAssemblyname: Main.Common.GuideMessageID, Assembly-CSharp, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      typeFullname: Main.Common.GuideMessageID
+      intValue: 4
+      boolValue: 0
+      floatValue: 0
+      stringValue: 
+      colorValue: {r: 0, g: 0, b: 0, a: 0}
+      gameObjectValue: {fileID: 0}
+      materialValue: {fileID: 0}
+      objectValue: {fileID: 0}
+      spriteValue: {fileID: 0}
+      textureValue: {fileID: 0}
+      vector2Value: {x: 0, y: 0}
+      vector3Value: {x: 0, y: 0, z: 0}
+    variableKey: 
+  saveReturnValue: 0
+  returnValueVariableKey: 
+  returnValueType: System.Void
+  showInherited: 0
+  callMode: 0
+--- !u!114 &3707225265592277046
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 502439594237340207}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 688e35811870d403f9e2b1ab2a699d98, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  itemId: 22
+  indentLevel: 0
+  description: 
+  targetObject: {fileID: 502439594237340207}
+  targetComponentAssemblyName: Main.Model.GuideMessageModel, Assembly-CSharp, Version=0.0.0.0,
+    Culture=neutral, PublicKeyToken=null
+  targetComponentFullname: UnityEngine.Component[]
+  targetComponentText: GuideMessageModel
+  targetMethod: CallGuideMessageID
+  targetMethodText: 'CallGuideMessageID (GuideMessageID): Void'
+  methodParameters:
+  - objValue:
+      typeAssemblyname: Main.Common.GuideMessageID, Assembly-CSharp, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      typeFullname: Main.Common.GuideMessageID
+      intValue: 5
+      boolValue: 0
+      floatValue: 0
+      stringValue: 
+      colorValue: {r: 0, g: 0, b: 0, a: 0}
+      gameObjectValue: {fileID: 0}
+      materialValue: {fileID: 0}
+      objectValue: {fileID: 0}
+      spriteValue: {fileID: 0}
+      textureValue: {fileID: 0}
+      vector2Value: {x: 0, y: 0}
+      vector3Value: {x: 0, y: 0, z: 0}
+    variableKey: 
+  saveReturnValue: 0
+  returnValueVariableKey: 
+  returnValueType: System.Void
+  showInherited: 0
+  callMode: 0
+--- !u!114 &4944622280521819382
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 502439594237340207}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 688e35811870d403f9e2b1ab2a699d98, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  itemId: 24
+  indentLevel: 0
+  description: 
+  targetObject: {fileID: 502439594237340207}
+  targetComponentAssemblyName: Main.Model.GuideMessageModel, Assembly-CSharp, Version=0.0.0.0,
+    Culture=neutral, PublicKeyToken=null
+  targetComponentFullname: UnityEngine.Component[]
+  targetComponentText: GuideMessageModel
+  targetMethod: CallGuideMessageID
+  targetMethodText: 'CallGuideMessageID (GuideMessageID): Void'
+  methodParameters:
+  - objValue:
+      typeAssemblyname: Main.Common.GuideMessageID, Assembly-CSharp, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      typeFullname: Main.Common.GuideMessageID
+      intValue: 6
+      boolValue: 0
+      floatValue: 0
+      stringValue: 
+      colorValue: {r: 0, g: 0, b: 0, a: 0}
+      gameObjectValue: {fileID: 0}
+      materialValue: {fileID: 0}
+      objectValue: {fileID: 0}
+      spriteValue: {fileID: 0}
+      textureValue: {fileID: 0}
+      vector2Value: {x: 0, y: 0}
+      vector3Value: {x: 0, y: 0, z: 0}
+    variableKey: 
+  saveReturnValue: 0
+  returnValueVariableKey: 
+  returnValueType: System.Void
+  showInherited: 0
+  callMode: 0
+--- !u!114 &1478773047868926030
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 502439594237340207}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 688e35811870d403f9e2b1ab2a699d98, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  itemId: 25
+  indentLevel: 0
+  description: 
+  targetObject: {fileID: 502439594237340207}
+  targetComponentAssemblyName: Main.Model.GuideMessageModel, Assembly-CSharp, Version=0.0.0.0,
+    Culture=neutral, PublicKeyToken=null
+  targetComponentFullname: UnityEngine.Component[]
+  targetComponentText: GuideMessageModel
+  targetMethod: CallGuideMessageID
+  targetMethodText: 'CallGuideMessageID (GuideMessageID): Void'
+  methodParameters:
+  - objValue:
+      typeAssemblyname: Main.Common.GuideMessageID, Assembly-CSharp, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      typeFullname: Main.Common.GuideMessageID
+      intValue: 7
+      boolValue: 0
+      floatValue: 0
+      stringValue: 
+      colorValue: {r: 0, g: 0, b: 0, a: 0}
+      gameObjectValue: {fileID: 0}
+      materialValue: {fileID: 0}
+      objectValue: {fileID: 0}
+      spriteValue: {fileID: 0}
+      textureValue: {fileID: 0}
+      vector2Value: {x: 0, y: 0}
+      vector3Value: {x: 0, y: 0, z: 0}
+    variableKey: 
+  saveReturnValue: 0
+  returnValueVariableKey: 
+  returnValueType: System.Void
+  showInherited: 0
+  callMode: 0
+--- !u!114 &4545480909702070861
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 502439594237340207}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 688e35811870d403f9e2b1ab2a699d98, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  itemId: 26
+  indentLevel: 0
+  description: 
+  targetObject: {fileID: 502439594237340207}
+  targetComponentAssemblyName: Main.Model.GuideMessageModel, Assembly-CSharp, Version=0.0.0.0,
+    Culture=neutral, PublicKeyToken=null
+  targetComponentFullname: UnityEngine.Component[]
+  targetComponentText: GuideMessageModel
+  targetMethod: CallGuideMessageID
+  targetMethodText: 'CallGuideMessageID (GuideMessageID): Void'
+  methodParameters:
+  - objValue:
+      typeAssemblyname: Main.Common.GuideMessageID, Assembly-CSharp, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      typeFullname: Main.Common.GuideMessageID
+      intValue: 8
+      boolValue: 0
+      floatValue: 0
+      stringValue: 
+      colorValue: {r: 0, g: 0, b: 0, a: 0}
+      gameObjectValue: {fileID: 0}
+      materialValue: {fileID: 0}
+      objectValue: {fileID: 0}
+      spriteValue: {fileID: 0}
+      textureValue: {fileID: 0}
+      vector2Value: {x: 0, y: 0}
+      vector3Value: {x: 0, y: 0, z: 0}
+    variableKey: 
+  saveReturnValue: 0
+  returnValueVariableKey: 
+  returnValueType: System.Void
+  showInherited: 0
+  callMode: 0
+--- !u!114 &6152744090853852828
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 502439594237340207}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 688e35811870d403f9e2b1ab2a699d98, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  itemId: 27
+  indentLevel: 0
+  description: 
+  targetObject: {fileID: 502439594237340207}
+  targetComponentAssemblyName: Main.Model.GuideMessageModel, Assembly-CSharp, Version=0.0.0.0,
+    Culture=neutral, PublicKeyToken=null
+  targetComponentFullname: UnityEngine.Component[]
+  targetComponentText: GuideMessageModel
+  targetMethod: CallGuideMessageID
+  targetMethodText: 'CallGuideMessageID (GuideMessageID): Void'
+  methodParameters:
+  - objValue:
+      typeAssemblyname: Main.Common.GuideMessageID, Assembly-CSharp, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      typeFullname: Main.Common.GuideMessageID
+      intValue: 9
+      boolValue: 0
+      floatValue: 0
+      stringValue: 
+      colorValue: {r: 0, g: 0, b: 0, a: 0}
+      gameObjectValue: {fileID: 0}
+      materialValue: {fileID: 0}
+      objectValue: {fileID: 0}
+      spriteValue: {fileID: 0}
+      textureValue: {fileID: 0}
+      vector2Value: {x: 0, y: 0}
+      vector3Value: {x: 0, y: 0, z: 0}
+    variableKey: 
+  saveReturnValue: 0
+  returnValueVariableKey: 
+  returnValueType: System.Void
+  showInherited: 0
+  callMode: 0
+--- !u!114 &8133988923243712879
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 502439594237340207}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 688e35811870d403f9e2b1ab2a699d98, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  itemId: 28
+  indentLevel: 0
+  description: 
+  targetObject: {fileID: 502439594237340207}
+  targetComponentAssemblyName: Main.Model.GuideMessageModel, Assembly-CSharp, Version=0.0.0.0,
+    Culture=neutral, PublicKeyToken=null
+  targetComponentFullname: UnityEngine.Component[]
+  targetComponentText: GuideMessageModel
+  targetMethod: CallGuideMessageID
+  targetMethodText: 'CallGuideMessageID (GuideMessageID): Void'
+  methodParameters:
+  - objValue:
+      typeAssemblyname: Main.Common.GuideMessageID, Assembly-CSharp, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      typeFullname: Main.Common.GuideMessageID
+      intValue: 10
+      boolValue: 0
+      floatValue: 0
+      stringValue: 
+      colorValue: {r: 0, g: 0, b: 0, a: 0}
+      gameObjectValue: {fileID: 0}
+      materialValue: {fileID: 0}
+      objectValue: {fileID: 0}
+      spriteValue: {fileID: 0}
+      textureValue: {fileID: 0}
+      vector2Value: {x: 0, y: 0}
+      vector3Value: {x: 0, y: 0, z: 0}
+    variableKey: 
+  saveReturnValue: 0
+  returnValueVariableKey: 
+  returnValueType: System.Void
+  showInherited: 0
+  callMode: 0
+--- !u!114 &4199181781497533159
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 502439594237340207}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 688e35811870d403f9e2b1ab2a699d98, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  itemId: 29
+  indentLevel: 0
+  description: 
+  targetObject: {fileID: 502439594237340207}
+  targetComponentAssemblyName: Main.Model.GuideMessageModel, Assembly-CSharp, Version=0.0.0.0,
+    Culture=neutral, PublicKeyToken=null
+  targetComponentFullname: UnityEngine.Component[]
+  targetComponentText: GuideMessageModel
+  targetMethod: CallGuideMessageID
+  targetMethodText: 'CallGuideMessageID (GuideMessageID): Void'
+  methodParameters:
+  - objValue:
+      typeAssemblyname: Main.Common.GuideMessageID, Assembly-CSharp, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      typeFullname: Main.Common.GuideMessageID
+      intValue: 11
+      boolValue: 0
+      floatValue: 0
+      stringValue: 
+      colorValue: {r: 0, g: 0, b: 0, a: 0}
+      gameObjectValue: {fileID: 0}
+      materialValue: {fileID: 0}
+      objectValue: {fileID: 0}
+      spriteValue: {fileID: 0}
+      textureValue: {fileID: 0}
+      vector2Value: {x: 0, y: 0}
+      vector3Value: {x: 0, y: 0, z: 0}
+    variableKey: 
+  saveReturnValue: 0
+  returnValueVariableKey: 
+  returnValueType: System.Void
+  showInherited: 0
+  callMode: 0
+--- !u!114 &8949204441234390214
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 502439594237340207}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 688e35811870d403f9e2b1ab2a699d98, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  itemId: 30
+  indentLevel: 0
+  description: 
+  targetObject: {fileID: 502439594237340207}
+  targetComponentAssemblyName: Main.Model.GuideMessageModel, Assembly-CSharp, Version=0.0.0.0,
+    Culture=neutral, PublicKeyToken=null
+  targetComponentFullname: UnityEngine.Component[]
+  targetComponentText: GuideMessageModel
+  targetMethod: CallGuideMessageID
+  targetMethodText: 'CallGuideMessageID (GuideMessageID): Void'
+  methodParameters:
+  - objValue:
+      typeAssemblyname: Main.Common.GuideMessageID, Assembly-CSharp, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      typeFullname: Main.Common.GuideMessageID
+      intValue: 12
+      boolValue: 0
+      floatValue: 0
+      stringValue: 
+      colorValue: {r: 0, g: 0, b: 0, a: 0}
+      gameObjectValue: {fileID: 0}
+      materialValue: {fileID: 0}
+      objectValue: {fileID: 0}
+      spriteValue: {fileID: 0}
+      textureValue: {fileID: 0}
+      vector2Value: {x: 0, y: 0}
+      vector3Value: {x: 0, y: 0, z: 0}
+    variableKey: 
+  saveReturnValue: 0
+  returnValueVariableKey: 
+  returnValueType: System.Void
+  showInherited: 0
+  callMode: 0
+--- !u!114 &5238991547095216749
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 502439594237340207}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 688e35811870d403f9e2b1ab2a699d98, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  itemId: 31
+  indentLevel: 0
+  description: 
+  targetObject: {fileID: 502439594237340207}
+  targetComponentAssemblyName: Main.Model.GuideMessageModel, Assembly-CSharp, Version=0.0.0.0,
+    Culture=neutral, PublicKeyToken=null
+  targetComponentFullname: UnityEngine.Component[]
+  targetComponentText: GuideMessageModel
+  targetMethod: CallGuideMessageID
+  targetMethodText: 'CallGuideMessageID (GuideMessageID): Void'
+  methodParameters:
+  - objValue:
+      typeAssemblyname: Main.Common.GuideMessageID, Assembly-CSharp, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      typeFullname: Main.Common.GuideMessageID
+      intValue: 13
+      boolValue: 0
+      floatValue: 0
+      stringValue: 
+      colorValue: {r: 0, g: 0, b: 0, a: 0}
+      gameObjectValue: {fileID: 0}
+      materialValue: {fileID: 0}
+      objectValue: {fileID: 0}
+      spriteValue: {fileID: 0}
+      textureValue: {fileID: 0}
+      vector2Value: {x: 0, y: 0}
+      vector3Value: {x: 0, y: 0, z: 0}
+    variableKey: 
+  saveReturnValue: 0
+  returnValueVariableKey: 
+  returnValueType: System.Void
+  showInherited: 0
+  callMode: 0
+--- !u!1 &2084581125207575793
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 8498046548159506962}
+  - component: {fileID: 7533831775956130097}
+  m_Layer: 0
+  m_Name: CharNavigator
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &8498046548159506962
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2084581125207575793}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 5954597495589241216}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &7533831775956130097
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2084581125207575793}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 25fb867d2049d41f597aefdd6b19f598, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  nameText: "\u767D\u305F\u307E\u3061\u3083\u3093"
+  nameColor: {r: 1, g: 1, b: 1, a: 1}
+  soundEffect: {fileID: 0}
+  portraits:
+  - {fileID: 21300000, guid: c2e045c9211205942a1e6663f41a5d32, type: 3}
+  portraitsFace: 0
+  setSayDialog: {fileID: 0}
+  description: 

@@ -191,15 +191,72 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 07283c2439253e540a391e42ef66c8f7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &67412292 stripped
+--- !u!1001 &15128160
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 6198753804911468420, guid: a7c16d138bc1b994299d2cd2c69cc55b, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6198753804911468420, guid: a7c16d138bc1b994299d2cd2c69cc55b, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6198753804911468420, guid: a7c16d138bc1b994299d2cd2c69cc55b, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6198753804911468420, guid: a7c16d138bc1b994299d2cd2c69cc55b, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6198753804911468420, guid: a7c16d138bc1b994299d2cd2c69cc55b, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6198753804911468420, guid: a7c16d138bc1b994299d2cd2c69cc55b, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6198753804911468420, guid: a7c16d138bc1b994299d2cd2c69cc55b, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6198753804911468420, guid: a7c16d138bc1b994299d2cd2c69cc55b, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6198753804911468420, guid: a7c16d138bc1b994299d2cd2c69cc55b, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6198753804911468420, guid: a7c16d138bc1b994299d2cd2c69cc55b, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7795306035460599223, guid: a7c16d138bc1b994299d2cd2c69cc55b, type: 3}
+      propertyPath: m_Name
+      value: MissionsSystemTutorial
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: a7c16d138bc1b994299d2cd2c69cc55b, type: 3}
+--- !u!114 &15128161 stripped
 MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 3116255076302386858, guid: d1f02c59a59dc8a4d89245becc051b3d, type: 3}
-  m_PrefabInstance: {fileID: 3116255076235499502}
+  m_CorrespondingSourceObject: {fileID: 2307162161786062241, guid: a7c16d138bc1b994299d2cd2c69cc55b, type: 3}
+  m_PrefabInstance: {fileID: 15128160}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 85f18667f50119240bf28ef4e5541bb5, type: 3}
+  m_Script: {fileID: 11500000, guid: 67fae4a09dc851b4e86f681ba514057b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!114 &81144365 stripped
@@ -255,6 +312,74 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: d611ac0c8e0b1cd4dbfe8b02f29da540, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!1001 &429045976
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 502439594237340207, guid: 3bac2921bb9a3194691a640dcacbd24c, type: 3}
+      propertyPath: m_Name
+      value: Flowchart
+      objectReference: {fileID: 0}
+    - target: {fileID: 5954597495589241216, guid: 3bac2921bb9a3194691a640dcacbd24c, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5954597495589241216, guid: 3bac2921bb9a3194691a640dcacbd24c, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5954597495589241216, guid: 3bac2921bb9a3194691a640dcacbd24c, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5954597495589241216, guid: 3bac2921bb9a3194691a640dcacbd24c, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5954597495589241216, guid: 3bac2921bb9a3194691a640dcacbd24c, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5954597495589241216, guid: 3bac2921bb9a3194691a640dcacbd24c, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5954597495589241216, guid: 3bac2921bb9a3194691a640dcacbd24c, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5954597495589241216, guid: 3bac2921bb9a3194691a640dcacbd24c, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5954597495589241216, guid: 3bac2921bb9a3194691a640dcacbd24c, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5954597495589241216, guid: 3bac2921bb9a3194691a640dcacbd24c, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 3bac2921bb9a3194691a640dcacbd24c, type: 3}
+--- !u!114 &429045977 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 7454021454277373838, guid: 3bac2921bb9a3194691a640dcacbd24c, type: 3}
+  m_PrefabInstance: {fileID: 429045976}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1257d4eb3e8da814fbcb7abd9c0394e5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!114 &434354310 stripped
@@ -1078,6 +1203,74 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1001 &1376717986
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 3750726609193139540, guid: 7814bbaffd89eae4bbb761745b007eef, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3750726609193139540, guid: 7814bbaffd89eae4bbb761745b007eef, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3750726609193139540, guid: 7814bbaffd89eae4bbb761745b007eef, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3750726609193139540, guid: 7814bbaffd89eae4bbb761745b007eef, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3750726609193139540, guid: 7814bbaffd89eae4bbb761745b007eef, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3750726609193139540, guid: 7814bbaffd89eae4bbb761745b007eef, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3750726609193139540, guid: 7814bbaffd89eae4bbb761745b007eef, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3750726609193139540, guid: 7814bbaffd89eae4bbb761745b007eef, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3750726609193139540, guid: 7814bbaffd89eae4bbb761745b007eef, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3750726609193139540, guid: 7814bbaffd89eae4bbb761745b007eef, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8016352396680796678, guid: 7814bbaffd89eae4bbb761745b007eef, type: 3}
+      propertyPath: m_Name
+      value: EnemiesSpawnTutorial
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 7814bbaffd89eae4bbb761745b007eef, type: 3}
+--- !u!114 &1376717987 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 527253223230264901, guid: 7814bbaffd89eae4bbb761745b007eef, type: 3}
+  m_PrefabInstance: {fileID: 1376717986}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7ee0fa09b6b4a244a97ed030b2dbd481, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &1434755458
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1224,6 +1417,114 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1001 &1481020868
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 4682542650677616105, guid: 6dfbe23dbf4a909468d9b69694ab3b9f, type: 3}
+      propertyPath: m_Pivot.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4682542650677616105, guid: 6dfbe23dbf4a909468d9b69694ab3b9f, type: 3}
+      propertyPath: m_Pivot.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4682542650677616105, guid: 6dfbe23dbf4a909468d9b69694ab3b9f, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4682542650677616105, guid: 6dfbe23dbf4a909468d9b69694ab3b9f, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4682542650677616105, guid: 6dfbe23dbf4a909468d9b69694ab3b9f, type: 3}
+      propertyPath: m_AnchorMin.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4682542650677616105, guid: 6dfbe23dbf4a909468d9b69694ab3b9f, type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4682542650677616105, guid: 6dfbe23dbf4a909468d9b69694ab3b9f, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4682542650677616105, guid: 6dfbe23dbf4a909468d9b69694ab3b9f, type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4682542650677616105, guid: 6dfbe23dbf4a909468d9b69694ab3b9f, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4682542650677616105, guid: 6dfbe23dbf4a909468d9b69694ab3b9f, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4682542650677616105, guid: 6dfbe23dbf4a909468d9b69694ab3b9f, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4682542650677616105, guid: 6dfbe23dbf4a909468d9b69694ab3b9f, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4682542650677616105, guid: 6dfbe23dbf4a909468d9b69694ab3b9f, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4682542650677616105, guid: 6dfbe23dbf4a909468d9b69694ab3b9f, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4682542650677616105, guid: 6dfbe23dbf4a909468d9b69694ab3b9f, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4682542650677616105, guid: 6dfbe23dbf4a909468d9b69694ab3b9f, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4682542650677616105, guid: 6dfbe23dbf4a909468d9b69694ab3b9f, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4682542650677616105, guid: 6dfbe23dbf4a909468d9b69694ab3b9f, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4682542650677616105, guid: 6dfbe23dbf4a909468d9b69694ab3b9f, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4682542650677616105, guid: 6dfbe23dbf4a909468d9b69694ab3b9f, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4692766868459648094, guid: 6dfbe23dbf4a909468d9b69694ab3b9f, type: 3}
+      propertyPath: m_Name
+      value: SayDialog
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 6dfbe23dbf4a909468d9b69694ab3b9f, type: 3}
+--- !u!114 &1481020869 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 1770528892686738542, guid: 6dfbe23dbf4a909468d9b69694ab3b9f, type: 3}
+  m_PrefabInstance: {fileID: 1481020868}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fb07bd4e0fc12464fbc8ff1406c3e2f2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &1485104123
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1292,6 +1593,105 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: eb9e2307ad5953f499f4217b9bf6d57c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &1523132819 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 8610786496793233105, guid: d1f02c59a59dc8a4d89245becc051b3d, type: 3}
+  m_PrefabInstance: {fileID: 3116255076235499502}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7ae48a4bcddd7fc45aecbfd3d3f22520, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &1523132820 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 7616046060454833147, guid: d1f02c59a59dc8a4d89245becc051b3d, type: 3}
+  m_PrefabInstance: {fileID: 3116255076235499502}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 009ddbc70b175ce4da45cf64088ac061, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &1523132821 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 4711887909965380471, guid: d1f02c59a59dc8a4d89245becc051b3d, type: 3}
+  m_PrefabInstance: {fileID: 3116255076235499502}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e401a12b7549a614f828b16fe1eec436, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &1523132822 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 7820389013119262542, guid: d1f02c59a59dc8a4d89245becc051b3d, type: 3}
+  m_PrefabInstance: {fileID: 3116255076235499502}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 33fe0f39d20a20b4fbf76be4b46da810, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &1523132823 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 7544253708860838002, guid: d1f02c59a59dc8a4d89245becc051b3d, type: 3}
+  m_PrefabInstance: {fileID: 3116255076235499502}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 62f8a5c7a8c005d42b75f5b2981407c6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &1523132824 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 8006606594409345741, guid: d1f02c59a59dc8a4d89245becc051b3d, type: 3}
+  m_PrefabInstance: {fileID: 3116255076235499502}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ebde3ea0f69fb4a41b84206195017913, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &1523132825 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 8498822746839885268, guid: d1f02c59a59dc8a4d89245becc051b3d, type: 3}
+  m_PrefabInstance: {fileID: 3116255076235499502}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 990b89c56bbd28a40ab770fc1e0dae4f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &1523132826 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 6109305374209302670, guid: d1f02c59a59dc8a4d89245becc051b3d, type: 3}
+  m_PrefabInstance: {fileID: 3116255076235499502}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1edc4179069771249b77bc47d5dfc668, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &1523132827 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 3646664294279809802, guid: d1f02c59a59dc8a4d89245becc051b3d, type: 3}
+  m_PrefabInstance: {fileID: 3116255076235499502}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 60065cfabfa8bf44b9e7927e25060476, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &1596134036 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 3116255077294491002, guid: d1f02c59a59dc8a4d89245becc051b3d, type: 3}
@@ -1334,17 +1734,6 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: c5eef12e08b8e8c4fa2ff07db4f32cc4, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &1636052851 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 3116255076780505245, guid: d1f02c59a59dc8a4d89245becc051b3d, type: 3}
-  m_PrefabInstance: {fileID: 3116255076235499502}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4abd6b357bc95484c974026f60fda0b9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!114 &1854376148 stripped
@@ -1559,6 +1948,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 1070523752}
     - target: {fileID: 1181800399, guid: 898ade031a3ce554b8df63abbf1da280, type: 3}
+      propertyPath: tutorialView
+      value: 
+      objectReference: {fileID: 1523132826}
+    - target: {fileID: 1181800399, guid: 898ade031a3ce554b8df63abbf1da280, type: 3}
       propertyPath: fadeImageView
       value: 
       objectReference: {fileID: 1854376149}
@@ -1569,11 +1962,15 @@ PrefabInstance:
     - target: {fileID: 1181800399, guid: 898ade031a3ce554b8df63abbf1da280, type: 3}
       propertyPath: jumpGuideView
       value: 
-      objectReference: {fileID: 1636052851}
+      objectReference: {fileID: 0}
     - target: {fileID: 1181800399, guid: 898ade031a3ce554b8df63abbf1da280, type: 3}
       propertyPath: moveGuideView
       value: 
-      objectReference: {fileID: 67412292}
+      objectReference: {fileID: 0}
+    - target: {fileID: 1181800399, guid: 898ade031a3ce554b8df63abbf1da280, type: 3}
+      propertyPath: tutorialModel
+      value: 
+      objectReference: {fileID: 1523132827}
     - target: {fileID: 1181800399, guid: 898ade031a3ce554b8df63abbf1da280, type: 3}
       propertyPath: cursorIconView
       value: 
@@ -1675,9 +2072,17 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 877289120}
     - target: {fileID: 1181800399, guid: 898ade031a3ce554b8df63abbf1da280, type: 3}
+      propertyPath: enemiesSpawnTutorialModel
+      value: 
+      objectReference: {fileID: 1376717987}
+    - target: {fileID: 1181800399, guid: 898ade031a3ce554b8df63abbf1da280, type: 3}
       propertyPath: shikigamiSkillSystemModel
       value: 
       objectReference: {fileID: 512768842}
+    - target: {fileID: 1181800399, guid: 898ade031a3ce554b8df63abbf1da280, type: 3}
+      propertyPath: missionsSystemTutorialModel
+      value: 
+      objectReference: {fileID: 15128161}
     - target: {fileID: 1181800399, guid: 898ade031a3ce554b8df63abbf1da280, type: 3}
       propertyPath: clearCountdownTimerGaugeView
       value: 
@@ -1750,6 +2155,886 @@ PrefabInstance:
       propertyPath: gameManualViewPageModels.Array.data[3]
       value: 
       objectReference: {fileID: 1634535772}
+    - target: {fileID: 1181800399, guid: 898ade031a3ce554b8df63abbf1da280, type: 3}
+      propertyPath: tutorialMissionContentsStuct.guideMessageView
+      value: 
+      objectReference: {fileID: 1481020869}
+    - target: {fileID: 1181800399, guid: 898ade031a3ce554b8df63abbf1da280, type: 3}
+      propertyPath: tutorialGuideContentsStuct.targetComponents.Array.size
+      value: 14
+      objectReference: {fileID: 0}
+    - target: {fileID: 1181800399, guid: 898ade031a3ce554b8df63abbf1da280, type: 3}
+      propertyPath: tutorialMissionContentsStuct.enemiesSpawnTutorialModel
+      value: 
+      objectReference: {fileID: 1376717987}
+    - target: {fileID: 1181800399, guid: 898ade031a3ce554b8df63abbf1da280, type: 3}
+      propertyPath: tutorialMissionContentsStuct.missionsSystemTutorialModel
+      value: 
+      objectReference: {fileID: 15128161}
+    - target: {fileID: 1181800399, guid: 898ade031a3ce554b8df63abbf1da280, type: 3}
+      propertyPath: tutorialGuideContentsStuct.targetComponents.Array.data[0]
+      value: 
+      objectReference: {fileID: 8268924}
+    - target: {fileID: 1181800399, guid: 898ade031a3ce554b8df63abbf1da280, type: 3}
+      propertyPath: tutorialGuideContentsStuct.targetComponents.Array.data[1]
+      value: 
+      objectReference: {fileID: 512768842}
+    - target: {fileID: 1181800399, guid: 898ade031a3ce554b8df63abbf1da280, type: 3}
+      propertyPath: tutorialGuideContentsStuct.targetComponents.Array.data[2]
+      value: 
+      objectReference: {fileID: 2094762497}
+    - target: {fileID: 1181800399, guid: 898ade031a3ce554b8df63abbf1da280, type: 3}
+      propertyPath: tutorialGuideContentsStuct.targetComponents.Array.data[3]
+      value: 
+      objectReference: {fileID: 701025616}
+    - target: {fileID: 1181800399, guid: 898ade031a3ce554b8df63abbf1da280, type: 3}
+      propertyPath: tutorialGuideContentsStuct.targetComponents.Array.data[4]
+      value: 
+      objectReference: {fileID: 898339426}
+    - target: {fileID: 1181800399, guid: 898ade031a3ce554b8df63abbf1da280, type: 3}
+      propertyPath: tutorialGuideContentsStuct.targetComponents.Array.data[5]
+      value: 
+      objectReference: {fileID: 81144365}
+    - target: {fileID: 1181800399, guid: 898ade031a3ce554b8df63abbf1da280, type: 3}
+      propertyPath: tutorialGuideContentsStuct.targetComponents.Array.data[6]
+      value: 
+      objectReference: {fileID: 1481020869}
+    - target: {fileID: 1181800399, guid: 898ade031a3ce554b8df63abbf1da280, type: 3}
+      propertyPath: tutorialGuideContentsStuct.targetComponents.Array.data[7]
+      value: 
+      objectReference: {fileID: 1523132825}
+    - target: {fileID: 1181800399, guid: 898ade031a3ce554b8df63abbf1da280, type: 3}
+      propertyPath: tutorialGuideContentsStuct.targetComponents.Array.data[8]
+      value: 
+      objectReference: {fileID: 1523132824}
+    - target: {fileID: 1181800399, guid: 898ade031a3ce554b8df63abbf1da280, type: 3}
+      propertyPath: tutorialGuideContentsStuct.targetComponents.Array.data[9]
+      value: 
+      objectReference: {fileID: 1523132823}
+    - target: {fileID: 1181800399, guid: 898ade031a3ce554b8df63abbf1da280, type: 3}
+      propertyPath: tutorialGuideContentsStuct.targetComponents.Array.data[10]
+      value: 
+      objectReference: {fileID: 1523132822}
+    - target: {fileID: 1181800399, guid: 898ade031a3ce554b8df63abbf1da280, type: 3}
+      propertyPath: tutorialGuideContentsStuct.targetComponents.Array.data[11]
+      value: 
+      objectReference: {fileID: 1523132821}
+    - target: {fileID: 1181800399, guid: 898ade031a3ce554b8df63abbf1da280, type: 3}
+      propertyPath: tutorialGuideContentsStuct.targetComponents.Array.data[12]
+      value: 
+      objectReference: {fileID: 1523132820}
+    - target: {fileID: 1181800399, guid: 898ade031a3ce554b8df63abbf1da280, type: 3}
+      propertyPath: tutorialGuideContentsStuct.targetComponents.Array.data[13]
+      value: 
+      objectReference: {fileID: 1523132819}
+    - target: {fileID: 1181800399, guid: 898ade031a3ce554b8df63abbf1da280, type: 3}
+      propertyPath: tutorialGuideContentsStuct.tutorialComponentMaps.Array.size
+      value: 14
+      objectReference: {fileID: 0}
+    - target: {fileID: 1181800399, guid: 898ade031a3ce554b8df63abbf1da280, type: 3}
+      propertyPath: tutorialGuideContentsStuct.tutorialComponentMaps.Array.data[13].guideMessageID
+      value: 13
+      objectReference: {fileID: 0}
+    - target: {fileID: 1181800399, guid: 898ade031a3ce554b8df63abbf1da280, type: 3}
+      propertyPath: tutorialGuideContentsStuct.tutorialComponentMaps.Array.data[13].tutorialComponents.Array.size
+      value: 14
+      objectReference: {fileID: 0}
+    - target: {fileID: 1181800399, guid: 898ade031a3ce554b8df63abbf1da280, type: 3}
+      propertyPath: tutorialGuideContentsStuct.tutorialComponentMaps.Array.data[0].tutorialComponents.Array.data[0].component
+      value: 
+      objectReference: {fileID: 8268924}
+    - target: {fileID: 1181800399, guid: 898ade031a3ce554b8df63abbf1da280, type: 3}
+      propertyPath: tutorialGuideContentsStuct.tutorialComponentMaps.Array.data[0].tutorialComponents.Array.data[1].component
+      value: 
+      objectReference: {fileID: 512768842}
+    - target: {fileID: 1181800399, guid: 898ade031a3ce554b8df63abbf1da280, type: 3}
+      propertyPath: tutorialGuideContentsStuct.tutorialComponentMaps.Array.data[0].tutorialComponents.Array.data[2].component
+      value: 
+      objectReference: {fileID: 2094762497}
+    - target: {fileID: 1181800399, guid: 898ade031a3ce554b8df63abbf1da280, type: 3}
+      propertyPath: tutorialGuideContentsStuct.tutorialComponentMaps.Array.data[0].tutorialComponents.Array.data[3].component
+      value: 
+      objectReference: {fileID: 701025616}
+    - target: {fileID: 1181800399, guid: 898ade031a3ce554b8df63abbf1da280, type: 3}
+      propertyPath: tutorialGuideContentsStuct.tutorialComponentMaps.Array.data[0].tutorialComponents.Array.data[4].component
+      value: 
+      objectReference: {fileID: 898339426}
+    - target: {fileID: 1181800399, guid: 898ade031a3ce554b8df63abbf1da280, type: 3}
+      propertyPath: tutorialGuideContentsStuct.tutorialComponentMaps.Array.data[0].tutorialComponents.Array.data[5].component
+      value: 
+      objectReference: {fileID: 81144365}
+    - target: {fileID: 1181800399, guid: 898ade031a3ce554b8df63abbf1da280, type: 3}
+      propertyPath: tutorialGuideContentsStuct.tutorialComponentMaps.Array.data[0].tutorialComponents.Array.data[6].component
+      value: 
+      objectReference: {fileID: 1481020869}
+    - target: {fileID: 1181800399, guid: 898ade031a3ce554b8df63abbf1da280, type: 3}
+      propertyPath: tutorialGuideContentsStuct.tutorialComponentMaps.Array.data[0].tutorialComponents.Array.data[7].component
+      value: 
+      objectReference: {fileID: 1523132825}
+    - target: {fileID: 1181800399, guid: 898ade031a3ce554b8df63abbf1da280, type: 3}
+      propertyPath: tutorialGuideContentsStuct.tutorialComponentMaps.Array.data[0].tutorialComponents.Array.data[8].component
+      value: 
+      objectReference: {fileID: 1523132824}
+    - target: {fileID: 1181800399, guid: 898ade031a3ce554b8df63abbf1da280, type: 3}
+      propertyPath: tutorialGuideContentsStuct.tutorialComponentMaps.Array.data[0].tutorialComponents.Array.data[9].component
+      value: 
+      objectReference: {fileID: 1523132823}
+    - target: {fileID: 1181800399, guid: 898ade031a3ce554b8df63abbf1da280, type: 3}
+      propertyPath: tutorialGuideContentsStuct.tutorialComponentMaps.Array.data[1].tutorialComponents.Array.data[0].component
+      value: 
+      objectReference: {fileID: 8268924}
+    - target: {fileID: 1181800399, guid: 898ade031a3ce554b8df63abbf1da280, type: 3}
+      propertyPath: tutorialGuideContentsStuct.tutorialComponentMaps.Array.data[1].tutorialComponents.Array.data[1].component
+      value: 
+      objectReference: {fileID: 512768842}
+    - target: {fileID: 1181800399, guid: 898ade031a3ce554b8df63abbf1da280, type: 3}
+      propertyPath: tutorialGuideContentsStuct.tutorialComponentMaps.Array.data[1].tutorialComponents.Array.data[2].component
+      value: 
+      objectReference: {fileID: 2094762497}
+    - target: {fileID: 1181800399, guid: 898ade031a3ce554b8df63abbf1da280, type: 3}
+      propertyPath: tutorialGuideContentsStuct.tutorialComponentMaps.Array.data[1].tutorialComponents.Array.data[3].component
+      value: 
+      objectReference: {fileID: 701025616}
+    - target: {fileID: 1181800399, guid: 898ade031a3ce554b8df63abbf1da280, type: 3}
+      propertyPath: tutorialGuideContentsStuct.tutorialComponentMaps.Array.data[1].tutorialComponents.Array.data[4].component
+      value: 
+      objectReference: {fileID: 898339426}
+    - target: {fileID: 1181800399, guid: 898ade031a3ce554b8df63abbf1da280, type: 3}
+      propertyPath: tutorialGuideContentsStuct.tutorialComponentMaps.Array.data[1].tutorialComponents.Array.data[5].component
+      value: 
+      objectReference: {fileID: 81144365}
+    - target: {fileID: 1181800399, guid: 898ade031a3ce554b8df63abbf1da280, type: 3}
+      propertyPath: tutorialGuideContentsStuct.tutorialComponentMaps.Array.data[1].tutorialComponents.Array.data[6].component
+      value: 
+      objectReference: {fileID: 1481020869}
+    - target: {fileID: 1181800399, guid: 898ade031a3ce554b8df63abbf1da280, type: 3}
+      propertyPath: tutorialGuideContentsStuct.tutorialComponentMaps.Array.data[1].tutorialComponents.Array.data[7].component
+      value: 
+      objectReference: {fileID: 1523132825}
+    - target: {fileID: 1181800399, guid: 898ade031a3ce554b8df63abbf1da280, type: 3}
+      propertyPath: tutorialGuideContentsStuct.tutorialComponentMaps.Array.data[1].tutorialComponents.Array.data[8].component
+      value: 
+      objectReference: {fileID: 1523132824}
+    - target: {fileID: 1181800399, guid: 898ade031a3ce554b8df63abbf1da280, type: 3}
+      propertyPath: tutorialGuideContentsStuct.tutorialComponentMaps.Array.data[1].tutorialComponents.Array.data[9].component
+      value: 
+      objectReference: {fileID: 1523132823}
+    - target: {fileID: 1181800399, guid: 898ade031a3ce554b8df63abbf1da280, type: 3}
+      propertyPath: tutorialGuideContentsStuct.tutorialComponentMaps.Array.data[2].tutorialComponents.Array.data[0].component
+      value: 
+      objectReference: {fileID: 8268924}
+    - target: {fileID: 1181800399, guid: 898ade031a3ce554b8df63abbf1da280, type: 3}
+      propertyPath: tutorialGuideContentsStuct.tutorialComponentMaps.Array.data[2].tutorialComponents.Array.data[1].component
+      value: 
+      objectReference: {fileID: 512768842}
+    - target: {fileID: 1181800399, guid: 898ade031a3ce554b8df63abbf1da280, type: 3}
+      propertyPath: tutorialGuideContentsStuct.tutorialComponentMaps.Array.data[2].tutorialComponents.Array.data[2].component
+      value: 
+      objectReference: {fileID: 2094762497}
+    - target: {fileID: 1181800399, guid: 898ade031a3ce554b8df63abbf1da280, type: 3}
+      propertyPath: tutorialGuideContentsStuct.tutorialComponentMaps.Array.data[2].tutorialComponents.Array.data[3].component
+      value: 
+      objectReference: {fileID: 701025616}
+    - target: {fileID: 1181800399, guid: 898ade031a3ce554b8df63abbf1da280, type: 3}
+      propertyPath: tutorialGuideContentsStuct.tutorialComponentMaps.Array.data[2].tutorialComponents.Array.data[4].component
+      value: 
+      objectReference: {fileID: 898339426}
+    - target: {fileID: 1181800399, guid: 898ade031a3ce554b8df63abbf1da280, type: 3}
+      propertyPath: tutorialGuideContentsStuct.tutorialComponentMaps.Array.data[2].tutorialComponents.Array.data[5].component
+      value: 
+      objectReference: {fileID: 81144365}
+    - target: {fileID: 1181800399, guid: 898ade031a3ce554b8df63abbf1da280, type: 3}
+      propertyPath: tutorialGuideContentsStuct.tutorialComponentMaps.Array.data[2].tutorialComponents.Array.data[6].component
+      value: 
+      objectReference: {fileID: 1481020869}
+    - target: {fileID: 1181800399, guid: 898ade031a3ce554b8df63abbf1da280, type: 3}
+      propertyPath: tutorialGuideContentsStuct.tutorialComponentMaps.Array.data[2].tutorialComponents.Array.data[7].component
+      value: 
+      objectReference: {fileID: 1523132825}
+    - target: {fileID: 1181800399, guid: 898ade031a3ce554b8df63abbf1da280, type: 3}
+      propertyPath: tutorialGuideContentsStuct.tutorialComponentMaps.Array.data[2].tutorialComponents.Array.data[8].component
+      value: 
+      objectReference: {fileID: 1523132824}
+    - target: {fileID: 1181800399, guid: 898ade031a3ce554b8df63abbf1da280, type: 3}
+      propertyPath: tutorialGuideContentsStuct.tutorialComponentMaps.Array.data[2].tutorialComponents.Array.data[9].component
+      value: 
+      objectReference: {fileID: 1523132823}
+    - target: {fileID: 1181800399, guid: 898ade031a3ce554b8df63abbf1da280, type: 3}
+      propertyPath: tutorialGuideContentsStuct.tutorialComponentMaps.Array.data[3].tutorialComponents.Array.data[0].component
+      value: 
+      objectReference: {fileID: 8268924}
+    - target: {fileID: 1181800399, guid: 898ade031a3ce554b8df63abbf1da280, type: 3}
+      propertyPath: tutorialGuideContentsStuct.tutorialComponentMaps.Array.data[3].tutorialComponents.Array.data[1].component
+      value: 
+      objectReference: {fileID: 512768842}
+    - target: {fileID: 1181800399, guid: 898ade031a3ce554b8df63abbf1da280, type: 3}
+      propertyPath: tutorialGuideContentsStuct.tutorialComponentMaps.Array.data[3].tutorialComponents.Array.data[2].component
+      value: 
+      objectReference: {fileID: 2094762497}
+    - target: {fileID: 1181800399, guid: 898ade031a3ce554b8df63abbf1da280, type: 3}
+      propertyPath: tutorialGuideContentsStuct.tutorialComponentMaps.Array.data[3].tutorialComponents.Array.data[3].component
+      value: 
+      objectReference: {fileID: 701025616}
+    - target: {fileID: 1181800399, guid: 898ade031a3ce554b8df63abbf1da280, type: 3}
+      propertyPath: tutorialGuideContentsStuct.tutorialComponentMaps.Array.data[3].tutorialComponents.Array.data[4].component
+      value: 
+      objectReference: {fileID: 898339426}
+    - target: {fileID: 1181800399, guid: 898ade031a3ce554b8df63abbf1da280, type: 3}
+      propertyPath: tutorialGuideContentsStuct.tutorialComponentMaps.Array.data[3].tutorialComponents.Array.data[5].component
+      value: 
+      objectReference: {fileID: 81144365}
+    - target: {fileID: 1181800399, guid: 898ade031a3ce554b8df63abbf1da280, type: 3}
+      propertyPath: tutorialGuideContentsStuct.tutorialComponentMaps.Array.data[3].tutorialComponents.Array.data[6].component
+      value: 
+      objectReference: {fileID: 1481020869}
+    - target: {fileID: 1181800399, guid: 898ade031a3ce554b8df63abbf1da280, type: 3}
+      propertyPath: tutorialGuideContentsStuct.tutorialComponentMaps.Array.data[3].tutorialComponents.Array.data[7].component
+      value: 
+      objectReference: {fileID: 1523132825}
+    - target: {fileID: 1181800399, guid: 898ade031a3ce554b8df63abbf1da280, type: 3}
+      propertyPath: tutorialGuideContentsStuct.tutorialComponentMaps.Array.data[3].tutorialComponents.Array.data[8].component
+      value: 
+      objectReference: {fileID: 1523132824}
+    - target: {fileID: 1181800399, guid: 898ade031a3ce554b8df63abbf1da280, type: 3}
+      propertyPath: tutorialGuideContentsStuct.tutorialComponentMaps.Array.data[3].tutorialComponents.Array.data[9].component
+      value: 
+      objectReference: {fileID: 1523132823}
+    - target: {fileID: 1181800399, guid: 898ade031a3ce554b8df63abbf1da280, type: 3}
+      propertyPath: tutorialGuideContentsStuct.tutorialComponentMaps.Array.data[4].tutorialComponents.Array.data[0].component
+      value: 
+      objectReference: {fileID: 8268924}
+    - target: {fileID: 1181800399, guid: 898ade031a3ce554b8df63abbf1da280, type: 3}
+      propertyPath: tutorialGuideContentsStuct.tutorialComponentMaps.Array.data[4].tutorialComponents.Array.data[1].component
+      value: 
+      objectReference: {fileID: 512768842}
+    - target: {fileID: 1181800399, guid: 898ade031a3ce554b8df63abbf1da280, type: 3}
+      propertyPath: tutorialGuideContentsStuct.tutorialComponentMaps.Array.data[4].tutorialComponents.Array.data[2].component
+      value: 
+      objectReference: {fileID: 2094762497}
+    - target: {fileID: 1181800399, guid: 898ade031a3ce554b8df63abbf1da280, type: 3}
+      propertyPath: tutorialGuideContentsStuct.tutorialComponentMaps.Array.data[4].tutorialComponents.Array.data[3].component
+      value: 
+      objectReference: {fileID: 701025616}
+    - target: {fileID: 1181800399, guid: 898ade031a3ce554b8df63abbf1da280, type: 3}
+      propertyPath: tutorialGuideContentsStuct.tutorialComponentMaps.Array.data[4].tutorialComponents.Array.data[4].component
+      value: 
+      objectReference: {fileID: 898339426}
+    - target: {fileID: 1181800399, guid: 898ade031a3ce554b8df63abbf1da280, type: 3}
+      propertyPath: tutorialGuideContentsStuct.tutorialComponentMaps.Array.data[4].tutorialComponents.Array.data[5].component
+      value: 
+      objectReference: {fileID: 81144365}
+    - target: {fileID: 1181800399, guid: 898ade031a3ce554b8df63abbf1da280, type: 3}
+      propertyPath: tutorialGuideContentsStuct.tutorialComponentMaps.Array.data[4].tutorialComponents.Array.data[6].component
+      value: 
+      objectReference: {fileID: 1481020869}
+    - target: {fileID: 1181800399, guid: 898ade031a3ce554b8df63abbf1da280, type: 3}
+      propertyPath: tutorialGuideContentsStuct.tutorialComponentMaps.Array.data[4].tutorialComponents.Array.data[7].component
+      value: 
+      objectReference: {fileID: 1523132825}
+    - target: {fileID: 1181800399, guid: 898ade031a3ce554b8df63abbf1da280, type: 3}
+      propertyPath: tutorialGuideContentsStuct.tutorialComponentMaps.Array.data[4].tutorialComponents.Array.data[8].component
+      value: 
+      objectReference: {fileID: 1523132824}
+    - target: {fileID: 1181800399, guid: 898ade031a3ce554b8df63abbf1da280, type: 3}
+      propertyPath: tutorialGuideContentsStuct.tutorialComponentMaps.Array.data[4].tutorialComponents.Array.data[9].component
+      value: 
+      objectReference: {fileID: 1523132823}
+    - target: {fileID: 1181800399, guid: 898ade031a3ce554b8df63abbf1da280, type: 3}
+      propertyPath: tutorialGuideContentsStuct.tutorialComponentMaps.Array.data[5].tutorialComponents.Array.data[0].component
+      value: 
+      objectReference: {fileID: 8268924}
+    - target: {fileID: 1181800399, guid: 898ade031a3ce554b8df63abbf1da280, type: 3}
+      propertyPath: tutorialGuideContentsStuct.tutorialComponentMaps.Array.data[5].tutorialComponents.Array.data[1].component
+      value: 
+      objectReference: {fileID: 512768842}
+    - target: {fileID: 1181800399, guid: 898ade031a3ce554b8df63abbf1da280, type: 3}
+      propertyPath: tutorialGuideContentsStuct.tutorialComponentMaps.Array.data[5].tutorialComponents.Array.data[2].component
+      value: 
+      objectReference: {fileID: 2094762497}
+    - target: {fileID: 1181800399, guid: 898ade031a3ce554b8df63abbf1da280, type: 3}
+      propertyPath: tutorialGuideContentsStuct.tutorialComponentMaps.Array.data[5].tutorialComponents.Array.data[3].component
+      value: 
+      objectReference: {fileID: 701025616}
+    - target: {fileID: 1181800399, guid: 898ade031a3ce554b8df63abbf1da280, type: 3}
+      propertyPath: tutorialGuideContentsStuct.tutorialComponentMaps.Array.data[5].tutorialComponents.Array.data[4].component
+      value: 
+      objectReference: {fileID: 898339426}
+    - target: {fileID: 1181800399, guid: 898ade031a3ce554b8df63abbf1da280, type: 3}
+      propertyPath: tutorialGuideContentsStuct.tutorialComponentMaps.Array.data[5].tutorialComponents.Array.data[5].component
+      value: 
+      objectReference: {fileID: 81144365}
+    - target: {fileID: 1181800399, guid: 898ade031a3ce554b8df63abbf1da280, type: 3}
+      propertyPath: tutorialGuideContentsStuct.tutorialComponentMaps.Array.data[5].tutorialComponents.Array.data[6].component
+      value: 
+      objectReference: {fileID: 1481020869}
+    - target: {fileID: 1181800399, guid: 898ade031a3ce554b8df63abbf1da280, type: 3}
+      propertyPath: tutorialGuideContentsStuct.tutorialComponentMaps.Array.data[5].tutorialComponents.Array.data[7].component
+      value: 
+      objectReference: {fileID: 1523132825}
+    - target: {fileID: 1181800399, guid: 898ade031a3ce554b8df63abbf1da280, type: 3}
+      propertyPath: tutorialGuideContentsStuct.tutorialComponentMaps.Array.data[5].tutorialComponents.Array.data[8].component
+      value: 
+      objectReference: {fileID: 1523132824}
+    - target: {fileID: 1181800399, guid: 898ade031a3ce554b8df63abbf1da280, type: 3}
+      propertyPath: tutorialGuideContentsStuct.tutorialComponentMaps.Array.data[5].tutorialComponents.Array.data[9].component
+      value: 
+      objectReference: {fileID: 1523132823}
+    - target: {fileID: 1181800399, guid: 898ade031a3ce554b8df63abbf1da280, type: 3}
+      propertyPath: tutorialGuideContentsStuct.tutorialComponentMaps.Array.data[6].tutorialComponents.Array.data[0].component
+      value: 
+      objectReference: {fileID: 8268924}
+    - target: {fileID: 1181800399, guid: 898ade031a3ce554b8df63abbf1da280, type: 3}
+      propertyPath: tutorialGuideContentsStuct.tutorialComponentMaps.Array.data[6].tutorialComponents.Array.data[1].component
+      value: 
+      objectReference: {fileID: 512768842}
+    - target: {fileID: 1181800399, guid: 898ade031a3ce554b8df63abbf1da280, type: 3}
+      propertyPath: tutorialGuideContentsStuct.tutorialComponentMaps.Array.data[6].tutorialComponents.Array.data[2].component
+      value: 
+      objectReference: {fileID: 2094762497}
+    - target: {fileID: 1181800399, guid: 898ade031a3ce554b8df63abbf1da280, type: 3}
+      propertyPath: tutorialGuideContentsStuct.tutorialComponentMaps.Array.data[6].tutorialComponents.Array.data[3].component
+      value: 
+      objectReference: {fileID: 701025616}
+    - target: {fileID: 1181800399, guid: 898ade031a3ce554b8df63abbf1da280, type: 3}
+      propertyPath: tutorialGuideContentsStuct.tutorialComponentMaps.Array.data[6].tutorialComponents.Array.data[4].component
+      value: 
+      objectReference: {fileID: 898339426}
+    - target: {fileID: 1181800399, guid: 898ade031a3ce554b8df63abbf1da280, type: 3}
+      propertyPath: tutorialGuideContentsStuct.tutorialComponentMaps.Array.data[6].tutorialComponents.Array.data[5].component
+      value: 
+      objectReference: {fileID: 81144365}
+    - target: {fileID: 1181800399, guid: 898ade031a3ce554b8df63abbf1da280, type: 3}
+      propertyPath: tutorialGuideContentsStuct.tutorialComponentMaps.Array.data[6].tutorialComponents.Array.data[6].component
+      value: 
+      objectReference: {fileID: 1481020869}
+    - target: {fileID: 1181800399, guid: 898ade031a3ce554b8df63abbf1da280, type: 3}
+      propertyPath: tutorialGuideContentsStuct.tutorialComponentMaps.Array.data[6].tutorialComponents.Array.data[7].component
+      value: 
+      objectReference: {fileID: 1523132825}
+    - target: {fileID: 1181800399, guid: 898ade031a3ce554b8df63abbf1da280, type: 3}
+      propertyPath: tutorialGuideContentsStuct.tutorialComponentMaps.Array.data[6].tutorialComponents.Array.data[8].component
+      value: 
+      objectReference: {fileID: 1523132824}
+    - target: {fileID: 1181800399, guid: 898ade031a3ce554b8df63abbf1da280, type: 3}
+      propertyPath: tutorialGuideContentsStuct.tutorialComponentMaps.Array.data[6].tutorialComponents.Array.data[9].component
+      value: 
+      objectReference: {fileID: 1523132823}
+    - target: {fileID: 1181800399, guid: 898ade031a3ce554b8df63abbf1da280, type: 3}
+      propertyPath: tutorialGuideContentsStuct.tutorialComponentMaps.Array.data[7].tutorialComponents.Array.data[0].component
+      value: 
+      objectReference: {fileID: 8268924}
+    - target: {fileID: 1181800399, guid: 898ade031a3ce554b8df63abbf1da280, type: 3}
+      propertyPath: tutorialGuideContentsStuct.tutorialComponentMaps.Array.data[7].tutorialComponents.Array.data[1].component
+      value: 
+      objectReference: {fileID: 512768842}
+    - target: {fileID: 1181800399, guid: 898ade031a3ce554b8df63abbf1da280, type: 3}
+      propertyPath: tutorialGuideContentsStuct.tutorialComponentMaps.Array.data[7].tutorialComponents.Array.data[2].component
+      value: 
+      objectReference: {fileID: 2094762497}
+    - target: {fileID: 1181800399, guid: 898ade031a3ce554b8df63abbf1da280, type: 3}
+      propertyPath: tutorialGuideContentsStuct.tutorialComponentMaps.Array.data[7].tutorialComponents.Array.data[3].component
+      value: 
+      objectReference: {fileID: 701025616}
+    - target: {fileID: 1181800399, guid: 898ade031a3ce554b8df63abbf1da280, type: 3}
+      propertyPath: tutorialGuideContentsStuct.tutorialComponentMaps.Array.data[7].tutorialComponents.Array.data[4].component
+      value: 
+      objectReference: {fileID: 898339426}
+    - target: {fileID: 1181800399, guid: 898ade031a3ce554b8df63abbf1da280, type: 3}
+      propertyPath: tutorialGuideContentsStuct.tutorialComponentMaps.Array.data[7].tutorialComponents.Array.data[5].component
+      value: 
+      objectReference: {fileID: 81144365}
+    - target: {fileID: 1181800399, guid: 898ade031a3ce554b8df63abbf1da280, type: 3}
+      propertyPath: tutorialGuideContentsStuct.tutorialComponentMaps.Array.data[7].tutorialComponents.Array.data[6].component
+      value: 
+      objectReference: {fileID: 1481020869}
+    - target: {fileID: 1181800399, guid: 898ade031a3ce554b8df63abbf1da280, type: 3}
+      propertyPath: tutorialGuideContentsStuct.tutorialComponentMaps.Array.data[7].tutorialComponents.Array.data[7].component
+      value: 
+      objectReference: {fileID: 1523132825}
+    - target: {fileID: 1181800399, guid: 898ade031a3ce554b8df63abbf1da280, type: 3}
+      propertyPath: tutorialGuideContentsStuct.tutorialComponentMaps.Array.data[7].tutorialComponents.Array.data[8].component
+      value: 
+      objectReference: {fileID: 1523132824}
+    - target: {fileID: 1181800399, guid: 898ade031a3ce554b8df63abbf1da280, type: 3}
+      propertyPath: tutorialGuideContentsStuct.tutorialComponentMaps.Array.data[7].tutorialComponents.Array.data[9].component
+      value: 
+      objectReference: {fileID: 1523132823}
+    - target: {fileID: 1181800399, guid: 898ade031a3ce554b8df63abbf1da280, type: 3}
+      propertyPath: tutorialGuideContentsStuct.tutorialComponentMaps.Array.data[8].tutorialComponents.Array.data[0].component
+      value: 
+      objectReference: {fileID: 8268924}
+    - target: {fileID: 1181800399, guid: 898ade031a3ce554b8df63abbf1da280, type: 3}
+      propertyPath: tutorialGuideContentsStuct.tutorialComponentMaps.Array.data[8].tutorialComponents.Array.data[1].component
+      value: 
+      objectReference: {fileID: 512768842}
+    - target: {fileID: 1181800399, guid: 898ade031a3ce554b8df63abbf1da280, type: 3}
+      propertyPath: tutorialGuideContentsStuct.tutorialComponentMaps.Array.data[8].tutorialComponents.Array.data[2].component
+      value: 
+      objectReference: {fileID: 2094762497}
+    - target: {fileID: 1181800399, guid: 898ade031a3ce554b8df63abbf1da280, type: 3}
+      propertyPath: tutorialGuideContentsStuct.tutorialComponentMaps.Array.data[8].tutorialComponents.Array.data[3].component
+      value: 
+      objectReference: {fileID: 701025616}
+    - target: {fileID: 1181800399, guid: 898ade031a3ce554b8df63abbf1da280, type: 3}
+      propertyPath: tutorialGuideContentsStuct.tutorialComponentMaps.Array.data[8].tutorialComponents.Array.data[4].component
+      value: 
+      objectReference: {fileID: 898339426}
+    - target: {fileID: 1181800399, guid: 898ade031a3ce554b8df63abbf1da280, type: 3}
+      propertyPath: tutorialGuideContentsStuct.tutorialComponentMaps.Array.data[8].tutorialComponents.Array.data[5].component
+      value: 
+      objectReference: {fileID: 81144365}
+    - target: {fileID: 1181800399, guid: 898ade031a3ce554b8df63abbf1da280, type: 3}
+      propertyPath: tutorialGuideContentsStuct.tutorialComponentMaps.Array.data[8].tutorialComponents.Array.data[6].component
+      value: 
+      objectReference: {fileID: 1481020869}
+    - target: {fileID: 1181800399, guid: 898ade031a3ce554b8df63abbf1da280, type: 3}
+      propertyPath: tutorialGuideContentsStuct.tutorialComponentMaps.Array.data[8].tutorialComponents.Array.data[7].component
+      value: 
+      objectReference: {fileID: 1523132825}
+    - target: {fileID: 1181800399, guid: 898ade031a3ce554b8df63abbf1da280, type: 3}
+      propertyPath: tutorialGuideContentsStuct.tutorialComponentMaps.Array.data[8].tutorialComponents.Array.data[8].component
+      value: 
+      objectReference: {fileID: 1523132824}
+    - target: {fileID: 1181800399, guid: 898ade031a3ce554b8df63abbf1da280, type: 3}
+      propertyPath: tutorialGuideContentsStuct.tutorialComponentMaps.Array.data[8].tutorialComponents.Array.data[9].component
+      value: 
+      objectReference: {fileID: 1523132823}
+    - target: {fileID: 1181800399, guid: 898ade031a3ce554b8df63abbf1da280, type: 3}
+      propertyPath: tutorialGuideContentsStuct.tutorialComponentMaps.Array.data[9].tutorialComponents.Array.data[0].component
+      value: 
+      objectReference: {fileID: 8268924}
+    - target: {fileID: 1181800399, guid: 898ade031a3ce554b8df63abbf1da280, type: 3}
+      propertyPath: tutorialGuideContentsStuct.tutorialComponentMaps.Array.data[9].tutorialComponents.Array.data[1].component
+      value: 
+      objectReference: {fileID: 512768842}
+    - target: {fileID: 1181800399, guid: 898ade031a3ce554b8df63abbf1da280, type: 3}
+      propertyPath: tutorialGuideContentsStuct.tutorialComponentMaps.Array.data[9].tutorialComponents.Array.data[2].component
+      value: 
+      objectReference: {fileID: 2094762497}
+    - target: {fileID: 1181800399, guid: 898ade031a3ce554b8df63abbf1da280, type: 3}
+      propertyPath: tutorialGuideContentsStuct.tutorialComponentMaps.Array.data[9].tutorialComponents.Array.data[3].component
+      value: 
+      objectReference: {fileID: 701025616}
+    - target: {fileID: 1181800399, guid: 898ade031a3ce554b8df63abbf1da280, type: 3}
+      propertyPath: tutorialGuideContentsStuct.tutorialComponentMaps.Array.data[9].tutorialComponents.Array.data[4].component
+      value: 
+      objectReference: {fileID: 898339426}
+    - target: {fileID: 1181800399, guid: 898ade031a3ce554b8df63abbf1da280, type: 3}
+      propertyPath: tutorialGuideContentsStuct.tutorialComponentMaps.Array.data[9].tutorialComponents.Array.data[5].component
+      value: 
+      objectReference: {fileID: 81144365}
+    - target: {fileID: 1181800399, guid: 898ade031a3ce554b8df63abbf1da280, type: 3}
+      propertyPath: tutorialGuideContentsStuct.tutorialComponentMaps.Array.data[9].tutorialComponents.Array.data[6].component
+      value: 
+      objectReference: {fileID: 1481020869}
+    - target: {fileID: 1181800399, guid: 898ade031a3ce554b8df63abbf1da280, type: 3}
+      propertyPath: tutorialGuideContentsStuct.tutorialComponentMaps.Array.data[9].tutorialComponents.Array.data[7].component
+      value: 
+      objectReference: {fileID: 1523132825}
+    - target: {fileID: 1181800399, guid: 898ade031a3ce554b8df63abbf1da280, type: 3}
+      propertyPath: tutorialGuideContentsStuct.tutorialComponentMaps.Array.data[9].tutorialComponents.Array.data[8].component
+      value: 
+      objectReference: {fileID: 1523132824}
+    - target: {fileID: 1181800399, guid: 898ade031a3ce554b8df63abbf1da280, type: 3}
+      propertyPath: tutorialGuideContentsStuct.tutorialComponentMaps.Array.data[9].tutorialComponents.Array.data[9].component
+      value: 
+      objectReference: {fileID: 1523132823}
+    - target: {fileID: 1181800399, guid: 898ade031a3ce554b8df63abbf1da280, type: 3}
+      propertyPath: tutorialGuideContentsStuct.tutorialComponentMaps.Array.data[0].tutorialComponents.Array.data[10].component
+      value: 
+      objectReference: {fileID: 1523132822}
+    - target: {fileID: 1181800399, guid: 898ade031a3ce554b8df63abbf1da280, type: 3}
+      propertyPath: tutorialGuideContentsStuct.tutorialComponentMaps.Array.data[0].tutorialComponents.Array.data[11].component
+      value: 
+      objectReference: {fileID: 1523132821}
+    - target: {fileID: 1181800399, guid: 898ade031a3ce554b8df63abbf1da280, type: 3}
+      propertyPath: tutorialGuideContentsStuct.tutorialComponentMaps.Array.data[0].tutorialComponents.Array.data[12].component
+      value: 
+      objectReference: {fileID: 1523132820}
+    - target: {fileID: 1181800399, guid: 898ade031a3ce554b8df63abbf1da280, type: 3}
+      propertyPath: tutorialGuideContentsStuct.tutorialComponentMaps.Array.data[0].tutorialComponents.Array.data[13].component
+      value: 
+      objectReference: {fileID: 1523132819}
+    - target: {fileID: 1181800399, guid: 898ade031a3ce554b8df63abbf1da280, type: 3}
+      propertyPath: tutorialGuideContentsStuct.tutorialComponentMaps.Array.data[10].tutorialComponents.Array.data[0].component
+      value: 
+      objectReference: {fileID: 8268924}
+    - target: {fileID: 1181800399, guid: 898ade031a3ce554b8df63abbf1da280, type: 3}
+      propertyPath: tutorialGuideContentsStuct.tutorialComponentMaps.Array.data[10].tutorialComponents.Array.data[1].component
+      value: 
+      objectReference: {fileID: 512768842}
+    - target: {fileID: 1181800399, guid: 898ade031a3ce554b8df63abbf1da280, type: 3}
+      propertyPath: tutorialGuideContentsStuct.tutorialComponentMaps.Array.data[10].tutorialComponents.Array.data[2].component
+      value: 
+      objectReference: {fileID: 2094762497}
+    - target: {fileID: 1181800399, guid: 898ade031a3ce554b8df63abbf1da280, type: 3}
+      propertyPath: tutorialGuideContentsStuct.tutorialComponentMaps.Array.data[10].tutorialComponents.Array.data[3].component
+      value: 
+      objectReference: {fileID: 701025616}
+    - target: {fileID: 1181800399, guid: 898ade031a3ce554b8df63abbf1da280, type: 3}
+      propertyPath: tutorialGuideContentsStuct.tutorialComponentMaps.Array.data[10].tutorialComponents.Array.data[4].component
+      value: 
+      objectReference: {fileID: 898339426}
+    - target: {fileID: 1181800399, guid: 898ade031a3ce554b8df63abbf1da280, type: 3}
+      propertyPath: tutorialGuideContentsStuct.tutorialComponentMaps.Array.data[10].tutorialComponents.Array.data[5].component
+      value: 
+      objectReference: {fileID: 81144365}
+    - target: {fileID: 1181800399, guid: 898ade031a3ce554b8df63abbf1da280, type: 3}
+      propertyPath: tutorialGuideContentsStuct.tutorialComponentMaps.Array.data[10].tutorialComponents.Array.data[6].component
+      value: 
+      objectReference: {fileID: 1481020869}
+    - target: {fileID: 1181800399, guid: 898ade031a3ce554b8df63abbf1da280, type: 3}
+      propertyPath: tutorialGuideContentsStuct.tutorialComponentMaps.Array.data[10].tutorialComponents.Array.data[7].component
+      value: 
+      objectReference: {fileID: 1523132825}
+    - target: {fileID: 1181800399, guid: 898ade031a3ce554b8df63abbf1da280, type: 3}
+      propertyPath: tutorialGuideContentsStuct.tutorialComponentMaps.Array.data[10].tutorialComponents.Array.data[8].component
+      value: 
+      objectReference: {fileID: 1523132824}
+    - target: {fileID: 1181800399, guid: 898ade031a3ce554b8df63abbf1da280, type: 3}
+      propertyPath: tutorialGuideContentsStuct.tutorialComponentMaps.Array.data[10].tutorialComponents.Array.data[9].component
+      value: 
+      objectReference: {fileID: 1523132823}
+    - target: {fileID: 1181800399, guid: 898ade031a3ce554b8df63abbf1da280, type: 3}
+      propertyPath: tutorialGuideContentsStuct.tutorialComponentMaps.Array.data[11].tutorialComponents.Array.data[0].component
+      value: 
+      objectReference: {fileID: 8268924}
+    - target: {fileID: 1181800399, guid: 898ade031a3ce554b8df63abbf1da280, type: 3}
+      propertyPath: tutorialGuideContentsStuct.tutorialComponentMaps.Array.data[11].tutorialComponents.Array.data[1].component
+      value: 
+      objectReference: {fileID: 512768842}
+    - target: {fileID: 1181800399, guid: 898ade031a3ce554b8df63abbf1da280, type: 3}
+      propertyPath: tutorialGuideContentsStuct.tutorialComponentMaps.Array.data[11].tutorialComponents.Array.data[2].component
+      value: 
+      objectReference: {fileID: 2094762497}
+    - target: {fileID: 1181800399, guid: 898ade031a3ce554b8df63abbf1da280, type: 3}
+      propertyPath: tutorialGuideContentsStuct.tutorialComponentMaps.Array.data[11].tutorialComponents.Array.data[3].component
+      value: 
+      objectReference: {fileID: 701025616}
+    - target: {fileID: 1181800399, guid: 898ade031a3ce554b8df63abbf1da280, type: 3}
+      propertyPath: tutorialGuideContentsStuct.tutorialComponentMaps.Array.data[11].tutorialComponents.Array.data[4].component
+      value: 
+      objectReference: {fileID: 898339426}
+    - target: {fileID: 1181800399, guid: 898ade031a3ce554b8df63abbf1da280, type: 3}
+      propertyPath: tutorialGuideContentsStuct.tutorialComponentMaps.Array.data[11].tutorialComponents.Array.data[5].component
+      value: 
+      objectReference: {fileID: 81144365}
+    - target: {fileID: 1181800399, guid: 898ade031a3ce554b8df63abbf1da280, type: 3}
+      propertyPath: tutorialGuideContentsStuct.tutorialComponentMaps.Array.data[11].tutorialComponents.Array.data[6].component
+      value: 
+      objectReference: {fileID: 1481020869}
+    - target: {fileID: 1181800399, guid: 898ade031a3ce554b8df63abbf1da280, type: 3}
+      propertyPath: tutorialGuideContentsStuct.tutorialComponentMaps.Array.data[11].tutorialComponents.Array.data[7].component
+      value: 
+      objectReference: {fileID: 1523132825}
+    - target: {fileID: 1181800399, guid: 898ade031a3ce554b8df63abbf1da280, type: 3}
+      propertyPath: tutorialGuideContentsStuct.tutorialComponentMaps.Array.data[11].tutorialComponents.Array.data[8].component
+      value: 
+      objectReference: {fileID: 1523132824}
+    - target: {fileID: 1181800399, guid: 898ade031a3ce554b8df63abbf1da280, type: 3}
+      propertyPath: tutorialGuideContentsStuct.tutorialComponentMaps.Array.data[11].tutorialComponents.Array.data[9].component
+      value: 
+      objectReference: {fileID: 1523132823}
+    - target: {fileID: 1181800399, guid: 898ade031a3ce554b8df63abbf1da280, type: 3}
+      propertyPath: tutorialGuideContentsStuct.tutorialComponentMaps.Array.data[12].tutorialComponents.Array.data[0].component
+      value: 
+      objectReference: {fileID: 8268924}
+    - target: {fileID: 1181800399, guid: 898ade031a3ce554b8df63abbf1da280, type: 3}
+      propertyPath: tutorialGuideContentsStuct.tutorialComponentMaps.Array.data[12].tutorialComponents.Array.data[1].component
+      value: 
+      objectReference: {fileID: 512768842}
+    - target: {fileID: 1181800399, guid: 898ade031a3ce554b8df63abbf1da280, type: 3}
+      propertyPath: tutorialGuideContentsStuct.tutorialComponentMaps.Array.data[12].tutorialComponents.Array.data[2].component
+      value: 
+      objectReference: {fileID: 2094762497}
+    - target: {fileID: 1181800399, guid: 898ade031a3ce554b8df63abbf1da280, type: 3}
+      propertyPath: tutorialGuideContentsStuct.tutorialComponentMaps.Array.data[12].tutorialComponents.Array.data[3].component
+      value: 
+      objectReference: {fileID: 701025616}
+    - target: {fileID: 1181800399, guid: 898ade031a3ce554b8df63abbf1da280, type: 3}
+      propertyPath: tutorialGuideContentsStuct.tutorialComponentMaps.Array.data[12].tutorialComponents.Array.data[4].component
+      value: 
+      objectReference: {fileID: 898339426}
+    - target: {fileID: 1181800399, guid: 898ade031a3ce554b8df63abbf1da280, type: 3}
+      propertyPath: tutorialGuideContentsStuct.tutorialComponentMaps.Array.data[12].tutorialComponents.Array.data[5].component
+      value: 
+      objectReference: {fileID: 81144365}
+    - target: {fileID: 1181800399, guid: 898ade031a3ce554b8df63abbf1da280, type: 3}
+      propertyPath: tutorialGuideContentsStuct.tutorialComponentMaps.Array.data[12].tutorialComponents.Array.data[6].component
+      value: 
+      objectReference: {fileID: 1481020869}
+    - target: {fileID: 1181800399, guid: 898ade031a3ce554b8df63abbf1da280, type: 3}
+      propertyPath: tutorialGuideContentsStuct.tutorialComponentMaps.Array.data[12].tutorialComponents.Array.data[7].component
+      value: 
+      objectReference: {fileID: 1523132825}
+    - target: {fileID: 1181800399, guid: 898ade031a3ce554b8df63abbf1da280, type: 3}
+      propertyPath: tutorialGuideContentsStuct.tutorialComponentMaps.Array.data[12].tutorialComponents.Array.data[8].component
+      value: 
+      objectReference: {fileID: 1523132824}
+    - target: {fileID: 1181800399, guid: 898ade031a3ce554b8df63abbf1da280, type: 3}
+      propertyPath: tutorialGuideContentsStuct.tutorialComponentMaps.Array.data[12].tutorialComponents.Array.data[9].component
+      value: 
+      objectReference: {fileID: 1523132823}
+    - target: {fileID: 1181800399, guid: 898ade031a3ce554b8df63abbf1da280, type: 3}
+      propertyPath: tutorialGuideContentsStuct.tutorialComponentMaps.Array.data[13].tutorialComponents.Array.data[0].component
+      value: 
+      objectReference: {fileID: 8268924}
+    - target: {fileID: 1181800399, guid: 898ade031a3ce554b8df63abbf1da280, type: 3}
+      propertyPath: tutorialGuideContentsStuct.tutorialComponentMaps.Array.data[13].tutorialComponents.Array.data[1].component
+      value: 
+      objectReference: {fileID: 512768842}
+    - target: {fileID: 1181800399, guid: 898ade031a3ce554b8df63abbf1da280, type: 3}
+      propertyPath: tutorialGuideContentsStuct.tutorialComponentMaps.Array.data[13].tutorialComponents.Array.data[2].component
+      value: 
+      objectReference: {fileID: 2094762497}
+    - target: {fileID: 1181800399, guid: 898ade031a3ce554b8df63abbf1da280, type: 3}
+      propertyPath: tutorialGuideContentsStuct.tutorialComponentMaps.Array.data[13].tutorialComponents.Array.data[3].component
+      value: 
+      objectReference: {fileID: 701025616}
+    - target: {fileID: 1181800399, guid: 898ade031a3ce554b8df63abbf1da280, type: 3}
+      propertyPath: tutorialGuideContentsStuct.tutorialComponentMaps.Array.data[13].tutorialComponents.Array.data[4].component
+      value: 
+      objectReference: {fileID: 898339426}
+    - target: {fileID: 1181800399, guid: 898ade031a3ce554b8df63abbf1da280, type: 3}
+      propertyPath: tutorialGuideContentsStuct.tutorialComponentMaps.Array.data[13].tutorialComponents.Array.data[5].component
+      value: 
+      objectReference: {fileID: 81144365}
+    - target: {fileID: 1181800399, guid: 898ade031a3ce554b8df63abbf1da280, type: 3}
+      propertyPath: tutorialGuideContentsStuct.tutorialComponentMaps.Array.data[13].tutorialComponents.Array.data[6].component
+      value: 
+      objectReference: {fileID: 1481020869}
+    - target: {fileID: 1181800399, guid: 898ade031a3ce554b8df63abbf1da280, type: 3}
+      propertyPath: tutorialGuideContentsStuct.tutorialComponentMaps.Array.data[13].tutorialComponents.Array.data[7].component
+      value: 
+      objectReference: {fileID: 1523132825}
+    - target: {fileID: 1181800399, guid: 898ade031a3ce554b8df63abbf1da280, type: 3}
+      propertyPath: tutorialGuideContentsStuct.tutorialComponentMaps.Array.data[13].tutorialComponents.Array.data[8].component
+      value: 
+      objectReference: {fileID: 1523132824}
+    - target: {fileID: 1181800399, guid: 898ade031a3ce554b8df63abbf1da280, type: 3}
+      propertyPath: tutorialGuideContentsStuct.tutorialComponentMaps.Array.data[13].tutorialComponents.Array.data[9].component
+      value: 
+      objectReference: {fileID: 1523132823}
+    - target: {fileID: 1181800399, guid: 898ade031a3ce554b8df63abbf1da280, type: 3}
+      propertyPath: tutorialGuideContentsStuct.tutorialComponentMaps.Array.data[1].tutorialComponents.Array.data[10].component
+      value: 
+      objectReference: {fileID: 1523132822}
+    - target: {fileID: 1181800399, guid: 898ade031a3ce554b8df63abbf1da280, type: 3}
+      propertyPath: tutorialGuideContentsStuct.tutorialComponentMaps.Array.data[1].tutorialComponents.Array.data[11].component
+      value: 
+      objectReference: {fileID: 1523132821}
+    - target: {fileID: 1181800399, guid: 898ade031a3ce554b8df63abbf1da280, type: 3}
+      propertyPath: tutorialGuideContentsStuct.tutorialComponentMaps.Array.data[1].tutorialComponents.Array.data[12].component
+      value: 
+      objectReference: {fileID: 1523132820}
+    - target: {fileID: 1181800399, guid: 898ade031a3ce554b8df63abbf1da280, type: 3}
+      propertyPath: tutorialGuideContentsStuct.tutorialComponentMaps.Array.data[1].tutorialComponents.Array.data[13].component
+      value: 
+      objectReference: {fileID: 1523132819}
+    - target: {fileID: 1181800399, guid: 898ade031a3ce554b8df63abbf1da280, type: 3}
+      propertyPath: tutorialGuideContentsStuct.tutorialComponentMaps.Array.data[2].tutorialComponents.Array.data[10].component
+      value: 
+      objectReference: {fileID: 1523132822}
+    - target: {fileID: 1181800399, guid: 898ade031a3ce554b8df63abbf1da280, type: 3}
+      propertyPath: tutorialGuideContentsStuct.tutorialComponentMaps.Array.data[2].tutorialComponents.Array.data[11].component
+      value: 
+      objectReference: {fileID: 1523132821}
+    - target: {fileID: 1181800399, guid: 898ade031a3ce554b8df63abbf1da280, type: 3}
+      propertyPath: tutorialGuideContentsStuct.tutorialComponentMaps.Array.data[2].tutorialComponents.Array.data[12].component
+      value: 
+      objectReference: {fileID: 1523132820}
+    - target: {fileID: 1181800399, guid: 898ade031a3ce554b8df63abbf1da280, type: 3}
+      propertyPath: tutorialGuideContentsStuct.tutorialComponentMaps.Array.data[2].tutorialComponents.Array.data[13].component
+      value: 
+      objectReference: {fileID: 1523132819}
+    - target: {fileID: 1181800399, guid: 898ade031a3ce554b8df63abbf1da280, type: 3}
+      propertyPath: tutorialGuideContentsStuct.tutorialComponentMaps.Array.data[3].tutorialComponents.Array.data[10].component
+      value: 
+      objectReference: {fileID: 1523132822}
+    - target: {fileID: 1181800399, guid: 898ade031a3ce554b8df63abbf1da280, type: 3}
+      propertyPath: tutorialGuideContentsStuct.tutorialComponentMaps.Array.data[3].tutorialComponents.Array.data[11].component
+      value: 
+      objectReference: {fileID: 1523132821}
+    - target: {fileID: 1181800399, guid: 898ade031a3ce554b8df63abbf1da280, type: 3}
+      propertyPath: tutorialGuideContentsStuct.tutorialComponentMaps.Array.data[3].tutorialComponents.Array.data[12].component
+      value: 
+      objectReference: {fileID: 1523132820}
+    - target: {fileID: 1181800399, guid: 898ade031a3ce554b8df63abbf1da280, type: 3}
+      propertyPath: tutorialGuideContentsStuct.tutorialComponentMaps.Array.data[3].tutorialComponents.Array.data[13].component
+      value: 
+      objectReference: {fileID: 1523132819}
+    - target: {fileID: 1181800399, guid: 898ade031a3ce554b8df63abbf1da280, type: 3}
+      propertyPath: tutorialGuideContentsStuct.tutorialComponentMaps.Array.data[4].tutorialComponents.Array.data[10].component
+      value: 
+      objectReference: {fileID: 1523132822}
+    - target: {fileID: 1181800399, guid: 898ade031a3ce554b8df63abbf1da280, type: 3}
+      propertyPath: tutorialGuideContentsStuct.tutorialComponentMaps.Array.data[4].tutorialComponents.Array.data[11].component
+      value: 
+      objectReference: {fileID: 1523132821}
+    - target: {fileID: 1181800399, guid: 898ade031a3ce554b8df63abbf1da280, type: 3}
+      propertyPath: tutorialGuideContentsStuct.tutorialComponentMaps.Array.data[4].tutorialComponents.Array.data[12].component
+      value: 
+      objectReference: {fileID: 1523132820}
+    - target: {fileID: 1181800399, guid: 898ade031a3ce554b8df63abbf1da280, type: 3}
+      propertyPath: tutorialGuideContentsStuct.tutorialComponentMaps.Array.data[4].tutorialComponents.Array.data[13].component
+      value: 
+      objectReference: {fileID: 1523132819}
+    - target: {fileID: 1181800399, guid: 898ade031a3ce554b8df63abbf1da280, type: 3}
+      propertyPath: tutorialGuideContentsStuct.tutorialComponentMaps.Array.data[5].tutorialComponents.Array.data[10].component
+      value: 
+      objectReference: {fileID: 1523132822}
+    - target: {fileID: 1181800399, guid: 898ade031a3ce554b8df63abbf1da280, type: 3}
+      propertyPath: tutorialGuideContentsStuct.tutorialComponentMaps.Array.data[5].tutorialComponents.Array.data[11].component
+      value: 
+      objectReference: {fileID: 1523132821}
+    - target: {fileID: 1181800399, guid: 898ade031a3ce554b8df63abbf1da280, type: 3}
+      propertyPath: tutorialGuideContentsStuct.tutorialComponentMaps.Array.data[5].tutorialComponents.Array.data[12].component
+      value: 
+      objectReference: {fileID: 1523132820}
+    - target: {fileID: 1181800399, guid: 898ade031a3ce554b8df63abbf1da280, type: 3}
+      propertyPath: tutorialGuideContentsStuct.tutorialComponentMaps.Array.data[5].tutorialComponents.Array.data[13].component
+      value: 
+      objectReference: {fileID: 1523132819}
+    - target: {fileID: 1181800399, guid: 898ade031a3ce554b8df63abbf1da280, type: 3}
+      propertyPath: tutorialGuideContentsStuct.tutorialComponentMaps.Array.data[6].tutorialComponents.Array.data[10].component
+      value: 
+      objectReference: {fileID: 1523132822}
+    - target: {fileID: 1181800399, guid: 898ade031a3ce554b8df63abbf1da280, type: 3}
+      propertyPath: tutorialGuideContentsStuct.tutorialComponentMaps.Array.data[6].tutorialComponents.Array.data[11].component
+      value: 
+      objectReference: {fileID: 1523132821}
+    - target: {fileID: 1181800399, guid: 898ade031a3ce554b8df63abbf1da280, type: 3}
+      propertyPath: tutorialGuideContentsStuct.tutorialComponentMaps.Array.data[6].tutorialComponents.Array.data[12].component
+      value: 
+      objectReference: {fileID: 1523132820}
+    - target: {fileID: 1181800399, guid: 898ade031a3ce554b8df63abbf1da280, type: 3}
+      propertyPath: tutorialGuideContentsStuct.tutorialComponentMaps.Array.data[6].tutorialComponents.Array.data[13].component
+      value: 
+      objectReference: {fileID: 1523132819}
+    - target: {fileID: 1181800399, guid: 898ade031a3ce554b8df63abbf1da280, type: 3}
+      propertyPath: tutorialGuideContentsStuct.tutorialComponentMaps.Array.data[7].tutorialComponents.Array.data[10].component
+      value: 
+      objectReference: {fileID: 1523132822}
+    - target: {fileID: 1181800399, guid: 898ade031a3ce554b8df63abbf1da280, type: 3}
+      propertyPath: tutorialGuideContentsStuct.tutorialComponentMaps.Array.data[7].tutorialComponents.Array.data[11].component
+      value: 
+      objectReference: {fileID: 1523132821}
+    - target: {fileID: 1181800399, guid: 898ade031a3ce554b8df63abbf1da280, type: 3}
+      propertyPath: tutorialGuideContentsStuct.tutorialComponentMaps.Array.data[7].tutorialComponents.Array.data[12].component
+      value: 
+      objectReference: {fileID: 1523132820}
+    - target: {fileID: 1181800399, guid: 898ade031a3ce554b8df63abbf1da280, type: 3}
+      propertyPath: tutorialGuideContentsStuct.tutorialComponentMaps.Array.data[7].tutorialComponents.Array.data[13].component
+      value: 
+      objectReference: {fileID: 1523132819}
+    - target: {fileID: 1181800399, guid: 898ade031a3ce554b8df63abbf1da280, type: 3}
+      propertyPath: tutorialGuideContentsStuct.tutorialComponentMaps.Array.data[8].tutorialComponents.Array.data[10].component
+      value: 
+      objectReference: {fileID: 1523132822}
+    - target: {fileID: 1181800399, guid: 898ade031a3ce554b8df63abbf1da280, type: 3}
+      propertyPath: tutorialGuideContentsStuct.tutorialComponentMaps.Array.data[8].tutorialComponents.Array.data[11].component
+      value: 
+      objectReference: {fileID: 1523132821}
+    - target: {fileID: 1181800399, guid: 898ade031a3ce554b8df63abbf1da280, type: 3}
+      propertyPath: tutorialGuideContentsStuct.tutorialComponentMaps.Array.data[8].tutorialComponents.Array.data[12].component
+      value: 
+      objectReference: {fileID: 1523132820}
+    - target: {fileID: 1181800399, guid: 898ade031a3ce554b8df63abbf1da280, type: 3}
+      propertyPath: tutorialGuideContentsStuct.tutorialComponentMaps.Array.data[8].tutorialComponents.Array.data[13].component
+      value: 
+      objectReference: {fileID: 1523132819}
+    - target: {fileID: 1181800399, guid: 898ade031a3ce554b8df63abbf1da280, type: 3}
+      propertyPath: tutorialGuideContentsStuct.tutorialComponentMaps.Array.data[9].tutorialComponents.Array.data[10].component
+      value: 
+      objectReference: {fileID: 1523132822}
+    - target: {fileID: 1181800399, guid: 898ade031a3ce554b8df63abbf1da280, type: 3}
+      propertyPath: tutorialGuideContentsStuct.tutorialComponentMaps.Array.data[9].tutorialComponents.Array.data[11].component
+      value: 
+      objectReference: {fileID: 1523132821}
+    - target: {fileID: 1181800399, guid: 898ade031a3ce554b8df63abbf1da280, type: 3}
+      propertyPath: tutorialGuideContentsStuct.tutorialComponentMaps.Array.data[9].tutorialComponents.Array.data[12].component
+      value: 
+      objectReference: {fileID: 1523132820}
+    - target: {fileID: 1181800399, guid: 898ade031a3ce554b8df63abbf1da280, type: 3}
+      propertyPath: tutorialGuideContentsStuct.tutorialComponentMaps.Array.data[9].tutorialComponents.Array.data[13].component
+      value: 
+      objectReference: {fileID: 1523132819}
+    - target: {fileID: 1181800399, guid: 898ade031a3ce554b8df63abbf1da280, type: 3}
+      propertyPath: tutorialGuideContentsStuct.tutorialComponentMaps.Array.data[10].tutorialComponents.Array.data[10].component
+      value: 
+      objectReference: {fileID: 1523132822}
+    - target: {fileID: 1181800399, guid: 898ade031a3ce554b8df63abbf1da280, type: 3}
+      propertyPath: tutorialGuideContentsStuct.tutorialComponentMaps.Array.data[10].tutorialComponents.Array.data[11].component
+      value: 
+      objectReference: {fileID: 1523132821}
+    - target: {fileID: 1181800399, guid: 898ade031a3ce554b8df63abbf1da280, type: 3}
+      propertyPath: tutorialGuideContentsStuct.tutorialComponentMaps.Array.data[10].tutorialComponents.Array.data[12].component
+      value: 
+      objectReference: {fileID: 1523132820}
+    - target: {fileID: 1181800399, guid: 898ade031a3ce554b8df63abbf1da280, type: 3}
+      propertyPath: tutorialGuideContentsStuct.tutorialComponentMaps.Array.data[10].tutorialComponents.Array.data[13].component
+      value: 
+      objectReference: {fileID: 1523132819}
+    - target: {fileID: 1181800399, guid: 898ade031a3ce554b8df63abbf1da280, type: 3}
+      propertyPath: tutorialGuideContentsStuct.tutorialComponentMaps.Array.data[11].tutorialComponents.Array.data[10].component
+      value: 
+      objectReference: {fileID: 1523132822}
+    - target: {fileID: 1181800399, guid: 898ade031a3ce554b8df63abbf1da280, type: 3}
+      propertyPath: tutorialGuideContentsStuct.tutorialComponentMaps.Array.data[11].tutorialComponents.Array.data[11].component
+      value: 
+      objectReference: {fileID: 1523132821}
+    - target: {fileID: 1181800399, guid: 898ade031a3ce554b8df63abbf1da280, type: 3}
+      propertyPath: tutorialGuideContentsStuct.tutorialComponentMaps.Array.data[11].tutorialComponents.Array.data[12].component
+      value: 
+      objectReference: {fileID: 1523132820}
+    - target: {fileID: 1181800399, guid: 898ade031a3ce554b8df63abbf1da280, type: 3}
+      propertyPath: tutorialGuideContentsStuct.tutorialComponentMaps.Array.data[11].tutorialComponents.Array.data[13].component
+      value: 
+      objectReference: {fileID: 1523132819}
+    - target: {fileID: 1181800399, guid: 898ade031a3ce554b8df63abbf1da280, type: 3}
+      propertyPath: tutorialGuideContentsStuct.tutorialComponentMaps.Array.data[12].tutorialComponents.Array.data[10].component
+      value: 
+      objectReference: {fileID: 1523132822}
+    - target: {fileID: 1181800399, guid: 898ade031a3ce554b8df63abbf1da280, type: 3}
+      propertyPath: tutorialGuideContentsStuct.tutorialComponentMaps.Array.data[12].tutorialComponents.Array.data[11].component
+      value: 
+      objectReference: {fileID: 1523132821}
+    - target: {fileID: 1181800399, guid: 898ade031a3ce554b8df63abbf1da280, type: 3}
+      propertyPath: tutorialGuideContentsStuct.tutorialComponentMaps.Array.data[12].tutorialComponents.Array.data[12].component
+      value: 
+      objectReference: {fileID: 1523132820}
+    - target: {fileID: 1181800399, guid: 898ade031a3ce554b8df63abbf1da280, type: 3}
+      propertyPath: tutorialGuideContentsStuct.tutorialComponentMaps.Array.data[12].tutorialComponents.Array.data[13].component
+      value: 
+      objectReference: {fileID: 1523132819}
+    - target: {fileID: 1181800399, guid: 898ade031a3ce554b8df63abbf1da280, type: 3}
+      propertyPath: tutorialGuideContentsStuct.tutorialComponentMaps.Array.data[13].tutorialComponents.Array.data[10].component
+      value: 
+      objectReference: {fileID: 1523132822}
+    - target: {fileID: 1181800399, guid: 898ade031a3ce554b8df63abbf1da280, type: 3}
+      propertyPath: tutorialGuideContentsStuct.tutorialComponentMaps.Array.data[13].tutorialComponents.Array.data[11].component
+      value: 
+      objectReference: {fileID: 1523132821}
+    - target: {fileID: 1181800399, guid: 898ade031a3ce554b8df63abbf1da280, type: 3}
+      propertyPath: tutorialGuideContentsStuct.tutorialComponentMaps.Array.data[13].tutorialComponents.Array.data[12].component
+      value: 
+      objectReference: {fileID: 1523132820}
+    - target: {fileID: 1181800399, guid: 898ade031a3ce554b8df63abbf1da280, type: 3}
+      propertyPath: tutorialGuideContentsStuct.tutorialComponentMaps.Array.data[13].tutorialComponents.Array.data[13].component
+      value: 
+      objectReference: {fileID: 1523132819}
+    - target: {fileID: 1181800399, guid: 898ade031a3ce554b8df63abbf1da280, type: 3}
+      propertyPath: tutorialGuideContentsStuct.tutorialComponentMaps.Array.data[13].tutorialComponents.Array.data[4].componentState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 1181800399, guid: 898ade031a3ce554b8df63abbf1da280, type: 3}
+      propertyPath: tutorialGuideContentsStuct.tutorialComponentMaps.Array.data[13].tutorialComponents.Array.data[5].componentState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 1181800399, guid: 898ade031a3ce554b8df63abbf1da280, type: 3}
+      propertyPath: tutorialGuideContentsStuct.tutorialComponentMaps.Array.data[13].tutorialComponents.Array.data[6].componentState
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 1369696456132551609, guid: 898ade031a3ce554b8df63abbf1da280, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -2935,6 +4220,10 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3646664294279809802, guid: d1f02c59a59dc8a4d89245becc051b3d, type: 3}
+      propertyPath: guideMessageModel
+      value: 
+      objectReference: {fileID: 429045977}
     - target: {fileID: 4730383241079538630, guid: d1f02c59a59dc8a4d89245becc051b3d, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
@@ -2967,6 +4256,10 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6109305374209302670, guid: d1f02c59a59dc8a4d89245becc051b3d, type: 3}
+      propertyPath: guideMessageView
+      value: 
+      objectReference: {fileID: 1481020869}
     - target: {fileID: 6719368663526017881, guid: d1f02c59a59dc8a4d89245becc051b3d, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
@@ -3232,3 +4525,7 @@ SceneRoots:
   - {fileID: 2094762496}
   - {fileID: 920806785}
   - {fileID: 1434755458}
+  - {fileID: 429045976}
+  - {fileID: 1481020868}
+  - {fileID: 1376717986}
+  - {fileID: 15128160}

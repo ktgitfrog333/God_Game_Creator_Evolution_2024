@@ -24,13 +24,10 @@ namespace Select.Model
         [SerializeField] private float sensibilityScratch = 40f;
         /// <summary>ステージセレクトのモデル</summary>
         [SerializeField] private StageSelectModel stageSelectModel;
-        /// <summary>遊び方確認ページのモデル</summary>
-        [SerializeField] private TutorialViewPageModel[] tutorialViewPageModels;
 
         private void Reset()
         {
             stageSelectModel = GameObject.Find("StageSelect").GetComponent<StageSelectModel>();
-            tutorialViewPageModels = GameObject.Find("Tutorial").GetComponentsInChildren<TutorialViewPageModel>();
         }
 
         private void Start()
@@ -50,7 +47,6 @@ namespace Select.Model
                 });
             // UIオブジェクトが有効となった場合に制御する
             Button currentButton = null;
-            Button currentTutorialButton = null;
             this.UpdateAsObservable()
                 .Where(_ => EventSystem.current != null)
                 .Select(_ => EventSystem.current.currentSelectedGameObject)
@@ -58,8 +54,6 @@ namespace Select.Model
                 .Subscribe(x =>
                 {
                     currentButton = stageSelectModel.Buttons
-                        .FirstOrDefault(y => y == x.GetComponent<Button>());
-                    currentTutorialButton = tutorialViewPageModels.Select(q => q.Button)
                         .FirstOrDefault(y => y == x.GetComponent<Button>());
                 });
             this.UpdateAsObservable()
@@ -82,12 +76,6 @@ namespace Select.Model
                                 if (!Scroll(EventSystemMidiJackModelScroll.Next, ref currentButton, ScrollRoute.Vertical))
                                     Debug.LogError("Scroll");
                             }
-                            if (currentTutorialButton != null &&
-                                currentTutorialButton.isActiveAndEnabled)
-                            {
-                                if (!Scroll(EventSystemMidiJackModelScroll.Next, ref currentTutorialButton, ScrollRoute.Horizontal))
-                                    Debug.LogError("Scroll");
-                            }
                         }
                         else if (x.Scratch < 0f)
                         {
@@ -97,24 +85,12 @@ namespace Select.Model
                                 if (!Scroll(EventSystemMidiJackModelScroll.Back, ref currentButton, ScrollRoute.Vertical))
                                     Debug.LogError("Scroll");
                             }
-                            if (currentTutorialButton != null &&
-                                currentTutorialButton.isActiveAndEnabled)
-                            {
-                                if (!Scroll(EventSystemMidiJackModelScroll.Back, ref currentTutorialButton, ScrollRoute.Horizontal))
-                                    Debug.LogError("Scroll");
-                            }
                         }
                     }
                     if (currentButton != null &&
                         currentButton.isActiveAndEnabled)
                     {
                         if (!AddExecuteEvents(currentButton, x))
-                            Debug.LogError("AddExecuteEvents");
-                    }
-                    if (currentTutorialButton != null &&
-                        currentTutorialButton.isActiveAndEnabled)
-                    {
-                        if (!AddExecuteEvents(currentTutorialButton, x))
                             Debug.LogError("AddExecuteEvents");
                     }
                 });

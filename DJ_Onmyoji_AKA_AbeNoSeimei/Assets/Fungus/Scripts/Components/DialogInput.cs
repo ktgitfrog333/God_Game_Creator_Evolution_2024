@@ -1,8 +1,10 @@
 // This code is part of the Fungus library (https://github.com/snozbot/fungus)
 // It is released for free under the MIT open source license (https://github.com/snozbot/fungus/blob/master/LICENSE)
 
-﻿using UnityEngine;
+using System.Collections.Generic;
+using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.InputSystem;
 
 namespace Fungus
 {
@@ -48,8 +50,14 @@ namespace Fungus
 
         protected Writer writer;
 
+        private DefaultInputActions _actions;
+        /// <summary>ボタン押下の有効状態</summary>
+        private bool _buttonPushEnabled = true;
+
         protected virtual void Awake()
         {
+            _actions = new DefaultInputActions();
+            _actions.Enable();
             writer = GetComponent<Writer>();
 
             CheckEventSystem();
@@ -71,7 +79,19 @@ namespace Fungus
                 }
             }
         }
-            
+
+        /// <summary>MIDIからの入力</summary>
+        private bool _isUiButton;
+
+        /// <summary>
+        /// MIDIからの入力をセット
+        /// </summary>
+        /// <param name="isUiButton">MIDIからの入力</param>
+        public void SetIsUiButton(bool isUiButton)
+        {
+            _isUiButton = isUiButton;
+        }
+
         protected virtual void Update()
         {
             if (EventSystem.current == null)
@@ -86,8 +106,12 @@ namespace Fungus
 
             if (writer != null)
             {
-                if (Input.GetButtonDown(currentStandaloneInputModule.submitButton) ||
-                    (cancelEnabled && Input.GetButton(currentStandaloneInputModule.cancelButton)))
+                if (_buttonPushEnabled &&
+                    (
+                        _actions.UI.Submit.WasPerformedThisFrame() ||
+                        (cancelEnabled && _actions.UI.Cancel.IsPressed()) ||
+                        _isUiButton)
+                    )
                 {
                     SetNextLineFlag();
                 }
@@ -199,6 +223,29 @@ namespace Fungus
             if (clickMode != ClickMode.Disabled)
             {
                 SetNextLineFlag();
+            }
+        }
+
+        /// <summary>
+        /// ボタン押下の有効状態をセット
+        /// </summary>
+        /// <param name="isEnable">ボタン押下の有効状態</param>
+        /// <returns>成功／失敗</returns>
+        public bool SetButtonPushEnabled(bool isEnable)
+        {
+            try
+            {
+                if (_buttonPushEnabled == isEnable)
+                    return true;
+
+                _buttonPushEnabled = isEnable;
+
+                return true;
+            }
+            catch (System.Exception e)
+            {
+                Debug.LogError(e);
+                return false;
             }
         }
 

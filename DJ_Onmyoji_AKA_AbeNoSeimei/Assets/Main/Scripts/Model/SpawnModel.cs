@@ -38,6 +38,24 @@ namespace Main.Model
         }
 
         /// <summary>
+        /// ターゲットが生成されるまで待機
+        /// </summary>
+        /// <param name="observer">トランスフォーム</param>
+        /// <returns>コルーチン</returns>
+        protected IEnumerator WaitForTarget(System.IObserver<Transform> observer)
+        {
+            Transform target = null;
+            while (target == null)
+            {
+                var obj = GameObject.FindGameObjectWithTag(ConstTagNames.TAG_NAME_PLAYER);
+                if (obj != null)
+                    target = obj.transform;
+                yield return null;
+            }
+            observer.OnNext(target);
+        }
+
+        /// <summary>
         /// オブジェクトを生成
         /// </summary>
         /// <param name="instanceRateTimeSec">オブジェクトを生成する時間間隔（秒）</param>

@@ -238,9 +238,28 @@ namespace Fungus
             StoryText = "";
         }
 
+        /// <summary>
+        /// ContinueButtonのインタラクティブを有効／無効
+        /// </summary>
+        /// <param name="isInteractable">インタラクティブ</param>
+        public void SetInteractableOfContinueButton(bool isInteractable)
+        {
+            if (continueButton != null)
+            {
+                Button b = continueButton;
+                if (b.interactable == isInteractable)
+                    return;
+
+                b.interactable = isInteractable; // 確定ボタンを有効化
+                // 有効になった場合は次の会話を表示（敵を倒した後にユーザに「押させる」のは避けたい）
+                if (isInteractable)
+                    Say(string.Empty, false, false, false, false, false, null, null);
+            }
+        }
+
         #region Public members
 
-		public Character SpeakingCharacter { get { return speakingCharacter; } }
+        public Character SpeakingCharacter { get { return speakingCharacter; } }
 
         /// <summary>
         /// Currently active Say Dialog used to display Say text
