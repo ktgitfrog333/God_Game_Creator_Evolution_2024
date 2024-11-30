@@ -42,6 +42,7 @@ GameObject:
   - component: {fileID: 8133988923243712879}
   - component: {fileID: 4199181781497533159}
   - component: {fileID: 8949204441234390214}
+  - component: {fileID: 5238991547095216749}
   m_Layer: 0
   m_Name: Flowchart
   m_TagString: Untagged
@@ -91,7 +92,8 @@ MonoBehaviour:
     height: 859
   selectedBlocks:
   - {fileID: 5780540346074303063}
-  selectedCommands: []
+  selectedCommands:
+  - {fileID: 5238991547095216749}
   variables: []
   description: 
   stepPause: 0
@@ -140,6 +142,7 @@ MonoBehaviour:
   - {fileID: 4001462999108648714}
   - {fileID: 3707225265592277046}
   - {fileID: 6460664704899528046}
+  - {fileID: 5238991547095216749}
   - {fileID: 6621530192003799033}
   - {fileID: 4944622280521819382}
   - {fileID: 1008212275914341549}
@@ -370,7 +373,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemId: 6
   indentLevel: 0
-  storyText: "\u30BF\u30FC\u30F3\u30C6\u30FC\u30D6\u30EB\u3092\u56DE\u3057\u3066\u3001\u5168\u3066\u306E\u6575\u3092\u5012\u305D\u3046\uFF01\uFF01\uFF01"
+  storyText: "\u30BF\u30FC\u30F3\u30C6\u30FC\u30D6\u30EB\u3092\u56DE\u3057\u3066\u3001\u5168\u3066\u306E\u6575\u3092\u5012\u305D\u3046\uFF01\uFF01\uFF01\r\n\u3010
+    \uFF10 \uFF0F \uFF13 \u3011"
   description: 
   character: {fileID: 7533831775956130097}
   portrait: {fileID: 21300000, guid: c2e045c9211205942a1e6663f41a5d32, type: 3}
@@ -451,7 +455,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemId: 9
   indentLevel: 0
-  storyText: "\u30A4\u30B3\u30E9\u30A4\u30B6\u30FC\u3092\u5DE6\u53F3\u306B\u56DE\u3057\u3066\u3001\u5F0F\u795E\u306E\u5F37\u3055\u3092\u8ABF\u6574\u3057\u3066\u3001\r\n\u5404\u8272\u306E\u30AA\u30FC\u30E9\u3092\u7E8F\u3063\u305F\u6575\u3092\u5168\u3066\u5012\u305D\u3046\uFF01\uFF01\uFF01"
+  storyText: "\u30A4\u30B3\u30E9\u30A4\u30B6\u30FC\u3092\u8ABF\u6574\u3057\u3066\u3001\u5168\u3066\u306E\u6575\u3092\u5012\u305D\u3046\uFF01\uFF01\uFF01\r\n\u3010
+    \uFF10 \uFF0F \uFF19 \u3011"
   description: 
   character: {fileID: 7533831775956130097}
   portrait: {fileID: 21300000, guid: c2e045c9211205942a1e6663f41a5d32, type: 3}
@@ -1167,6 +1172,51 @@ MonoBehaviour:
         Culture=neutral, PublicKeyToken=null
       typeFullname: Main.Common.GuideMessageID
       intValue: 12
+      boolValue: 0
+      floatValue: 0
+      stringValue: 
+      colorValue: {r: 0, g: 0, b: 0, a: 0}
+      gameObjectValue: {fileID: 0}
+      materialValue: {fileID: 0}
+      objectValue: {fileID: 0}
+      spriteValue: {fileID: 0}
+      textureValue: {fileID: 0}
+      vector2Value: {x: 0, y: 0}
+      vector3Value: {x: 0, y: 0, z: 0}
+    variableKey: 
+  saveReturnValue: 0
+  returnValueVariableKey: 
+  returnValueType: System.Void
+  showInherited: 0
+  callMode: 0
+--- !u!114 &5238991547095216749
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 502439594237340207}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 688e35811870d403f9e2b1ab2a699d98, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  itemId: 31
+  indentLevel: 0
+  description: 
+  targetObject: {fileID: 502439594237340207}
+  targetComponentAssemblyName: Main.Model.GuideMessageModel, Assembly-CSharp, Version=0.0.0.0,
+    Culture=neutral, PublicKeyToken=null
+  targetComponentFullname: UnityEngine.Component[]
+  targetComponentText: GuideMessageModel
+  targetMethod: CallGuideMessageID
+  targetMethodText: 'CallGuideMessageID (GuideMessageID): Void'
+  methodParameters:
+  - objValue:
+      typeAssemblyname: Main.Common.GuideMessageID, Assembly-CSharp, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      typeFullname: Main.Common.GuideMessageID
+      intValue: 13
       boolValue: 0
       floatValue: 0
       stringValue: 

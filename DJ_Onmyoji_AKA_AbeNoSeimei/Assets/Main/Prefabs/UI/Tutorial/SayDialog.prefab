@@ -676,7 +676,7 @@ Canvas:
   m_AdditionalShaderChannelsFlag: 25
   m_UpdateRectTransformForStandalone: 0
   m_SortingLayerID: 0
-  m_SortingOrder: 1
+  m_SortingOrder: -1
   m_TargetDisplay: 0
 --- !u!114 &332401783789016774
 MonoBehaviour:
@@ -922,7 +922,6 @@ MonoBehaviour:
   sayDialog: {fileID: 0}
   dialogInput: {fileID: 2827587291294569171}
   storyText: {fileID: 4008675487213654056}
-  continueBtn: {fileID: 1462211239474871569}
   guideMessageStructs:
   - missionID: 1
     sentenceTemplate: "\u30BF\u30FC\u30F3\u30C6\u30FC\u30D6\u30EB\u3092\u56DE\u3057\u3066\u3001\u5168\u3066\u306E\u6575\u3092\u5012\u305D\u3046\uFF01\uFF01\uFF01\n\u3010

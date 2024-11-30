@@ -20,6 +20,10 @@ namespace Main.Model
         [SerializeField] private GuideMessageModel guideMessageModel;
         /// <summary>FungusのFlowchartを管理のモデル</summary>
         public GuideMessageModel GuideMessageModel => guideMessageModel;
+        /// <summary>読み込み完了</summary>
+        private readonly BoolReactiveProperty _isCompleted = new BoolReactiveProperty();
+        /// <summary>読み込み完了</summary>
+        public IReactiveProperty<bool> IsCompleted => _isCompleted;
 
         private void Reset()
         {
@@ -38,11 +42,13 @@ namespace Main.Model
             var currentSceneId = utility.UserDataSingleton.UserBeanReloaded.sceneId;
             // シーンIDが8ならチュートリアルモード
             _isTutorialMode.Value = currentSceneId == 8;
+            _isCompleted.Value = true;
         }
 
         private void OnDisable()
         {
-            guideMessageModel.gameObject.SetActive(false);
+            if (guideMessageModel != null)
+                guideMessageModel.gameObject.SetActive(false);
         }
     }
 }

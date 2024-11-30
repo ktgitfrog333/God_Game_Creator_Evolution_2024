@@ -20,6 +20,14 @@ namespace Main.Common
         /// <summary>タイトルのシーン名</summary>
         [SerializeField] private string titleSceneName = "TitleScene";
 
+        private void OnDestroy()
+        {
+            var datas = GetSaveDatas();
+            if (ReverseSceneId(datas.sceneId, datas))
+                if (!SetSaveDatas(datas))
+                    Debug.LogError("クリア済みデータ保存呼び出しの失敗");
+        }
+
         public void OnStart()
         {
             new TemplateResourcesAccessory();

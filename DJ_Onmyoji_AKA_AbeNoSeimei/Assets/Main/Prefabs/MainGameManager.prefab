@@ -274,6 +274,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   scratchLevel: 1
   userActionTime: 0.2
+  userActionTimeForUI: 0.2
 --- !u!1 &1369696454595932813
 GameObject:
   m_ObjectHideFlags: 0
@@ -337,8 +338,6 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
-  moveGuideView: {fileID: 0}
-  jumpGuideView: {fileID: 0}
   fadeImageView: {fileID: 0}
   fadeImageModel: {fileID: 0}
   clearCountdownTimerCircleView: {fileID: 0}
@@ -372,6 +371,420 @@ MonoBehaviour:
   - {fileID: 0}
   congratulationsView: {fileID: 0}
   countdownLogosView: {fileID: 0}
+  tutorialModel: {fileID: 0}
+  tutorialView: {fileID: 0}
+  enemiesSpawnTutorialModel: {fileID: 0}
+  missionsSystemTutorialModel: {fileID: 0}
+  tutorialGuideContentsStuct:
+    targetComponents:
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    tutorialComponentMaps:
+    - guideMessageID: 0
+      tutorialComponents:
+      - component: {fileID: 0}
+        componentState: 0
+      - component: {fileID: 0}
+        componentState: 0
+      - component: {fileID: 0}
+        componentState: 0
+      - component: {fileID: 0}
+        componentState: 0
+      - component: {fileID: 0}
+        componentState: 2
+      - component: {fileID: 0}
+        componentState: 2
+      - component: {fileID: 0}
+        componentState: 2
+      - component: {fileID: 0}
+        componentState: 0
+      - component: {fileID: 0}
+        componentState: 0
+      - component: {fileID: 0}
+        componentState: 0
+      - component: {fileID: 0}
+        componentState: 0
+      - component: {fileID: 0}
+        componentState: 0
+      - component: {fileID: 0}
+        componentState: 0
+      - component: {fileID: 0}
+        componentState: 0
+    - guideMessageID: 1
+      tutorialComponents:
+      - component: {fileID: 0}
+        componentState: 0
+      - component: {fileID: 0}
+        componentState: 0
+      - component: {fileID: 0}
+        componentState: 0
+      - component: {fileID: 0}
+        componentState: 0
+      - component: {fileID: 0}
+        componentState: 2
+      - component: {fileID: 0}
+        componentState: 2
+      - component: {fileID: 0}
+        componentState: 1
+      - component: {fileID: 0}
+        componentState: 0
+      - component: {fileID: 0}
+        componentState: 0
+      - component: {fileID: 0}
+        componentState: 0
+      - component: {fileID: 0}
+        componentState: 0
+      - component: {fileID: 0}
+        componentState: 0
+      - component: {fileID: 0}
+        componentState: 0
+      - component: {fileID: 0}
+        componentState: 0
+    - guideMessageID: 2
+      tutorialComponents:
+      - component: {fileID: 0}
+        componentState: 0
+      - component: {fileID: 0}
+        componentState: 0
+      - component: {fileID: 0}
+        componentState: 0
+      - component: {fileID: 0}
+        componentState: 0
+      - component: {fileID: 0}
+        componentState: 2
+      - component: {fileID: 0}
+        componentState: 2
+      - component: {fileID: 0}
+        componentState: 1
+      - component: {fileID: 0}
+        componentState: 1
+      - component: {fileID: 0}
+        componentState: 0
+      - component: {fileID: 0}
+        componentState: 0
+      - component: {fileID: 0}
+        componentState: 0
+      - component: {fileID: 0}
+        componentState: 0
+      - component: {fileID: 0}
+        componentState: 0
+      - component: {fileID: 0}
+        componentState: 0
+    - guideMessageID: 3
+      tutorialComponents:
+      - component: {fileID: 0}
+        componentState: 1
+      - component: {fileID: 0}
+        componentState: 0
+      - component: {fileID: 0}
+        componentState: 0
+      - component: {fileID: 0}
+        componentState: 0
+      - component: {fileID: 0}
+        componentState: 2
+      - component: {fileID: 0}
+        componentState: 2
+      - component: {fileID: 0}
+        componentState: 2
+      - component: {fileID: 0}
+        componentState: 0
+      - component: {fileID: 0}
+        componentState: 0
+      - component: {fileID: 0}
+        componentState: 0
+      - component: {fileID: 0}
+        componentState: 0
+      - component: {fileID: 0}
+        componentState: 0
+      - component: {fileID: 0}
+        componentState: 0
+      - component: {fileID: 0}
+        componentState: 0
+    - guideMessageID: 4
+      tutorialComponents:
+      - component: {fileID: 0}
+        componentState: 0
+      - component: {fileID: 0}
+        componentState: 0
+      - component: {fileID: 0}
+        componentState: 0
+      - component: {fileID: 0}
+        componentState: 0
+      - component: {fileID: 0}
+        componentState: 2
+      - component: {fileID: 0}
+        componentState: 2
+      - component: {fileID: 0}
+        componentState: 1
+      - component: {fileID: 0}
+        componentState: 0
+      - component: {fileID: 0}
+        componentState: 1
+      - component: {fileID: 0}
+        componentState: 0
+      - component: {fileID: 0}
+        componentState: 0
+      - component: {fileID: 0}
+        componentState: 0
+      - component: {fileID: 0}
+        componentState: 0
+      - component: {fileID: 0}
+        componentState: 0
+    - guideMessageID: 5
+      tutorialComponents:
+      - component: {fileID: 0}
+        componentState: 1
+      - component: {fileID: 0}
+        componentState: 1
+      - component: {fileID: 0}
+        componentState: 0
+      - component: {fileID: 0}
+        componentState: 0
+      - component: {fileID: 0}
+        componentState: 2
+      - component: {fileID: 0}
+        componentState: 2
+      - component: {fileID: 0}
+        componentState: 2
+      - component: {fileID: 0}
+        componentState: 0
+      - component: {fileID: 0}
+        componentState: 0
+      - component: {fileID: 0}
+        componentState: 0
+      - component: {fileID: 0}
+        componentState: 0
+      - component: {fileID: 0}
+        componentState: 0
+      - component: {fileID: 0}
+        componentState: 0
+      - component: {fileID: 0}
+        componentState: 0
+    - guideMessageID: 6
+      tutorialComponents:
+      - component: {fileID: 0}
+        componentState: 0
+      - component: {fileID: 0}
+        componentState: 0
+      - component: {fileID: 0}
+        componentState: 0
+      - component: {fileID: 0}
+        componentState: 0
+      - component: {fileID: 0}
+        componentState: 2
+      - component: {fileID: 0}
+        componentState: 1
+      - component: {fileID: 0}
+        componentState: 1
+      - component: {fileID: 0}
+        componentState: 0
+      - component: {fileID: 0}
+        componentState: 0
+      - component: {fileID: 0}
+        componentState: 1
+      - component: {fileID: 0}
+        componentState: 0
+      - component: {fileID: 0}
+        componentState: 0
+      - component: {fileID: 0}
+        componentState: 0
+      - component: {fileID: 0}
+        componentState: 0
+    - guideMessageID: 7
+      tutorialComponents:
+      - component: {fileID: 0}
+        componentState: 0
+      - component: {fileID: 0}
+        componentState: 0
+      - component: {fileID: 0}
+        componentState: 0
+      - component: {fileID: 0}
+        componentState: 0
+      - component: {fileID: 0}
+        componentState: 2
+      - component: {fileID: 0}
+        componentState: 2
+      - component: {fileID: 0}
+        componentState: 1
+      - component: {fileID: 0}
+        componentState: 0
+      - component: {fileID: 0}
+        componentState: 0
+      - component: {fileID: 0}
+        componentState: 0
+      - component: {fileID: 0}
+        componentState: 1
+      - component: {fileID: 0}
+        componentState: 0
+      - component: {fileID: 0}
+        componentState: 0
+      - component: {fileID: 0}
+        componentState: 0
+    - guideMessageID: 8
+      tutorialComponents:
+      - component: {fileID: 0}
+        componentState: 0
+      - component: {fileID: 0}
+        componentState: 0
+      - component: {fileID: 0}
+        componentState: 0
+      - component: {fileID: 0}
+        componentState: 0
+      - component: {fileID: 0}
+        componentState: 2
+      - component: {fileID: 0}
+        componentState: 2
+      - component: {fileID: 0}
+        componentState: 1
+      - component: {fileID: 0}
+        componentState: 0
+      - component: {fileID: 0}
+        componentState: 0
+      - component: {fileID: 0}
+        componentState: 0
+      - component: {fileID: 0}
+        componentState: 0
+      - component: {fileID: 0}
+        componentState: 1
+      - component: {fileID: 0}
+        componentState: 0
+      - component: {fileID: 0}
+        componentState: 0
+    - guideMessageID: 9
+      tutorialComponents:
+      - component: {fileID: 0}
+        componentState: 0
+      - component: {fileID: 0}
+        componentState: 0
+      - component: {fileID: 0}
+        componentState: 0
+      - component: {fileID: 0}
+        componentState: 0
+      - component: {fileID: 0}
+        componentState: 2
+      - component: {fileID: 0}
+        componentState: 2
+      - component: {fileID: 0}
+        componentState: 1
+      - component: {fileID: 0}
+        componentState: 0
+      - component: {fileID: 0}
+        componentState: 0
+      - component: {fileID: 0}
+        componentState: 0
+      - component: {fileID: 0}
+        componentState: 0
+      - component: {fileID: 0}
+        componentState: 0
+      - component: {fileID: 0}
+        componentState: 1
+      - component: {fileID: 0}
+        componentState: 0
+    - guideMessageID: 10
+      tutorialComponents:
+      - component: {fileID: 0}
+        componentState: 0
+      - component: {fileID: 0}
+        componentState: 0
+      - component: {fileID: 0}
+        componentState: 0
+      - component: {fileID: 0}
+        componentState: 0
+      - component: {fileID: 0}
+        componentState: 2
+      - component: {fileID: 0}
+        componentState: 2
+      - component: {fileID: 0}
+        componentState: 1
+      - component: {fileID: 0}
+        componentState: 0
+      - component: {fileID: 0}
+        componentState: 0
+      - component: {fileID: 0}
+        componentState: 0
+      - component: {fileID: 0}
+        componentState: 0
+      - component: {fileID: 0}
+        componentState: 0
+      - component: {fileID: 0}
+        componentState: 0
+      - component: {fileID: 0}
+        componentState: 1
+    - guideMessageID: 11
+      tutorialComponents:
+      - component: {fileID: 0}
+        componentState: 0
+      - component: {fileID: 0}
+        componentState: 0
+      - component: {fileID: 0}
+        componentState: 0
+      - component: {fileID: 0}
+        componentState: 0
+      - component: {fileID: 0}
+        componentState: 2
+      - component: {fileID: 0}
+        componentState: 2
+      - component: {fileID: 0}
+        componentState: 1
+      - component: {fileID: 0}
+        componentState: 0
+      - component: {fileID: 0}
+        componentState: 0
+      - component: {fileID: 0}
+        componentState: 0
+      - component: {fileID: 0}
+        componentState: 0
+      - component: {fileID: 0}
+        componentState: 0
+      - component: {fileID: 0}
+        componentState: 0
+      - component: {fileID: 0}
+        componentState: 0
+    - guideMessageID: 12
+      tutorialComponents:
+      - component: {fileID: 0}
+        componentState: 0
+      - component: {fileID: 0}
+        componentState: 0
+      - component: {fileID: 0}
+        componentState: 0
+      - component: {fileID: 0}
+        componentState: 0
+      - component: {fileID: 0}
+        componentState: 2
+      - component: {fileID: 0}
+        componentState: 2
+      - component: {fileID: 0}
+        componentState: 2
+      - component: {fileID: 0}
+        componentState: 0
+      - component: {fileID: 0}
+        componentState: 0
+      - component: {fileID: 0}
+        componentState: 0
+      - component: {fileID: 0}
+        componentState: 0
+      - component: {fileID: 0}
+        componentState: 0
+      - component: {fileID: 0}
+        componentState: 0
+      - component: {fileID: 0}
+        componentState: 0
+  tutorialMissionContentsStuct:
+    missionsSystemTutorialModel: {fileID: 0}
+    guideMessageView: {fileID: 0}
+    enemiesSpawnTutorialModel: {fileID: 0}
 --- !u!1 &1369696454729978949
 GameObject:
   m_ObjectHideFlags: 0
@@ -772,9 +1185,9 @@ MonoBehaviour:
   - clipToPlayBGM: 14
     bpm: 144
   - clipToPlayBGM: 15
-    bpm: 144
+    bpm: 100
   - clipToPlayBGM: 16
-    bpm: 144
+    bpm: 100
   bGMDayOrNightMaps:
   - sceneId: 1
     clipToPlayBGMDay: 0

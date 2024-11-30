@@ -13,11 +13,11 @@ namespace Main.View
     public class GuideUITheUniversalView : MonoBehaviour
     {
         /// <summary>操作のガイド用UIの構造体</summary>
-        [SerializeField] private GuideUITheUniversalStruct[] guideUITheUniversalStructs;
+        [SerializeField] protected GuideUITheUniversalStruct[] guideUITheUniversalStructs;
         /// <summary>シーケンス</summary>
         private Sequence _sequence;
 
-        private void Reset()
+        protected virtual void Reset()
         {
             var pages = GetComponentsInChildren<CanvasGroup>();
             List<GuideUITheUniversalStruct> structs = new List<GuideUITheUniversalStruct>();

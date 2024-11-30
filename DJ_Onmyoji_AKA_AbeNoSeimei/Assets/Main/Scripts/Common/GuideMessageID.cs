@@ -22,5 +22,6 @@ namespace Main.Common
         GM0010,
         GM0011,
         GM0012,
+        GM0013,
     }
 }

@@ -125,12 +125,14 @@ namespace Main.Model
             try
             {
                 var spawnUtility = new SpawnUtility();
-                var enemiesSpawnTutorialStruct = enemiesSpawnTutorialStructs.FirstOrDefault(q => q.categoryID == 0 &&
-                    q.spawnIdx == killedEnemyCount);
-                if (!spawnUtility.ManageEnemiesSpawnTutorial(enemiesSpawnTutorialStruct,
-                    _poolModel,
-                    _target))
-                    Debug.LogError("ManageEnemiesSpawnTutorial");
+                var enemiesSpawnTutorialStruct = enemiesSpawnTutorialStructs.Where(q => q.categoryID == 0 &&
+                        q.spawnIdx == killedEnemyCount)
+                    .ToArray();
+                if (0 < enemiesSpawnTutorialStruct.Length)
+                    if (!spawnUtility.ManageEnemiesSpawnTutorial(enemiesSpawnTutorialStruct[0],
+                        _poolModel,
+                        _target))
+                        Debug.LogError("ManageEnemiesSpawnTutorial");
 
                 return true;
             }
@@ -146,12 +148,14 @@ namespace Main.Model
             try
             {
                 var spawnUtility = new SpawnUtility();
-                var enemiesSpawnTutorialStruct = enemiesSpawnTutorialStructs.FirstOrDefault(q => q.categoryID == 1 &&
-                    q.spawnIdx == killedEnemyCount);
-                if (!spawnUtility.ManageEnemiesSpawnTutorial(enemiesSpawnTutorialStruct,
-                    _poolModel,
-                    _target))
-                    Debug.LogError("ManageEnemiesSpawnTutorial");
+                var enemiesSpawnTutorialStruct = enemiesSpawnTutorialStructs.Where(q => q.categoryID == 1 &&
+                        q.spawnIdx == killedEnemyCount)
+                    .ToArray();
+                if (0 < enemiesSpawnTutorialStruct.Length)
+                    if (!spawnUtility.ManageEnemiesSpawnTutorial(enemiesSpawnTutorialStruct[0],
+                        _poolModel,
+                        _target))
+                        Debug.LogError("ManageEnemiesSpawnTutorial");
 
                 return true;
             }

@@ -16,7 +16,7 @@ namespace Main.Utility
     /// </summary>
     public class MainTutorialsUtility : IMainTutorialsUtility
     {
-        public bool InitializeTutorialGuideContentsOfPentagramTurnTableModel(MainPresenterDemo.TutorialGuideContentsStuct tutorialGuideContentsStuct, PentagramTurnTableModel pentagramTurnTableModel)
+        public MainPresenter.TutorialGuideContentsStuct InitializeTutorialGuideContentsOfPentagramTurnTableModel(MainPresenter.TutorialGuideContentsStuct tutorialGuideContentsStuct, PentagramTurnTableModel pentagramTurnTableModel)
         {
             try
             {
@@ -55,7 +55,7 @@ namespace Main.Utility
 
                             break;
                         case GuideMessageID.GM0003:
-                            if (!AddTutorialComponents(tutorialComponentMap.Content, pentagramTurnTableModel, tutorialComponentMap.Index, tutorialGuideContentsStuct.tutorialComponentMaps, MainPresenterDemo.ComponentState.Enable))
+                            if (!AddTutorialComponents(tutorialComponentMap.Content, pentagramTurnTableModel, tutorialComponentMap.Index, tutorialGuideContentsStuct.tutorialComponentMaps, MainPresenter.ComponentState.Enable))
                                 throw new System.ArgumentException("AddTutorialComponents");
 
                             break;
@@ -65,7 +65,7 @@ namespace Main.Utility
 
                             break;
                         case GuideMessageID.GM0005:
-                            if (!AddTutorialComponents(tutorialComponentMap.Content, pentagramTurnTableModel, tutorialComponentMap.Index, tutorialGuideContentsStuct.tutorialComponentMaps, MainPresenterDemo.ComponentState.Enable))
+                            if (!AddTutorialComponents(tutorialComponentMap.Content, pentagramTurnTableModel, tutorialComponentMap.Index, tutorialGuideContentsStuct.tutorialComponentMaps, MainPresenter.ComponentState.Enable))
                                 throw new System.ArgumentException("AddTutorialComponents");
 
                             break;
@@ -104,15 +104,24 @@ namespace Main.Utility
                                 throw new System.ArgumentException("AddTutorialComponents");
 
                             break;
+                        case GuideMessageID.GM0013:
+                            if (!AddTutorialComponents(tutorialComponentMap.Content, pentagramTurnTableModel, tutorialComponentMap.Index, tutorialGuideContentsStuct.tutorialComponentMaps))
+                                throw new System.ArgumentException("AddTutorialComponents");
+
+                            break;
+                        default:
+                            Debug.LogWarning($"MainPresenter.csにて定義を追加した場合はここへも追加してください: [{tutorialComponentMap.Content.guideMessageID}]");
+
+                            break;
                     }
                 }
 
-                return true;
+                return tutorialGuideContentsStuct;
             }
             catch (System.Exception e)
             {
                 Debug.LogError(e);
-                return false;
+                return new MainPresenter.TutorialGuideContentsStuct();
             }
         }
 
@@ -126,34 +135,34 @@ namespace Main.Utility
         /// <param name="tutorialComponentMaps">チュートリアルで扱うガイドIDとリソースの構造体</param>
         /// <param name="componentState">コンポーネント、【有効、無効、一時停止】</param>
         /// <returns>成功／失敗</returns>
-        private bool AddTutorialComponents(MainPresenterDemo.TutorialComponentMap tutorialComponentMap, PentagramTurnTableModel pentagramTurnTableModel, int index, MainPresenterDemo.TutorialComponentMap[] tutorialComponentMaps, MainPresenterDemo.ComponentState componentState=MainPresenterDemo.ComponentState.Pause)
+        private bool AddTutorialComponents(MainPresenter.TutorialComponentMap tutorialComponentMap, PentagramTurnTableModel pentagramTurnTableModel, int index, MainPresenter.TutorialComponentMap[] tutorialComponentMaps, MainPresenter.ComponentState componentState=MainPresenter.ComponentState.Pause)
         {
             try
             {
-                List<MainPresenterDemo.TutorialComponent> tutorialComponents = tutorialComponentMap.tutorialComponents.ToList();
-                tutorialComponents.Add(new MainPresenterDemo.TutorialComponent()
+                List<MainPresenter.TutorialComponent> tutorialComponents = tutorialComponentMap.tutorialComponents.ToList();
+                tutorialComponents.Add(new MainPresenter.TutorialComponent()
                 {
                     component = pentagramTurnTableModel.WrapTurretModel,
                     componentState = componentState
                 });
-                tutorialComponents.Add(new MainPresenterDemo.TutorialComponent()
+                tutorialComponents.Add(new MainPresenter.TutorialComponent()
                 {
                     component = pentagramTurnTableModel.DanceTurretModel,
                     componentState = componentState
                 });
-                tutorialComponents.Add(new MainPresenterDemo.TutorialComponent()
+                tutorialComponents.Add(new MainPresenter.TutorialComponent()
                 {
                     component = pentagramTurnTableModel.GraffitiTurretModel,
                     componentState = componentState
                 });
-                tutorialComponents.AddRange(new MainPresenterDemo.TutorialComponent[]
+                tutorialComponents.AddRange(new MainPresenter.TutorialComponent[]
                 {
-                    new MainPresenterDemo.TutorialComponent()
+                    new MainPresenter.TutorialComponent()
                     {
                         component = pentagramTurnTableModel.OnmyoTurretModels[0],
                         componentState = componentState
                     },
-                    new MainPresenterDemo.TutorialComponent()
+                    new MainPresenter.TutorialComponent()
                     {
                         component = pentagramTurnTableModel.OnmyoTurretModels[1],
                         componentState = componentState
@@ -170,7 +179,7 @@ namespace Main.Utility
             }
         }
 
-        public bool DoTutorialGuideContents(GuideMessageID guideMessageID, MainPresenterDemo.TutorialGuideContentsStuct tutorialGuideContentsStuct)
+        public bool DoTutorialGuideContents(GuideMessageID guideMessageID, MainPresenter.TutorialGuideContentsStuct tutorialGuideContentsStuct)
         {
             try
             {
@@ -346,23 +355,23 @@ namespace Main.Utility
         /// <param name="tutorialComponent">チュートリアルで扱うリソースの構造体</param>
         /// <param name="target">対象のコンポーネント</param>
         /// <returns>成功／失敗</returns>
-        private bool CheckComponentStateAndSetActive(MainPresenterDemo.TutorialComponent tutorialComponent, Component[] target)
+        private bool CheckComponentStateAndSetActive(MainPresenter.TutorialComponent tutorialComponent, Component[] target)
         {
             try
             {
                 switch (tutorialComponent.componentState)
                 {
-                    case MainPresenterDemo.ComponentState.Disable:
+                    case MainPresenter.ComponentState.Disable:
                         foreach (var item in target.Where(q => q.gameObject.activeSelf))
                             item.gameObject.SetActive(false);
 
                         break;
-                    case MainPresenterDemo.ComponentState.Enable:
+                    case MainPresenter.ComponentState.Enable:
                         foreach (var item in target.Where(q => !q.gameObject.activeSelf))
                             item.gameObject.SetActive(true);
 
                         break;
-                    case MainPresenterDemo.ComponentState.Pause:
+                    case MainPresenter.ComponentState.Pause:
                         throw new System.NotImplementedException($"必要に応じて処理を追加する: [{tutorialComponent.component.GetType().FullName}]");
 
                     default:
@@ -385,18 +394,18 @@ namespace Main.Utility
         /// <param name="tutorialComponent">チュートリアルで扱うリソースの構造体</param>
         /// <param name="target">対象のコンポーネント</param>
         /// <returns>成功／失敗</returns>
-        private bool CheckComponentStateAndSetActive(MainPresenterDemo.TutorialComponent tutorialComponent, TurretModel[] target)
+        private bool CheckComponentStateAndSetActive(MainPresenter.TutorialComponent tutorialComponent, TurretModel[] target)
         {
             try
             {
                 switch (tutorialComponent.componentState)
                 {
-                    case MainPresenterDemo.ComponentState.Disable:
+                    case MainPresenter.ComponentState.Disable:
                         foreach (var item in target.Where(q => q.gameObject.activeSelf))
                             item.gameObject.SetActive(false);
 
                         break;
-                    case MainPresenterDemo.ComponentState.Enable:
+                    case MainPresenter.ComponentState.Enable:
                         foreach (var item in target.Where(q => !q.gameObject.activeSelf))
                             item.gameObject.SetActive(true);
                         foreach (var item in target.Where(q => !q.IsAutoInstanceMode))
@@ -404,7 +413,7 @@ namespace Main.Utility
                                 throw new System.ArgumentException("SetAutoInstanceMode");
 
                         break;
-                    case MainPresenterDemo.ComponentState.Pause:
+                    case MainPresenter.ComponentState.Pause:
                         foreach (var item in target.Where(q => q.IsAutoInstanceMode))
                             if (!item.SetAutoInstanceMode(false))
                                 throw new System.ArgumentException("SetAutoInstanceMode");
@@ -430,18 +439,18 @@ namespace Main.Utility
         /// <param name="tutorialComponent">チュートリアルで扱うリソースの構造体</param>
         /// <param name="target">対象のコンポーネント</param>
         /// <returns>成功／失敗</returns>
-        private bool CheckComponentStateAndSetActive(MainPresenterDemo.TutorialComponent tutorialComponent, PauseView[] target)
+        private bool CheckComponentStateAndSetActive(MainPresenter.TutorialComponent tutorialComponent, PauseView[] target)
         {
             try
             {
                 switch (tutorialComponent.componentState)
                 {
-                    case MainPresenterDemo.ComponentState.Disable:
+                    case MainPresenter.ComponentState.Disable:
                         foreach (var item in target.Where(q => q.gameObject.activeSelf))
                             item.gameObject.SetActive(false);
 
                         break;
-                    case MainPresenterDemo.ComponentState.Enable:
+                    case MainPresenter.ComponentState.Enable:
                         foreach (var item in target.Where(q => !q.gameObject.activeSelf))
                             item.gameObject.SetActive(true);
                         foreach (var item in target.Where(q => !q.IsControllEnabled))
@@ -449,7 +458,7 @@ namespace Main.Utility
                                 throw new System.ArgumentException("SetControllEnabled");
 
                         break;
-                    case MainPresenterDemo.ComponentState.Pause:
+                    case MainPresenter.ComponentState.Pause:
                         foreach (var item in target.Where(q => q.IsControllEnabled))
                             if (!item.SetControllEnabled(false))
                                 throw new System.ArgumentException("SetControllEnabled");
@@ -475,18 +484,18 @@ namespace Main.Utility
         /// <param name="tutorialComponent">チュートリアルで扱うリソースの構造体</param>
         /// <param name="target">対象のコンポーネント</param>
         /// <returns>成功／失敗</returns>
-        private bool CheckComponentStateAndSetActive(MainPresenterDemo.TutorialComponent tutorialComponent, FadersGroupView[] target)
+        private bool CheckComponentStateAndSetActive(MainPresenter.TutorialComponent tutorialComponent, FadersGroupView[] target)
         {
             try
             {
                 switch (tutorialComponent.componentState)
                 {
-                    case MainPresenterDemo.ComponentState.Disable:
+                    case MainPresenter.ComponentState.Disable:
                         foreach (var item in target.Where(q => q.gameObject.activeSelf))
                             item.gameObject.SetActive(false);
 
                         break;
-                    case MainPresenterDemo.ComponentState.Enable:
+                    case MainPresenter.ComponentState.Enable:
                         foreach (var item in target.Where(q => !q.gameObject.activeSelf))
                             item.gameObject.SetActive(true);
                         foreach (var item in target)
@@ -497,7 +506,7 @@ namespace Main.Utility
                         }
 
                         break;
-                    case MainPresenterDemo.ComponentState.Pause:
+                    case MainPresenter.ComponentState.Pause:
                         foreach (var item in target)
                         {
                             Observable.FromCoroutine<bool>(observer => item.PlayMoveAnchorsBased(observer))
@@ -526,18 +535,18 @@ namespace Main.Utility
         /// <param name="tutorialComponent">チュートリアルで扱うリソースの構造体</param>
         /// <param name="target">対象のコンポーネント</param>
         /// <returns>成功／失敗</returns>
-        private bool CheckComponentStateAndSetActive(MainPresenterDemo.TutorialComponent tutorialComponent, GuideMessageView[] target)
+        private bool CheckComponentStateAndSetActive(MainPresenter.TutorialComponent tutorialComponent, GuideMessageView[] target)
         {
             try
             {
                 switch (tutorialComponent.componentState)
                 {
-                    case MainPresenterDemo.ComponentState.Disable:
+                    case MainPresenter.ComponentState.Disable:
                         foreach (var item in target.Where(q => q.gameObject.activeSelf))
                             item.gameObject.SetActive(false);
 
                         break;
-                    case MainPresenterDemo.ComponentState.Enable:
+                    case MainPresenter.ComponentState.Enable:
                         foreach (var item in target.Where(q => !q.gameObject.activeSelf))
                             item.gameObject.SetActive(true);
                         foreach (var item in target)
@@ -545,7 +554,7 @@ namespace Main.Utility
                                 throw new System.ArgumentException("SetButtonEnabled");
 
                         break;
-                    case MainPresenterDemo.ComponentState.Pause:
+                    case MainPresenter.ComponentState.Pause:
                         foreach (var item in target)
                             if (!item.SetButtonEnabled(false))
                                 throw new System.ArgumentException("SetButtonEnabled");
@@ -564,7 +573,7 @@ namespace Main.Utility
             }
         }
 
-        public bool DoTutorialMissionContents(MissionID missionID, MainPresenterDemo.TutorialMissionContentsStuct tutorialMissionContentsStuct, System.IDisposable modelUpdObservable)
+        public bool DoTutorialMissionContents(MissionID missionID, MainPresenter.TutorialMissionContentsStuct tutorialMissionContentsStuct, System.IDisposable modelUpdObservable)
         {
             try
             {
@@ -657,14 +666,14 @@ namespace Main.Utility
         /// <param name="tutorialGuideContentsStuct">チュートリアルのガイドで扱うリソースの構造体</param>
         /// <param name="pentagramTurnTableModel">ペンダグラムターンテーブルのモデル</param>
         /// <returns>成功／失敗</returns>
-        public bool InitializeTutorialGuideContentsOfPentagramTurnTableModel(MainPresenterDemo.TutorialGuideContentsStuct tutorialGuideContentsStuct, PentagramTurnTableModel pentagramTurnTableModel);
+        public MainPresenter.TutorialGuideContentsStuct InitializeTutorialGuideContentsOfPentagramTurnTableModel(MainPresenter.TutorialGuideContentsStuct tutorialGuideContentsStuct, PentagramTurnTableModel pentagramTurnTableModel);
         /// <summary>
         /// チュートリアルのガイドコンテンツを実行する
         /// </summary>
         /// <param name="guideMessageID">ガイドメッセージID</param>
         /// <param name="tutorialGuideContentsStuct">チュートリアルのガイドで扱うリソースの構造体</param>
         /// <returns>成功／失敗</returns>
-        public bool DoTutorialGuideContents(GuideMessageID guideMessageID, MainPresenterDemo.TutorialGuideContentsStuct tutorialGuideContentsStuct);
+        public bool DoTutorialGuideContents(GuideMessageID guideMessageID, MainPresenter.TutorialGuideContentsStuct tutorialGuideContentsStuct);
         /// <summary>
         /// チュートリアルのミッションコンテンツを実行する
         /// </summary>
@@ -672,6 +681,6 @@ namespace Main.Utility
         /// <param name="tutorialMissionContentsStuct">チュートリアルのミッションで扱うリソースの構造体</param>
         /// <param name="modelUpdObservable">監視用モデルコンポーネント</param>
         /// <returns>成功／失敗</returns>
-        public bool DoTutorialMissionContents(MissionID missionID, MainPresenterDemo.TutorialMissionContentsStuct tutorialMissionContentsStuct, System.IDisposable modelUpdObservable);
+        public bool DoTutorialMissionContents(MissionID missionID, MainPresenter.TutorialMissionContentsStuct tutorialMissionContentsStuct, System.IDisposable modelUpdObservable);
     }
 }

@@ -287,11 +287,11 @@ MonoBehaviour:
   guideUITheUniversalStructs:
   - pageIndex: 0
     fadeTimeSec: 0.35
-    duration: 4
+    duration: 1
     page: {fileID: 4687169343815085598}
   - pageIndex: 1
     fadeTimeSec: 0.35
-    duration: 4
+    duration: 2.5
     page: {fileID: 2345098623833105921}
 --- !u!1 &7923367666449493976
 GameObject:

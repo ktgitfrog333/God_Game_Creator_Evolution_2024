@@ -62,7 +62,8 @@ namespace Main.View
 
         private void OnDisable()
         {
-            guideMessageView.gameObject.SetActive(false);
+            if (guideMessageView != null)
+                guideMessageView.gameObject.SetActive(false);
         }
     }
 }
