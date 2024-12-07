@@ -50,6 +50,8 @@ namespace Main.Model
         private System.IDisposable _moveTowardsUpdObservable;
         /// <summary>死亡用の監視</summary>
         private System.IDisposable _isDeadSubscription;
+        /// <summary>Rigidbody2D</summary>
+        private Rigidbody2D _rigidbody2D;
 
         public bool Initialize(Vector2 position, Transform target)
         {
@@ -123,6 +125,7 @@ namespace Main.Model
             if (!attackColliderOfEnemy.SetAttackPoint(enemiesProp.attackPoint))
                 Debug.LogError("SetAttackPoint");
             State = new CharacterState(damageSufferedZoneModel.IsHit, prop.hpMax, damageSufferedZoneModel.Damage);
+            _rigidbody2D = GetComponent<Rigidbody2D>();
             base.Awake();
         }
 
@@ -223,21 +226,34 @@ namespace Main.Model
         {
             if (_target != null)
             {
-                var targetDirection = _target.position - Transform.position;
+                var targetDirection = new Vector2(_target.position.x, _target.position.y) - _rigidbody2D.position;
                 var moveDirection = targetDirection.normalized;
                 // 指定された方向と速度に弾を移動させる
 
-                if (SubSkillType.Paralysis.Equals(damageSufferedZoneModel.badStatus.Value))
-                    //麻痺中は移動しない
-                    Transform.position += moveDirection * 0;
-                else if (SubSkillType.Knockback.Equals(damageSufferedZoneModel.badStatus.Value))
-                    //ノックバック（逆方向への移動）
-                    Transform.position += moveDirection * _moveSpeed * Time.fixedDeltaTime * -10f;
-                else if (SubSkillType.Curse.Equals(damageSufferedZoneModel.badStatus.Value))
-                    //呪詛（移動速度半減）
-                    Transform.position += moveDirection * _moveSpeed * Time.fixedDeltaTime * 0.5f;
-                else
-                    Transform.position += moveDirection * _moveSpeed * Time.fixedDeltaTime;
+                float speedModifier = 1f; // 通常時
+                switch (damageSufferedZoneModel.badStatus.Value)
+                {
+                    case SubSkillType.Paralysis:
+                        //麻痺中は移動しない
+                        speedModifier = 0f;
+
+                        break;
+                    case SubSkillType.Knockback:
+                        //ノックバック（逆方向への移動）
+                        speedModifier = -10f;
+
+                        break;
+                    case SubSkillType.Curse:
+                        //呪詛（移動速度半減）
+                        speedModifier = 0.5f;
+
+                        break;
+                    default:
+                        break;
+                }
+                // 移動計算
+                Vector2 newPosition = _rigidbody2D.position + moveDirection * _moveSpeed * speedModifier * Time.fixedDeltaTime;
+                _rigidbody2D.MovePosition(newPosition);
             }
         }
 
