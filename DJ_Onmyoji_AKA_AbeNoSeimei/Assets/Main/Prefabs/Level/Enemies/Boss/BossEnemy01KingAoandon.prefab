@@ -644,6 +644,7 @@ MonoBehaviour:
   enemiesProp:
     soulMoneyPoint: 1
     attackPoint: 1
+  rigidbody2D: {fileID: 7327848469506556314}
   kingAoandonProp:
     targetClearedCountMax: 100
     intervalTimeSec: 30
@@ -679,6 +680,12 @@ MonoBehaviour:
   scales:
   - 1.1
   - 0.9
+  animatorView: {fileID: 404589354891813020}
+  effectsPoolPrefab: {fileID: 0}
+  hpSprite: {fileID: 0}
+  hpSpriteGauge: {fileID: 0}
+  fadeDuration: 2
+  auraSprite: {fileID: 0}
   animatorView: {fileID: 404589354891813020}
   kingAoandonProp:
     targetPointEntrance: {fileID: 3873948149133844616}
@@ -753,5 +760,10 @@ MonoBehaviour:
 --- !u!4 &6146906738550197740 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 3023802622660258064, guid: 5d7044c8d42de1540a3954615dee3f19, type: 3}
+  m_PrefabInstance: {fileID: 8987081947904894204}
+  m_PrefabAsset: {fileID: 0}
+--- !u!50 &7327848469506556314 stripped
+Rigidbody2D:
+  m_CorrespondingSourceObject: {fileID: 1804034909931988326, guid: 5d7044c8d42de1540a3954615dee3f19, type: 3}
   m_PrefabInstance: {fileID: 8987081947904894204}
   m_PrefabAsset: {fileID: 0}

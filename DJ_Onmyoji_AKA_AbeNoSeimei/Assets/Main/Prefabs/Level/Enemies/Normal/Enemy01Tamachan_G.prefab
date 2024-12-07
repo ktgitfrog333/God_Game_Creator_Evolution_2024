@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 1855415308971275901}
   - component: {fileID: 767403995214080615}
   - component: {fileID: 4771599399997114491}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: DamageSufferedZone
   m_TagString: GraffTarget
   m_Icon: {fileID: 0}
@@ -364,7 +364,7 @@ GameObject:
   - component: {fileID: 8480559042889348421}
   - component: {fileID: 6320770800134237935}
   - component: {fileID: 6154129831138059817}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: AttackColliderOfEnemy
   m_TagString: Enemy
   m_Icon: {fileID: 0}
@@ -534,7 +534,7 @@ GameObject:
   - component: {fileID: 1804034909931988326}
   - component: {fileID: 3678280287336115840}
   - component: {fileID: 2198367664600045414}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Enemy01Tamachan_G
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -646,6 +646,7 @@ MonoBehaviour:
   enemiesProp:
     soulMoneyPoint: 3
     attackPoint: 1
+  rigidbody2D: {fileID: 1804034909931988326}
 --- !u!114 &2198367664600045414
 MonoBehaviour:
   m_ObjectHideFlags: 0
