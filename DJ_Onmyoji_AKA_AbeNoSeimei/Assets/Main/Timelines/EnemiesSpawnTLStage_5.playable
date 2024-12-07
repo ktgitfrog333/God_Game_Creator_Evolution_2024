@@ -664,7 +664,7 @@ MonoBehaviour:
   enemiesSpawnTable:
     instanceRateTimeSec: 1
     instanceCount: 159
-    enemiesIDs: 00000000000000001000000011000000
+    enemiesIDs: 00000000000000000000000000000000
     sunMoonState: 1
   isSpawnPositionLock: 1
   changeDegree: 30
@@ -1706,7 +1706,7 @@ MonoBehaviour:
   enemiesSpawnTable:
     instanceRateTimeSec: 1
     instanceCount: 150
-    enemiesIDs: 00000000000000001000000011000000
+    enemiesIDs: 00000000000000000000000000000000
     sunMoonState: 1
   isSpawnPositionLock: 1
   changeDegree: 30
@@ -1750,7 +1750,7 @@ MonoBehaviour:
   enemiesSpawnTable:
     instanceRateTimeSec: 1
     instanceCount: 150
-    enemiesIDs: 00000000000000000000000010000000
+    enemiesIDs: 00000000000000000000000000000000
     sunMoonState: 0
   isSpawnPositionLock: 1
   changeDegree: 30
@@ -1838,7 +1838,7 @@ MonoBehaviour:
   enemiesSpawnTable:
     instanceRateTimeSec: 1
     instanceCount: 0
-    enemiesIDs: 00000000000000000000000011000000
+    enemiesIDs: 00000000000000000000000000000000
     sunMoonState: 0
   isSpawnPositionLock: 1
   changeDegree: 30

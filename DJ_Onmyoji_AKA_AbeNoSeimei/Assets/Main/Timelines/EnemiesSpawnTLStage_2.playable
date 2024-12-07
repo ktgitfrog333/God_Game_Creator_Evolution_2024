@@ -1681,7 +1681,7 @@ MonoBehaviour:
   enemiesSpawnTable:
     instanceRateTimeSec: 1
     instanceCount: 100
-    enemiesIDs: 000000000000000000000000000000000f000000
+    enemiesIDs: 0000000000000000000000000000000000000000
     sunMoonState: 1
   isSpawnPositionLock: 1
   changeDegree: 15
