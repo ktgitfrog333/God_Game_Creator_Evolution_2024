@@ -132,11 +132,11 @@ MonoBehaviour:
     image: {fileID: 21300000, guid: bfa93a3222f4740469acb95016ea06e7, type: 3}
   enhanceProps:
   - level: 1
-    soulMoney: 300
+    soulMoney: 200
   - level: 2
-    soulMoney: 500
+    soulMoney: 400
   - level: 3
-    soulMoney: 800
+    soulMoney: 600
   subSkillsSynergies:
   - subSkillType: 1
     subSkillTags: 00000000
