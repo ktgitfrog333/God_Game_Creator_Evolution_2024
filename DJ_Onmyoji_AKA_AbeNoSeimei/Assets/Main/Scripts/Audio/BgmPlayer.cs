@@ -93,7 +93,8 @@ namespace Main.Audio
                     audioSource.loop = sceneId == 8;
 
                     // BGMを再生
-                    audioSource.Play();
+                    if(audioSource.loop = sceneId != 0)
+                        audioSource.Play();
                 }
                 else
                     throw new System.Exception($"対象のファイルが見つかりません:[{clipToPlay}]");
