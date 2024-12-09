@@ -31,14 +31,19 @@ namespace Main.Model
         protected override void OnTriggerEnter2D(Collider2D other)
         {
             if (_utility.IsCompareTagAndUpdateReactiveFlag(other, tags, IsHit) && !isEndHoming)
-            {
                 Target = other.transform;
-            }
+        }
+
+        protected void OnTriggerExit2D(Collider2D other)
+        {
+            if (other.transform == Target)
+                EndHoming();
         }
 
         protected override void OnDisable()
         {
             Target = null;
+            isEndHoming = false;
             base.OnDisable();
         }
 
