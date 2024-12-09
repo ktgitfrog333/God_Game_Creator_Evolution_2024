@@ -93,7 +93,7 @@ namespace Main.Audio
                     audioSource.loop = sceneId == 8;
 
                     // BGMを再生
-                    if(audioSource.loop = sceneId != 0)
+                    if(sceneId != 0)
                         audioSource.Play();
                 }
                 else
