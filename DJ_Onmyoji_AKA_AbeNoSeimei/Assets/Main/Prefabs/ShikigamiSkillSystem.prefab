@@ -59,3 +59,5 @@ MonoBehaviour:
   - 3
   onmyoSlipLoopRate: 15
   pentagramTurnTableScriptableObject: {fileID: 11400000, guid: e093617fc1a2b024983809efd80547c1, type: 2}
+  onmyoSlipLoopEnergy: 2
+  onmyoSlipLoopResetTime: 5
