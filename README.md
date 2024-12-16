@@ -11,3 +11,4 @@
 ### [DOTween(HOTween v2)](https://assetstore.unity.com/packages/tools/animation/dotween-hotween-v2-27676)
 ### [UniRx](https://kingmo.jp/kumonos/unirx-unitask-upm-import/)
 ### [Fungus](https://github.com/snozbot/fungus/releases)
+### [MIDI Jack](https://github.com/keijiro/MidiJack?tab=readme-ov-file#midi-jack)
